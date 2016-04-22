@@ -1,0 +1,62 @@
+#!/bin/bash
+
+DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu/"
+
+N1AMR_HOME="/home/n1amr"
+BACKUP_ROOT_DIR="${DESTINATION_DIR}/backups"
+CONFIG_FOLDER="$N1AMR_HOME/.local/bin/sync.rc"
+
+timestamp="$(date +%F-%H-%M-%S)"
+
+INCLUDES_FILE="${CONFIG_FOLDER}/includes"
+EXCLUDES_FILE="${CONFIG_FOLDER}/excludes"
+BACKUP_CLEAN_FILE="${CONFIG_FOLDER}/backup-clean-files"
+
+LOGS_FOLDER="${BACKUP_ROOT_DIR}/backup-logs"
+LOG_FILE="${LOGS_FOLDER}/log"
+OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-output"
+ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-errors-log"
+CLEAN_OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-clean-output"
+CLEAN_ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-clean-error-log"
+
+backup_folder="${BACKUP_ROOT_DIR}/backup-${timestamp}"
+
+if [ ! -d "${LOGS_FOLDER}" ]; then
+  mkdir "${LOGS_FOLDER}";
+fi
+
+if [ "$1" = more ]; then
+  EXCLUDES_FILE="${CONFIG_FOLDER}/excludes-more"
+fi
+
+if [ ! -d "${DESTINATION_DIR}" ]; then
+  echo "Destination folder not found: ${DESTINATION_DIR}"
+  exit
+fi
+
+while IFS='' read -r line || [ -n "$line" ]; do
+  if [ ! "${line:0:1}" = "#" ] && [ x"$line" != x ]; then
+    echo Syncing \"$line\" ...
+    rsync -av --delete --relative --log-file="${LOG_FILE}" --exclude-from="${EXCLUDES_FILE}" -b --backup-dir="${backup_folder}" "${line}" "${DESTINATION_DIR}" >> "${OUTPUT_FILE}" 2>> "${ERRORS_LOG_FILE}"
+  fi
+done < "${INCLUDES_FILE}"
+
+echo "finished syncing" >> "${OUTPUT_FILE}"
+echo "finished syncing" >> "${ERRORS_LOG_FILE}"
+
+######################
+## cleaning backups ##
+######################
+shopt -s dotglob
+while IFS='' read -r line || [ -n "$line" ]; do
+  find "${BACKUP_ROOT_DIR}" | grep -F "$line" | xargs -d '\n' rm -rfv >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+done < "${BACKUP_CLEAN_FILE}"
+
+# clean empty folders
+for f in "${BACKUP_ROOT_DIR}/backup-2*"; do
+	if [ -d "$f" ]; then
+		sudo rsync -av --remove-source-files "$f" "${BACKUP_ROOT_DIR}/backup" >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+	fi
+done
+find "${BACKUP_ROOT_DIR}" -type d -empty -delete >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+

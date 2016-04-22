@@ -1,0 +1,12 @@
+mapfile -t files < <(find "$1" -type f | grep -P "$2")
+
+sum=0
+for file in "${files[@]}"; do
+  line=$(wc -l "${file}")
+  c=$(echo "${line}" | cut -d ' ' -f 1)
+
+  echo $line
+  sum=$((${sum} + ${c}))
+done
+echo -------------------------------
+echo ${sum} Total Number of lines
