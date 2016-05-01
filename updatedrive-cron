@@ -1,52 +1,6 @@
 #!/bin/bash
 
-N1AMR_HOME="/home/n1amr"
-GOPATH="$N1AMR_HOME/.gopath"
-PATH="$GOPATH/bin:$PATH"
-
 DRIVE_PATH="/mnt/Storage/GoogleDrive"
 OUTPUT_FILE="${DRIVE_PATH}/../.drive-log"
 
-current_month_folder=$(date +'%Y/%m')
-last_month_folder=$(date --date="-1 month" +'%Y/%m')
-# last_month_folder=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
-
-auto_pull_folders=(
-  "ASU/CSE 2017  2nd term 3rd year"
-  "ASU/Lab/CSE 351 Electrical Testing -2"
-  "Google Photos/${last_month_folder}"
-  "Google Photos/${current_month_folder}"
- )
-
-auto_push_folders=(
-  "ASU/Study/Second Term/"
-  "Personal"
- )
-  # "Backups/Internet/Twitter Favorites Archive"
-
-echo "$(date)" >> "${OUTPUT_FILE}" 
-echo >> "${OUTPUT_FILE}" 
-
-for f in "${auto_pull_folders[@]}"
-do
-  echo -e "Updating \"${f}\" ..." >> "${OUTPUT_FILE}" 
-  cd "$DRIVE_PATH/${f}" && if [ "$1" == "prompt" ]; 
-  then
-    drive pull -ignore-name-clashes >> "${OUTPUT_FILE}" 
-  else
-    drive pull -ignore-name-clashes -no-prompt --exclude-ops=delete,update >> "${OUTPUT_FILE}" 
-  fi
-  echo >> "${OUTPUT_FILE}" 
-done
-
-for f in "${auto_push_folders[@]}"
-do
-  echo -e "Updating \"${f}\" ..." >> "${OUTPUT_FILE}" 
-  cd "$DRIVE_PATH/${f}" && if [ "$1" == "prompt" ];
-  then
-    drive push -ignore-name-clashes >> "${OUTPUT_FILE}" 
-  else
-    drive push -ignore-name-clashes -no-prompt --exclude-ops=delete,update >> "${OUTPUT_FILE}" 
-  fi
-  echo >> "${OUTPUT_FILE}" 
-done
+updatedrive >> "${OUTPUT_FILE}"
