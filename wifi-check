@@ -1,0 +1,17 @@
+#!/bin/bash
+
+state() {
+	nmcli g | grep connected | awk '{print $1}'
+}
+
+connect() {
+	nmcli c up id TEData;
+}
+
+disconnect() {
+	nmcli d disconnect wlp8s0
+}
+
+if [ $(state) == "disconnected" ]; then
+	timeout 60s nmcli c up id TEData;
+fi
