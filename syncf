@@ -20,32 +20,32 @@ LOGS_FOLDER="${BACKUP_ROOT_DIR}/backup-logs"
 LOG_FILE="${LOGS_FOLDER}/log"
 
 if [ "$1" == "file" -o "$2" == "file" ]; then
-  OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-output"
-  ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-errors-log"
-  CLEAN_OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-clean-output"
-  CLEAN_ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-clean-error-log"
+	OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-output"
+	ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-errors-log"
+	CLEAN_OUTPUT_FILE="${LOGS_FOLDER}/${timestamp}-clean-output"
+	CLEAN_ERRORS_LOG_FILE="${LOGS_FOLDER}/${timestamp}-clean-error-log"
 fi
 
 backup_folder="${BACKUP_ROOT_DIR}/backup-${timestamp}"
 
 if [ ! -d "${LOGS_FOLDER}" ]; then
-  mkdir "${LOGS_FOLDER}";
+	mkdir "${LOGS_FOLDER}";
 fi
 
 if [ "$1" == "more" -o "$2" == "more" ]; then
-  EXCLUDES_FILE="${CONFIG_FOLDER}/excludes-more"
+	EXCLUDES_FILE="${CONFIG_FOLDER}/excludes-more"
 fi
 
 if [ ! -d "${DESTINATION_DIR}" ]; then
-  echo "Destination folder not found: ${DESTINATION_DIR}"
-  exit
+	echo "Destination folder not found: ${DESTINATION_DIR}"
+	exit
 fi
 
 while IFS='' read -r line || [ -n "$line" ]; do
-  if [ ! "${line:0:1}" = "#" ] && [ x"$line" != x ]; then
-    echo "Syncing \"$line\" ..." >> "${OUTPUT_FILE}"
-    rsync -av --delete --relative --log-file="${LOG_FILE}" --exclude-from="${EXCLUDES_FILE}" -b --backup-dir="${backup_folder}" "${line}" "${DESTINATION_DIR}" >> "${OUTPUT_FILE}" 2>> "${ERRORS_LOG_FILE}"
-  fi
+	if [ ! "${line:0:1}" = "#" ] && [ x"$line" != x ]; then
+		echo "Syncing \"$line\" ..." >> "${OUTPUT_FILE}"
+		rsync -av --delete --relative --log-file="${LOG_FILE}" --exclude-from="${EXCLUDES_FILE}" -b --backup-dir="${backup_folder}" "${line}" "${DESTINATION_DIR}" >> "${OUTPUT_FILE}" 2>> "${ERRORS_LOG_FILE}"
+	fi
 done < "${INCLUDES_FILE}"
 
 echo "finished syncing" >> "${OUTPUT_FILE}"
@@ -58,15 +58,15 @@ echo "cleaning backups..." >> "${CLEAN_OUTPUT_FILE}"
 
 shopt -s dotglob
 while IFS='' read -r line || [ -n "$line" ]; do
-  echo "Cleaning \"$line\"" >> "${CLEAN_OUTPUT_FILE}"
-  find "${BACKUP_ROOT_DIR}" | grep -F "$line" | xargs -d '\n' rm -rfv >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+	echo "Cleaning \"$line\"" >> "${CLEAN_OUTPUT_FILE}"
+	find "${BACKUP_ROOT_DIR}" | grep -F "$line" | xargs -d '\n' rm -rfv >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
 done < "${BACKUP_CLEAN_FILE}"
 
 # clean empty folders
 for f in "${BACKUP_ROOT_DIR}/backup-2"* ; do
 	if [ -d "$f" ]; then
-    echo "Cleaning backup folder \"$f\"" >> "${CLEAN_OUTPUT_FILE}"
-    rsync -a --progress --remove-source-files "${f}"/ "${BACKUP_ROOT_DIR}/backup" >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+		echo "Cleaning backup folder \"$f\"" >> "${CLEAN_OUTPUT_FILE}"
+		rsync -a --progress --remove-source-files "${f}"/ "${BACKUP_ROOT_DIR}/backup" >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
 	fi
 done
 

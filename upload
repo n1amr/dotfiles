@@ -6,12 +6,12 @@ if [ ! -d "$DESTINATION_DIRECTORY" ]; then mkdir -pv "$DESTINATION_DIRECTORY"; f
 
 for file in "$@";
 do
-  echo $file;
-  cp -r "$file" "$DESTINATION_DIRECTORY/";
-  cd "$DESTINATION_DIRECTORY";
-  drive push -ignore-name-clashes -no-prompt;
-  echo ------------------------------
-  echo '** 'Uploaded "$flle"
-  drive url "$file"
-  echo ------------------------------
+	echo $file;
+	cp -r "$file" "$DESTINATION_DIRECTORY/";
+	cd "$DESTINATION_DIRECTORY";
+	drive push -ignore-name-clashes -no-prompt;
+	echo ------------------------------
+	echo '** 'Uploaded "$flle"
+	drive url "$file"
+	echo ------------------------------
 done

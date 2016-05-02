@@ -9,9 +9,9 @@ mapfile -t courses < "${COURSES_LIST_FILE}"
 
 for course in "${courses[@]}"
 do
-  if echo "${course}" | grep -v '^\s*#'  | grep -q '\S';
-  then
-    echo "Downloading ${course} ..."
-    coursera-dl --resume "${course}" -n
-  fi
+	if echo "${course}" | grep -v '^\s*#'  | grep -q '\S';
+	then
+		echo "Downloading ${course} ..."
+		coursera-dl --resume "${course}" -n
+	fi
 done

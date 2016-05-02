@@ -4,26 +4,26 @@ help_text="
 Usage: screenshot-nicename [OPTION]... FILE...\n
 Renames screenshots format to a Windows compatible one.\n
 \n
-  -n                    dry run\n
-  -h, --help            show help\n
+	-n                    dry run\n
+	-h, --help            show help\n
 "
 dry="false"
 
 for file in "$@"
 do
-  if [ "$file" == "-n" ]; then
-    dry="true"
-    continue
-  elif [ "$file" == "-h" -o "$file" == "--help" ]; then
-    echo -e $help_text
-    exit
-  fi
-  new_file=$(echo $file | sed 's/\( from \|-\|\:\)/\ /g');
+	if [ "$file" == "-n" ]; then
+		dry="true"
+		continue
+	elif [ "$file" == "-h" -o "$file" == "--help" ]; then
+		echo -e $help_text
+		exit
+	fi
+	new_file=$(echo $file | sed 's/\( from \|-\|\:\)/\ /g');
 
-  if [ "$file" != "$new_file" ]; then
-    echo "$file" was renamed to "$new_file"
-    if [ $dry == "false" ]; then
-      mv -f "$file" "$new_file"
-    fi
-  fi
+	if [ "$file" != "$new_file" ]; then
+		echo "$file" was renamed to "$new_file"
+		if [ $dry == "false" ]; then
+			mv -f "$file" "$new_file"
+		fi
+	fi
 done
