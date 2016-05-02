@@ -45,9 +45,9 @@ do
 	echo -e "Updating \"${f}\" ..."
 	cd "$DRIVE_PATH/${f}" && if [ "$1" == "prompt" ];
 	then
-		drive push -ignore-name-clashes
+		drive push -ignore-name-clashes -no-clobber
 	else
-		drive push -ignore-name-clashes -no-prompt --exclude-ops=delete,update
+		drive push -ignore-name-clashes -no-clobber -no-prompt --exclude-ops=delete,update
 	fi
 	echo
 done
