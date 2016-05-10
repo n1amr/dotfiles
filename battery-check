@@ -1,7 +1,7 @@
 #!/bin/bash
 
 beep='paplay /usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
-battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
+battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ empty|percentage"'
 
 state() {
 	echo $(eval $battery | grep state | awk '{print $2}')
