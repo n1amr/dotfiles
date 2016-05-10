@@ -21,33 +21,31 @@ auto_pull_folders=(
 auto_push_folders=(
 	"ASU/Study/Second Term/"
 	"Personal"
+	"Backups/Internet/Twitter Favorites Archive"
 )
 
-# "Backups/Internet/Twitter Favorites Archive"
+echo -e "$(date)\n"
 
-echo "$(date)"
-echo
+# COMMONFLAGS='-ignore-name-clashes'
+COMMONFLAGS=''
+PUSHFLAGS='-no-clobber'
 
-for f in "${auto_pull_folders[@]}"
-do
+if [ "$1" != "prompt" ]; then
+	COMMONFLAGS="$COMMONFLAGS -no-prompt --exclude-ops=delete,update"
+fi
+
+for f in "${auto_pull_folders[@]}"; do
 	echo -e "Updating \"${f}\" ..."
-	cd "$DRIVE_PATH/${f}" && if [ "$1" == "prompt" ];
-	then
-		drive pull -ignore-name-clashes
-	else
-		drive pull -ignore-name-clashes -no-prompt --exclude-ops=delete,update
+	if [ -d "$DRIVE_PATH/${f}" ]; then
+		cd "$DRIVE_PATH/${f}";
+		drive pull $COMMONFLAGS
 	fi
-	echo
 done
 
-for f in "${auto_push_folders[@]}"
-do
+for f in "${auto_push_folders[@]}"; do
 	echo -e "Updating \"${f}\" ..."
-	cd "$DRIVE_PATH/${f}" && if [ "$1" == "prompt" ];
-	then
-		drive push -ignore-name-clashes -no-clobber
-	else
-		drive push -ignore-name-clashes -no-clobber -no-prompt --exclude-ops=delete,update
+	if [ -d "$DRIVE_PATH/${f}" ]; then
+		cd "$DRIVE_PATH/${f}";
+		drive push $COMMONFLAGS $PUSHFLAGS
 	fi
-	echo
 done
