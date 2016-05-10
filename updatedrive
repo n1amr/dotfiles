@@ -35,7 +35,7 @@ if [ "$1" != "prompt" ]; then
 fi
 
 for f in "${auto_pull_folders[@]}"; do
-	echo -e "Pulling \"${f}\" ..."
+	echo -e "\nPulling \"${f}\" ..."
 	if [ -d "$DRIVE_PATH/${f}" ]; then
 		cd "$DRIVE_PATH/${f}";
 		drive pull $COMMONFLAGS
@@ -43,7 +43,7 @@ for f in "${auto_pull_folders[@]}"; do
 done
 
 for f in "${auto_push_folders[@]}"; do
-	echo -e "Pushing \"${f}\" ..."
+	echo -e "\nPushing \"${f}\" ..."
 	if [ -d "$DRIVE_PATH/${f}" ]; then
 		cd "$DRIVE_PATH/${f}";
 		drive push $COMMONFLAGS $PUSHFLAGS
