@@ -1,41 +1,20 @@
 #!/bin/bash
 
-cd /mnt/Storage/Shared/vpnbook/
+VPN_HOME='/mnt/Storage/Shared/vpnbook/'
+credentials_file="$VPN_HOME/credentials/current"
+profile="$VPN_HOME/profiles/vpnbook-us1-udp25000.ovpn"
 
-update-credentials () {
-	echo "Trying to update vpn credentials";
+credentials_updater='/home/n1amr/.local/bin/updatevpn'
 
-	rm -f credentials.bak;
-	cp credentials credentials.bak;
-
-	if [ ! -d old-credentials ]; then mkdir old-credentials; fi
-	cp credentials "old-credentials/$(date)";
-
-	wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | nl | grep -Po '(?<=[12]).*' | grep -Po '\S*\w+\S*' > credentials;
+connect () {
+	sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";
 }
 
-connect () { sudo openvpn --config profiles/vpnbook-us1-udp25000.ovpn --auth-user-pass credentials; }
+connect && successful=1
 
-###################
-
-
-echo "Update credentials? (y/n)";
-read response;
-
-if [ $response == "y" ] ; then update-credentials; fi
-if (! connect) ; then
-	if [ $response == "y" ] ; then
-		rm -f credentials;
-		cp credentials.bak credentials;
-	fi
+if [ "$successful" != 1 ]; then
+	echo "Connection failed!!!"
+	echo -n "Update credentials? [y/n]: "
+	read response;
+	if [ x"$response" == x"y" ]; then "${credentials_updater}"; connect; fi
 fi
-
-# if (! connect) ; then
-#   echo "Failed to connect update credentials? (Y/N)";
-#   read response;
-#   if [ $response == "Y" ] ; then update-credentials; fi
-# fi
-
-#sudo openvpn --config vpnbook-de233-udp25000.ovpn --auth-user-pass credentials
-
-#cat vpnbook | grep -P '(?<=(Password|Username)\: <strong>)\w+(?=<\/)' -o | nl | grep -Po '(?<=[12]\s(?=\S)).*'
