@@ -1,8 +1,8 @@
 #!/bin/bash
 
-VPN_HOME='/mnt/Storage/Shared/vpnbook/'
+VPN_HOME='/mnt/Storage/Shared/vpnbook'
 credentials_file="$VPN_HOME/credentials/current"
-profile="$VPN_HOME/profiles/vpnbook-us1-udp25000.ovpn"
+profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
 credentials_updater='/home/n1amr/.local/bin/updatevpn'
 
