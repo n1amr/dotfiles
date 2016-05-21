@@ -1,0 +1,35 @@
+#!/bin/bash
+
+VPN_HOME='/mnt/Storage/Shared/vpnbook/'
+
+vpnconnections=(ca1.vpnbook.com\
+	de233.vpnbook.com\
+	euro214.vpnbook.com\
+	euro217.vpnbook.com\
+	us1.vpnbook.com\
+	us2.vpnbook.com\
+)
+
+cd "$VPN_HOME"
+
+echo -e "Trying to update vpn credentials...\n"
+
+wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | nl | grep -Po '(?<=[12]).*' | grep -Po '\S*\w+\S*' > credentials.tmp
+
+echo New credenatials:
+cat credentials.tmp
+echo -en "\nSave? [y/n] "
+
+read response
+if [ x"$response" != x"y" ]; then exit; fi
+
+rm -f credentials.bak &&
+mv credentials credentials.bak &&
+mv credentials.tmp credentials &&
+echo "Saved to $(realpath credentials)"
+
+new_password=$(cat credentials | tail -1)
+for v in "${vpnconnections[@]}"; do
+	nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
+	echo "Updated $v successfully"
+done
