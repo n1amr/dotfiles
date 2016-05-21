@@ -12,22 +12,45 @@ vpnconnections=(ca1.vpnbook.com\
 
 cd "$VPN_HOME"
 
-echo -e "Trying to update vpn credentials...\n"
+# Initialiaze options
+no_prompt="false"
 
-wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | nl | grep -Po '(?<=[12]).*' | grep -Po '\S*\w+\S*' > credentials.tmp
+# Read options
+for i in "$@"; do
+	case $i in
+	--no-prompt)
+		no_prompt="true"
+	;;
+	esac
+done
 
-echo New credenatials:
-cat credentials.tmp
-echo -en "\nSave? [y/n] "
+echo -e "Trying to update vpn credentials..."
+wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | nl | grep -Po '(?<=[12]).*' | grep -Po '\S*\w+\S*' > credentials.tmp && successful='true'
+if [ x"$successful" != x'true' ]; then
+	echo Cannot retrieve data!
+	rm -f credentials.tmp
+	exit
+fi
 
-read response
-if [ x"$response" != x"y" ]; then exit; fi
+echo -e "\nNew credenatials:" &&
+cat credentials.tmp &&
+echo
 
-rm -f credentials.bak &&
+# Prompt before modifying
+if [ x"$no_prompt" == x"false" ]; then
+	echo -en "Save? [y/n] " &&
+	read response
+	if [ x"$response" != x"y" ]; then exit; fi
+fi
+
+# Update history
+if [ ! -d old-credentials ]; then mkdir old-credentials; fi
+mv credentials.bak "old-credentials/$(date)" &&
 mv credentials credentials.bak &&
 mv credentials.tmp credentials &&
 echo "Saved to $(realpath credentials)"
 
+# Update credentials in vpn connections
 new_password=$(cat credentials | tail -1)
 for v in "${vpnconnections[@]}"; do
 	nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
