@@ -10,7 +10,9 @@ vpnconnections=(ca1.vpnbook.com\
 	us2.vpnbook.com\
 )
 
-cd "$VPN_HOME"
+mkdir -p "$VPN_HOME"/credentials
+cd "$VPN_HOME"/credentials
+credentials_filename='current'
 
 # Initialiaze options
 no_prompt="false"
@@ -44,14 +46,13 @@ if [ x"$no_prompt" == x"false" ]; then
 fi
 
 # Update history
-if [ ! -d old-credentials ]; then mkdir old-credentials; fi
-mv credentials.bak "old-credentials/$(date)" &&
-mv credentials credentials.bak &&
-mv credentials.tmp credentials &&
-echo "Saved to $(realpath credentials)"
+if [ ! -d backup ]; then mkdir backup; fi
+if [ -f "$credentials_filename" ];then mv "$credentials_filename" "backup/$(date +'%F-%T')"; fi
+mv credentials.tmp "$credentials_filename"
+echo "Saved to $(realpath \"$credentials_filename\")"
 
 # Update credentials in vpn connections
-new_password=$(cat credentials | tail -1)
+new_password=$(cat "$credentials_filename" | tail -1)
 for v in "${vpnconnections[@]}"; do
 	nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
 	echo "Updated $v successfully"

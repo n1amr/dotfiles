@@ -21,7 +21,7 @@ auto_pull_folders=(
 auto_push_folders=(
 	"ASU/Study/Second Term/"
 	"Personal"
-	"Backups/Internet/Twitter Favorites Archive"
+	# "Backups/Internet/Twitter Favorites Archive"
 )
 
 echo -e "$(date)\n"
