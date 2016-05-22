@@ -26,14 +26,39 @@ auto_push_folders=(
 
 echo -e "$(date)\n"
 
-# COMMONFLAGS='-ignore-name-clashes'
+# Options init
+no_prompt=false
+exclude=true
+
+# Set Options
+for i in "$@"; do
+	case "$i" in
+		-p|--no-prompt)
+			no_prompt=true
+		;;
+		-f|--no-exclude)
+			exclude=false
+		;;
+		*)
+			echo Error: Unknown argument "$i"
+			exit 1
+		;;
+	esac
+done
+
+# Set flags
 COMMONFLAGS=''
 PUSHFLAGS='-no-clobber'
 
-if [ "$1" != "prompt" ]; then
-	COMMONFLAGS="$COMMONFLAGS -no-prompt --exclude-ops=delete,update"
+if [ "$no_prompt" == "true" ]; then
+	COMMONFLAGS="$COMMONFLAGS -no-prompt"
 fi
 
+if [ "$exclude" == "true" ]; then
+	COMMONFLAGS="$COMMONFLAGS -exclude-ops=delete,update"
+fi
+
+# Pull all
 for f in "${auto_pull_folders[@]}"; do
 	echo -e "\nPulling \"${f}\" ..."
 	if [ -d "$DRIVE_PATH/${f}" ]; then
@@ -42,6 +67,7 @@ for f in "${auto_pull_folders[@]}"; do
 	fi
 done
 
+# Push all
 for f in "${auto_push_folders[@]}"; do
 	echo -e "\nPushing \"${f}\" ..."
 	if [ -d "$DRIVE_PATH/${f}" ]; then
@@ -49,3 +75,5 @@ for f in "${auto_push_folders[@]}"; do
 		drive push $COMMONFLAGS $PUSHFLAGS
 	fi
 done
+
+exit 0
