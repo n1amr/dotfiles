@@ -31,23 +31,28 @@ no_prompt=false
 exclude=true
 
 # Set Options
-for i in "$@"; do
-	case "$i" in
+while [[ $# > 0 ]]; do
+	case "$1" in
 		-p|--no-prompt)
 			no_prompt=true
 		;;
 		-f|--no-exclude)
 			exclude=false
 		;;
+		-o|--drive-options)
+			drive_options="$2"
+			shift;
+		;;
 		*)
-			echo Error: Unknown argument "$i"
+			echo Error: Unknown argument \"$1\"
 			exit 1
 		;;
 	esac
+	shift
 done
 
 # Set flags
-COMMONFLAGS=''
+COMMONFLAGS="$drive_options"
 PUSHFLAGS='-no-clobber'
 
 if [ "$no_prompt" == "true" ]; then
