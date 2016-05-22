@@ -39,9 +39,8 @@ while [[ $# > 0 ]]; do
 		-f|--no-exclude)
 			exclude=false
 		;;
-		-o|--drive-options)
-			drive_options="$2"
-			shift;
+		--drive-options=*)
+			drive_options="${1#*=}"
 		;;
 		*)
 			echo Error: Unknown argument \"$1\"
