@@ -35,41 +35,25 @@ export PATH="$N1AMR_HOME/.local/bin:$PATH"
 ##################################################
 
 print_welcome () {
-	indent='\e[1;34m'
-	cols=$(( ($COLUMNS - 60) / 2 ))
-	if [[ $(($cols >= 0)) == 1 ]]; then
-		while [[ $(($cols >= 0)) == 1 ]]; do
-			indent=" $indent"
-			cols=$(($cols - 1))
-		done
-
-		echo -e "${indent}                 _                                 _ \e[m";
-		echo -e "${indent}__      __  ___ | |  ___   ___   _ __ ___    ___  | |\e[m";
-		echo -e "${indent}\ \ /\ / / / _ \| | / __| / _ \ | '_ \` _ \  / _ \ | |\e[m";
-		echo -e "${indent} \ V  V / |  __/| || (__ | (_) || | | | | ||  __/ |_|\e[m";
-		echo -e "${indent}  \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___| (_)\e[m";
-		echo -e "${indent}                                                     \e[m";
+	if [[ $(($COLUMNS >= 108)) == 1 ]]; then
+		echo -e "\e[1;31m        _                    _                _    \e[1;34m                  _                                 _ \e[m";
+		echo -e "\e[1;31m _   _ | |__   _   _  _ __  | |_  _   _  _   | |   \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___  | |\e[m";
+		echo -e "\e[1;31m| | | || '_ \ | | | || '_ \ | __|| | | |(_) / __)  \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _ \  / _ \ | |\e[m";
+		echo -e "\e[1;31m| |_| || |_) || |_| || | | || |_ | |_| | _  \__ \  \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/ |_|\e[m";
+		echo -e "\e[1;31m \__,_||_.__/  \__,_||_| |_| \__| \__,_|(_) (   /  \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___| (_)\e[m";
+		echo -e "\e[1;31m                                             |_|   \e[1;34m                                                      \e[m";
 	fi
 }
 
 print_upgradable_pkgs() {
 	pkgs=($(apt list --upgradable 2> /dev/null | cut -d '/' -f 1))
 	if [[ ${#pkgs[@]} > 1 ]]; then
-		echo -n "Upgradable Packages: "
+		echo -en '\e[0;32mUpgradable Packages: \e[m'
 		for pkg_name in ${pkgs[@]:1}; do
 			echo -n "$pkg_name "
 		done
 		echo
 	fi
-}
-
-print_name () {
-	echo -e "\e[1;31m        _                    _                _   \e[m";
-	echo -e "\e[1;31m _   _ | |__   _   _  _ __  | |_  _   _  _   | |  \e[m";
-	echo -e "\e[1;31m| | | || '_ \ | | | || '_ \ | __|| | | |(_) / __) \e[m";
-	echo -e "\e[1;31m| |_| || |_) || |_| || | | || |_ | |_| | _  \__ \ \e[m";
-	echo -e "\e[1;31m \__,_||_.__/  \__,_||_| |_| \__| \__,_|(_) (   / \e[m";
-	echo -e "\e[1;31m                                             |_|  \e[m";
 }
 
 backup () {
@@ -180,4 +164,3 @@ shopt -s globstar
 
 # terminal_rezise;
 print_welcome
-print_upgradable_pkgs
