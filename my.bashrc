@@ -23,7 +23,7 @@ export VISUAL="$EDITOR"
 
 export PATH="/usr/bin/:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="$N1AMR_$HOME/.rbenv/bin:$PATH"
+export PATH="$N1AMR_HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PATH="$N1AMR_HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 export GOPATH="$N1AMR_HOME/.gopath"
@@ -35,13 +35,13 @@ export PATH="$N1AMR_HOME/.local/bin:$PATH"
 ##################################################
 
 print_welcome () {
-	if [[ $(( $COLUMNS > 114 )) == 1 ]]; then
-		echo -e "\e[1;31m          _                                   _     \e[1;34m                    _                                     _  \e[m";
-		echo -e "\e[1;31m  _ __   / |   __ _   _ __ ___    _ __   _   | |    \e[1;34m __      __   ___  | |   ___    ___    _ __ ___     ___  | | \e[m";
-		echo -e "\e[1;31m | '_ \  | |  / _\` | | '_ \` _ \  | '__| (_) / __)   \e[1;34m \ \ /\ / /  / _ \ | |  / __|  / _ \  | '_ \` _ \   / _ \ | | \e[m";
-		echo -e "\e[1;31m | | | | | | | (_| | | | | | | | | |     _  \__ \   \e[1;34m  \ V  V /  |  __/ | | | (__  | (_) | | | | | | | |  __/ |_| \e[m";
-		echo -e "\e[1;31m |_| |_| |_|  \__,_| |_| |_| |_| |_|    (_) (   /   \e[1;34m   \_/\_/    \___| |_|  \___|  \___/  |_| |_| |_|  \___| (_) \e[m";
-		echo -e "\e[1;31m                                             |_|    \e[1;34m                                                             \e[m";
+	if [[ $(( $COLUMNS > 98 )) == 1 ]]; then
+		echo -e "\e[1;31m         _                               _   \e[1;34m                  _                                _  \e[m";
+		echo -e "\e[1;31m  _ __  / |  __ _  _ __ ___   _ __  _   | |  \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___ | | \e[m";
+		echo -e "\e[1;31m | '_  \| | / _\` || '_ \` _  \| '__|(_) / __) \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _  \ / _ \| | \e[m";
+		echo -e "\e[1;31m | | | || || (_| || | | | | || |    _  \__ \ \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/|_| \e[m";
+		echo -e "\e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m";
+		echo -e "\e[1;31m                                        |_|  \e[1;34m                                                      \e[m";
 	fi
 }
 
@@ -136,7 +136,6 @@ reset_ps1(){
 }
 reset_ps1
 
-# export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_branch) \[\e[1;33m\]$(ps1_com)\n \[\e[0;32m\]$ \[\e[m\]'
 export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_branch) \[\e[1;33m\]$(ps1_com)\n \[\e[0;32m\]$ \[\e[m\]'
 
 # C_BLACK='\e[0;30m'
