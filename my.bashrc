@@ -147,6 +147,8 @@ reset_ps1() {
 	local C_DARK_GREEN='\e[2;32m'
 	local C_RESET='\e[m'
 	export PS1="${C_RESET}${debian_chroot:+($debian_chroot)}${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_eval)\n ${C_GREEN}\$ ${C_RESET}"
+
+	ps1_reset
 }
 
 # PS1 extention
