@@ -17,6 +17,8 @@ export GDRIVE="$D/GoogleDrive"
 export EDITOR='vim'
 export VISUAL="$EDITOR"
 
+export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
+
 ##################################################
 # PATH
 ##################################################
@@ -129,14 +131,7 @@ alias wget='wget -c'
 # PS1 create
 ##################################################
 
-reset_ps1(){
-	ps1_com(){
-		echo -e " ";
-	}
-}
-reset_ps1
-
-export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_branch) \[\e[1;33m\]$(ps1_com)\n \[\e[0;32m\]$ \[\e[m\]'
+export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_branch) \[\e[1;33m\]$(ps1_eval)\n \[\e[0;32m\]$ \[\e[m\]'
 
 # C_BLACK='\e[0;30m'
 # C_RED='\e[0;31m'
@@ -153,6 +148,23 @@ export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_bran
 # C_DARK_GREEN='\e[2;32m'
 # C_RESET='\e[m'
 # export PS1="${C_RESET}${debian_chroot:+($debian_chroot)}${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_com)\n ${C_GREEN}\$${C_RESET} "
+
+# PS1 extention
+ps1_eval(){ [[ $(type -t ps1_command) ]] && echo -e "[$(ps1_command)]"; }
+
+ps1_reset(){ unset ps1_command; }
+
+ps1_time() {
+	ps1_command() { date +%T; }
+}
+
+ps1_words() {
+	ps1_command() { shuf '/mnt/Storage/Documents/Reader/Languages/English/English Words/all-words.txt' | head -1; }
+}
+
+ps1_all_words() {
+	ps1_command() { shuf /usr/share/dict/words | head -1; }
+}
 
 ##################################################
 # Other
