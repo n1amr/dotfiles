@@ -131,23 +131,23 @@ alias wget='wget -c'
 # PS1 create
 ##################################################
 
-export PS1='\[\e[1;31m\]\u@\H\[\e[m\]:\[\e[1;34m\]\w\[\e[1;35m\]$(__git_ps1_branch) \[\e[1;33m\]$(ps1_eval)\n \[\e[0;32m\]$ \[\e[m\]'
-
-# C_BLACK='\e[0;30m'
-# C_RED='\e[0;31m'
-# C_GREEN='\e[0;32m'
-# C_YELLOW='\e[0;33m'
-# C_BLUE='\e[0;34m'
-# C_PURPLE='\e[0;35m'
-# C_CYAN='\e[0;36m'
-# C_WHITE='\e[0;37m'
-# C_BOLD_RED='\e[1;31m'
-# C_BOLD_YELLOW='\e[1;33m'
-# C_BOLD_BLUE='\e[1;34m'
-# C_BOLD_PURPLE='\e[1;35m'
-# C_DARK_GREEN='\e[2;32m'
-# C_RESET='\e[m'
-# export PS1="${C_RESET}${debian_chroot:+($debian_chroot)}${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_com)\n ${C_GREEN}\$${C_RESET} "
+reset_ps1() {
+	# local C_BLACK='\e[0;30m'
+	# local C_RED='\e[0;31m'
+	local C_GREEN='\e[0;32m'
+	# local C_YELLOW='\e[0;33m'
+	# local C_BLUE='\e[0;34m'
+	# local C_PURPLE='\e[0;35m'
+	# local C_CYAN='\e[0;36m'
+	# local C_WHITE='\e[0;37m'
+	local C_BOLD_RED='\e[1;31m'
+	local C_BOLD_YELLOW='\e[1;33m'
+	local C_BOLD_BLUE='\e[1;34m'
+	local C_BOLD_PURPLE='\e[1;35m'
+	local C_DARK_GREEN='\e[2;32m'
+	local C_RESET='\e[m'
+	export PS1="${C_RESET}${debian_chroot:+($debian_chroot)}${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_eval)\n ${C_GREEN}\$ ${C_RESET}"
+}
 
 # PS1 extention
 ps1_eval(){ [[ $(type -t ps1_command) ]] && echo -e "[$(ps1_command)]"; }
@@ -166,6 +166,10 @@ ps1_all_words() {
 	ps1_command() { shuf /usr/share/dict/words | head -1; }
 }
 
+ps1_memory() {
+	ps1_command() { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
+}
+
 ##################################################
 # Other
 ##################################################
@@ -175,3 +179,4 @@ shopt -s globstar
 
 # terminal_rezise;
 print_welcome
+reset_ps1
