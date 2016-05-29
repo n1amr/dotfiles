@@ -90,6 +90,7 @@ __git_ps1_branch () {
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
 alias beep='paplay /home/n1amr/.local/Schedule.ogg'
 alias brc='subl ~/.bashrc'
+alias c='clr'
 alias clock='tty-clock -scn -C 2'
 alias clr='clear'
 alias cp='cp -i'
@@ -123,6 +124,7 @@ alias sshot='screenshot-nicename /mnt/Storage/Pictures/Screenshots/*from*'
 alias tf='tail -f'
 alias tm='nohup terminator & exit'
 alias tr='trash -v'
+alias u='cd ..'
 alias v='vim'
 alias vi='vim'
 alias wget='wget -c'
@@ -146,7 +148,7 @@ reset_ps1() {
 	local C_BOLD_PURPLE='\[\e[1;35m\]'
 	local C_DARK_GREEN='\[\e[2;32m\]'
 	local C_RESET='\[\e[m\]'
-	export PS1="${C_RESET}${debian_chroot:+($debian_chroot)}${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_eval)\n ${C_GREEN}\$ ${C_RESET}"
+	export PS1="${C_RESET}${debian_chroot:+($debian_chroot) }${C_BOLD_RED}\u@\H${C_RESET}:${C_BOLD_BLUE}\w${C_BOLD_PURPLE}\$(__git_ps1_branch) ${C_BOLD_YELLOW}\$(ps1_eval)\n ${C_GREEN}\$ ${C_RESET}"
 
 	ps1_reset
 }
