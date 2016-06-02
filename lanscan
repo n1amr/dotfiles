@@ -26,7 +26,7 @@ echo2 () {
 	fi
 }
 
-[ -n "$verbose" ] && echo "Scanning IPs $base.* ..."
+[ -n "$verbose" ] && echo "Scanning IPs $pattern ..."
 
 unset ip mac
 
