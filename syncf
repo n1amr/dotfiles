@@ -57,17 +57,17 @@ echo "finished syncing" >> "${OUTPUT_FILE}"
 echo "cleaning backups..." >> "${CLEAN_OUTPUT_FILE}"
 
 shopt -s dotglob
-while IFS='' read -r line || [ -n "$line" ]; do
-	echo "Cleaning \"$line\"" >> "${CLEAN_OUTPUT_FILE}"
-	find "${BACKUP_ROOT_DIR}" | grep -F "$line" | xargs -d '\n' rm -rfv >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
-done < "${BACKUP_CLEAN_FILE}"
 
-# clean empty folders
 for f in "${BACKUP_ROOT_DIR}/backup-2"* ; do
 	if [ -d "$f" ]; then
 		echo "Cleaning backup folder \"$f\"" >> "${CLEAN_OUTPUT_FILE}"
+
+		while IFS='' read -r line || [ -n "$line" ]; do
+			find "${f}" | grep -F "$line" | xargs -d '\n' rm -rfv >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+		done < "${BACKUP_CLEAN_FILE}"
+
 		rsync -a --progress --remove-source-files --ignore-existing "${f}"/ "${BACKUP_ROOT_DIR}/backup" >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
 	fi
-done
 
-find "${BACKUP_ROOT_DIR}" -type d -empty -delete >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+	find "${f}" -type d -empty -delete >> "${CLEAN_OUTPUT_FILE}" 2>> "${CLEAN_ERRORS_LOG_FILE}"
+done

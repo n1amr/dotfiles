@@ -12,15 +12,14 @@ last_month_folder=$(date --date="-1 month" +'%Y/%m')
 
 auto_pull_folders=(
 	"ASU/CSE 2017  2nd term 3rd year"
-	"ASU/Lab/CSE 351 Electrical Testing -2"
 	"Google Photos/${current_month_folder}"
 	"Google Photos/${last_month_folder}"
 	"IFTTT"
 )
 
 auto_push_folders=(
-	#"ASU/Study/Second Term/"
-	#"Personal"
+	"ASU/Study/Second Term/"
+	"Personal"
 	# "Backups/Internet/Twitter Favorites Archive"
 )
 
