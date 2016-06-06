@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd /mnt/Storage/Shared/youtube
+touch youtube-download-list
+youtube-dl -a youtube-download-list -f 18 && cat youtube-download-list > log && rm youtube-download-list -rf
