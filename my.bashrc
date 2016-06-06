@@ -115,7 +115,7 @@ alias pg='grep -P --color=auto'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias pss='ps -e lx'
 alias py='python -c'
-alias qcommit=git add -A && git commit -m "$(date)"
+alias qcommit='git add -A && git commit -m "$(date)"'
 alias rb='ruby -e'
 alias rbox='rhythmbox-client'
 alias rm='rm -i'
