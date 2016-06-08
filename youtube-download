@@ -1,5 +1,24 @@
 #!/bin/bash
 
-cd /mnt/Storage/Shared/youtube
-touch youtube-download-list
-youtube-dl -a youtube-download-list -f 18 && cat youtube-download-list > log && rm youtube-download-list -rf
+YOUTUBE_DOWNLADER='/usr/local/bin/youtube-dl'
+YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
+URLS_FILE="$YOUTUBE_HOME/youtube-download-list"
+HISTORY_FILE="$YOUTUBE_HOME/history"
+ARGS='-f 18'
+
+download=true
+
+while [[ $# > 0 ]]; do
+	echo "$1" >> "$URLS_FILE"
+	echo "Added $1"
+	download=false
+	shift
+done
+
+if $download ; then
+	cd "$YOUTUBE_HOME"
+	touch "$URLS_FILE"
+	"$YOUTUBE_DOWNLADER" -a "$URLS_FILE" "$ARGS" &&
+		cat "$URLS_FILE" >> "$HISTORY_FILE" &&
+		echo '' > "$URLS_FILE"
+fi
