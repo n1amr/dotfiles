@@ -2,9 +2,10 @@
 
 YOUTUBE_DOWNLADER='/usr/local/bin/youtube-dl'
 YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
-URLS_FILE="$YOUTUBE_HOME/youtube-download-list"
-HISTORY_FILE="$YOUTUBE_HOME/history"
-ARGS='-f 18'
+URLS_FILE="$YOUTUBE_HOME/download-list"
+HISTORY_FILE="$YOUTUBE_HOME/download-history"
+FAILED_FILE="$YOUTUBE_HOME/download-failed"
+COMMON_ARGS='-f 18'
 
 download=true
 
@@ -18,7 +19,15 @@ done
 if $download ; then
 	cd "$YOUTUBE_HOME"
 	touch "$URLS_FILE"
-	"$YOUTUBE_DOWNLADER" -a "$URLS_FILE" "$ARGS" &&
-		cat "$URLS_FILE" >> "$HISTORY_FILE" &&
-		echo '' > "$URLS_FILE"
+	while IFS='' read line ; do
+		if [[ -n $line ]]; then
+			command=`echo "$YOUTUBE_DOWNLADER" "$COMMON_ARGS" "$line"`
+			echo -e "\e[1;32m$command\e[m"
+			eval "$command" &&
+				echo "$line" >> "$HISTORY_FILE" ||
+				echo "$line" >> "$FAILED_FILE"
+			echo
+		fi
+	done < "$URLS_FILE" &&
+	> "$URLS_FILE"
 fi
