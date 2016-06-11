@@ -5,7 +5,7 @@ YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
 URLS_FILE="$YOUTUBE_HOME/download-list"
 HISTORY_FILE="$YOUTUBE_HOME/download-history"
 FAILED_FILE="$YOUTUBE_HOME/download-failed"
-COMMON_ARGS='-f 18'
+COMMON_ARGS='-f 18 --all-subs'
 
 download=true
 

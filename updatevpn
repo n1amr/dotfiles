@@ -27,7 +27,15 @@ for i in "$@"; do
 done
 
 echo -e "Trying to update vpn credentials..."
-wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | nl | grep -Po '(?<=[12]).*' | grep -Po '\S*\w+\S*' > credentials.tmp && successful='true'
+
+echo "Fetching from http://www.vpnbook.com/freevpn"
+cred=$(wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | head -2)
+if [[ -z "$cred" ]]; then
+	echo "Fetching from https://twitter.com/vpnbook"
+	cred=$(/home/n1amr/.rbenv/shims/t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
+fi
+
+[[ -n "$cred" ]] && echo "$cred" > credentials.tmp && successful='true'
 if [ x"$successful" != x'true' ]; then
 	echo Cannot retrieve data!
 	rm -f credentials.tmp
