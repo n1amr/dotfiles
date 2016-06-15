@@ -163,7 +163,7 @@ reset_ps1() {
 # PS1 extention
 ps1_eval(){ [[ $(whence -f ps1_command) ]] && echo -e "[$(ps1_command)]"; }
 
-ps1_reset(){ unset ps1_command; }
+ps1_reset(){ [[ $(whence -f ps1_command) ]] && unset -f ps1_command; }
 
 ps1_time() {
 	ps1_command() { date +%T; }
