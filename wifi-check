@@ -5,5 +5,5 @@ state() {
 }
 
 if [ $(state) == "disconnected" ]; then
-	timeout 60s nmcli connection up id TEData;
+	timeout 60s nmcli connection up id alaa;
 fi
