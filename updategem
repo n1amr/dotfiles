@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export PATH="/home/n1amr/.rbenv/bin:$PATH"
+eval "$( [[ $(type -t rbenv) ]] && rbenv init -)"
+
+VERSIONS=(system 2.3.1)
+for v in "${VERSIONS[@]}"; do
+	rbenv shell "$v"
+	echo -e "\e[0;32mUpdating ruby $v packages\e[m"
+	if [[ "$v" == system ]]; then
+		sudo gem update
+	else
+		gem update
+	fi
+	gem list
+done

@@ -1,4 +1,15 @@
 #!/bin/bash
 
-pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | sort | xargs -n1 sudo -H pip install -U
-# pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 sudo -H pip install -U
+export PATH="/home/n1amr/.pyenv/bin:$PATH"
+eval "$( [[ $(type -t pyenv) ]] && pyenv init -)"
+
+VERSIONS=(system 3.5.1 2.7.11)
+for v in "${VERSIONS[@]}"; do
+	pyenv shell "$v"
+	echo -e "\e[0;32mUpdating python $v packages\e[m"
+	if [[ "$v" == system ]]; then
+		pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | sort | xargs -n1 sudo -H pip install -U
+	else
+		pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | sort | xargs -n1 pip install -U
+	fi
+done
