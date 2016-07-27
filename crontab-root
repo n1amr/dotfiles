@@ -6,4 +6,4 @@
 * * * * * /home/n1amr/.local/bin/battery-check &
 00 4 * * * /home/n1amr/.local/bin/syncf file more &
 00 5 * * * apt-get update && apt-get dist-upgrade -dy &
-
+0 * * * * #/home/n1amr/.local/bin/mac-check &
