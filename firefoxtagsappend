@@ -7,14 +7,9 @@ def append_tags(line):
 	search_for = 'TAGS="'
 	parts = line.split(search_for)
 	tags_part = parts[1]
-	tags_start_index = tags_part.find('"')
 
-	closing_tag_index = -1
-	while True:
-		tmp = tags_part.find('<', closing_tag_index + 1)
-		if tmp < 0:
-			break
-		closing_tag_index = tmp
+	tags_start_index = tags_part.find('"')
+	closing_tag_index = tags_part.rfind('<')
 
 	tags = tags_part[:tags_start_index].split(',')
 
