@@ -12,21 +12,23 @@ def main(argv):
 	else:
 		url = argv[1]
 
-	url = 'https://www.hackerrank.com/challenges/fibonacci-modified'
-	problem_name = url.split('/')[-1]
+	problem_name = url.split('?')[0].split('/')[-1]
 	class_name = problem_name.split('-')
 	class_name = ''.join(i.capitalize() for i in class_name)
 	if any(class_name.startswith(i) for i in '0123456789'):
 		class_name = '_' + class_name
+	class_name = ''.join((c if (c.isalpha() or c.isdigit()) else '_') for c in class_name )
 	input_file = open(PROJECT_HOME + '/Contests/Templates/Codeforces.java')
 	file = ''.join(input_file.readlines())
 	input_file.close
 
 	file = file.replace('Codeforces', class_name)
-	output_file = open(PROJECT_HOME + '/src/{0}.java'.format(class_name), 'w')
+	output_filename = PROJECT_HOME + '/src/{0}.java'.format(class_name)
+	output_file = open(output_filename, 'w')
 	output_file.write(file)
 	output_file.flush()
 	output_file.close()
+	print('Created file: ' + output_filename)
 	
 	
 if __name__ == '__main__':
