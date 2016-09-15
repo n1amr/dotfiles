@@ -15,7 +15,7 @@ def main(argv):
 	problem_name = url.split('?')[0].split('/')[-1]
 	class_name = problem_name.split('-')
 	class_name = ''.join(i.capitalize() for i in class_name)
-	if any(class_name.startswith(i) for i in '0123456789'):
+	if class_name[0].isdigit():
 		class_name = '_' + class_name
 	class_name = ''.join((c if (c.isalpha() or c.isdigit()) else '_') for c in class_name )
 	input_file = open(PROJECT_HOME + '/Contests/Templates/Codeforces.java')
