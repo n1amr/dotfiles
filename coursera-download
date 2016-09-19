@@ -7,11 +7,9 @@ cd "${COURSES_FOLDER}"
 
 mapfile -t courses < "${COURSES_LIST_FILE}"
 
-for course in "${courses[@]}"
-do
-	if echo "${course}" | grep -v '^\s*#'  | grep -q '\S';
-	then
-		echo "Downloading ${course} ..."
-		coursera-dl --resume "${course}" -n
+for course in "${courses[@]}"; do
+	if echo "${course}" | grep -v '^\s*#' | grep -q '\S'; then
+		echo "Downloading ${course} into ${COURSES_FOLDER}/${course}"
+		coursera-dl --resume --path "${COURSES_FOLDER}" -sl en "${course}" -n
 	fi
 done
