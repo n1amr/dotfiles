@@ -7,7 +7,7 @@ PROJECT_HOME = '/mnt/Storage/Lab/Java/javaProject'
 
 def main(argv):
 	if len(argv) < 2:
-		print('Enter url:', end='')
+		print('Enter url: ', end='')
 		url = input()
 	else:
 		url = argv[1]
@@ -18,11 +18,11 @@ def main(argv):
 	if class_name[0].isdigit():
 		class_name = '_' + class_name
 	class_name = ''.join((c if (c.isalpha() or c.isdigit()) else '_') for c in class_name )
-	input_file = open(PROJECT_HOME + '/Contests/Templates/Codeforces.java')
+	input_file = open(PROJECT_HOME + '/Contests/Template.java')
 	file = ''.join(input_file.readlines())
 	input_file.close
 
-	file = file.replace('Codeforces', class_name)
+	file = file.replace('Template', class_name)
 	output_filename = PROJECT_HOME + '/src/{0}.java'.format(class_name)
 	output_file = open(output_filename, 'w')
 	output_file.write(file)

@@ -6,6 +6,6 @@ num="$(echo $url | grep -Po '/\d+/' | cut -d '/' -f 2)"
 name=$(wget "$url" -qO - | grep -P '<div class="problem-statement"><div class="header"><div class="title">(.*?)</div>' -o | cut -d '>' -f 4 | cut -d '<' -f 1 | /usr/bin/tr -cd '[[:alnum:]] \n' | sed 's/\ /_/g')
 classname="_${num}_${name}"
 
-cat "$PROJECT_HOME/Contests/Templates/Codeforces.java" | 
-	sed "s/Codeforces/${classname}/g" > "$PROJECT_HOME/src/${classname}.java" &&
+cat "$PROJECT_HOME/Contests/Template.java" | 
+	sed "s/Template/${classname}/g" > "$PROJECT_HOME/src/${classname}.java" &&
 	echo "Created $PROJECT_HOME/src/${classname}.java"
