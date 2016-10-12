@@ -29,7 +29,7 @@ def main(argv):
 	output_file.flush()
 	output_file.close()
 	print('Created file: ' + output_filename)
-	
-	
+
+
 if __name__ == '__main__':
 	main(sys.argv)

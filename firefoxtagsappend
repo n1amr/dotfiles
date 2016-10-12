@@ -4,29 +4,29 @@ import sys
 
 def append_tags(line: str) -> str:
     """Appends tag list to title
-    
+
     :param line:
     :return str
     """
     search_for = 'TAGS="'
     parts = line.split(search_for)
     tags_part = parts[1]
-    
+
     tags_start_index = tags_part.find('"')
     closing_tag_index = tags_part.rfind('<')
-    
+
     tags = tags_part[:tags_start_index].split(',')
-    
+
     parts[1] = tags_part[:closing_tag_index] + ' [' + ', '.join(tags) + ']' + tags_part[closing_tag_index:]
     return search_for.join(parts)
 
 
 def convert_file(input_filename: str, output_filename: str):
     """Appends tag list to bookmark titles within file.
-    
+
     Takes an input HTML bookmarks file and finds lines containing 'TAGS' attribute
     then writes file with tag list in the bookmarks' titles.
-    
+
     :param input_filename:
     :param output_filename:
     """
@@ -43,10 +43,10 @@ def main(*argv):
     if len(args) == 1:
         print('Provide input file')
         return
-    
+
     input_filename = args[1]
     output_filename = args[2] if len(args) > 2 else input_filename + '.new.html'
-    
+
     print('input file: {0}'.format(input_filename))
     convert_file(input_filename, output_filename)
     print('output file: {0}'.format(output_filename))

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-YOUTUBE_DOWNLADER='/usr/local/bin/youtube-dl'
+# YOUTUBE_DOWNLADER='/home/n1amr/.pyenv/shims/youtube-dl'
+YOUTUBE_DOWNLADER='/usr/bin/env youtube-dl'
 YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
 URLS_FILE="$YOUTUBE_HOME/download-list"
 HISTORY_FILE="$YOUTUBE_HOME/download-history"
