@@ -1,0 +1,42 @@
+#!/bin/bash
+
+while [[ $# -gt 2 ]]; do
+    case $1 in
+        -n)
+            dry=true
+        ;;
+        -q|--quiet)
+            quiet=true
+        ;;
+        *)
+            echo Error: Invalid arguments
+            exit 1
+        ;;
+    esac
+    shift
+done
+
+src_root="$1"
+dst_root="$2"
+
+
+prefix_length=$(( ${#src_root} + 1 ))
+while IFS='' read file; do
+    if [[ -n "$file" ]]; then
+        dst="$dst_root/$(dirname "${file:${prefix_length}}")"
+
+        if [[ ! -d $dst ]]; then
+            mkdir -p "$dst"
+        fi
+
+        if [[ $quiet != true ]]; then
+            echo -e "file:  \"$file\" \ndir:   \"$dst\"\n"
+        fi
+
+        if [[ $dry != true ]]; then
+            mv "$file" "$dst"
+        fi
+    fi
+done<<EOF
+$(find $src_root -type f)
+EOF
