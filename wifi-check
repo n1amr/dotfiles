@@ -1,9 +1,9 @@
 #!/bin/bash
 
 state() {
-	nmcli d | grep wlp8s0 | grep -Po '\S*connected'
+    nmcli d | grep wlp8s0 | grep -Po '\S*connected'
 }
 
-if [ $(state) == "disconnected" ]; then
-	timeout 60s nmcli connection up id TEData;
+if [ x"$(state)" == x"disconnected" ]; then
+    timeout 60s nmcli connection up id TEData;
 fi

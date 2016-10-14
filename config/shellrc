@@ -1,9 +1,11 @@
 if [ -z $SHELLNAME ]; then
     SHELLNAME=bash
 fi
+
 if [ -z $MY_HOME ]; then
     export MY_HOME='/home/n1amr'
 fi
+
 if [ -z $MY_SCRIPTS_ROOT ]; then
     export MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
 fi

@@ -3,11 +3,11 @@
 VPN_HOME='/mnt/Storage/Shared/vpnbook/'
 
 vpnconnections=(ca1.vpnbook.com\
-	de233.vpnbook.com\
-	euro214.vpnbook.com\
-	euro217.vpnbook.com\
-	us1.vpnbook.com\
-	us2.vpnbook.com\
+    de233.vpnbook.com\
+    euro214.vpnbook.com\
+    euro217.vpnbook.com\
+    us1.vpnbook.com\
+    us2.vpnbook.com\
 )
 
 mkdir -p "$VPN_HOME"/credentials
@@ -19,11 +19,11 @@ no_prompt="false"
 
 # Read options
 for i in "$@"; do
-	case $i in
-	--no-prompt)
-		no_prompt="true"
-	;;
-	esac
+    case $i in
+    --no-prompt)
+        no_prompt="true"
+    ;;
+    esac
 done
 
 echo -e "Trying to update vpn credentials..."
@@ -31,15 +31,15 @@ echo -e "Trying to update vpn credentials..."
 echo "Fetching from http://www.vpnbook.com/freevpn"
 cred=$(wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | head -2)
 # if [[ -z "$cred" ]]; then
-# 	echo "Fetching from https://twitter.com/vpnbook"
-# 	cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
+#   echo "Fetching from https://twitter.com/vpnbook"
+#   cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
 # fi
 
 [[ -n "$cred" ]] && echo "$cred" > credentials.tmp && successful='true'
 if [ x"$successful" != x'true' ]; then
-	echo Cannot retrieve data!
-	rm -f credentials.tmp
-	exit
+    echo Cannot retrieve data!
+    rm -f credentials.tmp
+    exit
 fi
 
 echo -e "\nNew credenatials:" &&
@@ -48,9 +48,9 @@ echo
 
 # Prompt before modifying
 if [ x"$no_prompt" == x"false" ]; then
-	echo -en "Save? [y/n] " &&
-	read response
-	if [ x"$response" != x"y" ]; then exit; fi
+    echo -en "Save? [y/n] " &&
+    read response
+    if [ x"$response" != x"y" ]; then exit; fi
 fi
 
 # Update history
@@ -62,6 +62,6 @@ echo "Saved to $(realpath \"$credentials_filename\")"
 # Update credentials in vpn connections
 new_password=$(cat "$credentials_filename" | tail -1)
 for v in "${vpnconnections[@]}"; do
-	nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
-	echo "Updated $v successfully"
+    nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
+    echo "Updated $v successfully"
 done

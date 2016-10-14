@@ -11,16 +11,16 @@ last_month_folder=$(date --date="-1 month" +'%Y/%m')
 # last_month_folder=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
 
 auto_pull_folders=(
-	"ASU/CSE 2017  2nd term 3rd year"
-	"Google Photos/${current_month_folder}"
-	"Google Photos/${last_month_folder}"
-	"IFTTT"
+    "ASU/CSE 2017  2nd term 3rd year"
+    "Google Photos/${current_month_folder}"
+    "Google Photos/${last_month_folder}"
+    "IFTTT"
 )
 
 auto_push_folders=(
-	"ASU/Study/Second Term/"
-	"Personal"
-	# "Backups/Internet/Twitter Favorites Archive"
+    "ASU/Study/Second Term/"
+    "Personal"
+    # "Backups/Internet/Twitter Favorites Archive"
 )
 
 echo -e "$(date)\n"
@@ -31,22 +31,22 @@ exclude=true
 
 # Set Options
 while [[ $# > 0 ]]; do
-	case "$1" in
-		-p|--no-prompt)
-			no_prompt=true
-		;;
-		-f|--no-exclude)
-			exclude=false
-		;;
-		--drive-options=*)
-			drive_options="${1#*=}"
-		;;
-		*)
-			echo Error: Unknown argument \"$1\"
-			exit 1
-		;;
-	esac
-	shift
+    case "$1" in
+        -p|--no-prompt)
+            no_prompt=true
+        ;;
+        -f|--no-exclude)
+            exclude=false
+        ;;
+        --drive-options=*)
+            drive_options="${1#*=}"
+        ;;
+        *)
+            echo Error: Unknown argument \"$1\"
+            exit 1
+        ;;
+    esac
+    shift
 done
 
 # Set flags
@@ -54,29 +54,29 @@ COMMONFLAGS="$drive_options"
 PUSHFLAGS='-no-clobber'
 
 if [ "$no_prompt" == "true" ]; then
-	COMMONFLAGS="$COMMONFLAGS -no-prompt"
+    COMMONFLAGS="$COMMONFLAGS -no-prompt"
 fi
 
 if [ "$exclude" == "true" ]; then
-	COMMONFLAGS="$COMMONFLAGS -exclude-ops=delete,update"
+    COMMONFLAGS="$COMMONFLAGS -exclude-ops=delete,update"
 fi
 
 # Pull all
 for f in "${auto_pull_folders[@]}"; do
-	echo -e "\nPulling \"${f}\" ..."
-	if [ -d "$DRIVE_PATH/${f}" ]; then
-		cd "$DRIVE_PATH/${f}";
-		drive pull $COMMONFLAGS
-	fi
+    echo -e "\nPulling \"${f}\" ..."
+    if [ -d "$DRIVE_PATH/${f}" ]; then
+        cd "$DRIVE_PATH/${f}";
+        drive pull $COMMONFLAGS
+    fi
 done
 
 # Push all
 for f in "${auto_push_folders[@]}"; do
-	echo -e "\nPushing \"${f}\" ..."
-	if [ -d "$DRIVE_PATH/${f}" ]; then
-		cd "$DRIVE_PATH/${f}";
-		drive push $COMMONFLAGS $PUSHFLAGS
-	fi
+    echo -e "\nPushing \"${f}\" ..."
+    if [ -d "$DRIVE_PATH/${f}" ]; then
+        cd "$DRIVE_PATH/${f}";
+        drive push $COMMONFLAGS $PUSHFLAGS
+    fi
 done
 
 exit 0

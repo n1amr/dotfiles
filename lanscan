@@ -4,26 +4,26 @@ pattern="192.168.1.*"
 color=true
 
 while [[ $# -gt 0 ]]; do
-	case "$1" in
-		-v|--verbose)
-			verbose=true
-		;;
-		--no-color)
-			unset color
-		;;
-		*)
-			[[ $# -eq 1 ]] && pattern=$1
-		;;
-	esac
-	shift
+    case "$1" in
+        -v|--verbose)
+            verbose=true
+        ;;
+        --no-color)
+            unset color
+        ;;
+        *)
+            [[ $# -eq 1 ]] && pattern=$1
+        ;;
+    esac
+    shift
 done
 
 echo2 () {
-	if [ -n "$color" ]; then
-		echo -e "\e[1;32m$@\e[m"
-	else
-		echo -e "$@"
-	fi
+    if [ -n "$color" ]; then
+        echo -e "\e[1;32m$@\e[m"
+    else
+        echo -e "$@"
+    fi
 }
 
 [ -n "$verbose" ] && echo "Scanning IPs $pattern ..."
@@ -31,25 +31,25 @@ echo2 () {
 unset ip mac
 
 while IFS='' read -r line; do
-	[ -n "$verbose" ] && echo -e "$line"
-	if [ -n "$ip" -a -n "$mac" ]; then
-		echo2 "$ip $mac"
-		unset ip mac
-	fi
+    [ -n "$verbose" ] && echo -e "$line"
+    if [ -n "$ip" -a -n "$mac" ]; then
+        echo2 "$ip $mac"
+        unset ip mac
+    fi
 
-	if echo $line | grep -q '^Nmap scan report for '; then
-		if [ -n "$ip" ]; then
-			echo2 "$ip"
-			unset ip
-		fi
+    if echo $line | grep -q '^Nmap scan report for '; then
+        if [ -n "$ip" ]; then
+            echo2 "$ip"
+            unset ip
+        fi
 
-		ip="$(echo $line | sed 's/Nmap scan report for //g';)"
-	elif echo $line | grep -q '^MAC Address: '; then
-		mac="$(echo $line | sed 's/MAC Address: //g';)"
-	fi
+        ip="$(echo $line | sed 's/Nmap scan report for //g';)"
+    elif echo $line | grep -q '^MAC Address: '; then
+        mac="$(echo $line | sed 's/MAC Address: //g';)"
+    fi
 done < <(sudo nmap -sP -PE -PA21,23,80,3389 $pattern)
 
 if [ -n "$ip" ]; then
-	echo2 "$ip"
-	unset ip
+    echo2 "$ip"
+    unset ip
 fi

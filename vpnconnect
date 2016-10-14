@@ -7,14 +7,14 @@ profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 credentials_updater='/home/n1amr/.shell-scripts/updatevpn'
 
 connect () {
-	sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";
+    sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";
 }
 
 connect && successful=1
 
 if [ "$successful" != 1 ]; then
-	echo "Connection failed!!!"
-	echo -n "Update credentials? [y/n]: "
-	read response;
-	if [ x"$response" == x"y" ]; then "${credentials_updater}"; connect; fi
+    echo "Connection failed!!!"
+    echo -n "Update credentials? [y/n]: "
+    read response;
+    if [ x"$response" == x"y" ]; then "${credentials_updater}"; connect; fi
 fi

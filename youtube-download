@@ -11,24 +11,24 @@ COMMON_ARGS='-f 18 --all-subs'
 download=true
 
 while [[ $# > 0 ]]; do
-	echo "$1" >> "$URLS_FILE"
-	echo "Added $1"
-	download=false
-	shift
+    echo "$1" >> "$URLS_FILE"
+    echo "Added $1"
+    download=false
+    shift
 done
 
 if $download ; then
-	cd "$YOUTUBE_HOME"
-	touch "$URLS_FILE"
-	while IFS='' read line ; do
-		if [[ -n $line ]]; then
-			command=`echo "$YOUTUBE_DOWNLADER" "$COMMON_ARGS" "$line"`
-			echo -e "\e[1;32m$command\e[m"
-			eval "$command" &&
-				echo "$line" >> "$HISTORY_FILE" ||
-				echo "$line" >> "$FAILED_FILE"
-			echo
-		fi
-	done < "$URLS_FILE" &&
-	> "$URLS_FILE"
+    cd "$YOUTUBE_HOME"
+    touch "$URLS_FILE"
+    while IFS='' read line ; do
+        if [[ -n $line ]]; then
+            command=`echo "$YOUTUBE_DOWNLADER" "$COMMON_ARGS" "$line"`
+            echo -e "\e[1;32m$command\e[m"
+            eval "$command" &&
+                echo "$line" >> "$HISTORY_FILE" ||
+                echo "$line" >> "$FAILED_FILE"
+            echo
+        fi
+    done < "$URLS_FILE" &&
+    > "$URLS_FILE"
 fi
