@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo /home/n1amr/.shell-scripts/sync $@
+

@@ -8,6 +8,6 @@
 */15     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/retweet-bot-rasha-rizk
 */15     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/tweet-bot-clock &
 */15     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/ring &
-*/30     *       *       *       *       # /home/n1amr/.shell-scripts/config/crontab-jobs/updatedrive &
+*/30     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/updatedrive &
 0        */2     *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/updatevpn &
 #=============================================================================

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/home/n1amr/.shell-scripts/syncf file $1 $2
