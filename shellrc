@@ -31,8 +31,8 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-if [ -f ~/.api_keys ]; then
-    . ~/.api_keys
+if [ -f "$MY_SCRIPTS_ROOT/secret/api_keys" ]; then
+    . "$MY_SCRIPTS_ROOT/secret/api_keys"
 fi
 
 export D='/mnt/Storage'
@@ -101,6 +101,11 @@ terminal_rezise () {
 
 __git_ps1_branch () {
     git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/ (\1)/';
+}
+
+block_caret () {
+    tput cnorm '\e[?8c';
+    tput cvvis '\e[?8c';
 }
 
 ##################################################
@@ -232,6 +237,7 @@ ps1_memory() {
 terminal_rezise
 print_welcome
 reset_ps1
+block_caret
 
 if [ $SHELLNAME = zsh ]; then
     :

@@ -1,1 +1,3 @@
-/home/n1amr/.shell-scripts/updatevpn --no-prompt
+HOME=/home/n1amr
+MY_SCRIPTS_ROOT=$HOME/.shell-scripts
+$MY_SCRIPTS_ROOT/updatevpn --no-prompt
