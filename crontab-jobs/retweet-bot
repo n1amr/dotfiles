@@ -1,0 +1,6 @@
+HOME=/home/n1amr
+BOT_ROOT=$HOME/.retweet-bot
+
+. $HOME/.api_keys
+date >> $BOT_ROOT/log
+$HOME/.rbenv/shims/retweet-bot >> $BOT_ROOT/log 2>&1

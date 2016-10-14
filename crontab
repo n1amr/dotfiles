@@ -1,8 +1,13 @@
-* * * * * /home/n1amr/.local/bin/battery-check &
-15 * * * * #. $HOME/.keys ; date >> $HOME/.n1amr-twitter-bot/data/log ; $HOME/.rbenv/shims/n1amr-twitter-bot >> $HOME/.n1amr-twitter-bot/data/log 2>&1 &
-*/15 * * * * . $HOME/.keys ; date >> $HOME/.retweet-bot/log ; $HOME/.rbenv/shims/retweet-bot >> $HOME/.retweet-bot/log 2>&1 &
-*/15 * * * * . $HOME/.keys ; date >> $HOME/.retweet-bot/rasha-rizq/log ; $HOME/.rbenv/shims/retweet-bot $HOME/.retweet-bot/rasha-rizq >> $HOME/.retweet-bot/rasha-rizq/log 2>&1 &
-*/15 * * * * . $HOME/.keys ; date >> $HOME/.tweet-bot/clock/log ; $HOME/.rbenv/shims/tweet-bot "$HOME/.tweet-bot/clock" >> $HOME/.tweet-bot/clock/log 2>&1 &
-*/15 * * * * paplay /home/n1amr/.local/Schedule.ogg &
-*/30 * * * * #/home/n1amr/.local/bin/updatedrive-cron --no-prompt &
-0 */2 * * * /home/n1amr/.local/bin/updatevpn --no-prompt &
+# Crontab file for Home Directory for Amr Alaa (n1amr)
+#=============================================================================
+# Min    Hour    Day     Month   Weekday Command
+#=============================================================================
+*        *       *       *       *       /home/n1amr/.local/bin/crontab-jobs/battery-check &
+*/15     *       *       *       *       # /home/n1amr/.local/bin/crontab-jobs/twitter-bot &
+*/15     *       *       *       *       /home/n1amr/.local/bin/crontab-jobs/retweet-bot &
+*/15     *       *       *       *       /home/n1amr/.local/bin/crontab-jobs/retweet-bot-rasha-rizk
+*/15     *       *       *       *       /home/n1amr/.local/bin/crontab-jobs/tweet-bot-clock &
+*/15     *       *       *       *       /home/n1amr/.local/bin/crontab-jobs/ring &
+*/30     *       *       *       *       # /home/n1amr/.local/bin/crontab-jobs/updatedrive &
+0        */2     *       *       *       /home/n1amr/.local/bin/crontab-jobs/updatevpn &
+#=============================================================================

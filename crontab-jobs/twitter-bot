@@ -1,0 +1,4 @@
+. /home/n1amr/.api_keys
+BOT_ROOT=/home/n1amr/.n1amr-twitter-bot
+date >> $BOT_ROOT/data/log
+/homen/n1amr/.rbenv/shims/n1amr-twitter-bot >> $BOT_ROOT/data/log 2>&1
