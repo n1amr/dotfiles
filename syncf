@@ -4,7 +4,7 @@ DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu/"
 
 N1AMR_HOME="/home/n1amr"
 BACKUP_ROOT_DIR="${DESTINATION_DIR}/backups"
-CONFIG_FOLDER="$N1AMR_HOME/.local/bin/sync.rc"
+CONFIG_FOLDER="$N1AMR_HOME/.shell-scripts/sync.rc"
 
 timestamp="$(date +%F-%H-%M-%S)"
 

@@ -4,7 +4,7 @@ VPN_HOME='/mnt/Storage/Shared/vpnbook'
 credentials_file="$VPN_HOME/credentials/current"
 profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
-credentials_updater='/home/n1amr/.local/bin/updatevpn'
+credentials_updater='/home/n1amr/.shell-scripts/updatevpn'
 
 connect () {
 	sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";

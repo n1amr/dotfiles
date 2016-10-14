@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo /home/n1amr/.local/bin/syncf $1 $2
+sudo /home/n1amr/.shell-scripts/syncf $1 $2

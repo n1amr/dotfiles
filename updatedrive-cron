@@ -3,4 +3,4 @@
 DRIVE_PATH="/mnt/Storage/GoogleDrive"
 OUTPUT_FILE="${DRIVE_PATH}/../.drive-log"
 
-/home/n1amr/.local/bin/updatedrive >> "${OUTPUT_FILE}" 2>> "${OUTPUT_FILE}"
+/home/n1amr/.shell-scripts/updatedrive >> "${OUTPUT_FILE}" 2>> "${OUTPUT_FILE}"

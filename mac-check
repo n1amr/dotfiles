@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PATH="/home/n1amr/.local/bin:$PATH"
+PATH="/home/n1amr/.shell-scripts:$PATH"
 
-HOME_DIR='/home/n1amr/.local/bin/macs'
+HOME_DIR='/home/n1amr/.shell-scripts/macs'
 ALL_FILE="$HOME_DIR/all"
 PREV_FILE="$HOME_DIR/prev"
 LAST_FILE="$HOME_DIR/last"

@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 SHELLNAME=bash
-SHELLRC='/home/n1amr/.local/bin/shellrc'
+SHELLRC='/home/n1amr/.shell-scripts/shellrc'
 if [ -f "$SHELLRC" ]; then
     . "$SHELLRC"
 fi
