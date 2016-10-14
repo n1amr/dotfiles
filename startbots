@@ -1,6 +1,0 @@
-#!/bin/bash
-
-/mnt/Storage/Lab/Java/BrBaBot/run &
-/mnt/Storage/Lab/Java/TBBTBot/run &
-
-wait

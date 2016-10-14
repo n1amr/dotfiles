@@ -2,6 +2,6 @@ HOME=/home/n1amr
 MY_SCRIPTS_ROOT=$HOME/.shell-scripts
 BOT_ROOT=$HOME/.tweet-bot/clock
 
-. "$MY_SCRIPTS_ROOT/secret/api_keys"
+. "$MY_SCRIPTS_ROOT/config/secret/api_keys"
 date >> $BOT_ROOT/log
 $HOME/.rbenv/shims/retweet-bot $BOT_ROOT >> $BOT_ROOT/log 2>&1

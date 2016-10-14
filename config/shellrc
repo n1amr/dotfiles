@@ -10,7 +10,7 @@ fi
 
 # Initialize shell
 if [ $SHELLNAME = zsh ]; then
-    export ZSH="$MY_SCRIPTS_ROOT/oh-my-zsh"
+    export ZSH="$MY_SCRIPTS_ROOT/config/oh-my-zsh"
 
     ZSH_THEME="n1amr"
     ENABLE_CORRECTION="true"
@@ -19,7 +19,7 @@ if [ $SHELLNAME = zsh ]; then
     plugins=(command-not-found common-aliases dircycle dirhistory extract git history jump pip rsync z)
     source $ZSH/oh-my-zsh.sh
 elif [ $SHELLNAME = bash ]; then
-    source "$MY_SCRIPTS_ROOT/bash-init.sh"
+    source "$MY_SCRIPTS_ROOT/config/bash-init.sh"
 fi
 
 ##################################################
@@ -31,8 +31,8 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-if [ -f "$MY_SCRIPTS_ROOT/secret/api_keys" ]; then
-    . "$MY_SCRIPTS_ROOT/secret/api_keys"
+if [ -f "$MY_SCRIPTS_ROOT/config/secret/api_keys" ]; then
+    . "$MY_SCRIPTS_ROOT/config/secret/api_keys"
 fi
 
 export D='/mnt/Storage'
