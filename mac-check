@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PATH="/home/n1amr/.local/bin:$PATH"
+
+HOME_DIR='/home/n1amr/.local/bin/macs'
+ALL_FILE="$HOME_DIR/all"
+PREV_FILE="$HOME_DIR/prev"
+LAST_FILE="$HOME_DIR/last"
+
+echo >> "$ALL_FILE"
+date >> "$ALL_FILE"
+touch "$LAST_FILE"
+mv "$LAST_FILE" "$PREV_FILE" -f
+lanscan --no-color > "$LAST_FILE"
+diff "$PREV_FILE" "$LAST_FILE" | grep -P '^[<>]' | sed 's/</-/g' | sed 's/>/+/g' >> "$ALL_FILE"

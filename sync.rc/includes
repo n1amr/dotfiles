@@ -1,0 +1,31 @@
+/var/spool/cron/crontabs
+/home/n1amr
+/etc
+/etc/fstab
+/etc/rc.local
+/etc/samba/smb.conf
+/etc/ssh/sshd_config
+/usr/share/themes
+/var/lib/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla
+/mnt/Windows/ProgramData/Microsoft/Windows/Start Menu
+/mnt/Windows/ProgramData/Microsoft/Windows/Start Menu Places
+/mnt/Windows/Users/N1amr/AppData/Roaming/Sublime Text 3
+/mnt/Storage/ASU
+/mnt/Storage/Backups
+/mnt/Storage/Desktop
+/mnt/Storage/Documents
+/mnt/Storage/Downloads
+/mnt/Storage/Games
+/mnt/Storage/Google Drive
+/mnt/Windows/Users/N1amr/Google Drive
+/mnt/Storage/GoogleDrive
+/mnt/Storage/Lab
+/mnt/Storage/Pictures
+/mnt/Storage/Program Files/AppData/Roaming/Mozilla
+/mnt/Storage/Program Files/Virtual Machines
+/mnt/Storage/Program Files/vm
+/mnt/Storage/Programs
+/mnt/Storage/Shared
+/mnt/Storage/Sounds
+/mnt/Storage/Videos
+/mnt/Storage/ubuntu

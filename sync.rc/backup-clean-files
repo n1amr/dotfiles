@@ -1,0 +1,81 @@
+/etc/cups
+/etc/openvpn
+/etc/ufw
+/etc/vmware
+/home/n1amr/.CLion2016.2
+/home/n1amr/.ICEauthority
+/home/n1amr/.PyCharm2016.1
+/home/n1amr/.RubyMine2016.1
+/home/n1amr/.Xauthority
+/home/n1amr/.bash_history
+/home/n1amr/.cache
+/home/n1amr/.config/KeePass
+/home/n1amr/.config/dconf/user
+/home/n1amr/.config/evince
+/home/n1amr/.config/google-chrome
+/home/n1amr/.config/google-googletalkplugin
+/home/n1amr/.config/gtk-2.0
+/home/n1amr/.config/ibus
+/home/n1amr/.config/libreoffice
+/home/n1amr/.config/nautilus
+/home/n1amr/.config/pulse
+/home/n1amr/.config/spotify
+/home/n1amr/.config/sublime-text-3/Cache
+/home/n1amr/.config/sublime-text-3/Index
+/home/n1amr/.config/sublime-text-3/Local
+/home/n1amr/.config/sublime-text-3/Packages
+/home/n1amr/.config/totem
+/home/n1amr/.config/transmission
+/home/n1amr/.config/vlc
+/home/n1amr/.dbus
+/home/n1amr/.gconf
+/home/n1amr/.gconf/apps/alarm-clock/alarm0/
+/home/n1amr/.gimp-2.8
+/home/n1amr/.gitconfig
+/home/n1amr/.gradle
+/home/n1amr/.java
+/home/n1amr/.lesshst
+/home/n1amr/.local/bin/.git
+/home/n1amr/.local/bin/macs
+/home/n1amr/.local/share/evolution
+/home/n1amr/.local/share/gvfs-metadata
+/home/n1amr/.local/share/recently-used.xbel
+/home/n1amr/.local/share/rhythmbox
+/home/n1amr/.local/share/vlc
+/home/n1amr/.local/share/zeitgeist
+/home/n1amr/.mono
+/home/n1amr/.mozilla/firefox/n1amr.default
+/home/n1amr/.n1amr-twitter-bot/data/log
+/home/n1amr/.n1amr-twitter-bot/data/marked-as-replied.dat
+/home/n1amr/.oracle_jre_usage
+/home/n1amr/.retweet-bot/log
+/home/n1amr/.retweet-bot/marked-as-retweeted.dat
+/home/n1amr/.retweet-bot/rasha-rizq/log
+/home/n1amr/.retweet-bot/rasha-rizq/marked-as-retweeted.dat
+/home/n1amr/.sqlite_history
+/home/n1amr/.thunderbird
+/home/n1amr/.tweet-bot/clock/log
+/home/n1amr/.viminfo
+/home/n1amr/.vmware
+/home/n1amr/.wget-hsts
+/home/n1amr/.xsession-errors
+/home/n1amr/.xsession-errors.old
+/home/n1amr/.z
+/home/n1amr/.zsh_history
+/mnt/Storage/Backups/LG G4/storage/emulated/0/.userReturn
+/mnt/Storage/Backups/LG G4/storage/emulated/0/DCIM/.thumbnails
+/mnt/Storage/Backups/LG G4/storage/emulated/0/MATICS
+/mnt/Storage/Backups/LG G4/storage/emulated/0/Quickset Setup
+/mnt/Storage/Backups/LG G4/storage/emulated/0/WhatsApp
+/mnt/Storage/Backups/LG G4/storage/emulated/0/WhatsApp/Databases/msgstore.db.crypt9
+/mnt/Storage/Backups/LG G4/storage/emulated/0/dianxin/notify/.cache
+/mnt/Storage/Games/GTA Vice City/data/maps/bar/GoogleDrive/.gd
+/mnt/Storage/GoogleDrive/.gd
+/mnt/Storage/Lab/Java/.metadata
+/mnt/Storage/Lab/Java/.recommenders
+/mnt/Storage/Lab/Java/Twitter-Favorites-Saver/data/users.json
+/mnt/Storage/Program Files/AppData/Roaming/Mozilla/Firefox/Profiles/n1amr.default
+/mnt/Storage/Program Files/Virtual Machines
+/mnt/Storage/Program Files/vm
+/mnt/Storage/Shared/vpnbook/credentials
+/usr/share/themes/Numix Daily

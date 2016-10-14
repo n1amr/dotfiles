@@ -1,0 +1,48 @@
+#!/bin/bash
+
+trap "exit 2" INT
+
+start=1
+end=255
+
+while [[ $# -gt 1 ]]; do
+	case $1 in
+		--start=*)
+			start=${1#*=}
+		;;
+		--end=*)
+			end=${1#*=}
+		;;
+		-q|--quiet)
+			quiet=true
+		;;
+		*)
+			echo Error: Invalid arguments
+			exit 1
+		;;
+	esac
+	shift
+done
+
+if [[ $# -lt 1 ]]; then
+	echo Error: No IP base
+	exit 1
+fi
+
+base=$1
+range=$(($end - $start + 1))
+
+for i in $(seq $start $end); do
+	ip="$base.$i"
+
+	progress=$(($i * 100 / $range))
+	[[ ! $quiet ]] && echo -en "\r\e[01;32m[$progress%] Checking $ip ...\e[m\r"
+
+	ping -W 1 -c 1 $ip>/dev/null;
+	up=$?
+
+	[[ ! $quiet ]] && echo -en "\r                                                        \r"
+	[ $up -eq 0 ] && echo "$ip";
+done
+
+exit 0
