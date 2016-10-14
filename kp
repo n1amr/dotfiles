@@ -1,0 +1,32 @@
+#!/bin/bash
+
+N1AMR_HOME="/home/n1amr"
+GOPATH="$N1AMR_HOME/.gopath"
+PATH="$GOPATH/bin:$PATH"
+
+DRIVE_PATH="/mnt/Storage/GoogleDrive"
+FILE_PATH="Personal/main.kdbx"
+
+method=null
+OPTIONS=''
+
+while [[ $# > 0 ]]; do
+    case "$1" in
+        push|pull)
+            method="$1"
+        ;;
+        *)
+            OPTIONS="$OPTIONS $1"
+        ;;
+    esac
+    shift
+done
+
+cd "$DRIVE_PATH"
+
+if [ $method == push -o $method == pull ]; then
+    echo ${method}ing...
+    drive push $OPTIONS -exclude-ops=delete "$FILE_PATH"
+fi
+
+exit 0

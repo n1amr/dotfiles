@@ -11,14 +11,12 @@ last_month_folder=$(date --date="-1 month" +'%Y/%m')
 # last_month_folder=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
 
 auto_pull_folders=(
-    "Personal/main.kdbx"
     "ASU/CSE 2017 - 4th year"
     "Google Photos/${current_month_folder}"
     "Google Photos/${last_month_folder}"
 )
 
 auto_push_folders=(
-    "Personal/main.kdbx"
     "ASU/study"
     "Personal/Bookmarks"
 )
@@ -76,6 +74,7 @@ done
 
 # Push all
 for f in "${auto_push_folders[@]}"; do
+    cd "$DRIVE_PATH"
     echo -e "\nPushing \"$f\" ..."
     drive push $COMMONFLAGS $PUSHFLAGS "$f"
 done
