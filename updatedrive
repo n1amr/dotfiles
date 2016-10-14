@@ -11,16 +11,16 @@ last_month_folder=$(date --date="-1 month" +'%Y/%m')
 # last_month_folder=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
 
 auto_pull_folders=(
-    "ASU/CSE 2017  2nd term 3rd year"
+    "Personal/main.kdbx"
+    "ASU/CSE 2017 - 4th year"
     "Google Photos/${current_month_folder}"
     "Google Photos/${last_month_folder}"
-    "IFTTT"
 )
 
 auto_push_folders=(
-    "ASU/Study/Second Term/"
-    "Personal"
-    # "Backups/Internet/Twitter Favorites Archive"
+    "Personal/main.kdbx"
+    "ASU/study"
+    "Personal/Bookmarks"
 )
 
 echo -e "$(date)\n"
@@ -61,22 +61,23 @@ if [ "$exclude" == "true" ]; then
     COMMONFLAGS="$COMMONFLAGS -exclude-ops=delete,update"
 fi
 
+
 # Pull all
 for f in "${auto_pull_folders[@]}"; do
-    echo -e "\nPulling \"${f}\" ..."
-    if [ -d "$DRIVE_PATH/${f}" ]; then
-        cd "$DRIVE_PATH/${f}";
-        drive pull $COMMONFLAGS
+    cd "$DRIVE_PATH"
+    echo -e "\nPulling \"$f\" ..."
+    drive pull $COMMONFLAGS "$f"
+
+    if [ -d "$DRIVE_PATH/$f" ]; then
+        cd "$DRIVE_PATH/$f";
+        git status >/dev/null 2>&1 && git add . && git status && git commit -m "$(date)"
     fi
 done
 
 # Push all
 for f in "${auto_push_folders[@]}"; do
-    echo -e "\nPushing \"${f}\" ..."
-    if [ -d "$DRIVE_PATH/${f}" ]; then
-        cd "$DRIVE_PATH/${f}";
-        drive push $COMMONFLAGS $PUSHFLAGS
-    fi
+    echo -e "\nPushing \"$f\" ..."
+    drive push $COMMONFLAGS $PUSHFLAGS "$f"
 done
 
 exit 0

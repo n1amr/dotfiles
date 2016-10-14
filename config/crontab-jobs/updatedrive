@@ -1,3 +1,9 @@
+#!/bin/bash
+
 HOME=/home/n1amr
 MY_SCRIPTS_ROOT=$HOME/.shell-scripts
-$MY_SCRIPTS_ROOT/updatedrive-cron --no-prompt
+DRIVE_PATH="/mnt/Storage/GoogleDrive"
+OUTPUT_FILE="${DRIVE_PATH}/../.drive-log"
+
+$MY_SCRIPTS_ROOT/updatedrive --no-prompt --no-exclude >> "${OUTPUT_FILE}" 2>> "${OUTPUT_FILE}"
+
