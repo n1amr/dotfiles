@@ -4,4 +4,4 @@ BOT_ROOT=$HOME/.tweet-bot/clock
 
 . "$MY_SCRIPTS_ROOT/config/secret/api_keys"
 date >> $BOT_ROOT/log
-$HOME/.rbenv/shims/retweet-bot $BOT_ROOT >> $BOT_ROOT/log 2>&1
+$HOME/.rbenv/shims/tweet-bot $BOT_ROOT >> $BOT_ROOT/log 2>&1
