@@ -1,6 +1,6 @@
-[submodule "oh-my-zsh"]
+[submodule "config/oh-my-zsh"]
     path = config/oh-my-zsh
-    url = git@github.com:robbyrussell/oh-my-zsh.git
+    url = http://github.com/robbyrussell/oh-my-zsh.git
 [submodule "config/sublime-text-3/User"]
     path = config/sublime-text-3/User
     url = http://bitbucket.org/n1amr/sublime-text-3-config.git
