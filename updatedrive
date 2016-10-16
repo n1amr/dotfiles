@@ -49,14 +49,14 @@ done
 
 # Set flags
 COMMONFLAGS="$drive_options"
-PUSHFLAGS='-no-clobber'
+PUSHFLAGS=''
 
 if [ "$no_prompt" == "true" ]; then
-    COMMONFLAGS="$COMMONFLAGS -no-prompt"
+    COMMONFLAGS="$COMMONFLAGS --no-prompt"
 fi
 
 if [ "$exclude" == "true" ]; then
-    COMMONFLAGS="$COMMONFLAGS -exclude-ops=delete,update"
+    COMMONFLAGS="$COMMONFLAGS --exclude-ops=delete,update"
 fi
 
 
