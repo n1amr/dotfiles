@@ -1,0 +1,32 @@
+[alias]
+	cm = commit -a
+	co = checkout
+	st = status
+	ph = push
+	pl = pull
+	l = log --oneline
+	br = branch
+
+[color]
+	ui = true
+
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+	autocrlf = input
+
+[credential]
+	helper = cache
+
+[grep]
+	linenumber = true
+
+[push]
+	default = matching
+
+[user]
+	name = Amr Alaa
+	email = n1amr1@gmail.com
+	signingkey = 7C837246
+[commit]
+	gpgsign = false
