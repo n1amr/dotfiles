@@ -129,8 +129,8 @@ alias gitnext="git checkout \`git log --reverse --ancestry-path HEAD..master --o
 alias gitprev='git checkout HEAD~'
 alias gp='grep -P --color=auto'
 alias h='history'
-#alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias ipy="ipython"
+alias ipython="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias j='jump'
 alias l='ls -lgoh'
 alias m='mark'
