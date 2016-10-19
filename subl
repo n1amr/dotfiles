@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SUBL=/usr/bin/subl
+
+# Allow piping to subl
+if test -t 0; then
+    # Stdin is a terminal.
+    # Open sublime normally.
+    $SUBL "$@"
+else
+    # Stdin is not a terminal, it must be a pipe.
+    # Pipe stdin to a temporary file, and open it in sublime.
+    TMPDIR=${TMPDIR:-/tmp}  # default to /tmp if TMPDIR isn't set
+    file=$(mktemp $TMPDIR/subl-XXXXXXXX)
+    cat >| $file  # use >| instead of > if you set noclobber in bash
+    $SUBL $file
+    sleep .3  # give subl a little time to open the file
+    rm -f $file  # file will be deleted as soon as subl closes it
+fi
