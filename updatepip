@@ -3,8 +3,11 @@
 export PATH="/home/n1amr/.pyenv/bin:$PATH"
 eval "$( [[ $(type -t pyenv) ]] && pyenv init -)"
 
-# VERSIONS=(system 3.5.1 2.7.11)
-VERSIONS=(3.5.1)
+VERSIONS=(
+    3.5.1
+    # system
+    # 2.7.11
+)
 for v in "${VERSIONS[@]}"; do
     pyenv shell "$v"
     echo -e "\e[0;32mUpdating python $v packages\e[m"

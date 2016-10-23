@@ -160,6 +160,7 @@ alias twitter='/home/n1amr/.rbenv/shims/t'
 alias u='cd ..'
 alias v='vim'
 alias vi='vim'
+alias vpipupdate='pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | sort | xargs -n1 pip install -U'
 alias wget='wget -c'
 
 ##################################################
