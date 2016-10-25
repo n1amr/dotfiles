@@ -64,7 +64,7 @@ fi
 for f in "${auto_pull_folders[@]}"; do
     cd "$DRIVE_PATH"
     echo -e "\nPulling \"$f\" ..."
-    drive pull --ignore-name-clashes $COMMONFLAGS "$f"
+    drive pull --ignore-name-clashes --ignore-conflict $COMMONFLAGS "$f"
 
     if [ -d "$DRIVE_PATH/$f" ]; then
         cd "$DRIVE_PATH/$f";
