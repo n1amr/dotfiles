@@ -157,7 +157,7 @@ alias tf='tail -f'
 alias tm='nohup terminator & exit'
 alias tr='trash -v'
 alias twitter='/home/n1amr/.rbenv/shims/t'
-alias u='cd ..'
+alias u='up'
 alias v='vim'
 alias vi='vim'
 alias vpipupdate='pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | sort | xargs -n1 pip install -U'
@@ -232,6 +232,10 @@ ps1_all_words() {
 
 ps1_memory() {
     ps1_command() { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
+}
+
+up() {
+    cd $(printf '../%.0s' {0..$@})
 }
 
 ##################################################
