@@ -81,7 +81,7 @@ print_welcome () {
 }
 
 bak () {
-    cp "$1" "$1.bak";
+    cp -r "$1" "$1.bak";
 }
 
 findword () {
