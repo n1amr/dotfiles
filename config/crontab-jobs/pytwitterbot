@@ -1,0 +1,8 @@
+HOME=/home/n1amr
+MY_SCRIPTS_ROOT=$HOME/.shell-scripts
+BOT_ROOT=$HOME/.pytwitterbot/hantarisha
+
+date >> $BOT_ROOT/log
+$HOME/.pyenv/shims/pytbot $BOT_ROOT >> $BOT_ROOT/log 2>&1
+echo >> $BOT_ROOT/log
+echo >> $BOT_ROOT/log
