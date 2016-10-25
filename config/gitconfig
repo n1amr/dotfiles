@@ -1,11 +1,11 @@
 [alias]
-	cm = commit -a
-	co = checkout
-	st = status
-	ph = push
-	pl = pull
-	l = log --oneline
+	a = add
 	br = branch
+	c = commit
+	ca = commit -a
+	co = checkout
+	l = log --oneline
+	st = status
 
 [color]
 	ui = true
@@ -28,5 +28,6 @@
 	name = Amr Alaa
 	email = n1amr1@gmail.com
 	signingkey = 7C837246
+
 [commit]
 	gpgsign = false
