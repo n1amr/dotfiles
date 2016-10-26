@@ -110,6 +110,16 @@ block_caret () {
     tput cvvis '\e[?8c';
 }
 
+up() {
+    cd $(printf '../%.0s' {1..$@})
+}
+
+cd-tree () {
+    clear
+    cd "$@"
+    tree -CL 1 "$(realpath .)"
+}
+
 ##################################################
 # Aliases
 ##################################################
@@ -132,6 +142,7 @@ alias h='history'
 alias ipy="ipython"
 alias ipython="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias j='jump'
+alias k='cd-tree'
 alias l='ls -lgoh'
 alias m='mark'
 alias matlab-cli='DISPLAY='' matlab'
@@ -232,10 +243,6 @@ ps1_all_words() {
 
 ps1_memory() {
     ps1_command() { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
-}
-
-up() {
-    cd $(printf '../%.0s' {1..$@})
 }
 
 ##################################################
