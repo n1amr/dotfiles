@@ -1,10 +1,10 @@
 # Crontab file for Home Directory for Amr Alaa (n1amr)
-#=============================================================================
-# Min    Hour    Day     Month   Weekday Command
-#=============================================================================
-*        *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/battery-check &
-*/15     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/twitter-bots &
-*/15     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/ring &
-*/30     *       *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/updatedrive &
-0        */2     *       *       *       /home/n1amr/.shell-scripts/config/crontab-jobs/updatevpn &
-#=============================================================================
+#===============================================================================
+# Min    Hour     Day      Month    Weekday  Command
+#===============================================================================
+*        *        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/battery-check &
+*/15     *        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/twitter-bots &
+*/15     *        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/ring &
+*/30     *        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/updatedrive &
+0        */2      *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/updatevpn &
+#===============================================================================
