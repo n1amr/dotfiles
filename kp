@@ -26,7 +26,7 @@ cd "$DRIVE_PATH"
 
 if [ $method == push -o $method == pull ]; then
     echo ${method}ing...
-    drive push $OPTIONS -exclude-ops=delete "$FILE_PATH"
+    drive ${method} $OPTIONS -exclude-ops=delete "$FILE_PATH"
 fi
 
 exit 0
