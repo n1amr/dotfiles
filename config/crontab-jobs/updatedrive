@@ -5,5 +5,4 @@ MY_SCRIPTS_ROOT=$HOME/.shell-scripts
 DRIVE_PATH="/mnt/Storage/GoogleDrive"
 OUTPUT_FILE="${DRIVE_PATH}/../.drive-log"
 
-$MY_SCRIPTS_ROOT/updatedrive --no-prompt --no-exclude >> "${OUTPUT_FILE}" 2>> "${OUTPUT_FILE}"
-
+$MY_SCRIPTS_ROOT/updatedrive --no-prompt >> "${OUTPUT_FILE}" 2>> "${OUTPUT_FILE}"
