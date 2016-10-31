@@ -1,0 +1,5 @@
+#!/bin/bash
+
+in="$1"
+out="$2"
+ffmpeg -i "$in" -vn -acodec libmp3lame -ac 2 -qscale:a 4 -ar 48000 "$out"
