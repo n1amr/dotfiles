@@ -144,6 +144,8 @@ alias ipython="python -c 'import IPython; IPython.terminal.ipapp.launch_new_inst
 alias j='jump'
 alias k='cd-tree'
 alias l='ls -lgoh'
+alias la='ls -lAFh'
+alias ll='ls -l'
 alias m='mark'
 alias matlab-cli='DISPLAY='' matlab'
 alias mkdir='mkdir -pv'
@@ -255,8 +257,9 @@ reset_ps1
 block_caret
 
 if [ $SHELLNAME = zsh ]; then
-    :
+    bindkey -v
 elif [ $SHELLNAME = bash ]; then
+    set -o vi
     shopt -s autocd
     shopt -s globstar
 fi
