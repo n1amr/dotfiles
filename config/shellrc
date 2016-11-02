@@ -257,9 +257,10 @@ reset_ps1
 block_caret
 
 if [ $SHELLNAME = zsh ]; then
-    bindkey -v
+    nop=
+    # bindkey -v
 elif [ $SHELLNAME = bash ]; then
-    set -o vi
+    # set -o vi
     shopt -s autocd
     shopt -s globstar
 fi
