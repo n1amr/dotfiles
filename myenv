@@ -1,0 +1,2 @@
+export MY_HOME="/home/n1amr"
+export MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"

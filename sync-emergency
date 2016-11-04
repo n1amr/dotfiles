@@ -1,0 +1,4 @@
+#!/bin/bash
+
+destination='/mnt/Storage/Backups/emergency'
+sync-files "$MY_SCRIPTS_ROOT/config/sync.rc/emergency" "$destination"
