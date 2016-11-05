@@ -6,3 +6,8 @@ set smartindent
 
 noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 noremap <c-s-down> ddp
+
+noremap <c-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+noremap <c-j> ddp
+
+noremap <c-w> :q!
