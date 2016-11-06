@@ -1,5 +1,6 @@
-SHELLNAME=bash
-export MY_SCRIPTS_ROOT="/home/n1amr/.shell-scripts"
+export SHELLNAME=bash
+export MY_HOME="/home/n1amr"
+export MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
 if [ -f "$MY_SCRIPTS_ROOT/config/shellrc" ]; then
     . "$MY_SCRIPTS_ROOT/config/shellrc"
 fi
