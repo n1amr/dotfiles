@@ -1,4 +1,9 @@
 #!/bin/bash
 
+includes="$MY_SCRIPTS_ROOT/config/sync.rc/emergency"
 destination='/mnt/Storage/Backups/emergency'
-sync-files "$MY_SCRIPTS_ROOT/config/sync.rc/emergency" "$destination"
+
+while IFS= read -r line; do
+    echo $line
+    rsync -k -av --delete --relative -b --backup-dir="$destination/trash" "$line" "$destination" --exclude-from="$MY_SCRIPTS_ROOT/config/sync.rc/emergency-excludes"
+done < "$includes"

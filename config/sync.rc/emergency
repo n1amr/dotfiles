@@ -1,39 +1,44 @@
-/home/n1amr/.gnupg
-/home/n1amr/.shell-scripts
-/home/n1amr/.ssh
-/mnt/Storage/Backups/LG G4/storage/emulated/0/backups/system/settings.xml
-/mnt/Storage/GoogleDrive/Personal/Bookmarks
+/home/n1amr/.gnupg/
+/home/n1amr/.shell-scripts/
+/home/n1amr/.ssh/
+/home/n1amr/.bash_history
+/home/n1amr/.zsh_history
+/mnt/Storage/Backups/LG G4/storage/emulated/0/WhatsApp/
+/mnt/Storage/Backups/LG G4/storage/emulated/0/backups/system/
+/mnt/Storage/GoogleDrive/Personal/Bookmarks/
 /mnt/Storage/GoogleDrive/Personal/main.kdbx
-/home/n1amr/.config/sublime-text-3
-/home/n1amr/.mozilla/firefox
+/home/n1amr/.config/sublime-text-3/
+/home/n1amr/.mozilla/firefox/
 /mnt/Storage/GoogleDrive/Personal/
 /mnt/Storage/Programs/Compression/7z1506-x64.exe
 /mnt/Storage/Programs/Compression/WinRAR/WinRAR 3.9 En Silent.exe
 /mnt/Storage/Programs/Internet/Browsers/Firefox Setup 49.0.2.exe
-/mnt/Storage/Programs/Internet/KeePass
+/mnt/Storage/Programs/Internet/KeePass/
 /mnt/Storage/Programs/Internet/VPN/openvpn-2.3.8.tar.gz
 /mnt/Storage/Programs/Internet/VPN/openvpn-install-2.3.8-I601-x86_64.exe
 /mnt/Storage/Programs/Internet/VPN/torbrowser-install-6.0.5_en-US.exe
 /mnt/Storage/Programs/Programming/Git/Git-2.10.2-64-bit.exe
 /mnt/Storage/Programs/Programming/Git/PortableGit-2.10.2-64-bit.7z.exe
-/mnt/Storage/Programs/Programming/Git/config
+/mnt/Storage/Programs/Programming/Git/config/
 /mnt/Storage/Programs/Programming/Python/python-3.5.2-amd64.exe
 /mnt/Storage/Programs/Programming/Python/python-3.5.2-embed-amd64.zip
-/mnt/Storage/Programs/Programming/Text Editors/Sublime Text
+/mnt/Storage/Programs/Programming/Text Editors/Sublime Text/
 /mnt/Storage/Programs/System/OpenSSH-Win64.zip
 /mnt/Storage/Programs/Ubuntu/Internet/VPN/openvpn-2.3.8.7z
 /mnt/Storage/Programs/Ubuntu/Internet/VPN/tor-browser-linux64-6.0.5_en-US.tar.xz
 /mnt/Storage/Programs/Ubuntu/Internet/firefox-49.0.2.tar.bz2
 /mnt/Storage/Programs/Ubuntu/Programming/Python/Python-3.5.2.tar.xz
-/mnt/Storage/Programs/Ubuntu/Programming/Python/packages
-/mnt/Storage/Programs/Ubuntu/Text Editors/Sublime Text
+/mnt/Storage/Programs/Ubuntu/Programming/Python/packages/
+/mnt/Storage/Programs/Ubuntu/Text Editors/Sublime Text/
 /mnt/Storage/Programs/Ubuntu/Tools/git-2.10.2.tar.gz
 /mnt/Storage/Programs/Utilities/Encryption/gpg4win-2.3.2.exe
 /mnt/Storage/Programs/Utilities/putty
 /mnt/Storage/Shared/Sublime Text 3 portable.zip
-/mnt/Storage/Shared/vpnbook
-/opt/sublime_text
+/mnt/Storage/Shared/vpnbook/
+/opt/sublime_text/
 /usr/bin/subl
-/usr/lib/keepass2
+/usr/lib/keepass2/
 /usr/share/applications/sublime_text.desktop
 /usr/share/icons/sublime-text.png
+/home/n1amr/.twitter-bots/
+/home/n1amr/.bitbucket

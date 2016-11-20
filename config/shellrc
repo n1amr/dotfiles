@@ -266,11 +266,6 @@ ps1_memory() {
 # Other
 ##################################################
 
-terminal_rezise
-print_welcome
-reset_ps1
-block_caret
-
 if [ $SHELLNAME = zsh ]; then
     nop=
     # bindkey -v
@@ -280,7 +275,16 @@ elif [ $SHELLNAME = bash ]; then
     shopt -s globstar
 fi
 
+HISTFILE=~/.zsh_history
+HISTSIZE=10000000
+SAVEHIST=$HISTSIZE
+
 EXTRA_FUNCTIONS="$MY_SCRIPTS_ROOT/extra-functions"
 if [[ -f "$EXTRA_FUNCTIONS" ]]; then
     source "$EXTRA_FUNCTIONS"
 fi
+
+terminal_rezise
+print_welcome
+reset_ps1
+block_caret
