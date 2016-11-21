@@ -1,9 +1,20 @@
 #!/bin/bash
 
+wifi_list=(
+    TEData
+    alaa
+    linksys
+    3com
+)
+
 state() {
     nmcli d | grep wlp8s0 | grep -Po '\S*connected'
 }
 
-if [ x"$(state)" == x"disconnected" ]; then
-    timeout 60s nmcli connection up id TEData;
-fi
+for id in "${wifi_list[@]}"; do
+    if [[ x"$(state)" == x"connected" ]]; then
+        break
+    fi
+    echo "connecting to $id..."
+    timeout 5s nmcli connection up id "$id"
+done
