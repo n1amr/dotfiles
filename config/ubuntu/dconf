@@ -151,7 +151,7 @@ ignore-paths=['/']
 lid-close-battery-action='suspend'
 use-time-for-policy=false
 lid-close-ac-action='nothing'
-sleep-inactive-battery-timeout=60
+sleep-inactive-battery-timeout=0
 
 [org/gnome/settings-daemon/plugins/media-keys]
 decrease-text-size=''
@@ -188,6 +188,8 @@ numlock-state='on'
 locate-pointer=false
 
 [org/gnome/simple-scan]
+save-directory='/mnt/Storage/Documents'
+text-dpi=150
 selected-device='hpaio:ect hp:/usb/HP_LaserJet_100_colorMFP_M175nw?serial=00CNC9CDD060 "HP LaserJet 100 colorMFP M175nw" "HP LaserJet 100 colorMFP M175nw USB 00CNC9CDD060 HPLIP" "MFG:Hewlett-Packard'
 document-type='photo'
 
@@ -224,8 +226,8 @@ height=600
 
 [org/gnome/rhythmbox]
 queue-as-sidebar=true
-position=(49, 24)
-size=(1366, 697)
+position=(0, 24)
+size=(1366, 701)
 display-page-tree-visible=true
 paned-position=185
 maximized=true
@@ -275,7 +277,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Title', true)
+sorting=('Location', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -417,7 +419,7 @@ replace-with-entry=['رامي لكح']
 
 [org/gnome/gedit/state/window]
 size=(1315, 343)
-state=4
+state=132
 bottom-panel-size=140
 side-panel-size=200
 side-panel-active-page='GeditWindowDocumentsPanel'
@@ -612,14 +614,14 @@ recreate-folders=true
 
 [org/gnome/file-roller/ui]
 sidebar-width=200
-window-height=744
+window-height=672
 window-width=1317
 
 [org/gnome/evolution-data-server]
 migrated=true
 
 [org/gnome/software]
-check-timestamp=int64 1479469603
+check-timestamp=int64 1479876667
 
 [org/gnome/nautilus/preferences]
 default-folder-viewer='list-view'
@@ -653,6 +655,10 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/dd83b43c-9179-4ec2-926d-fadb49f563ba]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -809,7 +815,7 @@ priority=0
 document-directory=@ms 'file:///home/n1amr'
 
 [org/gnome/evince/default]
-window-ratio=(2.1486928104575163, 0.90277777777777779)
+window-ratio=(2.2319327731092438, 0.79809976247030878)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -933,10 +939,13 @@ arrow-base-color='#e6e6e6d9'
 arrow-shadow-color='#dcdcdcd9'
 
 [org/compiz/profiles/unity/plugins/unityshell]
-icon-size=32
+background-color='#210202ff'
+icon-size=28
 launcher-hide-mode=0
+launcher-opacity=0.66600000858306885
 num-launchers=0
 inactive-shadow-color='#000000a5'
+urgent-animation=2
 
 [org/compiz/profiles/unity/plugins/grid]
 bottom-right-corner-action=3
@@ -968,7 +977,7 @@ background-color='#333333d9'
 [org/compiz/profiles/unity/plugins/expo]
 ground-color1='#b3b3b3cc'
 ground-color2='#b3b3b300'
-y-bottom-offset=48
+y-bottom-offset=44
 x-offset=0
 
 [org/compiz/profiles/unity/plugins/core]
@@ -997,7 +1006,7 @@ network-traffic=false
 disk-usage=false
 
 [org/virt-manager/virt-manager]
-manager-window-height=744
+manager-window-height=672
 manager-window-width=1317
 
 [org/virt-manager/virt-manager/details]
@@ -1026,7 +1035,7 @@ vm-window-size=(1315, 826)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/41b3337fe9994c9e8090b0bc2adf8626]
-vm-window-size=(1317, 744)
+vm-window-size=(1366, 701)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/977ff189696f4ef789f1757da55bee7d]
@@ -1135,7 +1144,7 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=140
-window-position=(342, 190)
+window-position=(318, 169)
 show-size-column=true
 show-hidden=false
 window-size=(730, 411)
@@ -1145,12 +1154,12 @@ sort-order='ascending'
 location-mode='path-bar'
 
 [org/gtk/settings/color-chooser]
-selected-color=(true, 1.0, 1.0, 1.0, 1.0)
-custom-colors=[(0.92156862745098034, 0.8666666666666667, 0.8666666666666667, 1.0), (0.92333333333333334, 0.86793333333333345, 0.86793333333333345, 1.0), (0.72000000000000008, 0.68160000000000021, 0.68160000000000021, 1.0), (0.0014888888888888985, 0.0014888888888888985, 0.22333333333333336, 1.0), (0.0, 0.0, 0.66666666666666663, 1.0), (0.022600000000000023, 0.022600000000000023, 0.37666666666666671, 1.0), (0.016177777777777749, 0.016177777777777749, 0.60666666666666669, 1.0), (0.44720000000000004, 0.44720000000000004, 0.78000000000000003, 1.0)]
+selected-color=(true, 0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0)
+custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.35000000000000003, 0.017500000000000016, 0.017500000000000016, 1.0), (0.26000000000000001, 0.016466666666666671, 0.016466666666666671, 1.0), (0.47000000000000003, 0.05953333333333341, 0.05953333333333341, 1.0), (0.47000000000000003, 0.059533333333333355, 0.059533333333333355, 1.0), (0.92156862745098034, 0.8666666666666667, 0.8666666666666667, 1.0), (0.92333333333333334, 0.86793333333333345, 0.86793333333333345, 1.0), (0.72000000000000008, 0.68160000000000021, 0.68160000000000021, 1.0)]
 
 [apps/update-manager]
 first-run=false
-launch-time=1479343664
+launch-time=1479525333
 window-height=363
 show-details=true
 window-width=453
@@ -1189,7 +1198,7 @@ window-is-maximized=true
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=['rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', 'unity --replace', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite', '/mnt/Storage/Lab/Hibernate/sqldeveloper/sqldeveloper.sh', 'gnome-terminal -e /bin/sh']
+history=['NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', 'unity --replace', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite', '/mnt/Storage/Lab/Hibernate/sqldeveloper/sqldeveloper.sh']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
