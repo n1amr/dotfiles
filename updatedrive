@@ -68,7 +68,7 @@ for f in "${auto_pull_folders[@]}"; do
 
     if [ -d "$DRIVE_PATH/$f" ]; then
         cd "$DRIVE_PATH/$f";
-        git status >/dev/null 2>&1 && git add . && git status && git commit -m "$(date)"
+        git status >/dev/null 2>&1 && git checkout master && git add . && git status && git commit -m "$(date)"
     fi
 done
 
