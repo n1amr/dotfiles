@@ -18,7 +18,8 @@ do
         echo -e $help_text
         exit
     fi
-    new_file=$(echo $file | sed 's/\( from \|-\|\:\)/\ /g');
+
+    new_file=$(echo $file | sed 's/\-\|\ //g' | sed 's/Screenshotfrom\|screenshot/screenshot\-/g')
 
     if [ "$file" != "$new_file" ]; then
         echo "$file" was renamed to "$new_file"
