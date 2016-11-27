@@ -5,5 +5,5 @@ destination='/mnt/Storage/Backups/emergency'
 
 while IFS= read -r line; do
     echo $line
-    rsync -k -av --delete --relative -b --backup-dir="$destination/trash" "$line" "$destination" --exclude-from="$MY_SCRIPTS_ROOT/config/sync.rc/emergency-excludes"
+    rsync -avbk --progress --delete --relative --backup-dir="$destination/trash" --exclude-from="$MY_SCRIPTS_ROOT/config/sync.rc/emergency-excludes" "$line" "$destination"
 done < "$includes"
