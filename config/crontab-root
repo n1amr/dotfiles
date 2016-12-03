@@ -8,6 +8,5 @@
 00       5        *        *        *        apt-get update && apt-get dist-upgrade -dy &
 *        *        *        *        *        /home/n1amr/.shell-scripts/battery-check &
 *        *        *        *        *        /home/n1amr/.shell-scripts/wifi-check &
-0        0-3,5-23 *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/sync file &
-00       4        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/sync file more &
+00       5        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/sync file more &
 #===============================================================================
