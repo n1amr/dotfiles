@@ -259,7 +259,7 @@ ps1_memory() {
 ##################################################
 
 if [ $SHELLNAME = zsh ]; then
-    nop=
+    unsetopt EXTENDED_HISTORY
     # bindkey -v
 elif [ $SHELLNAME = bash ]; then
     # set -o vi
