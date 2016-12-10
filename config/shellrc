@@ -178,9 +178,9 @@ alias tm='nohup terminator & exit'
 alias tr='trash -v'
 alias twitter='/home/n1amr/.rbenv/shims/t'
 alias u='up'
+lias updatepip='pip install -U $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
 alias v='vim'
 alias vi='vim'
-alias vpipupdate='pip install -U $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
 alias wget='wget -c'
 
 ##################################################
