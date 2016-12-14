@@ -2,9 +2,9 @@
 
 wifi_list=(
     TEData
-    alaa
-    linksys
-    3com
+#    alaa
+#    linksys
+#    3com
 )
 
 state() {
