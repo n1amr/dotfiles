@@ -151,7 +151,7 @@ ignore-paths=['/']
 lid-close-battery-action='suspend'
 use-time-for-policy=false
 lid-close-ac-action='nothing'
-sleep-inactive-battery-timeout=0
+sleep-inactive-battery-timeout=60
 
 [org/gnome/settings-daemon/plugins/media-keys]
 decrease-text-size=''
