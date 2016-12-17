@@ -37,7 +37,7 @@ integrated-menus=false
 always-show-menus=false
 
 [com/canonical/unity/devices]
-blacklist=['2804074804071908-', 'D02C91932C917566-Storage']
+blacklist=@as []
 
 [com/canonical/unity/interface]
 text-scale-factor=1.0
@@ -296,7 +296,7 @@ window-size=[1317, 744]
 [org/gnome/baobab/ui]
 active-chart='rings'
 window-state=132
-window-size=(1317, 744)
+window-size=(1366, 701)
 
 [org/gnome/terminal/legacy]
 new-terminal-mode='tab'
@@ -324,6 +324,7 @@ use-transparent-background=false
 use-theme-colors=false
 font='Monospace 12'
 use-theme-transparency=false
+scrollback-unlimited=true
 background-color='rgb(0,0,0)'
 background-transparency-percent=43
 
@@ -397,7 +398,9 @@ print-font-header-pango='Sans 11'
 print-wrap-mode='word'
 
 [org/gnome/gedit/preferences/editor]
+use-default-font=false
 scheme='cobalt'
+editor-font='Droid Naskh Shift Alt Bold 18'
 wrap-last-split-mode='word'
 
 [org/gnome/gedit/preferences/ui]
@@ -406,7 +409,7 @@ notebook-show-tabs-mode='always'
 show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
-virtual-root='file:///home/n1amr/.twitter-bots/bot-01-n1amr-search'
+virtual-root='file:///mnt/Storage/GoogleDrive/ASU/archive/Database'
 tree-view=true
 root='file:///'
 
@@ -604,7 +607,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.zip'
+default-extension='.7z'
 volume-size=104857
 encrypt-header=true
 
@@ -621,7 +624,7 @@ window-width=1317
 migrated=true
 
 [org/gnome/software]
-check-timestamp=int64 1479876667
+check-timestamp=int64 1543484195
 
 [org/gnome/nautilus/preferences]
 default-folder-viewer='list-view'
@@ -815,7 +818,7 @@ priority=0
 document-directory=@ms 'file:///home/n1amr'
 
 [org/gnome/evince/default]
-window-ratio=(2.2319327731092438, 0.79809976247030878)
+window-ratio=(2.2320261437908497, 0.88510101010101006)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -918,20 +921,35 @@ round-avatars=false
 text-transform-flags=uint32 0
 
 [org/compiz]
-existing-profiles=['Default', 'unity']
-current-profile='unity'
+existing-profiles=['Default', 'unity', 'my']
+current-profile='my'
 
 [org/compiz/profiles/unity-lowgfx/plugins/core]
 active-plugins=['core', 'composite', 'opengl', 'compiztoolbox', 'vpswitch', 'snap', 'mousepoll', 'resize', 'place', 'move', 'wall', 'grid', 'regex', 'imgpng', 'session', 'animation', 'fade', 'workarounds', 'scale', 'expo', 'ezoom', 'switcher']
+
+[org/compiz/profiles/Default]
+plugins-with-set-keys=['expo', 'scale', 'session', 'composite', 'ezoom', 'mousepoll', 'wall', 'resize', 'grid', 'commands', 'opengl', 'core', 'unitymtgrabhandles', 'place', 'move', 'animation', 'fade', 'snap', 'vpswitch', 'unityshell', 'workarounds', 'decor', 'switcher', 'staticswitcher', 'matecompat']
+
+[org/compiz/profiles/Default/plugins/core]
+outputs=['640x480+0+0']
+active-plugins=['core', 'composite', 'opengl', 'compiztoolbox', 'decor', 'vpswitch', 'snap', 'mousepoll', 'resize', 'place', 'move', 'wall', 'grid', 'regex', 'imgpng', 'session', 'gnomecompat', 'animation', 'fade', 'workarounds', 'scale', 'expo', 'ezoom', 'switcher']
+
+[org/compiz/profiles/Default/plugins/expo]
+y-bottom-offset=64
+x-offset=0
 
 [org/compiz/profiles/unity]
 plugins-with-set-keys=['commands', 'unityshell', 'resize', 'expo', 'gnomecompat', 'scale', 'staticswitcher', 'session', 'composite', 'ezoom', 'matecompat', 'mousepoll', 'switcher', 'wall', 'grid', 'opengl', 'core', 'unitymtgrabhandles', 'place', 'move', 'animation', 'fade', 'snap', 'decor', 'vpswitch', 'workarounds']
 
 [org/compiz/profiles/unity/plugins/ezoom]
-zoom-box-fill-color='#2f2f2f4f'
 zoom-box-outline-color='#2f2f4f9f'
+pan-right-key='<Super>Right'
+pan-up-key='<Super>Up'
+zoom-box-fill-color='#2f2f2f4f'
 zoom-in-key='<Super>KP_Add'
+pan-down-key='<Super>Down'
 zoom-out-key='<Super>KP_Subtract'
+pan-left-key='<Super>Left'
 
 [org/compiz/profiles/unity/plugins/wall]
 thumb-highlight-gradient-shadow-color='#dfdfdfff'
@@ -941,11 +959,8 @@ arrow-shadow-color='#dcdcdcd9'
 [org/compiz/profiles/unity/plugins/unityshell]
 background-color='#210202ff'
 icon-size=28
-launcher-hide-mode=0
 launcher-opacity=0.66600000858306885
-num-launchers=0
 inactive-shadow-color='#000000a5'
-urgent-animation=2
 
 [org/compiz/profiles/unity/plugins/grid]
 bottom-right-corner-action=3
@@ -986,19 +1001,80 @@ outputs=['1366x768+0+0']
 vsize=2
 active-plugins=['core', 'composite', 'opengl', 'place', 'move', 'snap', 'regex', 'compiztoolbox', 'vpswitch', 'imgpng', 'session', 'mousepoll', 'wall', 'resize', 'grid', 'copytex', 'commands', 'unitymtgrabhandles', 'animation', 'fade', 'workarounds', 'expo', 'scale', 'ezoom', 'unityshell']
 
+[org/compiz/profiles/my]
+plugins-with-set-keys=['expo', 'scale', 'staticswitcher', 'session', 'composite', 'ezoom', 'matecompat', 'mousepoll', 'switcher', 'wall', 'resize', 'grid', 'commands', 'opengl', 'core', 'unitymtgrabhandles', 'place', 'move', 'animation', 'fade', 'snap', 'decor', 'vpswitch', 'unityshell', 'workarounds']
+
+[org/compiz/profiles/my/plugins/ezoom]
+zoom-box-outline-color='#2f2f4f9f'
+pan-right-key='<Super>Right'
+pan-up-key='<Super>Up'
+zoom-box-fill-color='#2f2f2f4f'
+zoom-in-key='<Super>KP_Add'
+pan-down-key='<Super>Down'
+zoom-out-key='<Super>KP_Subtract'
+pan-left-key='<Super>Left'
+
+[org/compiz/profiles/my/plugins/wall]
+thumb-highlight-gradient-shadow-color='#dfdfdfff'
+arrow-base-color='#e6e6e6d9'
+arrow-shadow-color='#dcdcdcd9'
+
+[org/compiz/profiles/my/plugins/unityshell]
+background-color='#210202ff'
+icon-size=28
+launcher-opacity=0.66600000858306885
+inactive-shadow-color='#000000a5'
+
+[org/compiz/profiles/my/plugins/grid]
+bottom-right-corner-action=3
+bottom-left-corner-action=1
+top-left-corner-action=7
+top-edge-action=8
+bottom-edge-action=2
+top-right-corner-action=9
+
+[org/compiz/profiles/my/plugins/animation]
+unminimize-effects=['animation:Glide 2']
+close-matches=['((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) & !(role=toolTipTip | role=qtooltip_label) & !(type=Normal & override_redirect=1) & !(name=gnome-screensaver) & !(name=gnome-screenshot)', '((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) & !(class=\\.exe$))', '(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd)']
+open-matches=['((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) & !(role=toolTipTip | role=qtooltip_label) & !(type=Normal & override_redirect=1) & !(name=gnome-screensaver)', '((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) & !(class=\\.exe$))', '(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd)']
+
+[org/compiz/profiles/my/plugins/switcher]
+background-color='#333333d9'
+
+[org/compiz/profiles/my/plugins/decor]
+active-shadow-color='#00000080'
+inactive-shadow-color='#000000ff'
+
+[org/compiz/profiles/my/plugins/expo]
+ground-color1='#b3b3b3cc'
+ground-color2='#b3b3b300'
+y-bottom-offset=44
+x-offset=0
+
+[org/compiz/profiles/my/plugins/staticswitcher]
+background-color='#333333d9'
+
+[org/compiz/profiles/my/plugins/core]
+hsize=2
+outputs=['1366x768+0+0']
+vsize=2
+active-plugins=['core', 'composite', 'opengl', 'place', 'move', 'snap', 'regex', 'compiztoolbox', 'vpswitch', 'imgpng', 'session', 'mousepoll', 'wall', 'resize', 'grid', 'copytex', 'commands', 'unitymtgrabhandles', 'animation', 'fade', 'workarounds', 'expo', 'scale', 'ezoom', 'unityshell']
+
 [org/compiz/integrated]
 run-command-1=['disabled']
 run-command-10=['disabled']
 run-command-11=['disabled']
-run-command-12=['disabled']
+command-window-screenshot='gnome-screenshot -w'
 run-command-2=['disabled']
 run-command-3=['disabled']
-run-command-4=['disabled']
+run-command-12=['disabled']
 run-command-5=['disabled']
 run-command-6=['disabled']
-run-command-7=['disabled']
+run-command-4=['disabled']
 run-command-8=['disabled']
 run-command-9=['disabled']
+run-command-7=['disabled']
+show-hud=['<Alt>']
 
 [org/virt-manager/virt-manager/vmlist-fields]
 host-cpu-usage=true
@@ -1023,7 +1099,7 @@ vm-window-size=(1317, 744)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/e2dc9eee91154c3ab75f6a14a7f218e0]
-vm-window-size=(1317, 744)
+vm-window-size=(1317, 672)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/edc4728110dd4987a4f2ebb30f92f8a6]
@@ -1049,7 +1125,7 @@ vm-window-size=(1315, 826)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/5064d8ed98744c82a7087b22fb570de6]
-vm-window-size=(1317, 744)
+vm-window-size=(1317, 672)
 
 [org/virt-manager/virt-manager/vms/b66ef6540be04f1d873a6d10dc18e768]
 vm-window-size=(1315, 715)
@@ -1061,10 +1137,10 @@ vm-window-size=(847, 638)
 vm-window-size=(847, 603)
 
 [org/virt-manager/virt-manager/vms/9f059883f8aa4d4dbe03411c34407d96]
-vm-window-size=(1317, 744)
+vm-window-size=(1366, 701)
 
 [org/virt-manager/virt-manager/vms/8a936bba9f0f47b68b13a679723f6314]
-vm-window-size=(1317, 744)
+vm-window-size=(1317, 672)
 
 [org/virt-manager/virt-manager/vms/d679d4549d2540d4acc8c028053b0b79]
 vm-window-size=(1317, 744)
@@ -1112,7 +1188,7 @@ scaling=2
 vm-window-size=(847, 603)
 
 [org/virt-manager/virt-manager/vms/2f275a1f83b64ca190e2fdb7c8aa8812]
-vm-window-size=(1315, 715)
+vm-window-size=(1315, 672)
 
 [org/virt-manager/virt-manager/vms/6fcfb0cb2b2c470ea970b49885ff4021]
 vm-window-size=(1317, 744)
@@ -1127,7 +1203,7 @@ vm-window-size=(847, 603)
 vm-window-size=(847, 603)
 
 [org/virt-manager/virt-manager/vms/4f03c22b85374b88a73ba5f9d188d3da]
-vm-window-size=(1315, 826)
+vm-window-size=(1366, 701)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/cbedfb0dd5cb4ea3ab4e7dfde234a1ff]
@@ -1144,10 +1220,10 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=140
-window-position=(318, 169)
+window-position=(318, 168)
 show-size-column=true
 show-hidden=false
-window-size=(730, 411)
+window-size=(730, 412)
 sort-directories-first=true
 date-format='regular'
 sort-order='ascending'
@@ -1159,7 +1235,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1479525333
+launch-time=1481858133
 window-height=363
 show-details=true
 window-width=453
@@ -1198,7 +1274,7 @@ window-is-maximized=true
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=['NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', 'unity --replace', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite', '/mnt/Storage/Lab/Hibernate/sqldeveloper/sqldeveloper.sh']
+history=['unity --replace', 'NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite', '/mnt/Storage/Lab/Hibernate/sqldeveloper/sqldeveloper.sh']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
