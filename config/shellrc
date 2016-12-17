@@ -261,6 +261,8 @@ ps1_memory() {
 if [ $SHELLNAME = zsh ]; then
     unsetopt EXTENDED_HISTORY
     # bindkey -v
+    bindkey "^P" up-line-or-beginning-search
+    bindkey "^N" down-line-or-beginning-search
 elif [ $SHELLNAME = bash ]; then
     # set -o vi
     shopt -s autocd
