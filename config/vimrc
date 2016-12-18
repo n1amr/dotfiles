@@ -18,8 +18,18 @@ nnoremap <CR> o<Esc>
 
 nnoremap <Space> i_<Esc>r
 
-noremap <c-w> :q!
+noremap <c-w> :q<CR>
 
+nnoremap <C-L> <Esc>
+inoremap <C-L> <Esc>
+vnoremap <C-L> <Esc>
+onoremap <C-L> <Esc>
+
+" tab indenting
+nnoremap <TAB> >>
+nnoremap <S-TAB> <<
+
+" change cursor shape in different modes
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
   au InsertEnter,InsertChange *
