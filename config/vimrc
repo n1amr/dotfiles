@@ -13,6 +13,11 @@ noremap <c-s-down> ddp
 noremap <c-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 noremap <c-j> ddp
 
+nnoremap <C-O> O<Esc>
+nnoremap <CR> o<Esc>
+
+nnoremap <Space> i_<Esc>r
+
 noremap <c-w> :q!
 
 if has("autocmd")
