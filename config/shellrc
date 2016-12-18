@@ -263,6 +263,9 @@ if [ $SHELLNAME = zsh ]; then
     # bindkey -v
     bindkey "^P" up-line-or-beginning-search
     bindkey "^N" down-line-or-beginning-search
+    bindkey "^[k" dirhistory_zle_dirhistory_future
+    bindkey "^[j" dirhistory_zle_dirhistory_back
+    bindkey -s "^[u" "cd ..^M"
 elif [ $SHELLNAME = bash ]; then
     # set -o vi
     shopt -s autocd
