@@ -8,11 +8,11 @@ set pastetoggle=<F10>
 set cursorline
 set mouse=a
 
-noremap <c-s-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
-noremap <c-s-down> ddp
+noremap <c-s-up> :m-2<CR>
+noremap <c-s-down> :m+<CR>
 
-noremap <c-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
-noremap <c-j> ddp
+noremap <c-k> :m-2<CR>
+noremap <c-j> :m+<CR>
 
 nnoremap <C-O> O<Esc>
 nnoremap <CR> o<Esc>
