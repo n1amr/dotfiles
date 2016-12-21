@@ -9,6 +9,7 @@ set smartindent
 set pastetoggle=<F10>
 set cursorline
 set mouse=a
+set ignorecase
 
 noremap <c-s-up> :m-2<CR>
 noremap <c-s-down> :m+<CR>
@@ -42,26 +43,12 @@ if has("autocmd")
   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
 
-" Airline
-" Set position (left or right) if neccesary (default: "left").
-let g:sidepanel_pos = "left"
-" Set width if neccesary (default: 32)
-let g:sidepanel_width = 26
-
-" To use rabbit-ui.vim
-let g:sidepanel_use_rabbit_ui = 1
-
-" Activate plugins in SidePanel
-let g:sidepanel_config = {}
-let g:sidepanel_config['nerdtree'] = {}
-let g:sidepanel_config['tagbar'] = {}
-let g:sidepanel_config['gundo'] = {}
-let g:sidepanel_config['buffergator'] = {}
-let g:sidepanel_config['vimfiler'] = {}
-
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
+
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme="powerlineish"
