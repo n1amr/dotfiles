@@ -88,7 +88,7 @@ let s:gb = {}
 
 " fill it with absolute colors
 "let s:gb.dark0_hard  = ['#1d2021', 234]     " 29-32-33
-let s:gb.dark0_hard  = ['#1d2021', 0]     " 29-32-33
+let s:gb.dark0_hard  = ['#1d2021', 0]       " 29-32-33
 let s:gb.dark0       = ['#282828', 235]     " 40-40-40
 let s:gb.dark0_soft  = ['#32302f', 236]     " 50-48-47
 " let s:gb.dark1       = ['#3c3836', 237]     " 60-56-54
@@ -97,6 +97,8 @@ let s:gb.dark2       = ['#504945', 239]     " 80-73-69
 let s:gb.dark3       = ['#665c54', 241]     " 102-92-84
 let s:gb.dark4       = ['#7c6f64', 243]     " 124-111-100
 let s:gb.dark4_256   = ['#7c6f64', 243]     " 124-111-100
+
+let s:gb.black       = ['#282828', 235]     " 40-40-40
 
 let s:gb.gray_245    = ['#928374', 245]     " 146-131-116
 let s:gb.gray_244    = ['#928374', 244]     " 146-131-116
@@ -183,6 +185,7 @@ if s:is_dark
   let s:bg3  = s:gb.dark3
   let s:bg4  = s:gb.dark4
 
+  let s:black  = s:gb.black
   let s:gray = s:gb.gray_245
 
   let s:fg0 = s:gb.light0
@@ -502,7 +505,8 @@ hi! link Directory GruvboxGreenBold
 hi! link Title GruvboxGreenBold
 
 " Error messages on the command line
-call s:HL('ErrorMsg',   s:bg0, s:red, s:bold)
+"call s:HL('ErrorMsg',   s:bg0, s:red, s:bold)
+call s:HL('ErrorMsg',   s:black, s:red, s:bold)
 " More prompt: -- More --
 hi! link MoreMsg GruvboxYellowBold
 " Current mode message: -- INSERT --

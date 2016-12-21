@@ -31,6 +31,9 @@ onoremap <C-L> <Esc>
 nnoremap <TAB> >>
 nnoremap <S-TAB> <<
 
+vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
+"vnoremap // y/\V<C-R>"<CR>
+
 " change cursor shape in different modes
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
