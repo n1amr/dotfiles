@@ -42,7 +42,7 @@ if has("autocmd")
   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
 
-
+" Airline
 " Set position (left or right) if neccesary (default: "left").
 let g:sidepanel_pos = "left"
 " Set width if neccesary (default: 32)
@@ -59,3 +59,9 @@ let g:sidepanel_config['gundo'] = {}
 let g:sidepanel_config['buffergator'] = {}
 let g:sidepanel_config['vimfiler'] = {}
 
+" NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
