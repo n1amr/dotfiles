@@ -42,7 +42,7 @@ if !exists('g:gruvbox_underline')
   let g:gruvbox_underline=1
 endif
 if !exists('g:gruvbox_inverse')
-  let g:gruvbox_inverse=1
+  let g:gruvbox_inverse=0
 endif
 
 if !exists('g:gruvbox_guisp_fallback') || index(['fg', 'bg'], g:gruvbox_guisp_fallback) == -1
@@ -70,14 +70,15 @@ if exists('g:gruvbox_contrast')
 endif
 
 if !exists('g:gruvbox_contrast_dark')
-  let g:gruvbox_contrast_dark='medium'
+  let g:gruvbox_contrast_dark='hard'
 endif
 
 if !exists('g:gruvbox_contrast_light')
-  let g:gruvbox_contrast_light='medium'
+  let g:gruvbox_contrast_light='hard'
 endif
 
-let s:is_dark=(&background == 'dark')
+" let s:is_dark=(&background == 'dark')
+let s:is_dark=1
 
 " }}}
 " Palette: {{{
@@ -86,6 +87,7 @@ let s:is_dark=(&background == 'dark')
 let s:gb = {}
 
 " fill it with absolute colors
+" let s:gb.dark0_hard  = ['#1d2021', 234]     " 29-32-33
 let s:gb.dark0_hard  = ['#1d2021', 234]     " 29-32-33
 let s:gb.dark0       = ['#282828', 235]     " 40-40-40
 let s:gb.dark0_soft  = ['#32302f', 236]     " 50-48-47
@@ -106,6 +108,8 @@ let s:gb.light2      = ['#d5c4a1', 250]     " 213-196-161
 let s:gb.light3      = ['#bdae93', 248]     " 189-174-147
 let s:gb.light4      = ['#a89984', 246]     " 168-153-132
 let s:gb.light4_256  = ['#a89984', 246]     " 168-153-132
+
+let s:gb.dark_black  = ['#000000', 000]     " 00-00-00
 
 let s:gb.bright_red     = ['#fb4934', 167]     " 251-73-52
 let s:gb.bright_green   = ['#b8bb26', 142]     " 184-187-38
@@ -177,6 +181,7 @@ if s:is_dark
 
   let s:bg1  = s:gb.dark1
   let s:bg2  = s:gb.dark2
+  let s:bg2  = s:gb.dark2
   let s:bg3  = s:gb.dark3
   let s:bg4  = s:gb.dark4
 
@@ -197,6 +202,7 @@ if s:is_dark
   let s:purple = s:gb.bright_purple
   let s:aqua   = s:gb.bright_aqua
   let s:orange = s:gb.bright_orange
+  let s:black  = s:gb.dark_black
 else
   let s:bg0  = s:gb.light0
   if g:gruvbox_contrast_light == 'soft'
@@ -241,6 +247,7 @@ if g:gruvbox_termcolors == 16
   let s:purple[1] = 13
   let s:aqua[1]   = 14
   let s:fg1[1]    = 15
+  let s:black[1]  = 0
 endif
 
 " save current relative colors back to palette dictionary
@@ -433,7 +440,7 @@ call s:HL('GruvboxAquaSign', s:aqua, s:sign_column, s:invert_signs)
 " General UI: {{{
 
 " Normal text
-call s:HL('Normal', s:fg1, s:bg0)
+call s:HL('Normal', s:fg1, s:black)
 
 " Correct background (see issue #7):
 " --- Problem with changing between dark and light on 256 color terminal
@@ -446,7 +453,7 @@ endif
 
 if version >= 700
   " Screen line that the cursor is
-  call s:HL('CursorLine',   s:none, s:bg1)
+  call s:HL('CursorLine',   s:none, s:bg0)
   " Screen column that the cursor is
   hi! link CursorColumn CursorLine
 
@@ -458,7 +465,7 @@ if version >= 700
   hi! link TabLine TabLineFill
 
   " Match paired bracket under the cursor
-  call s:HL('MatchParen', s:none, s:bg3, s:bold)
+  call s:HL('MatchParen', s:none, s:bg2, s:bold)
 endif
 
 if version >= 703
@@ -469,13 +476,15 @@ if version >= 703
   call s:HL('Conceal', s:blue, s:none)
 
   " Line number of CursorLine
-  call s:HL('CursorLineNr', s:yellow, s:bg1)
+  call s:HL('CursorLineNr', s:yellow, s:bg0)
 endif
 
 hi! link NonText GruvboxBg2
 hi! link SpecialKey GruvboxBg2
 
-call s:HL('Visual',    s:none,  s:bg3, s:invert_selection)
+" call s:HL('Visual',    s:none,  s:bg3, s:invert_selection)
+" call s:HL('Visual',    s:blue,  s:bg0, s:invert_selection)
+call s:HL('Visual',    s:none,  s:bg1, s:invert_selection)
 hi! link VisualNOS Visual
 
 call s:HL('Search',    s:yellow, s:bg0, s:inverse)
@@ -513,7 +522,7 @@ hi! link WarningMsg GruvboxRedBold
 " Gutter: {{{
 
 " Line number for :number and :# commands
-call s:HL('LineNr', s:bg4, s:number_column)
+call s:HL('LineNr', s:bg3, s:number_column)
 
 " Column where signs are displayed
 call s:HL('SignColumn', s:none, s:sign_column)
