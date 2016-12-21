@@ -42,7 +42,7 @@ if !exists('g:gruvbox_underline')
   let g:gruvbox_underline=1
 endif
 if !exists('g:gruvbox_inverse')
-  let g:gruvbox_inverse=1
+  let g:gruvbox_inverse=0
 endif
 
 if !exists('g:gruvbox_guisp_fallback') || index(['fg', 'bg'], g:gruvbox_guisp_fallback) == -1
@@ -70,14 +70,15 @@ if exists('g:gruvbox_contrast')
 endif
 
 if !exists('g:gruvbox_contrast_dark')
-  let g:gruvbox_contrast_dark='medium'
+  let g:gruvbox_contrast_dark='hard'
 endif
 
 if !exists('g:gruvbox_contrast_light')
-  let g:gruvbox_contrast_light='medium'
+  let g:gruvbox_contrast_light='hard'
 endif
 
-let s:is_dark=(&background == 'dark')
+" let s:is_dark=(&background == 'dark')
+let s:is_dark=1
 
 " }}}
 " Palette: {{{
@@ -86,10 +87,12 @@ let s:is_dark=(&background == 'dark')
 let s:gb = {}
 
 " fill it with absolute colors
-let s:gb.dark0_hard  = ['#1d2021', 234]     " 29-32-33
+"let s:gb.dark0_hard  = ['#1d2021', 234]     " 29-32-33
+let s:gb.dark0_hard  = ['#1d2021', 0]     " 29-32-33
 let s:gb.dark0       = ['#282828', 235]     " 40-40-40
 let s:gb.dark0_soft  = ['#32302f', 236]     " 50-48-47
-let s:gb.dark1       = ['#3c3836', 237]     " 60-56-54
+" let s:gb.dark1       = ['#3c3836', 237]     " 60-56-54
+let s:gb.dark1       = ['#000000', 236]     " 60-56-54
 let s:gb.dark2       = ['#504945', 239]     " 80-73-69
 let s:gb.dark3       = ['#665c54', 241]     " 102-92-84
 let s:gb.dark4       = ['#7c6f64', 243]     " 124-111-100
@@ -475,7 +478,7 @@ endif
 hi! link NonText GruvboxBg2
 hi! link SpecialKey GruvboxBg2
 
-call s:HL('Visual',    s:none,  s:bg3, s:invert_selection)
+call s:HL('Visual',    s:none,  s:bg2, s:invert_selection)
 hi! link VisualNOS Visual
 
 call s:HL('Search',    s:yellow, s:bg0, s:inverse)
