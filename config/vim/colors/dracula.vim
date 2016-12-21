@@ -147,5 +147,5 @@ hi vimHiGuiFgBg ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE
 "      TERM=xterm-256color
 "      export $TERM
 
-execute "set background=dark"
+" execute "set background=dark"
 "-------------------
