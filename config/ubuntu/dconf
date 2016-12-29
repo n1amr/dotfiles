@@ -37,7 +37,7 @@ integrated-menus=false
 always-show-menus=false
 
 [com/canonical/unity/devices]
-blacklist=@as []
+blacklist=['2804074804071908-']
 
 [com/canonical/unity/interface]
 text-scale-factor=1.0
@@ -160,6 +160,7 @@ toggle-contrast=''
 terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
+screensaver='<Primary><Alt>l'
 custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']
 on-screen-keyboard=''
 
@@ -322,7 +323,7 @@ use-custom-command=false
 use-system-font=false
 use-transparent-background=false
 use-theme-colors=false
-font='Monospace 12'
+font='DejaVu Sans Mono for Powerline 12'
 use-theme-transparency=false
 scrollback-unlimited=true
 background-color='rgb(0,0,0)'
@@ -607,7 +608,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.7z'
+default-extension='.zip'
 volume-size=104857
 encrypt-header=true
 
@@ -618,7 +619,7 @@ recreate-folders=true
 [org/gnome/file-roller/ui]
 sidebar-width=200
 window-height=672
-window-width=1317
+window-width=681
 
 [org/gnome/evolution-data-server]
 migrated=true
@@ -637,10 +638,10 @@ geometry='1315x715+49+24'
 maximized=true
 
 [org/gnome/nautilus/desktop]
-home-icon-visible=true
+home-icon-visible=false
 network-icon-visible=false
-volumes-visible=true
-trash-icon-visible=true
+volumes-visible=false
+trash-icon-visible=false
 
 [org/gnome/nautilus/list-view]
 default-visible-columns=['name', 'size', 'type', 'date_modified']
@@ -661,11 +662,15 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+[org/gnome/nm-applet/eap/d8bffd44-b8ac-455c-9898-f1dd3891e68f]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/c061ece1-d09a-416d-a41c-c432948e5d5f]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -749,7 +754,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/d8bffd44-b8ac-455c-9898-f1dd3891e68f]
+[org/gnome/nm-applet/eap/a4503482-0ab7-4fa2-8a06-93874a60fa37]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -818,7 +823,7 @@ priority=0
 document-directory=@ms 'file:///home/n1amr'
 
 [org/gnome/evince/default]
-window-ratio=(2.2320261437908497, 0.88510101010101006)
+window-ratio=(2.2947338713470722, 0.83265034624475887)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -921,7 +926,7 @@ round-avatars=false
 text-transform-flags=uint32 0
 
 [org/compiz]
-existing-profiles=['Default', 'unity', 'my']
+existing-profiles=['Default', 'unity', 'my', 'tmp']
 current-profile='my'
 
 [org/compiz/profiles/unity-lowgfx/plugins/core]
@@ -930,11 +935,18 @@ active-plugins=['core', 'composite', 'opengl', 'compiztoolbox', 'vpswitch', 'sna
 [org/compiz/profiles/Default]
 plugins-with-set-keys=['expo', 'scale', 'session', 'composite', 'ezoom', 'mousepoll', 'wall', 'resize', 'grid', 'commands', 'opengl', 'core', 'unitymtgrabhandles', 'place', 'move', 'animation', 'fade', 'snap', 'vpswitch', 'unityshell', 'workarounds', 'decor', 'switcher', 'staticswitcher', 'matecompat']
 
-[org/compiz/profiles/Default/plugins/core]
+[org/compiz/profiles/tmp]
+plugins-with-set-keys=['expo', 'scale', 'staticswitcher', 'session', 'composite', 'ezoom', 'matecompat', 'mousepoll', 'switcher', 'wall', 'resize', 'grid', 'commands', 'opengl', 'core', 'unitymtgrabhandles', 'place', 'move', 'animation', 'fade', 'snap', 'decor', 'vpswitch', 'unityshell', 'workarounds']
+
+[org/compiz/profiles/tmp/plugins/decor]
+decoration-match='(any) & !(title=embeddedterminal) '
+
+[org/compiz/profiles/tmp/plugins/core]
+hide-skip-taskbar-windows=false
 outputs=['640x480+0+0']
 active-plugins=['core', 'composite', 'opengl', 'compiztoolbox', 'decor', 'vpswitch', 'snap', 'mousepoll', 'resize', 'place', 'move', 'wall', 'grid', 'regex', 'imgpng', 'session', 'gnomecompat', 'animation', 'fade', 'workarounds', 'scale', 'expo', 'ezoom', 'switcher']
 
-[org/compiz/profiles/Default/plugins/expo]
+[org/compiz/profiles/tmp/plugins/expo]
 y-bottom-offset=64
 x-offset=0
 
@@ -959,7 +971,7 @@ arrow-shadow-color='#dcdcdcd9'
 [org/compiz/profiles/unity/plugins/unityshell]
 background-color='#210202ff'
 icon-size=28
-launcher-opacity=0.66600000858306885
+launcher-opacity=0.69780219780219777
 inactive-shadow-color='#000000a5'
 
 [org/compiz/profiles/unity/plugins/grid]
@@ -1235,7 +1247,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1481858133
+launch-time=1482269571
 window-height=363
 show-details=true
 window-width=453
@@ -1274,7 +1286,7 @@ window-is-maximized=true
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=['unity --replace', 'NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite', '/mnt/Storage/Lab/Hibernate/sqldeveloper/sqldeveloper.sh']
+history=['gnome-terminal --window-with-profile=trans777 --geometry 67x35+220+50', 'unity --replace', 'NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
