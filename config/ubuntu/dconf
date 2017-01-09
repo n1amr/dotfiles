@@ -236,7 +236,7 @@ time-display=false
 
 [org/gnome/rhythmbox/player]
 play-order='shuffle'
-volume=1.0
+volume=0.8124847412109375
 
 [org/gnome/rhythmbox/podcast]
 download-location='file:///mnt/Storage/Sounds/Music'
@@ -278,12 +278,12 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Location', true)
+sorting=('Album', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
 browser-views='artists-albums'
-visible-columns=['post-time', 'artist', 'duration', 'date', 'track-number', 'album', 'play-count', 'location']
+visible-columns=['post-time', 'artist', 'duration', 'location', 'date', 'track-number', 'album', 'play-count']
 
 [org/gnome/rhythmbox/rhythmdb]
 locations=['file:///mnt/Storage/Sounds/Music']
@@ -823,7 +823,7 @@ priority=0
 document-directory=@ms 'file:///home/n1amr'
 
 [org/gnome/evince/default]
-window-ratio=(2.2947338713470722, 0.83265034624475887)
+window-ratio=(2.2957983193277309, 0.83254156769596199)
 continuous=true
 fullscreen=false
 show-sidebar=false
