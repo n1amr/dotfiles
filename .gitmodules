@@ -4,9 +4,9 @@
     branch = master
 [submodule "config/sublime-text-3"]
     path = config/sublime-text-3
-    url = http://bitbucket.org/n1amr/sublime-text-3-config.git
+    url = http://gitlab.com/n1amr/sublime-text-3-config.git
     branch = master
 [submodule "config/secret"]
     path = config/secret
-    url = http://bitbucket.org/n1amr/shell-scripts-secret.git
+    url = http://gitlab.com/n1amr/shell-scripts-secret.git
     branch = master
