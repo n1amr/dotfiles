@@ -181,7 +181,7 @@ name='Sublime Text 3'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
 binding='<Primary><Alt>p'
-command='gnome-terminal -e ipython'
+command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; ipython'\""
 name='iPython'
 
 [org/gnome/settings-daemon/plugins/xsettings]
@@ -828,7 +828,7 @@ priority=0
 document-directory=@ms 'file:///home/n1amr'
 
 [org/gnome/evince/default]
-window-ratio=(2.2957983193277309, 0.83254156769596199)
+window-ratio=(1.7254901960784315, 0.84848484848484851)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1291,7 +1291,7 @@ window-is-maximized=true
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=['gnome-terminal --window-with-profile=trans777 --geometry 67x35+220+50', 'unity --replace', 'NetworkManager', 'rackup', '/home/n1amr/.local/bin/keepass', 'unity', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2', 'cd /mnt/Storage/GoogleDrive/Personal && drive pull --no-prompt main.kdbx && keepass2 %f', '/mnt/Storage/Programs/Ubuntu/Internet/utorrent-server-alpha-v3_3/utserver', 'sqlitebrowser /mnt/Storage/Lab/Hibernate/workspace/learn-java-hibernate/local-db.sqlite']
+history=['unity --replace']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
