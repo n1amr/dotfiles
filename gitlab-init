@@ -1,0 +1,50 @@
+#!/bin/bash
+
+repo_name="$1"
+TOKEN_FILE="${MY_SCRIPTS_ROOT}/config/secret/gitlab_token"
+
+if [[ -x "${TOKEN_FILE}" ]]; then
+    source "${TOKEN_FILE}"
+else
+    echo "Please enter a new private token. From https://gitlab.com/profile/account"
+    echo -n ">>> "
+    read GITLAB_PRIVATE_TOKEN
+    echo "export GITLAB_PRIVATE_TOKEN = ${GITLAB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
+    chmod +x "${TOKEN_FILE}"
+fi
+
+username="n1amr"
+private_token=${GITLAB_PRIVATE_TOKEN}
+url="https://gitlab.com/api/v3/projects?private_token=${private_token}"
+
+if [[ -z ${repo_name} ]]; then
+    echo "Please provide a name for the repository"
+    exit 1
+fi
+
+echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O /dev/null
+wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O /dev/null
+r=$?
+repo_link="git@gitlab.com:${username}/${repo_name}"
+
+if [[ $r == 0 ]]; then
+    echo "Created repo successfully [${repo_link}]"
+else
+    echo "error ($r)"
+    exit $r
+fi
+
+if [[ ! -d .git ]]; then
+    git init
+fi
+
+remote_name='gitlab'
+git remote -v | grep -P '^origin' > /dev/null
+if [[ $? = 1 ]]; then
+    remote_name='origin'
+fi
+echo "Remote name is ${remote_name}"
+
+git remote add "${remote_name}" "${repo_link}"
+echo "Added remote name is ${remote_name}"
+git remote -v
