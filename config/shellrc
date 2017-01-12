@@ -59,8 +59,6 @@ fi
 export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
 export GOPATH="$MY_HOME/.gopath"
 
-export PATH="/usr/bin/:$PATH"
-export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$MY_HOME/.pyenv/bin:$PATH"
 export PATH="$MY_HOME/.rbenv/bin:$PATH"
