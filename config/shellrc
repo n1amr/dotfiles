@@ -3,15 +3,16 @@ unset MY_SCRIPTS_ROOT
 unset SHELLNAME
 
 # Determine shell type
-if [[ -n "$BASH_VERSION" ]]; then
+if [ -n "$BASH_VERSION" ]; then
     SHELLNAME=bash
-elif [[ -n "$ZSH_VERSION" ]]; then
+elif [ -n "$ZSH_VERSION" ]; then
     SHELLNAME=zsh
 else
-    SHELLNAME=sh
+    echo 'Shell type not supported by this script'
+    return
 fi
 
-CONFIG_FILE=~/.shellrc_config
+CONFIG_FILE=~/.shell-scripts_config
 
 # Load config file
 if [[ -f "${CONFIG_FILE}" ]]; then

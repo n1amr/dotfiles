@@ -1,0 +1,77 @@
+#!/bin/sh
+
+CONFIG_FILE=`realpath ~/.shell-scripts_config`
+if [ -f "${CONFIG_FILE}" ]; then
+    . "${CONFIG_FILE}"
+fi
+
+# Set MY_HOME
+MY_HOME="${HOME}"
+echo -n "Enter your home directory [${MY_HOME}]: "
+read response
+if [ ! -z "${response}" ]; then
+    MY_HOME=`realpath "${response}"`
+fi
+
+# Set MY_SCRIPTS_ROOT
+MY_SCRIPTS_ROOT=`realpath .`
+echo -n "Enter shell-scripts directory [${MY_SCRIPTS_ROOT}]: "
+read response
+if [ ! -z "${response}" ]; then
+    MY_SCRIPTS_ROOT=`realpath "${response}"`
+fi
+
+if [ ! -d "$MY_HOME/.shell-scripts" ]; then
+    mv "$MY_HOME/.shell-scripts" "$MY_HOME/.shell-scripts.bak.$(date +%s)"
+    ln -s "$MY_SCRIPTS_ROOT" "$MY_HOME/.shell-scripts"
+    MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
+fi
+
+# Backup existing files
+for cf in bashrc gitconfig inputrc irbrc netrc sqliterc trc vim vimrc zshrc; do
+    f="$MY_HOME/.$cf"
+    if [ -e "$f" ]; then
+        echo mv "$f" "$f.bak.$(date +%s)"
+        mv "$f" "$f.bak.$(date +%s)"
+    fi
+done
+
+for cf in gitconfig inputrc irbrc sqliterc vim vimrc; do
+    echo -n "Link ${MY_SCRIPTS_ROOT}/config/${cf} to ~/.${cf} ? [y/n] "
+    read response
+    if [ x"${response}" != xn ]; then
+        ln -s "${MY_SCRIPTS_ROOT}/config/${cf}" ~/."${cf}"
+    fi
+done
+
+for cf in bashrc zshrc; do
+    echo -n "Link ${MY_SCRIPTS_ROOT}/config/shellrc to ~/.${cf} ? [y/n] "
+    read response
+    if [ x"${response}" != xn ]; then
+        ln -s "${MY_SCRIPTS_ROOT}/config/shellrc" ~/."${cf}"
+    fi
+done
+
+for cf in netrc trc; do
+    echo -n "Link ${MY_SCRIPTS_ROOT}/config/secret/${cf} to ~/.${cf} ? [y/n] "
+    read response
+    if [ x"${response}" != xn ]; then
+        ln -s "${MY_SCRIPTS_ROOT}/config/secret/${cf}" ~/."${cf}"
+    fi
+done
+
+if [ ! -e "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ]; then
+    cd "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom"
+    mkdir "themes"
+    cd themes
+    ln -s ../../../n1amr.zsh-theme n1amr.zsh-theme
+fi
+
+echo "#!/bin/bash" > "$CONFIG_FILE"
+echo "export MY_HOME='${MY_HOME}'" >> "$CONFIG_FILE"
+echo "export MY_SCRIPTS_ROOT='${MY_SCRIPTS_ROOT}'" >> "$CONFIG_FILE"
+
+echo
+echo "Contents of config file at $CONFIG_FILE:"
+echo
+cat "$CONFIG_FILE"
