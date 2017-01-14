@@ -23,7 +23,7 @@ fi
 
 if [ ! -d "$MY_HOME/.shell-scripts" ]; then
     mv "$MY_HOME/.shell-scripts" "$MY_HOME/.shell-scripts.bak.$(date +%s)"
-    ln -s "$MY_SCRIPTS_ROOT" "$MY_HOME/.shell-scripts"
+    ln -sf "$MY_SCRIPTS_ROOT" "$MY_HOME/.shell-scripts"
     MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
 fi
 
@@ -40,7 +40,7 @@ for cf in gitconfig inputrc irbrc sqliterc vim vimrc; do
     echo -n "Link ${MY_SCRIPTS_ROOT}/config/${cf} to ~/.${cf} ? [y/n] "
     read response
     if [ x"${response}" != xn ]; then
-        ln -s "${MY_SCRIPTS_ROOT}/config/${cf}" ~/."${cf}"
+        ln -sf "${MY_SCRIPTS_ROOT}/config/${cf}" ~/."${cf}"
     fi
 done
 
@@ -48,7 +48,7 @@ for cf in bashrc zshrc; do
     echo -n "Link ${MY_SCRIPTS_ROOT}/config/shellrc to ~/.${cf} ? [y/n] "
     read response
     if [ x"${response}" != xn ]; then
-        ln -s "${MY_SCRIPTS_ROOT}/config/shellrc" ~/."${cf}"
+        ln -sf "${MY_SCRIPTS_ROOT}/config/shellrc" ~/."${cf}"
     fi
 done
 
@@ -56,7 +56,7 @@ for cf in netrc trc; do
     echo -n "Link ${MY_SCRIPTS_ROOT}/config/secret/${cf} to ~/.${cf} ? [y/n] "
     read response
     if [ x"${response}" != xn ]; then
-        ln -s "${MY_SCRIPTS_ROOT}/config/secret/${cf}" ~/."${cf}"
+        ln -sf "${MY_SCRIPTS_ROOT}/config/secret/${cf}" ~/."${cf}"
     fi
 done
 
@@ -64,7 +64,7 @@ if [ ! -e "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ];
     cd "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom"
     mkdir "themes"
     cd themes
-    ln -s ../../../n1amr.zsh-theme n1amr.zsh-theme
+    ln -sf ../../../n1amr.zsh-theme n1amr.zsh-theme
 fi
 
 echo "#!/bin/bash" > "$CONFIG_FILE"
