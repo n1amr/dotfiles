@@ -1,5 +1,21 @@
-if [ -z $SHELLNAME ]; then
+unset MY_HOME
+unset MY_SCRIPTS_ROOT
+unset SHELLNAME
+
+# Determine shell type
+if [[ -n "$BASH_VERSION" ]]; then
     SHELLNAME=bash
+elif [[ -n "$ZSH_VERSION" ]]; then
+    SHELLNAME=zsh
+else
+    SHELLNAME=sh
+fi
+
+CONFIG_FILE=~/.shellrc_config
+
+# Load config file
+if [[ -f "${CONFIG_FILE}" ]]; then
+    source "${CONFIG_FILE}"
 fi
 
 if [ -z $MY_HOME ]; then
