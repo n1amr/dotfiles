@@ -27,6 +27,8 @@ cd "$DRIVE_PATH"
 if [ $method == push -o $method == pull ]; then
     echo ${method}ing...
     drive ${method} $OPTIONS -exclude-ops=delete "$FILE_PATH"
+else
+    echo 'Usage: kp <push|pull>'
 fi
 
 exit 0
