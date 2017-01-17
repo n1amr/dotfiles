@@ -31,3 +31,9 @@
 
 [commit]
 	gpgsign = false
+
+[diff]
+	tool = vimdiff
+
+[merge]
+	tool = vimdiff
