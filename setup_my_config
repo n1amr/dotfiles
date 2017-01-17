@@ -28,7 +28,7 @@ if [ ! -d "$MY_HOME/.shell-scripts" ]; then
 fi
 
 # Backup existing files
-for cf in bashrc gitconfig inputrc irbrc netrc sqliterc trc vim vimrc zshrc; do
+for cf in bashrc gitconfig gitignore inputrc irbrc netrc sqliterc trc vim vimrc zshrc; do
     f="$MY_HOME/.$cf"
     if [ -e "$f" ]; then
         echo mv "$f" "$f.bak.$(date +%s)"
@@ -36,7 +36,7 @@ for cf in bashrc gitconfig inputrc irbrc netrc sqliterc trc vim vimrc zshrc; do
     fi
 done
 
-for cf in gitconfig inputrc irbrc sqliterc vim vimrc; do
+for cf in gitconfig gitignore inputrc irbrc sqliterc vim vimrc; do
     echo -n "Link ${MY_SCRIPTS_ROOT}/config/${cf} to ~/.${cf} ? [y/n] "
     read response
     if [ x"${response}" != xn ]; then
