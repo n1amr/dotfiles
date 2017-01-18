@@ -23,7 +23,7 @@ fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
 if [ ! -d "$DOTFILES_DIR" ]; then
-    mv "$DOTFILES_DIR" "${DOTFILES_DIR.bak}.$(date +%s)"
+    mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
     ln -sf "$MY_SCRIPTS_ROOT" "$DOTFILES_DIR"
     MY_SCRIPTS_ROOT="$DOTFILES_DIR"
 fi
