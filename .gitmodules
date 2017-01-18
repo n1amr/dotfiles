@@ -8,7 +8,7 @@
     branch = master
 [submodule "config/secret"]
     path = config/secret
-    url = http://gitlab.com/n1amr/shell-scripts-secret.git
+    url = http://gitlab.com/n1amr/dotfiles-secret.git
     branch = master
 [submodule "config/vim/bundle/nerdtree.vim"]
     path = config/vim/bundle/nerdtree.vim
