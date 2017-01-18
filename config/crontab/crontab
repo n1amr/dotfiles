@@ -2,9 +2,9 @@
 #===============================================================================
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
-*        *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/battery-check &
-*/15     *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/twitter-bots &
-*/15     *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/ring &
-*/30     *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/updatedrive &
-0        */2      *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/updatevpn &
+*        *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/battery-check &
+*/15     *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/twitter-bots &
+*/15     *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/ring &
+*/30     *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/updatedrive &
+0        */2      *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/updatevpn &
 #===============================================================================

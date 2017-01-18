@@ -3,7 +3,7 @@
 DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu"
 BACKUP_ROOT_DIR="${DESTINATION_DIR}/backups"
 
-source ~/.shell-scripts_config
+source ~/.dotfiles_config
 CONFIG_FOLDER="$MY_SCRIPTS_ROOT/config/sync.rc"
 
 timestamp="$(date +%F-%H-%M-%S)"

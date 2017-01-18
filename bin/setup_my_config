@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONFIG_FILE=`realpath ~/.shell-scripts_config`
+CONFIG_FILE=`realpath ~/.dotfiles_config`
 if [ -f "${CONFIG_FILE}" ]; then
     . "${CONFIG_FILE}"
 fi
@@ -15,16 +15,17 @@ fi
 
 # Set MY_SCRIPTS_ROOT
 MY_SCRIPTS_ROOT=`realpath .`
-echo -n "Enter shell-scripts directory [${MY_SCRIPTS_ROOT}]: "
+echo -n "Enter dofiles directory [${MY_SCRIPTS_ROOT}]: "
 read response
 if [ ! -z "${response}" ]; then
     MY_SCRIPTS_ROOT=`realpath "${response}"`
 fi
 
-if [ ! -d "$MY_HOME/.shell-scripts" ]; then
-    mv "$MY_HOME/.shell-scripts" "$MY_HOME/.shell-scripts.bak.$(date +%s)"
-    ln -sf "$MY_SCRIPTS_ROOT" "$MY_HOME/.shell-scripts"
-    MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
+DOTFILES_DIR="$MY_HOME/.dotfiles"
+if [ ! -d "$DOTFILES_DIR" ]; then
+    mv "$DOTFILES_DIR" "${DOTFILES_DIR.bak}.$(date +%s)"
+    ln -sf "$MY_SCRIPTS_ROOT" "$DOTFILES_DIR"
+    MY_SCRIPTS_ROOT="$DOTFILES_DIR"
 fi
 
 # Backup existing files

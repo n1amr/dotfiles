@@ -12,7 +12,7 @@ else
     return
 fi
 
-CONFIG_FILE=~/.shell-scripts_config
+CONFIG_FILE=~/.dotfiles_config
 
 # Load config file
 if [ -f "${CONFIG_FILE}" ]; then
@@ -24,7 +24,7 @@ if [ -z $MY_HOME ]; then
 fi
 
 if [ -z $MY_SCRIPTS_ROOT ]; then
-    export MY_SCRIPTS_ROOT="$MY_HOME/.shell-scripts"
+    export MY_SCRIPTS_ROOT="$MY_HOME/.dotfiles"
 fi
 
 # Initialize shell

@@ -4,7 +4,7 @@ VPN_HOME='/mnt/Storage/Shared/vpnbook'
 credentials_file="$VPN_HOME/credentials/current"
 profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
-source ~/.shell-scripts_config
+source ~/.dotfiles_config
 credentials_updater="$MY_SCRIPTS_ROOT/bin/updatevpn"
 
 connect () {

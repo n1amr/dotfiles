@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.shell-scripts_config
+source ~/.dotfiles_config
 GOPATH="$MY_HOME/.gopath"
 PATH="$GOPATH/bin:$PATH"
 
