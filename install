@@ -76,3 +76,5 @@ echo
 echo "Contents of config file at $CONFIG_FILE:"
 echo
 cat "$CONFIG_FILE"
+
+exec "$SHELL"
