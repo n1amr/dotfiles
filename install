@@ -23,50 +23,48 @@ fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
 if [ ! -d "$DOTFILES_DIR" ]; then
-    mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
+    if [ -e "$DOTFILES_DIR" ]; then
+        mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
+    fi
     ln -sf "$MY_SCRIPTS_ROOT" "$DOTFILES_DIR"
     MY_SCRIPTS_ROOT="$DOTFILES_DIR"
 fi
 
-# Backup existing files
-for cf in bashrc gitconfig gitignore inputrc irbrc netrc sqliterc trc vim vimrc zshrc; do
-    f="$MY_HOME/.$cf"
-    if [ -e "$f" ]; then
-        echo mv "$f" "$f.bak.$(date +%s)"
-        mv "$f" "$f.bak.$(date +%s)"
+safe_link() {
+    from="$1"
+    to="$2"
+    echo -n "Link ${from} -> ${to} ? [y/n]"
+    read response
+
+    if [ x"${response}" != xn ]; then
+        if [ -e "$from" ]; then
+            echo mv "$from" "${from}.bak.$(date +%s)"
+            mv "$from" "${from}.bak.$(date +%s)"
+        fi
+
+        dir=`dirname "${from}"`
+        if [ ! -d "${dir}" ]; then
+            mkdir -pv "${dir}"
+        fi
+
+        ln -sf "${to}" "${from}"
     fi
-done
+}
 
 for cf in gitconfig gitignore inputrc irbrc sqliterc vim vimrc; do
-    echo -n "Link ${MY_SCRIPTS_ROOT}/config/${cf} to ~/.${cf} ? [y/n] "
-    read response
-    if [ x"${response}" != xn ]; then
-        ln -sf "${MY_SCRIPTS_ROOT}/config/${cf}" ~/."${cf}"
-    fi
+    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/${cf}"
 done
 
 for cf in bashrc zshrc; do
-    echo -n "Link ${MY_SCRIPTS_ROOT}/config/shellrc to ~/.${cf} ? [y/n] "
-    read response
-    if [ x"${response}" != xn ]; then
-        ln -sf "${MY_SCRIPTS_ROOT}/config/shellrc" ~/."${cf}"
-    fi
+    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/shellrc"
 done
 
 for cf in netrc trc; do
-    echo -n "Link ${MY_SCRIPTS_ROOT}/config/secret/${cf} to ~/.${cf} ? [y/n] "
-    read response
-    if [ x"${response}" != xn ]; then
-        ln -sf "${MY_SCRIPTS_ROOT}/config/secret/${cf}" ~/."${cf}"
-    fi
+    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/secret/${cf}"
 done
 
-if [ ! -e "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ]; then
-    cd "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom"
-    mkdir "themes"
-    cd themes
-    ln -sf ../../../n1amr.zsh-theme n1amr.zsh-theme
-fi
+safe_link "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
+safe_link ~/".ipython/profile_default" "${MY_SCRIPTS_ROOT}/config/ipython/profile_default"
 
 echo "#!/bin/bash" > "$CONFIG_FILE"
 echo "export MY_HOME='${MY_HOME}'" >> "$CONFIG_FILE"
