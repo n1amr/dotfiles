@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ~/.shell-scripts_config
+mkdir -p $MY_HOME/tmp/manpdf;
+FILE=$MY_HOME/tmp/manpdf/"$1.pdf";
+man -t $1 | ps2pdf - $FILE;
+evince $FILE;
+# rm -rf $FILE;

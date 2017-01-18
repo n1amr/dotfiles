@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source ~/.shell-scripts_config
+$MY_SCRIPTS_ROOT/bin/battery-check

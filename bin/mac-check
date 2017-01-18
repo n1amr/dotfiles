@@ -2,7 +2,8 @@
 
 PATH="/home/n1amr/.shell-scripts:$PATH"
 
-HOME_DIR='/home/n1amr/.shell-scripts/macs'
+source ~/.shell-scripts_config
+HOME_DIR="$MY_SCRIPTS_ROOT/bin/macs"
 ALL_FILE="$HOME_DIR/all"
 PREV_FILE="$HOME_DIR/prev"
 LAST_FILE="$HOME_DIR/last"

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ~/.shell-scripts_config
+BOTS_ROOT="$MY_HOME/.twitter-bots"
+BOT_SCRIPT="$MY_HOME/.pyenv/shims/pytbot"
+
+for bot_root in "${BOTS_ROOT}"/bot-*; do
+    if [[ -d "$bot_root" ]]; then
+        LOG_FILE="$bot_root/log"
+        date >> "$LOG_FILE"
+        "$BOT_SCRIPT" "$bot_root" >> "$LOG_FILE" 2>&1 &
+        echo -e "\n\n" >> "$LOG_FILE"
+    fi
+done

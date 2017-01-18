@@ -6,7 +6,7 @@
 35       15       23       1        *        /usr/share/wakeup/setnextalarm.py n1amr >/dev/null 2>&1
 35       15       23       1        *        /usr/bin/wakeup n1amr 0 >/dev/null 2>&1 #entered by setnextalarm
 00       5        *        *        *        apt-get update && apt-get dist-upgrade -dy &
-*        *        *        *        *        /home/n1amr/.shell-scripts/battery-check &
-*        *        *        *        *        /home/n1amr/.shell-scripts/wifi-check &
-00       5        *        *        *        /home/n1amr/.shell-scripts/config/crontab-jobs/sync file more &
+*        *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/bin/battery-check &
+*        *        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/bin/wifi-check &
+00       5        *        *        *        . ~/.shell-scripts_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/sync file more &
 #===============================================================================

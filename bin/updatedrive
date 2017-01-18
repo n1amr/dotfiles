@@ -1,7 +1,7 @@
 #!/bin/bash
 
-N1AMR_HOME="/home/n1amr"
-GOPATH="$N1AMR_HOME/.gopath"
+source ~/.shell-scripts_config
+GOPATH="$MY_HOME/.gopath"
 PATH="$GOPATH/bin:$PATH"
 
 DRIVE_PATH="/mnt/Storage/GoogleDrive"

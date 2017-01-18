@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ~/.shell-scripts_config
+
+sudo "$MY_SCRIPTS_ROOT/bin/syncf" $@
+"$MY_SCRIPTS_ROOT/bin/sync-emergency"

@@ -87,7 +87,7 @@ elif [ $SHELLNAME = bash ]; then
     eval "$( type -t pyenv > /dev/null && pyenv init - )"
     eval "$( type -t rbenv > /dev/null && rbenv init - )"
 fi
-export PATH="$MY_SCRIPTS_ROOT:$PATH"
+export PATH="$MY_SCRIPTS_ROOT/bin:$PATH"
 
 ##################################################
 # Functions

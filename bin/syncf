@@ -1,10 +1,10 @@
 #!/bin/bash
 
-DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu/"
+DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu"
 BACKUP_ROOT_DIR="${DESTINATION_DIR}/backups"
 
-N1AMR_HOME="/home/n1amr"
-CONFIG_FOLDER="$N1AMR_HOME/.shell-scripts/config/sync.rc"
+source ~/.shell-scripts_config
+CONFIG_FOLDER="$MY_SCRIPTS_ROOT/config/sync.rc"
 
 timestamp="$(date +%F-%H-%M-%S)"
 
@@ -44,7 +44,7 @@ fi
 while IFS='' read -r line || [ -n "$line" ]; do
     if [ ! "${line:0:1}" = "#" ] && [ x"$line" != x ]; then
         echo "Syncing \"$line\" ..." >> "${OUTPUT_FILE}"
-        rsync -av --delete --relative --log-file="${LOG_FILE}" --exclude-from="${EXCLUDES_FILE}" -b --backup-dir="${backup_folder}" "${line}" "${DESTINATION_DIR}" >> "${OUTPUT_FILE}" 2>> "${ERRORS_LOG_FILE}"
+        rsync -av --delete --relative --log-file="${LOG_FILE}" --exclude-from="${EXCLUDES_FILE}" -b --backup-dir="${backup_folder}" "${line}" "${DESTINATION_DIR}" >> "${OUTPUT_FILE}" 2>> "${ERRORS_LOG_FILE}/"
     fi
 done < "${INCLUDES_FILE}"
 
