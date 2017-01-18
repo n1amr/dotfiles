@@ -105,11 +105,14 @@ print_welcome () {
 }
 
 bak () {
-    cp -r "$1" "$1.bak.$(date +%s)";
+    while [ $# != 0 ]; do
+        cp -ir "$1" "$1.bak.$(date +%s)"
+        shift
+    done
 }
 
 findword () {
-    grep -P "$1" /usr/share/dict/words;
+    grep -P "$1" /usr/share/dict/words
 }
 
 # A rainbow in your shell.
@@ -118,11 +121,11 @@ rainbow () {
 }
 
 hcd () {
-    history | grep -P "\d+\s+cd $@";
+    history | grep -P "\d+\s+cd $@"
 }
 
 terminal_rezise () {
-    eval `/usr/bin/resize`;
+    eval `/usr/bin/resize`
 }
 
 block_caret () {
@@ -130,7 +133,7 @@ block_caret () {
     tput cvvis '\e[?8c'
 }
 
-up() {
+up () {
     cd $(printf '../%.0s' {1..$@})
 }
 
