@@ -1,10 +1,16 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
+    echo -n 'Enter Google Drive home directory path: '
+    read DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
+    echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
+fi
+
 GOPATH="$MY_HOME/.gopath"
 PATH="$GOPATH/bin:$PATH"
 
-DRIVE_PATH="/mnt/Storage/GoogleDrive"
+DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 
 current_month_folder=$(date +'%Y/%m')
 last_month_folder=$(date --date="-1 month" +'%Y/%m')

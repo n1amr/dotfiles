@@ -1,8 +1,14 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
+    echo -n 'Enter youtube home directory: '
+    read DOTFILES_CONFIG_YOUTUBE_HOME
+    echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles_config
+fi
+
 YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
-YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
+YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 YOUTUBE_LIST_DOWNLADER="$DOTFILES_ROOT/bin/youtube-dl-list"
 
 PLAYLIST='WL'

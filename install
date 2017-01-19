@@ -66,7 +66,7 @@ done
 safe_link "${DOTFILES_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "${DOTFILES_ROOT}/config/ipython/profile_default"
 
-echo "#!/bin/bash" > "$CONFIG_FILE"
+echo "#!/bin/bash" >> "$CONFIG_FILE"
 echo "export MY_HOME='${MY_HOME}'" >> "$CONFIG_FILE"
 echo "export DOTFILES_ROOT='${DOTFILES_ROOT}'" >> "$CONFIG_FILE"
 

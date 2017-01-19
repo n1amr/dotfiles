@@ -1,14 +1,22 @@
 #!/bin/bash
 
-VPN_HOME='/mnt/Storage/Shared/vpnbook'
+source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
+    echo -n 'Enter vpn home directory: '
+    read DOTFILES_CONFIG_VPN_HOME
+    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
+fi
+
+VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"
+
 credentials_file="$VPN_HOME/credentials/current"
-profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
+selected_profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
 source ~/.dotfiles_config
-credentials_updater="$DOTFILES_ROOT/bin/updatevpn"
+UPDATEVPN_SCRIPT="$DOTFILES_ROOT/bin/updatevpn"
 
 connect () {
-    sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";
+    sudo openvpn --config "${selected_profile}" --auth-user-pass "${credentials_file}";
 }
 
 connect && successful=1
@@ -17,5 +25,13 @@ if [ "$successful" != 1 ]; then
     echo "Connection failed!!!"
     echo -n "Update credentials? [y/n]: "
     read response;
-    if [ x"$response" == x"y" ]; then "${credentials_updater}"; connect; fi
+    if [ x"$response" == x"y" ]; then "${UPDATEVPN_SCRIPT}"; connect; fi
 fi
+source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
+    echo -n 'Enter vpn home directory: '
+    read DOTFILES_CONFIG_VPN_HOME
+    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
+fi
+
+VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"

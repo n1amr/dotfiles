@@ -55,7 +55,7 @@ if [ -f "$DOTFILES_ROOT/config/secret/api_keys" ]; then
 fi
 
 export D='/mnt/Storage'
-export GDRIVE="$D/GoogleDrive"
+export GDRIVE="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 
 export EDITOR='vim'
 export VISUAL="$EDITOR"

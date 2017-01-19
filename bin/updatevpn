@@ -1,8 +1,16 @@
 #!/bin/bash
 
-VPN_HOME='/mnt/Storage/Shared/vpnbook/'
+source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
+    echo -n 'Enter vpn home directory: '
+    read DOTFILES_CONFIG_VPN_HOME
+    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
+fi
 
-vpnconnections=(ca1.vpnbook.com\
+VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"
+
+vpnconnections=(
+    ca1.vpnbook.com\
     de233.vpnbook.com\
     euro214.vpnbook.com\
     euro217.vpnbook.com\
@@ -10,8 +18,8 @@ vpnconnections=(ca1.vpnbook.com\
     us2.vpnbook.com\
 )
 
-mkdir -p "$VPN_HOME"/credentials
-cd "$VPN_HOME"/credentials
+mkdir -p "$VPN_HOME/credentials"
+cd "$VPN_HOME/credentials"
 credentials_filename='current'
 
 # Initialiaze options

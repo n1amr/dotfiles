@@ -1,15 +1,22 @@
 #!/bin/bash
 
-COURSES_FOLDER="/mnt/Storage/Videos/Courses"
-COURSES_LIST_FILE="${COURSES_FOLDER}/coursera-download-list.txt"
+source ~/.dotfiles_config
+if [ -z "$DOTFILES_CONFIG_COURSERA_HOME" ]; then
+    echo -n 'Enter coursera home directory: '
+    read DOTFILES_CONFIG_COURSERA_HOME
+    echo "export DOTFILES_CONFIG_COURSERA_HOME='$DOTFILES_CONFIG_COURSERA_HOME'" >> ~/.dotfiles_config
+fi
 
-cd "${COURSES_FOLDER}"
+COURSERA_HOME="$DOTFILES_CONFIG_COURSERA_HOME"
+COURSES_LIST_FILE="$COURSERA_HOME/coursera-download-list.txt"
 
-mapfile -t courses < "${COURSES_LIST_FILE}"
+cd "$COURSERA_HOME"
+
+mapfile -t courses < "$COURSES_LIST_FILE"
 
 for course in "${courses[@]}"; do
     if echo "${course}" | grep -v '^\s*#' | grep -q '\S'; then
-        echo "Downloading ${course} into ${COURSES_FOLDER}/${course}"
-        coursera-dl --disable-url-skipping --resume --path "${COURSES_FOLDER}" -sl en "${course}" -n
+        echo "Downloading ${course} into \"$COURSERA_HOME/${course}\""
+        coursera-dl --disable-url-skipping --resume --path "$COURSERA_HOME" -sl en "${course}" -n
     fi
 done
