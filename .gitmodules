@@ -10,6 +10,10 @@
     path = config/secret
     url = http://gitlab.com/n1amr/dotfiles-secret.git
     branch = master
+[submodule "config/history/zsh"]
+    path = config/history/zsh
+    url = https://gist.github.com/3abf9dab6ff4bd54371b390f2dd0b8d9.git
+    branch = master
 [submodule "config/vim/bundle/nerdtree.vim"]
     path = config/vim/bundle/nerdtree.vim
     url = http://github.com/scrooloose/nerdtree.git

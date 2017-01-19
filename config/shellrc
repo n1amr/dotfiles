@@ -28,6 +28,10 @@ if [ -z $DOTFILES_ROOT ]; then
 fi
 
 # Initialize shell
+HISTFILE=~/.zsh_history
+HISTSIZE=10000000
+SAVEHIST=$HISTSIZE
+
 if [ $SHELLNAME = zsh ]; then
     export ZSH="$DOTFILES_ROOT/config/oh-my-zsh"
 
@@ -292,10 +296,6 @@ elif [ $SHELLNAME = bash ]; then
     shopt -s autocd
     shopt -s globstar
 fi
-
-HISTFILE=~/.zsh_history
-HISTSIZE=10000000
-SAVEHIST=$HISTSIZE
 
 EXTRA_FUNCTIONS="$DOTFILES_ROOT/extra-functions"
 if [ -f "$EXTRA_FUNCTIONS" ]; then
