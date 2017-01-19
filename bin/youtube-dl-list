@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# YOUTUBE_DOWNLADER='/home/n1amr/.pyenv/shims/youtube-dl'
-YOUTUBE_DOWNLADER='/usr/bin/env youtube-dl'
+source ~/.dotfiles_config
+YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
 YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
+
 URLS_FILE="$YOUTUBE_HOME/download-list"
 HISTORY_FILE="$YOUTUBE_HOME/download-history"
 FAILED_FILE="$YOUTUBE_HOME/download-failed"
@@ -22,9 +23,10 @@ if $download ; then
     touch "$URLS_FILE"
     while IFS='' read line ; do
         if [[ -n $line ]]; then
-            command=`echo "$YOUTUBE_DOWNLADER" "$COMMON_ARGS" "$line"`
+            command=`echo "$YOUTUBE_DOWNLADER $COMMON_ARGS \"$line\""`
             echo -e "\e[1;32m$command\e[m"
-            eval "$command" &&
+
+            $YOUTUBE_DOWNLADER $COMMON_ARGS "$line" &&
                 echo "$line" >> "$HISTORY_FILE" ||
                 echo "$line" >> "$FAILED_FILE"
             echo
