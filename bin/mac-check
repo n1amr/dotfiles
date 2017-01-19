@@ -1,8 +1,8 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
-PATH="$MY_SCRIPTS_ROOT/bin:$PATH"
-HOME_DIR="$MY_SCRIPTS_ROOT/bin/macs"
+PATH="$DOTFILES_ROOT/bin:$PATH"
+HOME_DIR="$DOTFILES_ROOT/bin/macs"
 ALL_FILE="$HOME_DIR/all"
 PREV_FILE="$HOME_DIR/prev"
 LAST_FILE="$HOME_DIR/last"

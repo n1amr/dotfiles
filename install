@@ -13,12 +13,12 @@ if [ ! -z "${response}" ]; then
     MY_HOME=`realpath "${response}"`
 fi
 
-# Set MY_SCRIPTS_ROOT
-MY_SCRIPTS_ROOT=`realpath .`
-echo -n "Enter dofiles directory [${MY_SCRIPTS_ROOT}]: "
+# Set DOTFILES_ROOT
+DOTFILES_ROOT=`realpath .`
+echo -n "Enter dofiles directory [${DOTFILES_ROOT}]: "
 read response
 if [ ! -z "${response}" ]; then
-    MY_SCRIPTS_ROOT=`realpath "${response}"`
+    DOTFILES_ROOT=`realpath "${response}"`
 fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
@@ -26,8 +26,8 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
         mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
     fi
-    ln -sf "$MY_SCRIPTS_ROOT" "$DOTFILES_DIR"
-    MY_SCRIPTS_ROOT="$DOTFILES_DIR"
+    ln -sf "$DOTFILES_ROOT" "$DOTFILES_DIR"
+    DOTFILES_ROOT="$DOTFILES_DIR"
 fi
 
 safe_link() {
@@ -52,23 +52,23 @@ safe_link() {
 }
 
 for cf in gitconfig gitignore inputrc irbrc sqliterc vim vimrc; do
-    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/${cf}"
+    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/${cf}"
 done
 
 for cf in bashrc zshrc; do
-    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/shellrc"
+    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/shellrc"
 done
 
 for cf in netrc trc; do
-    safe_link ~/."${cf}" "${MY_SCRIPTS_ROOT}/config/secret/${cf}"
+    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/secret/${cf}"
 done
 
-safe_link "${MY_SCRIPTS_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
-safe_link ~/".ipython/profile_default" "${MY_SCRIPTS_ROOT}/config/ipython/profile_default"
+safe_link "${DOTFILES_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
+safe_link ~/".ipython/profile_default" "${DOTFILES_ROOT}/config/ipython/profile_default"
 
 echo "#!/bin/bash" > "$CONFIG_FILE"
 echo "export MY_HOME='${MY_HOME}'" >> "$CONFIG_FILE"
-echo "export MY_SCRIPTS_ROOT='${MY_SCRIPTS_ROOT}'" >> "$CONFIG_FILE"
+echo "export DOTFILES_ROOT='${DOTFILES_ROOT}'" >> "$CONFIG_FILE"
 
 echo
 echo "Contents of config file at $CONFIG_FILE:"

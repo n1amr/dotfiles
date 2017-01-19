@@ -6,7 +6,7 @@
 35       15       23       1        *        /usr/share/wakeup/setnextalarm.py n1amr >/dev/null 2>&1
 35       15       23       1        *        /usr/bin/wakeup n1amr 0 >/dev/null 2>&1 #entered by setnextalarm
 00       5        *        *        *        apt-get update && apt-get dist-upgrade -dy &
-*        *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/bin/battery-check &
-*        *        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/bin/wifi-check &
-00       5        *        *        *        . ~/.dotfiles_config && $MY_SCRIPTS_ROOT/config/crontab/crontab-jobs/sync file more &
+*        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_ROOT/bin/battery-check &
+*        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_ROOT/bin/wifi-check &
+00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_ROOT/config/crontab/crontab-jobs/sync file more &
 #===============================================================================

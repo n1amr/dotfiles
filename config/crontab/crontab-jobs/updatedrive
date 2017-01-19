@@ -3,6 +3,6 @@
 source ~/.dotfiles_config
 DRIVE_PATH="/mnt/Storage/GoogleDrive"
 LOG_FILE="${DRIVE_PATH}/../.drive-log"
-UPDATE_SCRIPT="$MY_SCRIPTS_ROOT/bin/updatedrive"
+UPDATE_SCRIPT="$DOTFILES_ROOT/bin/updatedrive"
 
 "$UPDATE_SCRIPT" --no-prompt >> "${LOG_FILE}" 2>> "${LOG_FILE}"

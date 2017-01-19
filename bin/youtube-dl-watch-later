@@ -3,7 +3,7 @@
 source ~/.dotfiles_config
 YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
 YOUTUBE_HOME='/mnt/Storage/Shared/youtube'
-YOUTUBE_LIST_DOWNLADER="$MY_SCRIPTS_ROOT/bin/youtube-dl-list"
+YOUTUBE_LIST_DOWNLADER="$DOTFILES_ROOT/bin/youtube-dl-list"
 
 PLAYLIST='WL'
 COMMON_ARGS='-f 18 --all-subs --continue'

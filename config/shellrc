@@ -1,5 +1,5 @@
 unset MY_HOME
-unset MY_SCRIPTS_ROOT
+unset DOTFILES_ROOT
 unset SHELLNAME
 
 # Determine shell type
@@ -23,13 +23,13 @@ if [ -z $MY_HOME ]; then
     export MY_HOME='/home/n1amr'
 fi
 
-if [ -z $MY_SCRIPTS_ROOT ]; then
-    export MY_SCRIPTS_ROOT="$MY_HOME/.dotfiles"
+if [ -z $DOTFILES_ROOT ]; then
+    export DOTFILES_ROOT="$MY_HOME/.dotfiles"
 fi
 
 # Initialize shell
 if [ $SHELLNAME = zsh ]; then
-    export ZSH="$MY_SCRIPTS_ROOT/config/oh-my-zsh"
+    export ZSH="$DOTFILES_ROOT/config/oh-my-zsh"
 
     ZSH_THEME="n1amr"
     ENABLE_CORRECTION="true"
@@ -38,7 +38,7 @@ if [ $SHELLNAME = zsh ]; then
     plugins=(command-not-found common-aliases dircycle dirhistory extract git history jump pip rsync z)
     source $ZSH/oh-my-zsh.sh
 elif [ $SHELLNAME = bash ]; then
-    source "$MY_SCRIPTS_ROOT/config/bash-init.sh"
+    source "$DOTFILES_ROOT/config/bash-init.sh"
 fi
 
 ##################################################
@@ -50,8 +50,8 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-if [ -f "$MY_SCRIPTS_ROOT/config/secret/api_keys" ]; then
-    . "$MY_SCRIPTS_ROOT/config/secret/api_keys"
+if [ -f "$DOTFILES_ROOT/config/secret/api_keys" ]; then
+    . "$DOTFILES_ROOT/config/secret/api_keys"
 fi
 
 export D='/mnt/Storage'
@@ -87,7 +87,7 @@ elif [ $SHELLNAME = bash ]; then
     eval "$( type -t pyenv > /dev/null && pyenv init - )"
     eval "$( type -t rbenv > /dev/null && rbenv init - )"
 fi
-export PATH="$MY_SCRIPTS_ROOT/bin:$PATH"
+export PATH="$DOTFILES_ROOT/bin:$PATH"
 
 ##################################################
 # Functions
@@ -297,7 +297,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=$HISTSIZE
 
-EXTRA_FUNCTIONS="$MY_SCRIPTS_ROOT/extra-functions"
+EXTRA_FUNCTIONS="$DOTFILES_ROOT/extra-functions"
 if [ -f "$EXTRA_FUNCTIONS" ]; then
     source "$EXTRA_FUNCTIONS"
 fi

@@ -5,7 +5,7 @@ credentials_file="$VPN_HOME/credentials/current"
 profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
 source ~/.dotfiles_config
-credentials_updater="$MY_SCRIPTS_ROOT/bin/updatevpn"
+credentials_updater="$DOTFILES_ROOT/bin/updatevpn"
 
 connect () {
     sudo openvpn --config "${profile}" --auth-user-pass "${credentials_file}";
