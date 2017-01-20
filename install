@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONFIG_FILE=`realpath ~/.dotfiles_config`
+CONFIG_FILE="$(realpath ~)/.dotfiles_config"
 if [ -f "${CONFIG_FILE}" ]; then
     . "${CONFIG_FILE}"
 fi
