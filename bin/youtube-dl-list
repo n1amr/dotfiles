@@ -27,6 +27,7 @@ done
 if $download ; then
     cd "$YOUTUBE_HOME"
     touch "$URLS_FILE"
+    cat "$URLS_FILE" | sort | uniq | tee "$URLS_FILE" # remove dublicates
     while IFS='' read line ; do
         if [[ -n $line ]]; then
             command=`echo "$YOUTUBE_DOWNLADER $COMMON_ARGS \"$line\""`
