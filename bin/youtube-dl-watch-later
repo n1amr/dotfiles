@@ -9,7 +9,6 @@ fi
 
 YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-YOUTUBE_LIST_DOWNLADER="$DOTFILES_ROOT/bin/youtube-dl-list"
 
 PLAYLIST='WL'
 COMMON_ARGS='-f 18 --all-subs --continue'
@@ -38,10 +37,6 @@ wget "https://www.youtube.com/playlist?list=$PLAYLIST" \
 -O "$WATCH_LATER_PAGE_FILE"
 
 ids=(`grep -Po '(?<=video-id=")[\w-]{11}?(?=")' "$WATCH_LATER_PAGE_FILE"`)
-
-for id in "${ids[@]}"; do
-    $YOUTUBE_LIST_DOWNLADER "${URL_PREFIX}${id}"
-done
 
 for id in "${ids[@]}"; do
     url="${URL_PREFIX}${id}"
