@@ -233,11 +233,14 @@ first-run=false
 check-timestamp=int64 1485264011
 
 [org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
-use-custom-command=true
-use-system-font=false
+foreground-color='rgb(255,255,255)'
 visible-name='n1amr'
 custom-command='/bin/zsh'
+use-system-font=false
+use-custom-command=true
+use-theme-colors=false
 font='DejaVu Sans Mono for Powerline 12'
+background-color='rgb(0,0,0)'
 
 [org/gnome/terminal/legacy]
 schema-version=uint32 3
