@@ -13,7 +13,7 @@ credentials_file="$VPN_HOME/credentials/current"
 selected_profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
 
 source ~/.dotfiles_config
-UPDATEVPN_SCRIPT="$DOTFILES_ROOT/bin/updatevpn"
+UPDATEVPN_SCRIPT="$DOTFILES_HOME/bin/updatevpn"
 
 connect () {
     sudo openvpn --config "${selected_profile}" --auth-user-pass "${credentials_file}";

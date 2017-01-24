@@ -7,8 +7,8 @@ if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
 fi
 
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-YOUTUBE_WATCH_LATER_DOWNLOADER="$DOTFILES_ROOT/bin/youtube-dl-watch-later"
-YOUTUBE_LIST_DOWNLADER="$DOTFILES_ROOT/bin/youtube-dl-list"
+YOUTUBE_WATCH_LATER_DOWNLOADER="$DOTFILES_HOME/bin/youtube-dl-watch-later"
+YOUTUBE_LIST_DOWNLADER="$DOTFILES_HOME/bin/youtube-dl-list"
 LOG_FILE="$YOUTUBE_HOME/download-log"
 
 echo -e "\n====================\n" >> "$LOG_FILE" 2>&1

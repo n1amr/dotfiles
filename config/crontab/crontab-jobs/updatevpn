@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
-$DOTFILES_ROOT/bin/updatevpn --no-prompt
+$DOTFILES_HOME/bin/updatevpn --no-prompt

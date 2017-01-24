@@ -1,8 +1,8 @@
 #!/bin/sh
 
-CONFIG_FILE="$(realpath ~)/.dotfiles_config"
-if [ -f "${CONFIG_FILE}" ]; then
-    . "${CONFIG_FILE}"
+DOTFILES_CONFIG_FILE="$(realpath ~)/.dotfiles_config"
+if [ -f "${DOTFILES_CONFIG_FILE}" ]; then
+    . "${DOTFILES_CONFIG_FILE}"
 fi
 
 # Set MY_HOME
@@ -13,12 +13,12 @@ if [ ! -z "${response}" ]; then
     MY_HOME=`realpath "${response}"`
 fi
 
-# Set DOTFILES_ROOT
-DOTFILES_ROOT=`realpath .`
-echo -n "Enter dofiles directory [${DOTFILES_ROOT}]: "
+# Set DOTFILES_HOME
+DOTFILES_HOME=`realpath .`
+echo -n "Enter dofiles directory [${DOTFILES_HOME}]: "
 read response
 if [ ! -z "${response}" ]; then
-    DOTFILES_ROOT=`realpath "${response}"`
+    DOTFILES_HOME=`realpath "${response}"`
 fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
@@ -26,8 +26,8 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
         mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
     fi
-    ln -sf "$DOTFILES_ROOT" "$DOTFILES_DIR"
-    DOTFILES_ROOT="$DOTFILES_DIR"
+    ln -sf "$DOTFILES_HOME" "$DOTFILES_DIR"
+    DOTFILES_HOME="$DOTFILES_DIR"
 fi
 
 safe_link() {
@@ -52,28 +52,30 @@ safe_link() {
 }
 
 for cf in gitconfig gitignore inputrc irbrc sqliterc vim vimrc; do
-    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/${cf}"
+    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/${cf}"
 done
 
 for cf in bashrc zshrc; do
-    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/shellrc"
+    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/shellrc"
 done
 
 for cf in netrc trc; do
-    safe_link ~/."${cf}" "${DOTFILES_ROOT}/config/secret/${cf}"
+    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/secret/${cf}"
 done
 
-safe_link "${DOTFILES_ROOT}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
-safe_link ~/".ipython/profile_default" "${DOTFILES_ROOT}/config/ipython/profile_default"
-safe_link ~/.zsh_history.bak "${DOTFILES_ROOT}/config/history/zsh/zsh_history"
+safe_link "${DOTFILES_HOME}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
+safe_link ~/".ipython/profile_default" "${DOTFILES_HOME}/config/ipython/profile_default"
+safe_link ~/.zsh_history.bak "${DOTFILES_HOME}/config/history/zsh/zsh_history"
 
-echo "#!/bin/bash" >> "$CONFIG_FILE"
-echo "export MY_HOME='${MY_HOME}'" >> "$CONFIG_FILE"
-echo "export DOTFILES_ROOT='${DOTFILES_ROOT}'" >> "$CONFIG_FILE"
+echo "#!/bin/bash" >> "$DOTFILES_CONFIG_FILE"
+echo "export MY_HOME='${MY_HOME}'" >> "$DOTFILES_CONFIG_FILE"
+echo "export DOTFILES_HOME='${DOTFILES_HOME}'" >> "$DOTFILES_CONFIG_FILE"
 
 echo
-echo "Contents of config file at $CONFIG_FILE:"
+echo "Contents of config file at $DOTFILES_CONFIG_FILE:"
 echo
-cat "$CONFIG_FILE"
+cat "$DOTFILES_CONFIG_FILE"
 
+chmod +x "$DOTFILES_CONFIG_FILE"
+echo "Successful!"
 exec "$SHELL"

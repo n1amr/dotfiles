@@ -1,2 +1,2 @@
 export MY_HOME="/home/n1amr"
-export DOTFILES_ROOT="$MY_HOME/.dotfiles"
+export DOTFILES_HOME="$MY_HOME/.dotfiles"
