@@ -2,7 +2,6 @@
 /home/n1amr/.PyCharm2016.3/config
 /home/n1amr/.CLion2016.3/config
 /home/n1amr/.bash_history
-/home/n1amr/.bitbucket
 /home/n1amr/.config/sublime-text-3/
 /home/n1amr/.gnupg/
 /home/n1amr/.mozilla/firefox/n1amr.default/
@@ -51,8 +50,7 @@
 /mnt/Storage/Programs/Utilities/rufus-2.6.exe
 /mnt/Storage/Shared/Sublime Text 3 portable.zip
 /mnt/Storage/Shared/vpnbook/
-/opt/sublime_text/
-/usr/bin/subl
+/usr/local/sublime_text/
+/usr/src/sublime_text_3.tar.bz2
 /usr/lib/keepass2/
-/usr/share/applications/sublime_text.desktop
 /usr/share/themes/Numix Daily
