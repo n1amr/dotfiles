@@ -2,9 +2,8 @@
 Name=screen-mode
 GenericName=add new resoulution
 Comment=add new resolution
-Exec=/home/n1amr/.shell-scripts/config/fedora/screen-mode
+Exec=/home/n1amr/.dotfiles/config/fedora/screen-mode
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true
 # /etc/xdg/autostart
-

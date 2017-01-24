@@ -5,4 +5,3 @@ GRUB_DISABLE_SUBMENU=true
 GRUB_TERMINAL_OUTPUT="console"
 GRUB_CMDLINE_LINUX="rd.lvm.lv=fedora/root rd.lvm.lv=fedora/swap rhgb quiet vconsole.font=latarcyrheb-sun32"
 GRUB_DISABLE_RECOVERY="true"
-

@@ -1,0 +1,10 @@
+git clone git@github.com:yyuu/pyenv.git ~/.pyenv
+
+# pyeenv plugins
+git clone git@github.com:concordusapps/pyenv-implict.git ~/.pyenv/plugins/pyenv-implict
+git clone git@github.com:yyuu/pyenv-doctor.git ~/.pyenv/plugins/pyenv-doctor
+git clone git@github.com:yyuu/pyenv-installer.git ~/.pyenv/plugins/pyenv-installer
+git clone git@github.com:yyuu/pyenv-update.git ~/.pyenv/plugins/pyenv-update
+git clone git@github.com:yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+git clone git@github.com:yyuu/pyenv-which-ext.git ~/.pyenv/plugins/pyenv-which
+git clone git@github.com:yyuu/pyenv.git ~/.pyenv/plugins/pyenv.git
