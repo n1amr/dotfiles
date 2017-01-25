@@ -1,0 +1,28 @@
+#!/bin/bash
+
+programs=(
+    IntelliJIdea
+    CLion
+    PyCharm
+)
+
+if [ -e ~/.java/.userPrefs/jetbrains ]; then
+    mv -vf ~/.java/.userPrefs/jetbrains ~/jetbrains.`date +%s`
+fi
+
+# find ~/.java/.userPrefs/jetbrains -name 'evlsprt*' -exec rm -vrf {} +
+
+while IFS='' read line; do
+    rm -vrf $line
+done <<EOF
+`grep -Pl 'JetBrains' -r ~/.java/.userPrefs`
+EOF
+
+for program in "${programs[@]}"; do
+    for dir in ~/.${program}????.?*/config; do
+        cd "$dir"
+        pwd
+        rm -vrf eval
+        sed -i '/evlsprt/d' options/options.xml
+    done
+done
