@@ -13,10 +13,14 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 PLAYLIST='WL'
 COMMON_ARGS='-f 18 --all-subs --continue'
 URL_PREFIX='https://www.youtube.com/watch?v='
-WATCH_LATER_PAGE_FILE="$YOUTUBE_HOME/download-watch-later.html"
-COOKIE_FILE="$YOUTUBE_HOME/download-cookie.txt"
+WATCH_LATER_HTML_FILE="$YOUTUBE_HOME/.downloader/watch-later.html"
+COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookie.txt"
 
 cd "$YOUTUBE_HOME"
+if [ ! -d .downloader ]; then
+    mkdir .downloader
+fi
+
 if [ -f "$COOKIE_FILE" ]; then
     COOKIE=`cat $COOKIE_FILE`
 else
@@ -34,9 +38,9 @@ wget "https://www.youtube.com/playlist?list=$PLAYLIST" \
 --header 'Upgrade-Insecure-Requests: 1' \
 --header 'Connection: keep-alive' \
 --header 'Cache-Control: max-age=0' \
--O "$WATCH_LATER_PAGE_FILE"
+-O "$WATCH_LATER_HTML_FILE"
 
-ids=(`grep -Po '(?<=video-id=")[\w-]{11}?(?=")' "$WATCH_LATER_PAGE_FILE"`)
+ids=(`grep -Po '(?<=video-id=")[\w-]{11}?(?=")' "$WATCH_LATER_HTML_FILE"`)
 
 for id in "${ids[@]}"; do
     url="${URL_PREFIX}${id}"
