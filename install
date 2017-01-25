@@ -77,5 +77,9 @@ echo
 cat "$DOTFILES_CONFIG_FILE"
 
 chmod +x "$DOTFILES_CONFIG_FILE"
+
+# fzf install
+"$DOTFILES_HOME/thirdparty/fzf/install"
+
 echo "Successful!"
 exec "$SHELL"
