@@ -56,9 +56,9 @@ echo
 
 # Prompt before modifying
 if [ x"$no_prompt" == x"false" ]; then
-    echo -en "Save? [y/n] " &&
-    read response
-    if [ x"$response" != x"y" ]; then exit; fi
+    read -n 1 -p "Save? (y/n) "
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] || exit
 fi
 
 # Update history

@@ -31,6 +31,7 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=$HISTSIZE
+HISTCONTROL='ignoreboth';
 
 if [ $SHELLNAME = zsh ]; then
     export ZSH="$DOTFILES_HOME/config/oh-my-zsh"
@@ -142,9 +143,8 @@ up () {
 }
 
 cd-tree () {
-    clear
-    cd "$@"
-    tree -CL 1 "$(realpath .)"
+    cd "${@:-.}"
+    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX;
 }
 
 ##################################################
@@ -183,6 +183,7 @@ alias matlab-cli='DISPLAY='' matlab'
 alias mkdir='mkdir -pv'
 alias mv='mv -i'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias myips='ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)'\'' | awk '\''{ sub(/inet6? (addr:)? ?/, ""); print }'\'''
 alias nmcli='nmcli -a'
 alias o='gnome-open'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'

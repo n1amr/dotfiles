@@ -37,3 +37,12 @@
 
 [merge]
 	tool = vimdiff
+
+[url "git@github.com:"]
+    insteadOf = "github:"
+
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
+
+[url "git@gitlab.com:"]
+	insteadOf = "gitlab:"

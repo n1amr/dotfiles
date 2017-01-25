@@ -23,15 +23,8 @@ connect && successful=1
 
 if [ "$successful" != 1 ]; then
     echo "Connection failed!!!"
-    echo -n "Update credentials? [y/n]: "
-    read response;
-    if [ x"$response" == x"y" ]; then "${UPDATEVPN_SCRIPT}"; connect; fi
-fi
-source ~/.dotfiles_config
-if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
-    echo -n 'Enter vpn home directory: '
-    read DOTFILES_CONFIG_VPN_HOME
-    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
-fi
 
-VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"
+    read -n 1 -p "Update credentials? (y/n) "
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] && "${UPDATEVPN_SCRIPT}" && connect
+fi
