@@ -36,6 +36,12 @@ vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
 
 nnoremap <silent> <F5> :w<CR>:!clear;python %<CR>
 
+nnoremap <C-c> :let @+ = getreg('"')<CR>
+vnoremap <C-c> "+y
+vnoremap <C-x> "+d
+vnoremap <C-v> "+p
+inoremap <C-v> <C-r>+
+
 " change cursor shape in different modes
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
