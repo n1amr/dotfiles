@@ -300,7 +300,7 @@ elif [ $SHELLNAME = bash ]; then
     [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 fi
 
-EXTRA_FUNCTIONS="$DOTFILES_HOME/extra-functions"
+EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 if [ -f "$EXTRA_FUNCTIONS" ]; then
     source "$EXTRA_FUNCTIONS"
 fi
