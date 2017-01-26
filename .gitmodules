@@ -26,3 +26,7 @@
     path = config/vim/bundle/vim-airline-themes.vim
     url = http://github.com/vim-airline/vim-airline-themes.git
     branch = master
+[submodule "thirdparty/fzf"]
+    path = thirdparty/fzf
+    url = http://github.com/junegunn/fzf.git
+    branch = master
