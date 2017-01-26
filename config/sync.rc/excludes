@@ -22,3 +22,15 @@
 /mnt/Windows/ProgramData/Microsoft/Windows/Start Menu Places/.*
 /mnt/Windows/ProgramData/Microsoft/Windows/Start Menu/.*
 /mnt/Windows/Users/N1amr/AppData/Roaming/Sublime Text 3/.*
+/bin/
+/boot/
+/core
+/initrd/
+/lib/
+/lib64/
+/opt/
+/root/
+/sbin/
+/sys/
+/usr/
+/var/

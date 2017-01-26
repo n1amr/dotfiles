@@ -26,3 +26,14 @@
 /mnt/Storage/Sounds
 /mnt/Storage/Videos
 /mnt/Storage/ubuntu
+/bin/
+/boot/
+/core
+/initrd/
+/lib/
+/lib64/
+/opt/
+/root/
+/sbin/
+/usr/
+/var/
