@@ -38,10 +38,14 @@ echo -e "Trying to update vpn credentials..."
 
 echo "Fetching from http://www.vpnbook.com/freevpn"
 cred=$(wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | head -2)
-# if [[ -z "$cred" ]]; then
-#   echo "Fetching from https://twitter.com/vpnbook"
-#   cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
-# fi
+if [ -z "$cred" -a x"$no_prompt" == x"false" ]; then
+    read -n 1 -p 'Fetch from twitter? (y/n) '
+    echo
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+        echo "Fetching from https://twitter.com/vpnbook"
+        cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
+    fi
+fi
 
 [[ -n "$cred" ]] && echo "$cred" > credentials.tmp && successful='true'
 if [ x"$successful" != x'true' ]; then
@@ -63,7 +67,9 @@ fi
 
 # Update history
 if [ ! -d backup ]; then mkdir backup; fi
-if [ -f "$credentials_filename" ];then mv "$credentials_filename" "backup/$(date +'%F-%H-%M-%S')"; fi
+if [ -f "$credentials_filename" ]; then
+    mv "$credentials_filename" "backup/$(date +'%F-%H-%M-%S')"
+fi
 mv credentials.tmp "$credentials_filename"
 echo "Saved to $(realpath \"$credentials_filename\")"
 

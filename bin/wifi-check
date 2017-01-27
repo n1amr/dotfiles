@@ -1,8 +1,8 @@
 #!/bin/bash
 
 wifi_list=(
-    TEData
-#    alaa
+    alaa
+#    TEData
 #    linksys
 #    3com
 )
