@@ -46,6 +46,17 @@ if [ -z "$cred" -a x"$no_prompt" == x"false" ]; then
         cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
     fi
 fi
+if [ -z "$cred" -a x"$no_prompt" == x"false" ]; then
+    read -n 1 -p 'Enter manually? (y/n) '
+    echo
+    if [[ $REPLY =~ ^[yY]$ ]]; then
+        echo -n "Enter username: "
+        read username
+        echo -n "Enter password: "
+        read password
+        cred="$(echo -e "$username\n$password")"
+    fi
+fi
 
 [[ -n "$cred" ]] && echo "$cred" > credentials.tmp && successful='true'
 if [ x"$successful" != x'true' ]; then
