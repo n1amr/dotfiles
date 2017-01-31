@@ -1,11 +1,5 @@
 #!/bin/bash
 
-programs=(
-    IntelliJIdea
-    CLion
-    PyCharm
-)
-
 if [ -e ~/.java/.userPrefs/jetbrains ]; then
     mv -vf ~/.java/.userPrefs/jetbrains ~/jetbrains.`date +%s`
 fi
@@ -18,11 +12,9 @@ done <<EOF
 `grep -Pl 'JetBrains' -r ~/.java/.userPrefs`
 EOF
 
-for program in "${programs[@]}"; do
-    for dir in ~/.${program}????.?*/config; do
-        cd "$dir"
-        pwd
-        rm -vrf eval
-        sed -i '/evlsprt/d' options/options.xml
-    done
+for config_dir in ~/.jetbrains/config/*; do
+    cd "$config_dir"
+    pwd
+    rm -vrf eval
+    sed -i '/evlsprt/d' options/options.xml
 done
