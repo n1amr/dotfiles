@@ -13,7 +13,7 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 URLS_FILE="$YOUTUBE_HOME/.downloader/list"
 HISTORY_FILE="$YOUTUBE_HOME/.downloader/history"
 FAILED_FILE="$YOUTUBE_HOME/.downloader/failed"
-COMMON_ARGS='-f 18 --all-subs --continue'
+COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue'
 
 download=true
 

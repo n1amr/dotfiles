@@ -11,7 +11,7 @@ YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
 PLAYLIST='WL'
-COMMON_ARGS='-f 18 --all-subs --continue'
+COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue'
 URL_PREFIX='https://www.youtube.com/watch?v='
 WATCH_LATER_HTML_FILE="$YOUTUBE_HOME/.downloader/watch-later.html"
 COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookie.txt"
