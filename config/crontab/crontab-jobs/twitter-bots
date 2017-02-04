@@ -8,7 +8,7 @@ for bot_root in "${BOTS_ROOT}"/bot-*; do
     if [[ -d "$bot_root" ]]; then
         LOG_FILE="$bot_root/log"
         date >> "$LOG_FILE"
-        "$BOT_SCRIPT" "$bot_root" >> "$LOG_FILE" 2>&1 &
         echo -e "\n\n" >> "$LOG_FILE"
+        "$BOT_SCRIPT" "$bot_root" >> "$LOG_FILE" 2>&1 &
     fi
 done

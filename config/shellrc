@@ -151,6 +151,7 @@ cd-tree () {
 # Aliases
 ##################################################
 
+alias apt='sudo apt'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
 alias beep='paplay /home/n1amr/.local/Schedule.ogg'
 alias c='clear'

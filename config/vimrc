@@ -11,36 +11,33 @@ set cursorline
 set mouse=a
 set ignorecase
 
-noremap <c-s-up> :m-2<CR>
-noremap <c-s-down> :m+<CR>
+ noremap <c-k> :m-2<CR>
+ noremap <c-j> :m+<CR>
 
-noremap <c-k> :m-2<CR>
-noremap <c-j> :m+<CR>
+" noremap <c-s-up> :m-2<CR>
+" noremap <c-s-down> :m+<CR>
 
-nnoremap <C-O> O<Esc>
-nnoremap <CR> o<Esc>
+" nnoremap <Space> i_<Esc>r
 
-nnoremap <Space> i_<Esc>r
-
-nnoremap <C-L> <Esc>
-inoremap <C-L> <Esc>
-vnoremap <C-L> <Esc>
-onoremap <C-L> <Esc>
+" nnoremap <C-L> <Esc>
+" inoremap <C-L> <Esc>
+" vnoremap <C-L> <Esc>
+" onoremap <C-L> <Esc>
 
 " tab indenting
-nnoremap <TAB> >>
-nnoremap <S-TAB> <<
+" nnoremap <TAB> >>
+" nnoremap <S-TAB> <<
 
-vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
-"vnoremap // y/\V<C-R>"<CR>
+" vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
+" vnoremap // y/\V<C-R>"<CR>
 
-nnoremap <silent> <F5> :w<CR>:!clear;python %<CR>
+" nnoremap <silent> <F5> :w<CR>:!clear;python %<CR>
 
-nnoremap <C-c> :let @+ = getreg('"')<CR>
-vnoremap <C-c> "+y
-vnoremap <C-x> "+d
-vnoremap <C-v> "+p
-inoremap <C-v> <C-r>+
+" nnoremap <C-c> :let @+ = getreg('"')<CR>
+" vnoremap <C-c> "+y
+" vnoremap <C-x> "+d
+" vnoremap <C-v> "+p
+" inoremap <C-v> <C-r>+
 
 " change cursor shape in different modes
 if has("autocmd")
