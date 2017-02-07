@@ -65,7 +65,7 @@ done
 
 safe_link "${DOTFILES_HOME}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "${DOTFILES_HOME}/config/ipython/profile_default"
-safe_link ~/.zsh_history.bak "${DOTFILES_HOME}/config/history/zsh/zsh_history"
+safe_link ~/.zsh_history.bak "${DOTFILES_HOME}/config/history/zsh_history"
 
 echo "#!/bin/bash" >> "$DOTFILES_CONFIG_FILE"
 echo "export MY_HOME='${MY_HOME}'" >> "$DOTFILES_CONFIG_FILE"
