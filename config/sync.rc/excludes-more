@@ -1,16 +1,11 @@
 /home/n1amr/.cache/*
+/home/n1amr/.jetbrains/system
 /home/n1amr/.local/share/Trash/
 /home/n1amr/.mozilla/firefox/n1amr.default/cache2/*
 /mnt/Storage/Program Files/AppData/Roaming/Mozilla/Firefox/Profiles/n1amr.default/cache2/*
+/mnt/Storage/ubuntu/usr/local/matlab/R2015a
 /mnt/Windows/ProgramData/Microsoft/Windows/Start Menu Places/.*
 /mnt/Windows/ProgramData/Microsoft/Windows/Start Menu/.*
 /mnt/Windows/Users/N1amr/AppData/Roaming/Sublime Text 3/.*
-/home/n1amr/.AndroidStudio2.1/system
-/home/n1amr/.CLion2016.3/system
-/home/n1amr/.IntelliJIdea2016.3/system/home/n1amr/.CLion2016.3/system/home/n1amr/.IntelliJIdea2016.3/system/home/n1amr/.WebStorm2016.1/system
-/home/n1amr/.PyCharm2016.3/system
-/home/n1amr/.RubyMine2016.1/system
-/home/n1amr/.WebStorm2016.1/system
-/mnt/Storage/ubuntu/usr/local/matlab/R2015a
-/var/cache/
 /root/.cache/
+/var/cache/
