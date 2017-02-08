@@ -204,6 +204,9 @@ alias v='vim'
 alias vi='vim'
 alias wget='wget -c'
 
+alias -g 'G=| grep -P'
+alias -g 'V=| vim -'
+
 ##################################################
 # PS1 create
 ##################################################

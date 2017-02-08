@@ -167,7 +167,7 @@ terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
 screensaver='<Primary><Alt>l'
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']
 on-screen-keyboard=''
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
@@ -179,6 +179,11 @@ name='Invert colors'
 binding='<Primary><Alt>j'
 command='gnome-terminal'
 name='Terminal'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
+binding='<Primary><Alt>v'
+command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; vim'\""
+name='Vim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
 binding='<Primary><Alt>slash'
@@ -343,7 +348,7 @@ replace-with-entry=['رامي لكح']
 
 [org/gnome/gedit/state/window]
 size=(1315, 343)
-state=132
+state=4
 bottom-panel-size=140
 side-panel-size=200
 side-panel-active-page='GeditWindowDocumentsPanel'
@@ -377,6 +382,7 @@ use-theme-transparency=false
 scrollback-unlimited=true
 background-color='rgb(0,0,0)'
 background-transparency-percent=43
+audible-bell=true
 
 [org/gnome/terminal/legacy/profiles:/:d5d4a1f6-e012-4fc0-9508-53534387fbc0]
 encoding='UTF-8'
@@ -492,6 +498,10 @@ lock-enabled=false
 
 [org/gnome/desktop/peripherals/touchpad]
 natural-scroll=true
+
+[org/gnome/desktop/peripherals/keyboard]
+repeat-interval=uint32 24
+delay=uint32 286
 
 [org/gnome/desktop/peripherals/mouse]
 speed=-1.0
@@ -853,7 +863,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(2.2320261437908497, 0.88510101010101006)
+window-ratio=(2.2949497664729006, 0.83254156769596199)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1282,7 +1292,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1485984259
+launch-time=1486428928
 window-height=363
 show-details=true
 window-width=453
