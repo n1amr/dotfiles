@@ -10,6 +10,8 @@ set pastetoggle=<F10>
 set cursorline
 set mouse=a
 set ignorecase
+set timeoutlen=50
+set relativenumber
 
  noremap <c-k> :m-2<CR>
  noremap <c-j> :m+<CR>
