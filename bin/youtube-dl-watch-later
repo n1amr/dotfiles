@@ -11,10 +11,9 @@ YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
 PLAYLIST='WL'
-COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue'
-URL_PREFIX='https://www.youtube.com/watch?v='
-WATCH_LATER_HTML_FILE="$YOUTUBE_HOME/.downloader/watch-later.html"
-COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookie.txt"
+URL="https://youtube.com/playlist?list=$PLAYLIST"
+COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
+COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue --mark-watched --ignore-errors'
 
 cd "$YOUTUBE_HOME"
 if [ ! -d .downloader ]; then
@@ -24,26 +23,8 @@ fi
 if [ -f "$COOKIE_FILE" ]; then
     COOKIE=`cat $COOKIE_FILE`
 else
-    echo -n 'Please enter cookie: '
-    read COOKIE
-    echo $COOKIE > $COOKIE_FILE
+    echo "Please copy cookies.txt to $COOKIE_FILE"
+    exit 1
 fi
 
-wget "https://www.youtube.com/playlist?list=$PLAYLIST" \
---header "$COOKIE" \
---header 'Host: www.youtube.com' \
---header 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0' \
---header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
---header 'Accept-Language: en,en-US;q=0.8,ar;q=0.7,ar-EG;q=0.5,de;q=0.3,de-DE;q=0.2' \
---header 'Upgrade-Insecure-Requests: 1' \
---header 'Connection: keep-alive' \
---header 'Cache-Control: max-age=0' \
--O "$WATCH_LATER_HTML_FILE"
-
-ids=(`grep -Po '(?<=video-id=")[\w-]{11}?(?=")' "$WATCH_LATER_HTML_FILE"`)
-
-for id in "${ids[@]}"; do
-    url="${URL_PREFIX}${id}"
-    echo -e "\n\e[1;32mDownloading $url\e[m"
-    $YOUTUBE_DOWNLADER $COMMON_ARGS "$url"
-done
+$YOUTUBE_DOWNLADER $COMMON_ARGS --cookie "$COOKIE_FILE" "$URL"
