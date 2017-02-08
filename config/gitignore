@@ -1,4 +1,13 @@
-*.swo
-*.swp
-*fuse_hidden*
-/.idea/
+*.bak
+*.bak.[0-9][0-9]*
+*.class
+*.jar
+*.pyc
+*globally-gitignored*
+.fuse_hidden*
+.idea/
+.sw?
+/build/
+/cmake-build-debug/
+/out/
+__pycache__/

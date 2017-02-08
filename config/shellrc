@@ -205,6 +205,7 @@ alias vi='vim'
 alias wget='wget -c'
 
 alias -g 'G=| grep -P'
+alias -g 'S=| subl'
 alias -g 'V=| vim -'
 
 ##################################################
