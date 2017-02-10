@@ -7,9 +7,9 @@ bak () {
     done
 }
 
-cd-tree () {
+cdtree () {
     cd "${@:-.}"
-    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX;
+    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX
 }
 
 findword () {
@@ -21,18 +21,29 @@ hcd () {
     history | grep -P "\d+\s+cd $@"
 }
 
-print-videos-duration () {
+print_videos_duration () {
     DELIM=';.;.;'
     [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $@ 2> /dev/null \
     | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
+}
+
+print_title_comment() {
+    LENGTH=80
+    if [ ${#1} -ge $LENGTH ]; then
+        echo "### ${1} ###"
+    elif [ ${#1} -eq 0 ]; then
+        printf "%*s\n" $LENGTH "#" | tr ' ' '#'
+    else
+        printf "%*s%*s\n" $(( (${#1} + 4 + $LENGTH) / 2)) "__${1// /$}__" $(( $LENGTH - (${#1} + 4 + $LENGTH) / 2)) "#" | tr ' _$' '#  '
+    fi
 }
 
 rainbow () {
     yes "$(seq 231 -1 16)" | while read i; do printf "\x1b[48;5;${i}m\n"; sleep .02; done
 }
 
-sum-videos-duration () {
-    print-videos-duration $@ | tail -1 | awk '{print $2}'
+sum_videos_duration () {
+    print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
 up () {

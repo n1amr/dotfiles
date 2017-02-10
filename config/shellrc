@@ -1,8 +1,8 @@
-unset MY_HOME
-unset DOTFILES_HOME
-unset SHELLNAME
+################################################################################
+###############################  Initialization  ###############################
 
 # Determine shell type
+unset SHELLNAME
 if [ -n "$BASH_VERSION" ]; then
     SHELLNAME=bash
 elif [ -n "$ZSH_VERSION" ]; then
@@ -12,23 +12,29 @@ else
     return
 fi
 
+MY_HOME="$HOME"
+DOTFILES_HOME="$MY_HOME/.dotfiles"
+
+init_config_file () {
+    echo "Note: Creating new config file."
+    echo -n \
+"""\
+#!/bin/bash
+
+export MY_HOME='$MY_HOME'
+export DOTFILES_HOME='$DOTFILES_HOME'
+""" >> "$DOTFILES_CONFIG_FILE"
+}
+
 # Load config file
 DOTFILES_CONFIG_FILE=~/.dotfiles_config
-[ -f "$DOTFILES_CONFIG_FILE" ] && source "$DOTFILES_CONFIG_FILE"
-
-if [ -z $MY_HOME ]; then
-    export MY_HOME='/home/n1amr'
-fi
-
-if [ -z $DOTFILES_HOME ]; then
-    export DOTFILES_HOME="$MY_HOME/.dotfiles"
-fi
+[ -f "$DOTFILES_CONFIG_FILE" ] && source "$DOTFILES_CONFIG_FILE" || init_config_file
 
 # Initialize shell
 HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=$HISTSIZE
-HISTCONTROL='ignoreboth';
+HISTCONTROL='ignoreboth'
 
 if [ $SHELLNAME = zsh ]; then
     export ZSH="$DOTFILES_HOME/config/oh-my-zsh"
@@ -43,9 +49,8 @@ elif [ $SHELLNAME = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
 fi
 
-##################################################
-# Environment variables
-##################################################
+################################################################################
+###########################  Environment variables  ############################
 
 export NAME='Amr Alaa'
 export EMAIL='n1amr1@gmail.com'
@@ -69,10 +74,8 @@ else
   export IS_TTY=0
 fi
 
-
-##################################################
-# PATH
-##################################################
+################################################################################
+####################################  PATH  ####################################
 
 export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
 export GOPATH="$MY_HOME/.gopath"
@@ -90,19 +93,19 @@ elif [ $SHELLNAME = bash ]; then
 fi
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
-##################################################
-# Functions
-##################################################
+################################################################################
+#################################  Functions  ##################################
 
 print_welcome () {
-    if [ "$COLUMNS" -gt "98" ]; then
-        echo -e "\e[1;31m         _                               _   \e[1;34m                  _                                _  \e[m";
-        echo -e "\e[1;31m  _ __  / |  __ _  _ __ ___   _ __  _   | |  \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___ | | \e[m";
-        echo -e "\e[1;31m | '_  \| | / _\` || '_ \` _  \| '__|(_) / __) \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _  \ / _ \| | \e[m";
-        echo -e "\e[1;31m | | | || || (_| || | | | | || |    _  \__ \ \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/|_| \e[m";
-        echo -e "\e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m";
-        echo -e "\e[1;31m                                        |_|  \e[1;34m                                                      \e[m";
-    fi
+    [ "$COLUMNS" -gt "98" ] && echo -e \
+"""\
+\e[1;31m         _                               _   \e[1;34m                  _                                _  \e[m\n\
+\e[1;31m  _ __  / |  __ _  _ __ ___   _ __  _   | |  \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___ | | \e[m\n\
+\e[1;31m | '_  \| | / _\` || '_ \` _  \| '__|(_) / __) \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _  \ / _ \| | \e[m\n\
+\e[1;31m | | | || || (_| || | | | | || |    _  \__ \ \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/|_| \e[m\n\
+\e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m\n\
+\e[1;31m                                        |_|  \e[1;34m                                                      \e[m\
+"""
 }
 
 block_caret () {
@@ -110,7 +113,7 @@ block_caret () {
     tput cvvis '\e[?8c'
 }
 
-fzf-init () {
+fzf_init () {
     if [ $SHELLNAME = zsh ]; then
         [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
     elif [ $SHELLNAME = bash ]; then
@@ -118,7 +121,7 @@ fzf-init () {
     fi
 }
 
-reset-keybindings () {
+reset_keybindings () {
     if [ $SHELLNAME = zsh ]; then
         [ "$1" = 'vi' ] && bindkey -v
         bindkey "^P" up-line-or-beginning-search
@@ -133,9 +136,8 @@ terminal_rezise () {
     eval `/usr/bin/resize`
 }
 
-##################################################
-# Aliases
-##################################################
+################################################################################
+##################################  Aliases  ###################################
 
 alias apt='sudo apt'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
@@ -160,7 +162,7 @@ alias hrestore='yes | cp ~/.${SHELLNAME}_history.bak ~/.${SHELLNAME}_history; fo
 alias ipy="ipython"
 alias ipython="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias j='jump'
-alias k='cd-tree'
+alias k='cdtree'
 alias l='ls -lgoh'
 alias la='ls -lAFh'
 alias ll='ls -l'
@@ -188,7 +190,7 @@ alias u='up'
 alias updatepip='pip install -U pip $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
 alias v='vim'
 alias vi='vim'
-alias vibindkey='reset-keybindings vi'
+alias vibindkey='reset_keybindings vi'
 alias wget='wget -c'
 
 if [ $SHELLNAME = zsh ]; then
@@ -197,9 +199,8 @@ if [ $SHELLNAME = zsh ]; then
     alias -g 'V=| vim -'
 fi
 
-##################################################
-# PS1 create
-##################################################
+################################################################################
+#################################  PS1 create  #################################
 
 reset_ps1() {
     if [ $SHELLNAME = zsh ]; then
@@ -266,7 +267,7 @@ $'%{\e[0m%} '
 }
 
 __ps1_git_branch () {
-    git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/ (\1)/';
+    git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/ (\1)/'
 }
 
 __ps1_pyenv_version () {
@@ -298,9 +299,8 @@ ps1_memory() {
     ps1_command() { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
 }
 
-##################################################
-# Other
-##################################################
+################################################################################
+################################  Finalization  ################################
 
 # Options
 if [ $SHELLNAME = zsh ]; then
@@ -315,5 +315,5 @@ EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 
 terminal_rezise
 reset_ps1
-reset-keybindings
+reset_keybindings
 block_caret
