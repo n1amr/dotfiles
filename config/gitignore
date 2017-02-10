@@ -6,7 +6,7 @@
 *globally-gitignored*
 .fuse_hidden*
 .idea/
-.sw?
+*.sw[mnop]
 /build/
 /cmake-build-debug/
 /out/

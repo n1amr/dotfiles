@@ -13,8 +13,8 @@ set ignorecase
 set timeoutlen=50
 set relativenumber
 
- noremap <c-k> :m-2<CR>
- noremap <c-j> :m+<CR>
+noremap <c-k> :m-2<CR>
+noremap <c-j> :m+<CR>
 
 " noremap <c-s-up> :m-2<CR>
 " noremap <c-s-down> :m+<CR>
