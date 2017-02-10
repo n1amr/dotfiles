@@ -155,6 +155,17 @@ fzf-init () {
     fi
 }
 
+reset-keybindings () {
+    if [ $SHELLNAME = zsh ]; then
+        [ "$1" = 'vi' ] && bindkey -v
+        bindkey "^P" up-line-or-beginning-search
+        bindkey "^N" down-line-or-beginning-search
+        bindkey -s "^[u" "^Qcd ..^M"
+    elif [ $SHELLNAME = bash ]; then
+        [ "$1" = 'vi' ] && set -o vi
+    fi
+}
+
 ##################################################
 # Aliases
 ##################################################
@@ -210,11 +221,14 @@ alias u='up'
 alias updatepip='pip install -U pip $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
 alias v='vim'
 alias vi='vim'
+alias vibindkey='reset-keybindings vi'
 alias wget='wget -c'
 
-alias -g 'G=| grep -P'
-alias -g 'S=| subl'
-alias -g 'V=| vim -'
+if [ $SHELLNAME = zsh ]; then
+    alias -g 'G=| grep -P'
+    alias -g 'S=| subl'
+    alias -g 'V=| vim -'
+fi
 
 ##################################################
 # PS1 create
@@ -321,16 +335,10 @@ ps1_memory() {
 # Other
 ##################################################
 
+# Options
 if [ $SHELLNAME = zsh ]; then
     unsetopt EXTENDED_HISTORY
-    # bindkey -v
-    bindkey "^P" up-line-or-beginning-search
-    bindkey "^N" down-line-or-beginning-search
-    bindkey "^[k" dirhistory_zle_dirhistory_future
-    bindkey "^[j" dirhistory_zle_dirhistory_back
-    bindkey -s "^[u" "^Qcd ..^M"
 elif [ $SHELLNAME = bash ]; then
-    # set -o vi
     shopt -s autocd
     shopt -s globstar
 fi
@@ -340,4 +348,5 @@ EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 
 terminal_rezise
 reset_ps1
+reset-keybindings
 block_caret
