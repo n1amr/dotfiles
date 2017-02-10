@@ -147,6 +147,14 @@ cd-tree () {
     tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX;
 }
 
+fzf-init () {
+    if [ $SHELLNAME = zsh ]; then
+        [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    elif [ $SHELLNAME = bash ]; then
+        [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    fi
+}
+
 ##################################################
 # Aliases
 ##################################################
@@ -321,20 +329,15 @@ if [ $SHELLNAME = zsh ]; then
     bindkey "^[k" dirhistory_zle_dirhistory_future
     bindkey "^[j" dirhistory_zle_dirhistory_back
     bindkey -s "^[u" "^Qcd ..^M"
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 elif [ $SHELLNAME = bash ]; then
     # set -o vi
     shopt -s autocd
     shopt -s globstar
-    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 fi
 
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
-if [ -f "$EXTRA_FUNCTIONS" ]; then
-    source "$EXTRA_FUNCTIONS"
-fi
+[ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
 terminal_rezise
-# print_welcome
 reset_ps1
 block_caret
