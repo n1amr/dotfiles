@@ -1,3 +1,11 @@
-sumvideos () {
-    exiftool -n -q -p '${Duration;our $sum;$_=ConvertDuration($sum+=$_)}' $@ | tail -n1;
+#!/bin/bash
+
+print-videos-duration () {
+    DELIM=';.;.;'
+    [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $@ 2> /dev/null \
+    | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
+}
+
+sum-videos-duration () {
+    print-videos-duration $@ | tail -1 | awk '{print $2}'
 }
