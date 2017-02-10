@@ -12,12 +12,9 @@ else
     return
 fi
 
-DOTFILES_CONFIG_FILE=~/.dotfiles_config
-
 # Load config file
-if [ -f "${DOTFILES_CONFIG_FILE}" ]; then
-    source "${DOTFILES_CONFIG_FILE}"
-fi
+DOTFILES_CONFIG_FILE=~/.dotfiles_config
+[ -f "$DOTFILES_CONFIG_FILE" ] && source "$DOTFILES_CONFIG_FILE"
 
 if [ -z $MY_HOME ]; then
     export MY_HOME='/home/n1amr'
@@ -55,9 +52,8 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-if [ -f "$DOTFILES_HOME/config/secret/api_keys" ]; then
-    . "$DOTFILES_HOME/config/secret/api_keys"
-fi
+API_KEYS_FILE="$DOTFILES_HOME/config/secret/api_keys"
+[ -f "$API_KEYS_FILE" ] && source "$API_KEYS_FILE"
 
 export D='/mnt/Storage'
 export GDRIVE="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
@@ -109,42 +105,9 @@ print_welcome () {
     fi
 }
 
-bak () {
-    while [ $# != 0 ]; do
-        cp -ir "$1" "$1.bak.$(date +%s)"
-        shift
-    done
-}
-
-findword () {
-    grep -P "$1" /usr/share/dict/words
-}
-
-# A rainbow in your shell.
-rainbow () {
-    yes "$(seq 231 -1 16)" | while read i; do printf "\x1b[48;5;${i}m\n"; sleep .02; done
-}
-
-hcd () {
-    history | grep -P "\d+\s+cd $@"
-}
-
-terminal_rezise () {
-    eval `/usr/bin/resize`
-}
-
 block_caret () {
     tput cnorm '\e[?8c'
     tput cvvis '\e[?8c'
-}
-
-up () {
-    cd $(printf '../%.0s' {1..$@})
-}
-
-cd-tree () {
-    cd "${@:-.}"
-    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX;
 }
 
 fzf-init () {
@@ -164,6 +127,10 @@ reset-keybindings () {
     elif [ $SHELLNAME = bash ]; then
         [ "$1" = 'vi' ] && set -o vi
     fi
+}
+
+terminal_rezise () {
+    eval `/usr/bin/resize`
 }
 
 ##################################################

@@ -1,11 +1,40 @@
 #!/bin/bash
 
+bak () {
+    while [ $# != 0 ]; do
+        cp -ir "$1" "$1.bak.$(date +%s)"
+        shift
+    done
+}
+
+cd-tree () {
+    cd "${@:-.}"
+    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX;
+}
+
+findword () {
+    grep -P "$1" /usr/share/dict/words
+}
+
+
+hcd () {
+    history | grep -P "\d+\s+cd $@"
+}
+
 print-videos-duration () {
     DELIM=';.;.;'
     [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $@ 2> /dev/null \
     | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
 }
 
+rainbow () {
+    yes "$(seq 231 -1 16)" | while read i; do printf "\x1b[48;5;${i}m\n"; sleep .02; done
+}
+
 sum-videos-duration () {
     print-videos-duration $@ | tail -1 | awk '{print $2}'
+}
+
+up () {
+    cd $(printf '../%.0s' {1..$@})
 }
