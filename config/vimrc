@@ -1,8 +1,5 @@
 execute pathogen#infect()
 
-color my-theme
-" color dracula
-
 set number
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
@@ -10,6 +7,7 @@ set pastetoggle=<F10>
 set cursorline
 set mouse=a
 set ignorecase
+set wildignorecase " for ex-mode autocompletion
 set timeoutlen=50
 set relativenumber
 
@@ -64,3 +62,35 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme="powerlineish"
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
+
+" gvim config
+if has("gui_running")
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Book\ 12
+  set guioptions=agimLt
+  set lines=999 columns=999
+
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    if l:gf_size_whole >= 1
+      let l:gf_size_whole = l:gf_size_whole - 1
+    endif
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  nnoremap <C-F11> :call FontSizePlus()<CR>
+  nnoremap <S-F11> :call FontSizeMinus()<CR>
+
+  " pass F11 press to system to enable fullscreen
+  noremap <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+endif
+
+set background=dark
+color chroma
