@@ -1,8 +1,10 @@
 [com/canonical/indicator/bluetooth]
 visible=true
 
-[com/canonical/indicator/appmenu/hud]
-store-usage-data=true
+[com/canonical/indicator/power]
+icon-policy='charge'
+show-percentage=true
+show-time=true
 
 [com/canonical/indicator/datetime]
 show-day=true
@@ -26,11 +28,6 @@ interested-media-players=['spotify.desktop', 'rhythmbox.desktop', 'vlc.desktop']
 preferred-media-players=['rhythmbox.desktop']
 visible=true
 
-[com/canonical/indicator/power]
-icon-policy='charge'
-show-percentage=true
-show-time=true
-
 [com/canonical/unity]
 minimize-count=100
 integrated-menus=false
@@ -43,7 +40,7 @@ blacklist=['2804074804071908-']
 text-scale-factor=1.0
 
 [com/canonical/unity/launcher]
-favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://gnome-terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'unity://running-apps', 'unity://devices']
+favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://gnome-terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'application://ubuntu-amazon-default.desktop', 'unity://running-apps', 'unity://devices']
 launcher-position='Bottom'
 
 [com/canonical/unity/webapps]
@@ -167,13 +164,18 @@ terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
 screensaver='<Primary><Alt>l'
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']
 on-screen-keyboard=''
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
 binding='<Primary><Alt>i'
 command='xcalib -i -a'
 name='Invert colors'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
+binding='<Primary><Alt>n'
+command='gvim'
+name='GVim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
 binding='<Primary><Alt>j'
@@ -251,7 +253,7 @@ time-display=false
 
 [org/gnome/rhythmbox/player]
 play-order='shuffle'
-volume=0.7999725341796875
+volume=1.0
 
 [org/gnome/rhythmbox/podcast]
 download-location='file:///mnt/Storage/Sounds/Music'
@@ -513,7 +515,7 @@ idle-delay=uint32 0
 disable-lock-screen=false
 
 [org/gnome/desktop/privacy]
-remember-recent-files=true
+remember-recent-files=false
 
 [org/gnome/desktop/wm/preferences]
 theme='Adwaita'
@@ -628,7 +630,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.zip'
+default-extension='.7z'
 volume-size=104857
 encrypt-header=true
 
@@ -666,7 +668,7 @@ trash-icon-visible=false
 [org/gnome/nautilus/list-view]
 default-visible-columns=['name', 'size', 'type', 'date_modified']
 default-zoom-level='smallest'
-use-tree-view=false
+use-tree-view=true
 default-column-order=['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions', 'mime_type', 'where']
 
 [org/gnome/eog/view]
@@ -730,6 +732,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/4bd84d00-7c1b-4bf9-92ad-f83bb80b4336]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/d8bffd44-b8ac-455c-9898-f1dd3891e68f]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -738,11 +744,19 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/a3ec76f0-8e29-4e07-a7ef-bd807cd927e4]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/325421e4-acd5-4f00-83ce-9b2b0d056af8]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/c2dab111-0702-47ab-a85f-3b19b92660fd]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -755,6 +769,10 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/5cb08e56-d890-4858-b366-db980dd48181]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -782,7 +800,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/dd83b43c-9179-4ec2-926d-fadb49f563ba]
+[org/gnome/nm-applet/eap/603e98a1-5d01-4320-a1db-cdc4a5bec953]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -798,7 +816,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/603e98a1-5d01-4320-a1db-cdc4a5bec953]
+[org/gnome/nm-applet/eap/dd83b43c-9179-4ec2-926d-fadb49f563ba]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -863,7 +881,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(2.2949497664729006, 0.83254156769596199)
+window-ratio=(2.2287581699346406, 0.83207070707070707)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1306,7 +1324,7 @@ height=744
 
 [apps/seahorse/windows/key-manager]
 width=1317
-height=744
+height=672
 
 [apps/seahorse]
 server-auto-retrieve=true
@@ -1323,15 +1341,12 @@ sidebar-visible=true
 
 [ca/desrt/dconf-editor]
 window-is-fullscreen=false
-window-height=715
-window-width=1315
+window-height=672
+window-width=1364
 window-is-maximized=true
 
 [desktop/gnome/crypto/pgp]
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
-
-[desktop/unity/runner]
-history=['gnome-terminal -e sh', 'unity --replace', 'xterm', 'gnome-terminal', 'sh', "gnome-terminal -e 'sh'", 'packettracer']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']

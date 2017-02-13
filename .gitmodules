@@ -14,6 +14,10 @@
     path = config/history
     url = http://gitlab.com/n1amr/dotfiles-history.git
     branch = master
+[submodule "config/vim/bundle/ctrlp.vim"]
+    path = config/vim/bundle/ctrlp.vim
+    url = github:kien/ctrlp.vim
+    branch = master
 [submodule "config/vim/bundle/nerdtree.vim"]
     path = config/vim/bundle/nerdtree.vim
     url = http://github.com/scrooloose/nerdtree.git

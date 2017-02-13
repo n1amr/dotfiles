@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 bak () {
     while [ $# != 0 ]; do
         cp -ir "$1" "$1.bak.$(date +%s)"
@@ -16,6 +17,9 @@ findword () {
     grep -P "$1" /usr/share/dict/words
 }
 
+gdiff () {
+    git diff --no-index "$1" "$2"
+}
 
 hcd () {
     history | grep -P "\d+\s+cd $@"
