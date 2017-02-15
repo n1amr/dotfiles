@@ -1,22 +1,19 @@
 #!/bin/bash
 
-wifi_list=(
-    Vodafone_ADSL_DC53
-#    TEData
-#    DLINK_WIRELESS
-#    Alaa
-#    linksys
-#    3com
-)
+source ~/.dotfiles_config
+
+WIFI_LIST_FILE="$DOTFILES_HOME/data/wifi-list"
+[ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
 
 state() {
     nmcli d | grep wlp8s0 | grep -Po '\S*connected'
 }
 
-for id in "${wifi_list[@]}"; do
+while IFS= read line; do
+    [ "${#line}" = 0 -o "${line:0:1}" = "#" ] && continue  # ignore empty lines comments
     if [[ x"$(state)" == x"connected" ]]; then
         break
     fi
     echo "connecting to $id..."
     timeout 5s nmcli connection up id "$id"
-done
+done < "$WIFI_LIST_FILE"

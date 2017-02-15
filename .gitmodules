@@ -12,7 +12,7 @@
     branch = master
 [submodule "config/vim"]
     path = config/vim
-    url = git@gitlab.com:n1amr/vim-config
+    url = http://gitlab.com/n1amr/vim-config
     branch = master
 [submodule "config/history"]
     path = config/history
