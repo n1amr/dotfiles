@@ -1,0 +1,3 @@
+map o open_with gui-open
+map <c-t> open_with trash
+set line_numbers relative

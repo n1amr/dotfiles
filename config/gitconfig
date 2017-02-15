@@ -1,42 +1,42 @@
 [alias]
-	a = add
-	br = branch
-	c = commit
-	ca = commit -a
-	co = checkout
-	l = log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	st = status
+    a = add
+    br = branch
+    c = commit
+    ca = commit -a
+    co = checkout
+    l = log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    st = status
 
 [color]
-	ui = true
+    ui = true
 
 [core]
-	editor = vim
-	excludesfile = ~/.gitignore
-	autocrlf = input
+    editor = vim
+    excludesfile = ~/.gitignore
+    autocrlf = input
 
 [credential]
-	helper = cache
+    helper = cache
 
 [grep]
-	linenumber = true
+    linenumber = true
 
 [push]
-	default = matching
+    default = matching
 
 [user]
-	name = Amr Alaa
-	email = n1amr1@gmail.com
-	signingkey = 7C837246
+    name = Amr Alaa
+    email = n1amr1@gmail.com
+    signingkey = 7C837246
 
 [commit]
-	gpgsign = false
+    gpgsign = false
 
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 
 [url "git@github.com:"]
     insteadOf = "github:"
@@ -45,4 +45,4 @@
     insteadOf = "gist:"
 
 [url "git@gitlab.com:"]
-	insteadOf = "gitlab:"
+    insteadOf = "gitlab:"
