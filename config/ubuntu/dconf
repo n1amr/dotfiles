@@ -40,7 +40,7 @@ blacklist=['2804074804071908-']
 text-scale-factor=1.0
 
 [com/canonical/unity/launcher]
-favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://gnome-terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'application://ubuntu-amazon-default.desktop', 'unity://running-apps', 'unity://devices']
+favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://gnome-terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'unity://running-apps', 'unity://devices']
 launcher-position='Bottom'
 
 [com/canonical/unity/webapps]
@@ -173,8 +173,8 @@ command='xcalib -i -a'
 name='Invert colors'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
-binding='<Primary><Alt>n'
-command='gvim'
+binding='<Primary><Alt>v'
+command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; gvim'\""
 name='GVim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
@@ -183,7 +183,7 @@ command='gnome-terminal'
 name='Terminal'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
-binding='<Primary><Alt>v'
+binding='<Primary><Alt>n'
 command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; vim'\""
 name='Vim'
 
@@ -295,7 +295,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Location', true)
+sorting=('Location', false)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -676,43 +676,47 @@ background-color='rgb(0,0,0)'
 use-background-color=true
 transparency='checked'
 
-[org/gnome/nm-applet/eap/b0424aea-43ea-458a-916a-5351197cebbb]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/d1647325-b3dc-402f-94ad-859ae621cf2d]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/a4503482-0ab7-4fa2-8a06-93874a60fa37]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
 [org/gnome/nm-applet/eap/04807f22-fd11-4fba-aa4c-da0c578cb5f0]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/f514fa01-474f-4f72-9e57-4b60421e3954]
+[org/gnome/nm-applet/eap/05a026d2-c6df-4ecb-b0ae-c89526128950]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/7993c944-b46b-4194-a131-acb71ecca634]
+[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/f69bab0f-a69f-4e38-8b33-a9f8b63cacd8]
+[org/gnome/nm-applet/eap/1a43c4db-227d-4ebc-909d-b279723840a6]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/659d1f6b-54e9-4261-a60b-619e16f1915e]
+[org/gnome/nm-applet/eap/1c2123b4-3906-44e7-8b2a-fc7112965be1]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/882465c5-62d6-4714-9af5-2100e4583c27]
+[org/gnome/nm-applet/eap/1fe0dbc4-669b-4e74-b36a-1fafec9bf666]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/5ec8f238-0da3-4057-8f21-0dc6bc5cfe27]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/6d0bc985-ce7b-4038-870f-33afa7a66ebe]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -724,99 +728,19 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/1c2123b4-3906-44e7-8b2a-fc7112965be1]
+[org/gnome/nm-applet/eap/c6861bac-934c-4ce4-aea4-8a3af76bfae4]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/cda73d4a-4993-4787-9414-8a7562de30b7]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/f8dd4a31-bbe2-429f-9217-5dbffec7837e]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/4bd84d00-7c1b-4bf9-92ad-f83bb80b4336]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/d8bffd44-b8ac-455c-9898-f1dd3891e68f]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/5039be3e-f698-4587-b9ad-1ea24274164e]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/a3ec76f0-8e29-4e07-a7ef-bd807cd927e4]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/325421e4-acd5-4f00-83ce-9b2b0d056af8]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/c2dab111-0702-47ab-a85f-3b19b92660fd]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/4fcac206-63d2-4ed4-9ced-e08862df16d1]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/5ec8f238-0da3-4057-8f21-0dc6bc5cfe27]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/5cb08e56-d890-4858-b366-db980dd48181]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/8679817b-ea9c-47ad-a08a-99a56946f1b8]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/7667ed9b-610a-43d0-9d72-6c7919492f90]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/2ba31de3-6950-40e8-a7f3-a486031510d6]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/793c425a-ab73-4c6f-9d5d-085491104054]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/51a22d6e-c614-4acf-b3d5-81f03fab95aa]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/603e98a1-5d01-4320-a1db-cdc4a5bec953]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/11aa95c7-3e25-4ac9-a0ca-86563ace8b2e]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/378c3c4b-793f-4955-81f9-958d0c6d8268]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/dd83b43c-9179-4ec2-926d-fadb49f563ba]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -881,7 +805,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(2.2287581699346406, 0.83207070707070707)
+window-ratio=(3.3500098096919757, 1.1544795783926218)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1295,10 +1219,10 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=157
-window-position=(318, 136)
+window-position=(342, 38)
 show-size-column=true
 show-hidden=false
-window-size=(730, 476)
+window-size=(681, 672)
 sort-directories-first=true
 date-format='regular'
 sort-order='ascending'
@@ -1310,7 +1234,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1486428928
+launch-time=1487301561
 window-height=363
 show-details=true
 window-width=453
