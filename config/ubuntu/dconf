@@ -295,7 +295,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Location', false)
+sorting=('Title', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -676,19 +676,23 @@ background-color='rgb(0,0,0)'
 use-background-color=true
 transparency='checked'
 
+[org/gnome/nm-applet/eap/cda73d4a-4993-4787-9414-8a7562de30b7]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/04807f22-fd11-4fba-aa4c-da0c578cb5f0]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/05a026d2-c6df-4ecb-b0ae-c89526128950]
+[org/gnome/nm-applet/eap/c061ece1-d09a-416d-a41c-c432948e5d5f]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/1a43c4db-227d-4ebc-909d-b279723840a6]
+[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -700,10 +704,6 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
 [org/gnome/nm-applet/eap/5ec8f238-0da3-4057-8f21-0dc6bc5cfe27]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -712,19 +712,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
+[org/gnome/nm-applet/eap/05a026d2-c6df-4ecb-b0ae-c89526128950]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/88e6991f-a942-4da0-9642-a4c9f46f7668]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/c061ece1-d09a-416d-a41c-c432948e5d5f]
+[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -732,15 +724,23 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/cda73d4a-4993-4787-9414-8a7562de30b7]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
 [org/gnome/nm-applet/eap/f8dd4a31-bbe2-429f-9217-5dbffec7837e]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/1a43c4db-227d-4ebc-909d-b279723840a6]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/88e6991f-a942-4da0-9642-a4c9f46f7668]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -805,7 +805,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(3.3500098096919757, 1.1544795783926218)
+window-ratio=(1.7247474747474747, 1.1454248366013071)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1219,7 +1219,7 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=157
-window-position=(342, 38)
+window-position=(342, 48)
 show-size-column=true
 show-hidden=false
 window-size=(681, 672)
@@ -1234,7 +1234,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1487301561
+launch-time=1487629646
 window-height=363
 show-details=true
 window-width=453
