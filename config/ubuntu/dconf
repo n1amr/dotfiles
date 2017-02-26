@@ -164,8 +164,13 @@ terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
 screensaver='<Primary><Alt>l'
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']
 on-screen-keyboard=''
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
+binding='<Primary><Alt>k'
+command='xdotool mousemove --sync 683 384'
+name='Center Cursor'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
 binding='<Primary><Alt>i'
@@ -184,7 +189,7 @@ name='Terminal'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
 binding='<Primary><Alt>n'
-command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; vim'\""
+command="gnome-terminal -e \"zsh -c '. ~/.zshrc; vim'\""
 name='Vim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
@@ -194,7 +199,7 @@ name='Sublime Text 3'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
 binding='<Primary><Alt>p'
-command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; ipython'\""
+command="gnome-terminal -e \"zsh -c '. ~/.zshrc; ipython'\""
 name='iPython'
 
 [org/gnome/settings-daemon/plugins/xsettings]
@@ -337,7 +342,7 @@ notebook-show-tabs-mode='always'
 show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
-virtual-root='file:///mnt/Storage/GoogleDrive/ASU/archive/Database'
+virtual-root='file:///home/n1amr'
 tree-view=true
 root='file:///'
 
@@ -350,7 +355,7 @@ replace-with-entry=['رامي لكح']
 
 [org/gnome/gedit/state/window]
 size=(1315, 343)
-state=4
+state=132
 bottom-panel-size=140
 side-panel-size=200
 side-panel-active-page='GeditWindowDocumentsPanel'
@@ -736,6 +741,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/4dd6c2c8-195e-4992-8159-3ca2e49f6a5e]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/1a43c4db-227d-4ebc-909d-b279723840a6]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -805,7 +814,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(1.7247474747474747, 1.1454248366013071)
+window-ratio=(1.8972222222222221, 1.2981481481481481)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1234,8 +1243,8 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1487629646
-window-height=363
+launch-time=1488126301
+window-height=397
 show-details=true
 window-width=453
 

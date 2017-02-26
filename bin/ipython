@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ~/.dotfiles_config
+export PATH="$MY_HOME/.pyenv/bin:$PATH"
+eval "$( type -t pyenv > /dev/null && pyenv init - )"
+python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'
