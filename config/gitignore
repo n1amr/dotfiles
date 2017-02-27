@@ -3,10 +3,10 @@
 *.class
 *.jar
 *.pyc
+*.sw[klmnop]
 *globally-gitignored*
 .fuse_hidden*
 .idea/
-*.sw[klmnop]
 /build/
 /cmake-build-debug/
 /out/
