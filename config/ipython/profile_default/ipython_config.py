@@ -1,5 +1,26 @@
 # Configuration file for ipython.
 
+c = get_config()
+
+c.AliasManager.user_aliases = [
+ ('la', 'ls -al')
+]
+
+c.InteractiveShell.autocall = 1
+c.InteractiveShell.colors = 'Linux'
+c.InteractiveShell.confirm_exit = False
+c.InteractiveShell.editor = 'vim'
+
+c.StoreMagics.autorestore = True
+
+c.TerminalInteractiveShell.display_completions = 'column'
+c.TerminalInteractiveShell.editing_mode = 'vi'
+c.TerminalInteractiveShell.highlighting_style = 'paraiso-dark'
+# c.TerminalInteractiveShell.mouse_support = True
+c.TerminalInteractiveShell.true_color = True
+
+c.TerminalIPythonApp.display_banner = False
+
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 #------------------------------------------------------------------------------
@@ -303,6 +324,14 @@
 #  xcode, vim, algol_nu, perldoc, manni, pastie, tango, rrt, autumn, trac,
 #  fruity, borland, lovelace, paraiso-light
 #c.TerminalInteractiveShell.highlighting_style = 'legacy'
+
+# c.TerminalInteractiveShell.highlighting_style = 'native'
+# c.TerminalInteractiveShell.highlighting_style = 'monokai'
+# c.TerminalInteractiveShell.highlighting_style = 'paraiso-dark'
+# c.TerminalInteractiveShell.highlighting_style = 'manni'
+# c.TerminalInteractiveShell.highlighting_style = 'perldoc'
+# c.TerminalInteractiveShell.highlighting_style = 'vim'
+
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
