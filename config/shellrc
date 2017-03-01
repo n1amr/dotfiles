@@ -312,6 +312,8 @@ elif [ $SHELLNAME = bash ]; then
     shopt -s globstar
 fi
 
+stty stop undef # to unmap ctrl-s
+
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 [ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
