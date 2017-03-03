@@ -8,6 +8,10 @@ bak () {
     done
 }
 
+cdf () {
+    diff -u "$1" "$2" | colordiff | less -FRX
+}
+
 cdtree () {
     cd "${@:-.}"
     tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX
@@ -15,10 +19,6 @@ cdtree () {
 
 findword () {
     grep -P "$1" /usr/share/dict/words
-}
-
-gdiff () {
-    git diff --no-index "$1" "$2"
 }
 
 hcd () {
