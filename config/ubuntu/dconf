@@ -164,43 +164,48 @@ terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
 screensaver='<Primary><Alt>l'
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/']
 on-screen-keyboard=''
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
-binding='<Primary><Alt>k'
-command='xdotool mousemove --sync 683 384'
-name='Center Cursor'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
-binding='<Primary><Alt>i'
-command='xcalib -i -a'
-name='Invert colors'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
-binding='<Primary><Alt>v'
-command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; gvim'\""
-name='GVim'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
-binding='<Primary><Alt>j'
-command='gnome-terminal'
-name='Terminal'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
-binding='<Primary><Alt>n'
-command="gnome-terminal -e \"zsh -c '. ~/.zshrc; vim'\""
-name='Vim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
 binding='<Primary><Alt>slash'
 command='/usr/bin/subl'
 name='Sublime Text 3'
 
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
+binding=''
+command='gnome-terminal'
+name='Terminal'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
+binding='<Primary><Alt>i'
+command='xcalib -i -a'
+name='Invert colors'
+
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
 binding='<Primary><Alt>p'
 command="gnome-terminal -e \"zsh -c '. ~/.zshrc; ipython'\""
 name='iPython'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
+binding='<Primary><Alt>n'
+command="gnome-terminal -e \"zsh -c '. ~/.zshrc; vim'\""
+name='Vim'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
+binding='<Primary><Alt>v'
+command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; gvim'\""
+name='GVim'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
+binding='<Primary><Alt>k'
+command='xdotool mousemove --sync 683 384'
+name='Center Cursor'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7]
+binding='<Primary><Alt>j'
+command="gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux attach\"'"
+name='tmux'
 
 [org/gnome/settings-daemon/plugins/xsettings]
 overrides={'Gtk/ShellShowsAppMenu': <1>}
@@ -372,9 +377,10 @@ default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
 [org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 encoding='UTF-8'
 foreground-color='rgb(255,255,255)'
-visible-name='n1amr'
+scrollbar-policy='never'
 login-shell=false
 palette=['rgb(0,0,0)', 'rgb(239,41,41)', 'rgb(0,170,0)', 'rgb(170,85,0)', 'rgb(0,0,170)', 'rgb(170,0,170)', 'rgb(0,170,170)', 'rgb(170,170,170)', 'rgb(85,85,85)', 'rgb(255,0,0)', 'rgb(85,255,85)', 'rgb(255,255,85)', 'rgb(85,85,255)', 'rgb(255,85,255)', 'rgb(85,255,255)', 'rgb(255,255,255)']
+visible-name='n1amr'
 custom-command='zsh'
 default-size-columns=250
 default-size-rows=220
@@ -635,7 +641,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.7z'
+default-extension='.zip'
 volume-size=104857
 encrypt-header=true
 
@@ -685,6 +691,10 @@ transparency='checked'
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/2c2d2f39-af1f-4dfa-b8ad-42e1c24fdafe]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -697,11 +707,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
+[org/gnome/nm-applet/eap/1c2123b4-3906-44e7-8b2a-fc7112965be1]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/1c2123b4-3906-44e7-8b2a-fc7112965be1]
+[org/gnome/nm-applet/eap/436c5acf-2a95-4b0f-bc5e-dc8fd8a77b82]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -814,7 +824,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(1.8972222222222221, 1.2981481481481481)
+window-ratio=(2.2948341033179336, 0.83254156769596199)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1228,7 +1238,7 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=157
-window-position=(342, 48)
+window-position=(343, 33)
 show-size-column=true
 show-hidden=false
 window-size=(681, 672)
@@ -1243,8 +1253,8 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1488126301
-window-height=397
+launch-time=1488337341
+window-height=363
 show-details=true
 window-width=453
 
@@ -1280,6 +1290,9 @@ window-is-maximized=true
 
 [desktop/gnome/crypto/pgp]
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
+
+[desktop/unity/runner]
+history=["gnome-terminal -e 'tmux'", 'gnome-terminal -e "sh"', 'sh']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']

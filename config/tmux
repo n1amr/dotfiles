@@ -1,3 +1,6 @@
+# if run as "tmux attach", create a session if one does not already exist
+new-session -s main -n $HOST
+
 # C-b is not acceptable -- Vim uses it
 unbind C-b
 set-option -g prefix C-a
@@ -64,5 +67,7 @@ set -g pane-border-bg black
 set -g pane-active-border-fg green
 set -g pane-active-border-bg black
 
-# if run as "tmux attach", create a session if one does not already exist
-new-session -s main -n $HOST
+set-option -g mouse on
+
+# copy to system clipboard
+bind-key p save-buffer ~/.tmux-buffer \; run-shell "xsel -ib <~/.tmux-buffer && rm ~/.tmux-buffer"
