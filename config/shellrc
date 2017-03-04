@@ -113,11 +113,29 @@ block_caret () {
     tput cvvis '\e[?8c'
 }
 
-fzf_init () {
+init_fzf () {
     if [ $SHELLNAME = zsh ]; then
         [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
     elif [ $SHELLNAME = bash ]; then
         [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    fi
+}
+
+init_powerline () {
+    POWERLINE_ROOT="$(pip show powerline-status | grep -Po '(?<=Location: ).*')/powerline"
+
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+
+    if [ $SHELLNAME = zsh ]; then
+        if [ -r $POWERLINE_ROOT/bindings/zsh/powerline.zsh ]; then
+            source $POWERLINE_ROOT/bindings/zsh/powerline.zsh
+        fi
+    elif [ $SHELLNAME = bash ]; then
+        if [ -r $POWERLINE_ROOT/bindings/bash/powerline.sh ]; then
+            source $POWERLINE_ROOT/bindings/bash/powerline.sh
+        fi
     fi
 }
 

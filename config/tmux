@@ -1,0 +1,68 @@
+# C-b is not acceptable -- Vim uses it
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a last-window
+
+# Start numbering at 1
+set -g base-index 1
+
+# Allows for faster key repetition
+set -s escape-time 0
+
+# Rather than constraining window size to the maximum size of any client 
+# connected to the *session*, constrain window size to the maximum size of any 
+# client connected to *that window*. Much more reasonable.
+setw -g aggressive-resize on
+
+# Status bar customization
+set -g status-utf8 on
+set -g status-bg black
+set -g status-fg white
+set -g status-interval 5
+set -g status-left-length 90
+set -g status-right-length 60
+set -g status-justify left
+set -g status-left '#[fg=Cyan]#S'
+set -g status-right '#[fg=white]%a %d %b %R'
+
+# powerline
+set -g default-terminal "screen-256color"
+source /home/n1amr/.pyenv/versions/3.6.0/lib/python3.6/site-packages/powerline/bindings/tmux/powerline.conf
+
+set-option -g status-position top
+set message-command-style "bg=black fg=white"
+
+set-window-option -g mode-keys vi
+
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+bind-key -t vi-copy Space rectangle-toggle
+
+bind-key C-k select-pane -U
+bind-key C-j select-pane -D
+bind-key C-l select-pane -R
+bind-key C-h select-pane -L
+
+setw -g aggressive-resize on
+
+bind-key C-r source-file ~/.tmux.conf
+
+# Rename your terminals
+set -g set-titles on
+set -g set-titles-string '#(whoami)@#h: tmux'
+
+# re-number windows when one is closed
+set -g renumber-windows on
+
+# highlight current window
+set-window-option -g window-status-current-fg black
+set-window-option -g window-status-current-bg green
+
+# set color of active pane
+set -g pane-border-fg colour235
+set -g pane-border-bg black
+set -g pane-active-border-fg green
+set -g pane-active-border-bg black
+
+# if run as "tmux attach", create a session if one does not already exist
+new-session -s main -n $HOST
