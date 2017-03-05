@@ -1,8 +1,5 @@
-/.*\.(class|pyc)$
-/__pycache__$
-/cmake-build-debug$
-/desktop\.ini$
-/~.*\.(ppt|pptx|doc|docx|xls|xlsx)
+.*\.(driveignored|class|pyc)$
+.*_exports$
 ASU/CSE 2017 - 4th year/First term$
 ASU/CSE 2017 - 4th year/Second Term/Bigdata$
 ASU/CSE 2017 - 4th year/Second Term/Machine Learning/Slides/pdf$
@@ -14,3 +11,7 @@ ASU/study/first-term/security/project/resources/The_Art_of_Computer_Programming 
 ASU/study/first-term/security/project/rsa-crypt/build$
 ASU/study/first-term/security/project/rsa-crypt/src/test/lib/googletest-master$
 ASU/study/second-term/image-processing/project/mcq-checker/data$
+__pycache__$
+cmake-build-debug$
+desktop\.ini$
+~.*\.(ppt|pptx|doc|docx|xls|xlsx)$

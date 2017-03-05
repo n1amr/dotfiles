@@ -1,58 +1,59 @@
-/home/n1amr/.jetbrains/config
 /home/n1amr/.bash_history
 /home/n1amr/.config/sublime-text-3/
-/home/n1amr/.gnupg/
-/home/n1amr/.mozilla/firefox/n1amr.default/
-/home/n1amr/.mozilla/firefox/profiles.ini
 /home/n1amr/.dotfiles/
 /home/n1amr/.dotfiles_config
+/home/n1amr/.gnupg/
+/home/n1amr/.jetbrains/config
+/home/n1amr/.local/share/rhythmbox
+/home/n1amr/.mozilla/firefox/n1amr.default/
+/home/n1amr/.mozilla/firefox/profiles.ini
 /home/n1amr/.ssh/
 /home/n1amr/.twitter-bots/
 /home/n1amr/.zsh_history
 /home/n1amr/.zsh_history.bak
 /mnt/Storage/Backups/LG G4/storage/emulated/0/WhatsApp/
 /mnt/Storage/Backups/LG G4/storage/emulated/0/backups/system/
+/mnt/Storage/Backups/Twitter Favorites Archive
 /mnt/Storage/GoogleDrive/Personal/
 /mnt/Storage/GoogleDrive/Personal/main.kdbx
 /mnt/Storage/Pictures/Wallpapers/Black Wallpapers Widescreen 13.jpg
-/mnt/Storage/Programs/Compression/7z1506-x64.exe
-/mnt/Storage/Programs/Compression/WinRAR/WinRAR 3.9 En Silent.exe
-/mnt/Storage/Programs/Internet/Browsers/Firefox Setup 49.0.2.exe
-/mnt/Storage/Programs/Internet/KeePass/
-/mnt/Storage/Programs/Internet/VPN/openvpn-2.3.8.tar.gz
-/mnt/Storage/Programs/Internet/VPN/openvpn-install-2.3.8-I601-x86_64.exe
-/mnt/Storage/Programs/Internet/VPN/torbrowser-install-6.0.5_en-US.exe
-/mnt/Storage/Programs/Programming/Git/Git-2.10.2-64-bit.exe
-/mnt/Storage/Programs/Programming/Git/PortableGit-2.10.2-64-bit.7z.exe
-/mnt/Storage/Programs/Programming/Git/config/
-/mnt/Storage/Programs/Programming/Java/jdk-8u111-windows-x64.exe
-/mnt/Storage/Programs/Programming/Python/python-3.6.0-amd64.exe
-/mnt/Storage/Programs/Programming/Text Editors/Sublime Text/
-/mnt/Storage/Programs/Programming/Java/IDEA/ideaIU-2016.3.3.win.zip
-/mnt/Storage/Programs/Programming/Python/Pycharm/pycharm-professional-2016.3.2.exe
-/mnt/Storage/Programs/System/EasyBCD 2.2.exe
-/mnt/Storage/Programs/System/OpenSSH-Win64.zip
-/mnt/Storage/Programs/Ubuntu/Internet/VPN/openvpn-2.3.8.7z
-/mnt/Storage/Programs/Ubuntu/Internet/VPN/tor-browser-linux64-6.0.5_en-US.tar.xz
-/mnt/Storage/Programs/Ubuntu/Internet/firefox-49.0.2.tar.bz2
-/mnt/Storage/Programs/Ubuntu/Programming/Java/IDEA/ideaIU-2016.3.3.tar.gz
-/mnt/Storage/Programs/Ubuntu/Programming/Java/IDEA/license
-/mnt/Storage/Programs/Ubuntu/Programming/Java/jdk-8u111-linux-x64.tar.gz
-/mnt/Storage/Programs/Ubuntu/Programming/Java/jdk-9-ea+140_linux-x64_bin.tar.gz
-/mnt/Storage/Programs/Ubuntu/Programming/Python/PyCharm/PyCharm-license-server
-/mnt/Storage/Programs/Ubuntu/Programming/Python/PyCharm/fix-ipython.diff
-/mnt/Storage/Programs/Ubuntu/Programming/Python/PyCharm/pycharm-professional-2016.3.2.tar.gz
-/mnt/Storage/Programs/Ubuntu/Programming/Python/pyenv/sources/3.6.0/Python-3.6.0.tar.xz
-/mnt/Storage/Programs/Ubuntu/Text Editors/Sublime Text/
-/mnt/Storage/Programs/Ubuntu/Tools/git-2.10.2.tar.gz
+/mnt/Storage/Programs/Internet/VPN/openvpn-2.3.8.7z
+/mnt/Storage/Programs/Internet/VPN/tor-browser-linux64-6.0.5_en-US.tar.xz
+/mnt/Storage/Programs/Internet/firefox-49.0.2.tar.bz2
+/mnt/Storage/Programs/Programming/C++/CLion/CLion-2016.3.2.tar.gz
+/mnt/Storage/Programs/Programming/C++/cmake-3.7.2-Linux-x86_64.sh
+/mnt/Storage/Programs/Programming/Java/IDEA/ideaIU-2016.3.3.tar.gz
+/mnt/Storage/Programs/Programming/Java/jdk-8u111-linux-x64.tar.gz
+/mnt/Storage/Programs/Programming/Python/PyCharm/fix-ipython.diff
+/mnt/Storage/Programs/Programming/Python/PyCharm/pycharm-professional-2016.3.2.tar.gz
+/mnt/Storage/Programs/Programming/Python/pyenv/pyenv
+/mnt/Storage/Programs/Programming/Python/pyenv/sources/3.6.0/Python-3.6.0.tar.xz
+/mnt/Storage/Programs/Programming/texstudio_2.12.2-2.1_amd64.deb
+/mnt/Storage/Programs/Windows/Compression/7z1506-x64.exe
+/mnt/Storage/Programs/Windows/Compression/WinRAR/WinRAR 3.9 En Silent.exe
+/mnt/Storage/Programs/Windows/Internet/Browsers/Firefox Setup 49.0.2.exe
+/mnt/Storage/Programs/Windows/Internet/KeePass/
+/mnt/Storage/Programs/Windows/Internet/VPN/openvpn-2.3.8.tar.gz
+/mnt/Storage/Programs/Windows/Internet/VPN/openvpn-install-2.3.8-I601-x86_64.exe
+/mnt/Storage/Programs/Windows/Internet/VPN/torbrowser-install-6.0.5_en-US.exe
+/mnt/Storage/Programs/Windows/Programming/Git/Git-2.10.2-64-bit.exe
+/mnt/Storage/Programs/Windows/Programming/Git/PortableGit-2.10.2-64-bit.7z.exe
+/mnt/Storage/Programs/Windows/Programming/Git/config/
+/mnt/Storage/Programs/Windows/Programming/Java/IDEA/ideaIU-2016.3.3.win.zip
+/mnt/Storage/Programs/Windows/Programming/Java/jdk-8u111-windows-x64.exe
+/mnt/Storage/Programs/Windows/Programming/Python/Pycharm/pycharm-professional-2016.3.2.exe
+/mnt/Storage/Programs/Windows/Programming/Python/python-3.6.0-amd64.exe
+/mnt/Storage/Programs/Windows/Programming/Text Editors/Sublime Text/
+/mnt/Storage/Programs/Windows/System/EasyBCD 2.2.exe
+/mnt/Storage/Programs/Windows/System/OpenSSH-Win64.zip
+/mnt/Storage/Programs/Text Editors/Sublime Text/
+/mnt/Storage/Programs/Tools/git-2.10.2.tar.gz
 /mnt/Storage/Programs/Utilities/Encryption/gpg4win-2.3.2.exe
 /mnt/Storage/Programs/Utilities/putty
 /mnt/Storage/Programs/Utilities/rufus-2.6.exe
 /mnt/Storage/Shared/Sublime Text 3 portable.zip
 /mnt/Storage/Shared/vpnbook/
-/usr/local/sublime_text_3/
-/usr/src/sublime_text_3.tar.bz2
 /usr/lib/keepass2/
+/usr/local/sublime_text_3/
 /usr/share/themes/Numix Daily
-/mnt/Storage/Backups/Twitter Favorites Archive
-/home/n1amr/.local/share/rhythmbox
+/usr/src/sublime_text_3.tar.bz2

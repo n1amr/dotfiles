@@ -11,7 +11,7 @@ state() {
 
 while IFS= read line; do
     [ "$(state)" = "connected" ] && break
-    id=`echo $line | grep -Po '^[^#]\w*'`
+    id=`echo $line | grep -Po '^[^#].*'`
     [ $? = 0 ] || continue
     echo "connecting to $id..."
     timeout 5s nmcli connection up id "$id"

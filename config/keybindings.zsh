@@ -9,11 +9,16 @@ bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 bindkey "^B" backward-char
 bindkey "^F" forward-char
+bindkey "^[[1;5D" backward-word
+bindkey "^[[D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[C" forward-word
 
 bindkey "^H" backward-delete-char
 bindkey "^K" kill-line
 bindkey "^U" kill-whole-line
 bindkey "^W" backward-kill-word
+bindkey "^[^?" backward-kill-word
 
 bindkey "^J" accept-line
 bindkey "^L" clear-screen

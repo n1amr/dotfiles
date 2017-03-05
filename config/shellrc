@@ -78,9 +78,7 @@ fi
 ####################################  PATH  ####################################
 
 export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
-export GOPATH="$MY_HOME/.gopath"
 
-export PATH="$GOPATH/bin:$PATH"
 export PATH="$MY_HOME/.pyenv/bin:$PATH"
 export PATH="$MY_HOME/.rbenv/bin:$PATH"
 export PATH="$MY_HOME/.rbenv/plugins/ruby-build/bin:$PATH"
