@@ -142,15 +142,14 @@ init_powerline () {
 reset_keybindings () {
     if [ $SHELLNAME = zsh ]; then
         [ "$1" = 'vi' ] && bindkey -v
-        bindkey "^P" up-line-or-beginning-search
-        bindkey "^N" down-line-or-beginning-search
-        bindkey -s "^[u" "^Qcd ..^M"
+        source "$DOTFILES_HOME/config/keybindings.zsh"
     elif [ $SHELLNAME = bash ]; then
         [ "$1" = 'vi' ] && set -o vi
+        source "$DOTFILES_HOME/config/keybindings.bash"
     fi
 }
 
-terminal_rezise () {
+terminal_resize () {
     eval `/usr/bin/resize | head -2`
 }
 
@@ -178,7 +177,7 @@ alias clock='tty-clock -scn -C 2'
 alias clr='clear'
 alias cp='cp -i'
 alias dl='trash -v'
-alias f='find | grep -P'
+alias f='find .'
 alias fgrep='grep -F'
 alias g='grep'
 alias gdplshared='drive pull -ignore-name-clashes --ignore-conflict'
@@ -187,6 +186,7 @@ alias gitnext="git checkout \`git log --reverse --ancestry-path HEAD..master --o
 alias gitprev='git checkout HEAD~'
 alias gp='grep -P --color=auto'
 alias h='history'
+alias hgp="fc -El 0 | grep"
 alias hbackup='yes | cp ~/.${SHELLNAME}_history ~/.${SHELLNAME}_history.bak;'
 alias hrestore='yes | cp ~/.${SHELLNAME}_history.bak ~/.${SHELLNAME}_history; for i in {0..10000}; do echo; done; /usr/bin/clear; cd ~; exec ${SHELLNAME}'
 alias ipy="ipython"
@@ -216,6 +216,7 @@ alias rb='ruby -e'
 alias rm='rm -i'
 alias s='subl -a'
 alias sshot='screenshot-nicename /mnt/Storage/Pictures/Screenshots/*from*'
+alias shellrc="\$EDITOR $DOTFILES_HOME/config/shellrc"
 alias sync='sudo "$(which syncf)"'
 alias tf='tail -f'
 alias twitter='/home/n1amr/.rbenv/shims/t'
@@ -238,24 +239,10 @@ fi
 
 reset_ps1() {
     if [ $SHELLNAME = zsh ]; then
-        # local C_BLACK='\e[0;30m'
-        # local C_RED='\e[0;31m'
-        # local C_GREEN='\e[0;32m'
-        # local C_YELLOW='\e[0;33m'
-        # local C_BLUE='\e[0;34m'
-        # local C_PURPLE='\e[0;35m'
-        # local C_CYAN='\e[0;36m'
-        # local C_WHITE='\e[0;37m'
-        # local C_BOLD_RED='\e[1;31m'
-        # local C_BOLD_YELLOW='\e[1;33m'
-        # local C_BOLD_BLUE='\e[1;34m'
-        # local C_BOLD_MAGNETA='\e[1;35m'
-        # local C_DARK_GREEN='\e[2;32m'
-        # local C_RESET='\e[0m'
-
         export PS1=\
 $'%{\e[0m%}'\
-$'%{\e[1;31m%}%n@%m%{\e[0m%}:'\
+$'%{\e[1;31m%}%n@%m'\
+$'%{\e[0m%}:'\
 $'%{\e[1;34m%}%~'\
 $'%{\e[0;36m%}`__ps1_pyenv_version`'\
 $'%{\e[1;35m%}`__ps1_git_branch`'\
@@ -266,21 +253,6 @@ $'%{\e[0;31m%}`[ $USER = "root" ] && echo "#"`'\
 $'%{\e[0m%} '
 
     elif [ $SHELLNAME = bash ]; then
-        # local C_BLACK='\[\e[0;30m\]'
-        # local C_RED='\[\e[0;31m\]'
-        # local C_GREEN='\[\e[0;32m\]'
-        # local C_YELLOW='\[\e[0;33m\]'
-        # local C_BLUE='\[\e[0;34m\]'
-        # local C_PURPLE='\[\e[0;35m\]'
-        # local C_CYAN='\[\e[0;36m\]'
-        # local C_WHITE='\[\e[0;37m\]'
-        # local C_BOLD_RED='\[\e[1;31m\]'
-        # local C_BOLD_YELLOW='\[\e[1;33m\]'
-        # local C_BOLD_BLUE='\[\e[1;34m\]'
-        # local C_BOLD_PURPLE='\[\e[1;35m\]'
-        # local C_DARK_GREEN='\[\e[2;32m\]'
-        # local C_RESET='\[\e[m\]'
-
         export PS1=\
 '\[\e[m\]'\
 '${debian_chroot:+($debian_chroot) }'\
@@ -349,9 +321,8 @@ stty stop undef # to unmap ctrl-s
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 [ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
-terminal_rezise
+terminal_resize
 reset_ps1
-reset_keybindings
+reset_keybindings vi
 block_caret
 enable_swapescape
-vibindkey
