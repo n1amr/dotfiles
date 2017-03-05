@@ -1,24 +1,24 @@
 #!/bin/sh
 
 DOTFILES_CONFIG_FILE="$(realpath ~)/.dotfiles_config"
-if [ -f "${DOTFILES_CONFIG_FILE}" ]; then
-    . "${DOTFILES_CONFIG_FILE}"
+if [ -f "$DOTFILES_CONFIG_FILE" ]; then
+    . "$DOTFILES_CONFIG_FILE"
 fi
 
 # Set MY_HOME
-MY_HOME="${HOME}"
-echo -n "Enter your home directory [${MY_HOME}]: "
+MY_HOME="$HOME"
+echo -n "Enter your home directory [$MY_HOME]: "
 read response
-if [ ! -z "${response}" ]; then
-    MY_HOME=`realpath "${response}"`
+if [ ! -z "$response" ]; then
+    MY_HOME=`realpath "$response"`
 fi
 
 # Set DOTFILES_HOME
 DOTFILES_HOME=`realpath .`
-echo -n "Enter dofiles directory [${DOTFILES_HOME}]: "
+echo -n "Enter dofiles directory [$DOTFILES_HOME]: "
 read response
-if [ ! -z "${response}" ]; then
-    DOTFILES_HOME=`realpath "${response}"`
+if [ ! -z "$response" ]; then
+    DOTFILES_HOME=`realpath "$response"`
 fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
@@ -33,41 +33,41 @@ fi
 safe_link() {
     from="$1"
     to="$2"
-    echo -n "Link ${from} -> ${to} ? [y/n]"
+    echo -n "Link $from -> $to ? [y/n]"
     read response
 
-    if [ x"${response}" != xn ]; then
+    if [ x"$response" != xn ]; then
         if [ -e "$from" ]; then
             echo mv "$from" "${from}.bak.$(date +%s)"
             mv "$from" "${from}.bak.$(date +%s)"
         fi
 
-        dir=`dirname "${from}"`
-        if [ ! -d "${dir}" ]; then
-            mkdir -pv "${dir}"
+        dir=`dirname "$from"`
+        if [ ! -d "$dir" ]; then
+            mkdir -pv "$dir"
         fi
 
-        ln -sf "${to}" "${from}"
+        ln -sf "$to" "$from"
     fi
 }
 
-for cf in gitconfig gitignore inputrc irbrc sqliterc vim; do
-    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/${cf}"
+for cf in gitconfig gitignore inputrc irbrc sqliterc tmux.conf vim; do
+    safe_link ~/."$cf" "$DOTFILES_HOME/config/$cf"
 done
 
 for cf in bashrc zshrc; do
-    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/shellrc"
+    safe_link ~/."$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
 for cf in netrc trc; do
-    safe_link ~/."${cf}" "${DOTFILES_HOME}/config/secret/${cf}"
+    safe_link ~/."$cf" "$DOTFILES_HOME/config/secret/$cf"
 done
 
-safe_link "${DOTFILES_HOME}/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
-safe_link ~/".ipython/profile_default" "${DOTFILES_HOME}/config/ipython/profile_default"
-safe_link ~/.zsh_history.bak "${DOTFILES_HOME}/config/history/zsh_history"
-safe_link ~/.vimrc "${DOTFILES_HOME}/config/vim/vimrc"
-safe_link ~/.config/ranger/rc.conf "${DOTFILES_HOME}/config/ranger.rc"
+safe_link "$DOTFILES_HOME/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
+safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
+safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"
+safe_link ~/.vimrc "$DOTFILES_HOME/config/vim/vimrc"
+safe_link ~/.config/ranger/rc.conf "$DOTFILES_HOME/config/ranger.rc"
 
 echo -n """\
 #!/bin/bash

@@ -1,3 +1,6 @@
 git clone git@github.com:powerline/fonts ~/powerline-fonts
 cd ~/powerline-fonts
 ./install.sh 
+
+# Install for tmux, zsh and bash
+pip install powerline-status

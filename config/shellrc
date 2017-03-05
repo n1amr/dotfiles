@@ -151,7 +151,19 @@ reset_keybindings () {
 }
 
 terminal_rezise () {
-    eval `/usr/bin/resize`
+    eval `/usr/bin/resize | head -2`
+}
+
+enable_swapescape () {
+    setxkbmap -option caps:swapescape 2> /dev/null
+}
+
+disable_swapescape () {
+    setxkbmap -option '' 2> /dev/null
+}
+
+toggle_swapescape () {
+    setxkbmap -query | grep -q 'caps:swapescape' && disable_swapescape || enable_swapescape
 }
 
 ################################################################################
@@ -161,6 +173,7 @@ alias apt='sudo apt'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
 alias beep='paplay /home/n1amr/.local/Schedule.ogg'
 alias c='clear'
+alias cape='toggle_swapescape'
 alias clock='tty-clock -scn -C 2'
 alias clr='clear'
 alias cp='cp -i'
@@ -192,6 +205,7 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias myips='ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)'\'' | awk '\''{ sub(/inet6? (addr:)? ?/, ""); print }'\'''
 alias nmcli='nmcli -a'
 alias o='gui-open'
+alias p='ipython'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias pss='ps -e lx'
 alias py='python -c'
@@ -339,3 +353,5 @@ terminal_rezise
 reset_ps1
 reset_keybindings
 block_caret
+enable_swapescape
+vibindkey
