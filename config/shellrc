@@ -82,13 +82,8 @@ export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
 export PATH="$MY_HOME/.pyenv/bin:$PATH"
 export PATH="$MY_HOME/.rbenv/bin:$PATH"
 export PATH="$MY_HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-if [ $SHELLNAME = zsh ]; then
-    eval "$( whence -f pyenv > /dev/null && pyenv init -)"
-    eval "$( whence -f rbenv > /dev/null && rbenv init -)"
-elif [ $SHELLNAME = bash ]; then
-    eval "$( type -t pyenv > /dev/null && pyenv init - )"
-    eval "$( type -t rbenv > /dev/null && rbenv init - )"
-fi
+eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
+eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
 ################################################################################
@@ -151,18 +146,6 @@ terminal_resize () {
     eval `/usr/bin/resize | head -2`
 }
 
-enable_swapescape () {
-    setxkbmap -option caps:swapescape 2> /dev/null
-}
-
-disable_swapescape () {
-    setxkbmap -option '' 2> /dev/null
-}
-
-toggle_swapescape () {
-    setxkbmap -query | grep -q 'caps:swapescape' && disable_swapescape || enable_swapescape
-}
-
 ################################################################################
 ##################################  Aliases  ###################################
 
@@ -216,6 +199,7 @@ alias s='subl -a'
 alias sshot='screenshot-nicename /mnt/Storage/Pictures/Screenshots/*from*'
 alias shellrc="\$EDITOR $DOTFILES_HOME/config/shellrc"
 alias sync='sudo "$(which syncf)"'
+alias t='tmux'
 alias tf='tail -f'
 alias twitter='/home/n1amr/.rbenv/shims/t'
 alias u='up'
@@ -279,13 +263,10 @@ __ps1_pyenv_version () {
 }
 
 # PS1 extention
-if [ $SHELLNAME = zsh ]; then
-    __ps1_command_eval() { whence -f ps1_command > /dev/null && echo -e " {{ $(ps1_command) }}"; }
-    ps1_command_reset() { whence -f ps1_command > /dev/null && unset -f ps1_command; }
-elif [ $SHELLNAME = bash ]; then
-    __ps1_command_eval() { type -t ps1_command > /dev/null && echo -e " {{ $(ps1_command) }}"; }
-    ps1_command_reset() { unset ps1_command; }
-fi
+__ps1_command_eval() {
+    type ps1_command > /dev/null 2>&1 && echo -e " {{ $(ps1_command) }}"; }
+ps1_command_reset() {
+    type ps1_command > /dev/null 2>&1 && unset -f ps1_command; }
 
 ps1_time() {
     ps1_command() { date +%T; }
@@ -323,4 +304,4 @@ terminal_resize
 reset_ps1
 reset_keybindings vi
 block_caret
-enable_swapescape
+swapescape_enable

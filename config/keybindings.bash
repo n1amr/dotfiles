@@ -1,3 +1,4 @@
+
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'
 bind '"\e[A": history-search-backward'
@@ -37,5 +38,8 @@ bind '"\C-x\C-u" "\C-e\C-ucd ..\n\C-y"'
 bind '"\C-gd" "\C-e\C-ugit diff\n\C-y"'
 bind '"\C-gl" "\C-e\C-ugit l\n\C-y"'
 bind '"\C-gs" "\C-e\C-ugit st\n\C-y"'
+
+bind '"\C-xf" "\C-e\C-uranger\n\C-y"'
+bind '"\C-xr" "\C-e\C-uexec $SHELL\n\C-y"'
 
 bind '"\e[15~" "\C-p\C-j"'

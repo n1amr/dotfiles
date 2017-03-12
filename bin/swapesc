@@ -1,3 +1,0 @@
-#!/bin/bash
-
-setxkbmap -query | grep -q 'caps:swapescape' && setxkbmap -option '' || setxkbmap -option caps:swapescape

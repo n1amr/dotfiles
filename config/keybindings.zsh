@@ -39,4 +39,7 @@ bindkey -s "^Gd" "^Qgit diff^M"
 bindkey -s "^Gl" "^Qgit l^M"
 bindkey -s "^Gs" "^Qgit st^M"
 
+bindkey -s "^Xf" "^Qranger^M"
+bindkey -s "^Xr" "^Qexec \$SHELL^M"
+
 bindkey -s "^[[15~" "^P^J"
