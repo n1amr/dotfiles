@@ -29,6 +29,8 @@
 /mnt/Storage/Programs/Programming/Python/pyenv/pyenv
 /mnt/Storage/Programs/Programming/Python/pyenv/sources/3.6.0/Python-3.6.0.tar.xz
 /mnt/Storage/Programs/Programming/texstudio_2.12.2-2.1_amd64.deb
+/mnt/Storage/Programs/Text Editors/Sublime Text/
+/mnt/Storage/Programs/Tools/git-2.10.2.tar.gz
 /mnt/Storage/Programs/Windows/Compression/7z1506-x64.exe
 /mnt/Storage/Programs/Windows/Compression/WinRAR/WinRAR 3.9 En Silent.exe
 /mnt/Storage/Programs/Windows/Internet/Browsers/Firefox Setup 49.0.2.exe
@@ -46,11 +48,9 @@
 /mnt/Storage/Programs/Windows/Programming/Text Editors/Sublime Text/
 /mnt/Storage/Programs/Windows/System/EasyBCD 2.2.exe
 /mnt/Storage/Programs/Windows/System/OpenSSH-Win64.zip
-/mnt/Storage/Programs/Text Editors/Sublime Text/
-/mnt/Storage/Programs/Tools/git-2.10.2.tar.gz
-/mnt/Storage/Programs/Utilities/Encryption/gpg4win-2.3.2.exe
-/mnt/Storage/Programs/Utilities/putty
-/mnt/Storage/Programs/Utilities/rufus-2.6.exe
+/mnt/Storage/Programs/Windows/Utilities/Encryption/gpg4win-2.3.2.exe
+/mnt/Storage/Programs/Windows/Utilities/putty
+/mnt/Storage/Programs/Windows/Utilities/rufus-2.6.exe
 /mnt/Storage/Shared/Sublime Text 3 portable.zip
 /mnt/Storage/Shared/vpnbook/
 /usr/lib/keepass2/

@@ -1,3 +1,6 @@
+[com/canonical/unity8]
+usage-mode='Windowed'
+
 [com/canonical/indicator/bluetooth]
 visible=true
 
@@ -28,10 +31,16 @@ interested-media-players=['spotify.desktop', 'rhythmbox.desktop', 'vlc.desktop']
 preferred-media-players=['rhythmbox.desktop']
 visible=true
 
+[com/canonical/keyboard/maliit]
+disable-height=true
+
+[com/canonical/desktop/interface]
+scrollbar-mode='normal'
+
 [com/canonical/unity]
-minimize-count=100
 integrated-menus=false
 always-show-menus=false
+minimize-count=100
 
 [com/canonical/unity/devices]
 blacklist=['2804074804071908-']
@@ -39,15 +48,21 @@ blacklist=['2804074804071908-']
 [com/canonical/unity/interface]
 text-scale-factor=1.0
 
-[com/canonical/unity/launcher]
-favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://gnome-terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'unity://running-apps', 'unity://devices']
-launcher-position='Bottom'
-
 [com/canonical/unity/webapps]
 preauthorized-domains=@as []
 
-[com/canonical/desktop/interface]
-scrollbar-mode='normal'
+[com/canonical/unity/runner]
+history=["gnome-terminal -e 'tmux'", 'gnome-terminal -e "sh"', 'sh']
+
+[com/canonical/unity/launcher]
+favorites=['unity://expo-icon', 'unity://desktop-icon', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'application://org.gnome.Terminal.desktop', 'application://sublime_text.desktop', 'application://jetbrains-pycharm.desktop', 'application://jetbrains-idea.desktop', 'application://jetbrains-clion.desktop', 'unity://running-apps', 'unity://devices']
+launcher-position='Bottom'
+
+[com/ubuntu/content/hub/source]
+all=['webbrowser-app']
+contacts=@as []
+pictures=['']
+videos=['']
 
 [com/ubuntu/user-interface]
 scale-factor={'default': 8, 'LVDS': 8}
@@ -164,43 +179,38 @@ terminal='<Control><Alt>T'
 calculator=''
 increase-text-size=''
 screensaver='<Primary><Alt>l'
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']
 on-screen-keyboard=''
 
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
-binding='<Primary><Alt>slash'
-command='/usr/bin/subl'
-name='Sublime Text 3'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
-binding=''
-command='gnome-terminal'
-name='Terminal'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
-binding='<Primary><Alt>i'
-command='xcalib -i -a'
-name='Invert colors'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
-binding='<Primary><Alt>p'
-command="gnome-terminal -e \"zsh -c '. ~/.zshrc; ipython'\""
-name='iPython'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
-binding='<Primary><Alt>n'
-command="gnome-terminal -e \"zsh -c '. ~/.zshrc; vim'\""
-name='Vim'
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
+binding='<Primary><Alt>k'
+command='xdotool mousemove --sync 683 384'
+name='Center Cursor'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
 binding='<Primary><Alt>v'
 command="gnome-terminal -e \"zsh -c '. /home/n1amr/.zshrc ; gvim'\""
 name='GVim'
 
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
-binding='<Primary><Alt>k'
-command='xdotool mousemove --sync 683 384'
-name='Center Cursor'
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
+binding='<Primary><Alt>i'
+command='xcalib -i -a'
+name='Invert Colors'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
+binding='<Primary><Alt>n'
+command="gnome-terminal -e \"zsh -c '. ~/.zshrc; vim'\""
+name='Vim'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Primary><Alt>slash'
+command='/usr/bin/subl'
+name='Sublime Text 3'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
+binding='<Primary><Alt>p'
+command="gnome-terminal -e \"zsh -c '. ~/.zshrc; ipython'\""
+name='iPython'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7]
 binding='<Primary><Alt>j'
@@ -285,7 +295,7 @@ sorting=('Title', false)
 show-browser=true
 
 [org/gnome/rhythmbox/plugins]
-seen-plugins=['artsearch', 'replaygain', 'mpris', 'daap', 'context', 'rbzeitgeist', 'fmradio', 'audioscrobbler', 'notification', 'cd-recorder', 'rblirc', 'soundcloud', 'magnatune', 'ipod', 'rb', 'mtpdevice', 'grilo', 'dbus-media-server', 'im-status', 'lyrics', 'pythonconsole', 'sendto']
+seen-plugins=['artsearch', 'replaygain', 'mpris', 'daap', 'context', 'rbzeitgeist', 'fmradio', 'audioscrobbler', 'notification', 'cd-recorder', 'rblirc', 'soundcloud', 'magnatune', 'ipod', 'rb', 'mtpdevice', 'grilo', 'dbus-media-server', 'im-status', 'lyrics', 'pythonconsole', 'sendto', 'webremote']
 active-plugins=['artsearch', 'replaygain', 'generic-player', 'mpris', 'daap', 'android', 'audiocd', 'notification', 'iradio', 'rb', 'power-manager', 'dbus-media-server', 'mmkeys', 'lyrics']
 
 [org/gnome/rhythmbox/plugins/android/source]
@@ -534,7 +544,7 @@ action-right-click-titlebar='menu'
 auto-raise=true
 auto-raise-delay=1000
 button-layout='close,minimize,maximize:'
-num-workspaces=4
+num-workspaces=6
 focus-mode='click'
 
 [org/gnome/desktop/wm/keybindings]
@@ -625,7 +635,7 @@ secondary-color='#000000'
 [org/gnome/desktop/input-sources]
 current=uint32 0
 sources=[('xkb', 'us'), ('xkb', 'ara')]
-xkb-options=@as []
+xkb-options=['caps:swapescape']
 
 [org/gnome/gnome-system-log]
 width=600
@@ -641,7 +651,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.zip'
+default-extension='.tar.gz'
 volume-size=104857
 encrypt-header=true
 
@@ -655,6 +665,7 @@ window-height=672
 window-width=681
 
 [org/gnome/evolution-data-server]
+network-monitor-gio-name=''
 migrated=true
 
 [org/gnome/software]
@@ -663,11 +674,12 @@ check-timestamp=int64 1543484195
 [org/gnome/nautilus/preferences]
 default-folder-viewer='list-view'
 confirm-trash=true
+search-filter-time-type='last_modified'
 sort-directories-first=true
 
 [org/gnome/nautilus/window-state]
 sidebar-width=276
-geometry='1315x715+49+24'
+geometry='681x326+0+24'
 maximized=true
 
 [org/gnome/nautilus/desktop]
@@ -678,9 +690,9 @@ trash-icon-visible=false
 
 [org/gnome/nautilus/list-view]
 default-visible-columns=['name', 'size', 'type', 'date_modified']
-default-zoom-level='smallest'
+default-zoom-level='small'
 use-tree-view=true
-default-column-order=['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions', 'mime_type', 'where']
+default-column-order=['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions', 'mime_type', 'where', 'date_modified_with_time']
 
 [org/gnome/eog/view]
 background-color='rgb(0,0,0)'
@@ -723,6 +735,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/9f24e820-bdaa-4d8b-b36c-a8cc93b761cc]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/6d0bc985-ce7b-4038-870f-33afa7a66ebe]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -740,6 +756,10 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/f8dd4a31-bbe2-429f-9217-5dbffec7837e]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/d9c7fb7c-e9a2-4c77-874c-c11ad294f28c]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -824,7 +844,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(2.2948341033179336, 0.83254156769596199)
+window-ratio=(1.8972274922985897, 1.298150552130652)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -866,7 +886,7 @@ path='file:///home/n1amr/deja-dup'
 [org/gnome/gnome-system-monitor]
 current-tab='processes'
 show-whose-processes='user'
-window-state=(1317, 744, 49, 24)
+window-state=(1366, 701, 0, 24)
 maximized=true
 show-dependencies=false
 cpu-colors=[(uint32 0, '#FF6E00'), (1, '#CB0C29'), (2, '#49A835'), (3, '#2D7DB3'), (4, '#f25915e815e8'), (5, '#f25915e815e8'), (6, '#f25915e815e8'), (7, '#f25915e815e8')]
@@ -1237,8 +1257,8 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 
 [org/gtk/settings/file-chooser]
 sort-column='name'
-sidebar-width=157
-window-position=(343, 33)
+sidebar-width=165
+window-position=(342, 38)
 show-size-column=true
 show-hidden=false
 window-size=(681, 672)
@@ -1253,7 +1273,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=1488337341
+launch-time=1489006696
 window-height=363
 show-details=true
 window-width=453
@@ -1279,7 +1299,7 @@ server-publish-to='hkp://pgp.mit.edu'
 [apps/seahorse/listing]
 sidebar-width=215
 item-filter=''
-keyrings-selected=['secret-service://login', 'secret-service:///org/freedesktop/secrets/collection/a', 'gnupg://']
+keyrings-selected=['secret-service://login', 'secret-service:///org/freedesktop/secrets/collection/a', 'secret-service:///org/freedesktop/secrets/collection/login']
 sidebar-visible=true
 
 [ca/desrt/dconf-editor]
@@ -1290,9 +1310,6 @@ window-is-maximized=true
 
 [desktop/gnome/crypto/pgp]
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
-
-[desktop/unity/runner]
-history=["gnome-terminal -e 'tmux'", 'gnome-terminal -e "sh"', 'sh']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
