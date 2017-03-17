@@ -1,9 +1,12 @@
 #!/bin/bash
 
+set -e
+
 includes="$DOTFILES_HOME/config/sync.rc/emergency"
+excludes="$DOTFILES_HOME/config/sync.rc/emergency-excludes"
 destination='/mnt/Storage/Backups/emergency'
 
 while IFS= read -r line; do
     echo $line
-    rsync -avbk --progress --delete --relative --backup-dir="$destination/trash" --exclude-from="$DOTFILES_HOME/config/sync.rc/emergency-excludes" "$line" "$destination"
+    rsync -avzbk --progress --delete --relative --exclude-from="$excludes" "$line" "$destination"
 done < "$includes"
