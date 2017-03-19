@@ -1,5 +1,8 @@
 #!/bin/bash
 
+keybindings () {
+    less $DOTFILES_HOME/config/keybindings.$SHELLNAME
+}
 
 bak () {
     while [ $# != 0 ]; do

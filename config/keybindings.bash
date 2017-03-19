@@ -1,4 +1,3 @@
-
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'
 bind '"\e[A": history-search-backward'
@@ -34,6 +33,8 @@ bind '"\C-xa": alias-expand-line'
 bind '"\C-y": yank'
 
 bind '"\C-x\C-u" "\C-e\C-ucd ..\n\C-y"'
+
+bind '"\C-x\C-x" "\C-e\C-ukeybindings\n\C-y"'
 
 bind '"\C-gd" "\C-e\C-ugit diff\n\C-y"'
 bind '"\C-gl" "\C-e\C-ugit l\n\C-y"'

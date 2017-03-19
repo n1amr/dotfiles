@@ -35,6 +35,8 @@ bindkey -s "^X^K" "^E^U"
 bindkey -s "^B" "^Qd^M"
 bindkey -s "^[u" "^Qcd ..^M"
 
+bindkey -s "^X^X" "^Qkeybindings^M"
+
 bindkey -s "^Gd" "^Qgit diff^M"
 bindkey -s "^Gl" "^Qgit l^M"
 bindkey -s "^Gs" "^Qgit st^M"
