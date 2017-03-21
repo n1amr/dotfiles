@@ -21,6 +21,10 @@ c.TerminalInteractiveShell.true_color = True
 
 c.TerminalIPythonApp.display_banner = False
 
+# c.InteractiveShellApp.extensions = [
+#     'powerline.bindings.ipython.post_0_11'
+# ]
+
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 #------------------------------------------------------------------------------
