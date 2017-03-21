@@ -1,7 +1,13 @@
 #!/bin/bash
 
-export readonly LOG_FILE="/tmp/$(basename "$0").log"
-info ()    { echo "[$(date +'%Y-%m-%d %T.%N')] INFO:    $*" | tee -a "$LOG_FILE" >&2 ; }
-warning () { echo "[$(date +'%Y-%m-%d %T.%N')] WARNING: $*" | tee -a "$LOG_FILE" >&2 ; }
-error ()   { echo "[$(date +'%Y-%m-%d %T.%N')] ERROR:   $*" | tee -a "$LOG_FILE" >&2 ; }
-fatal ()   { echo "[$(date +'%Y-%m-%d %T.%N')] FATAL:   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+[ ! -d "$DOTFILES_HOME/logs" ] && mkdir "$DOTFILES_HOME/logs"
+readonly LOG_FILE="$DOTFILES_HOME/logs/$(basename "$0")"
+
+_log() {
+    echo "[$(date +'%Y-%m-%d %T.%N')] $1: $2" | tee -a "$LOG_FILE" >&2 ;
+}
+
+info ()    { _log "INFO"    "$*"; }
+warning () { _log "WARNING" "$*"; }
+error ()   { _log "ERROR"   "$*"; }
+fatal ()   { _log "FATAL"   "$*"; exit 1; }
