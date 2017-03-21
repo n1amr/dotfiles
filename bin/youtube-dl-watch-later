@@ -28,11 +28,11 @@ if [ ! -f "$COOKIE_FILE" ]; then
     exit 1
 fi
 
-sigint_trap () {
-    echo 'SIGINT received'
+cleanup () {
+    echo 'Exiting'
     rm -vf "$LOCK_FILE"
 }
-trap 'sigint_trap' SIGINT
+trap 'cleanup' EXIT
 
 # acquire lock
 if [ -f "$LOCK_FILE" ]; then
