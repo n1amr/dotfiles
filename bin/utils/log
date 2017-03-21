@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export readonly LOG_FILE="/tmp/$(basename "$0").log"
+info ()    { echo "[$(date +'%Y-%m-%d %T.%N')] INFO:    $*" | tee -a "$LOG_FILE" >&2 ; }
+warning () { echo "[$(date +'%Y-%m-%d %T.%N')] WARNING: $*" | tee -a "$LOG_FILE" >&2 ; }
+error ()   { echo "[$(date +'%Y-%m-%d %T.%N')] ERROR:   $*" | tee -a "$LOG_FILE" >&2 ; }
+fatal ()   { echo "[$(date +'%Y-%m-%d %T.%N')] FATAL:   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
