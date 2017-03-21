@@ -2,5 +2,5 @@
 
 source ~/.dotfiles_config
 
-sudo "$DOTFILES_HOME/bin/syncf" $@
+sudo "$DOTFILES_HOME/bin/syncf" "$*"
 "$DOTFILES_HOME/bin/sync-emergency"

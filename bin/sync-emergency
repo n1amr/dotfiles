@@ -2,8 +2,8 @@
 
 set -e
 
-includes="$DOTFILES_HOME/config/sync.rc/emergency"
-excludes="$DOTFILES_HOME/config/sync.rc/emergency-excludes"
+includes="$DOTFILES_HOME/data/sync.rc/emergency"
+excludes="$DOTFILES_HOME/data/sync.rc/emergency-excludes"
 destination='/mnt/Storage/Backups/emergency'
 
 while IFS= read -r line; do

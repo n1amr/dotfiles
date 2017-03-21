@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export PATH="/home/n1amr/.rbenv/bin:$PATH"
 eval "$( [[ $(type -t rbenv) ]] && rbenv init -)"
 

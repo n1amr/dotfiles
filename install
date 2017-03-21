@@ -1,8 +1,9 @@
 #!/bin/sh
 
-DOTFILES_CONFIG_FILE="$(realpath ~)/.dotfiles_config"
-if [ -f "$DOTFILES_CONFIG_FILE" ]; then
-    . "$DOTFILES_CONFIG_FILE"
+set -e
+
+if [ -f "~/.dotfiles_config" ]; then
+    . "~/.dotfiles_config"
 fi
 
 # Set MY_HOME
@@ -29,6 +30,9 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     ln -sf "$DOTFILES_HOME" "$DOTFILES_DIR"
     DOTFILES_HOME="$DOTFILES_DIR"
 fi
+
+DOTFILES_CONFIG_FILE="$DOTFILES_HOME/data/dotfiles_config"
+
 
 safe_link() {
     from="$1"
@@ -63,6 +67,7 @@ for cf in netrc trc; do
     safe_link ~/."$cf" "$DOTFILES_HOME/config/secret/$cf"
 done
 
+safe_link ~/.dotfiles_config "$DOTFILES_HOME/data/dotfiles_config"
 safe_link "$DOTFILES_HOME/config/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"

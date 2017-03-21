@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 beep='paplay /usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
 battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ empty|percentage"'
 

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
-$DOTFILES_HOME/bin/battery-check
+"$DOTFILES_HOME/bin/battery-check"

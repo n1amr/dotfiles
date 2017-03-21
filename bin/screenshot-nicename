@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 help_text="
 Usage: screenshot-nicename [OPTION]... FILE...\n
 Renames screenshots format to a Windows compatible one.\n

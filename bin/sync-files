@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 includes="$1"
 destination="$2"
 

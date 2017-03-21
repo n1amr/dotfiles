@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 trap "exit 2" INT
 
 start=1

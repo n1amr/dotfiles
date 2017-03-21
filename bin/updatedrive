@@ -14,18 +14,18 @@ PATH="$GOPATH/bin:$PATH"
 
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 
-current_month_folder=$(date +'%Y/%m')
-last_month_folder=$(date --date="-1 month" +'%Y/%m')
-# last_month_folder=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
+current_month_dir=$(date +'%Y/%m')
+last_month_dir=$(date --date="-1 month" +'%Y/%m')
+# last_month_dir=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
 
-auto_pull_folders=(
+auto_pull_dirs=(
     "ASU/CSE 2017 - 4th year"
     "ASU/CSE4"
-    "Google Photos/${current_month_folder}"
-    "Google Photos/${last_month_folder}"
+    "Google Photos/${current_month_dir}"
+    "Google Photos/${last_month_dir}"
 )
 
-auto_push_folders=(
+auto_push_dirs=(
 #    "ASU/study"
 #    "Personal/Bookmarks"
 )
@@ -70,20 +70,20 @@ fi
 
 
 # Pull all
-for f in "${auto_pull_folders[@]}"; do
+for f in "${auto_pull_dirs[@]}"; do
     cd "$DRIVE_PATH"
     echo -e "\nPulling \"$f\" ..."
     # shellcheck disable=SC2086
     drive pull --ignore-name-clashes --ignore-conflict $COMMONFLAGS "$f"
 
     if [ -d "$DRIVE_PATH/$f" ]; then
-        cd "$DRIVE_PATH/$f";
+        cd "$DRIVE_PATH/$f"
         git status >/dev/null 2>&1 && git checkout master && git add . && git status && git commit -m "$(date)"
     fi
 done
 
 # Push all
-for f in "${auto_push_folders[@]}"; do
+for f in "${auto_push_dirs[@]}"; do
     cd "$DRIVE_PATH"
     echo -e "\nPushing \"$f\" ..."
     # shellcheck disable=SC2086
