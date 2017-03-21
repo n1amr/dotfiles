@@ -2,6 +2,22 @@
 
 set -e
 
-ping -c 3 192.168.1.1 | grep rtt &&
-ping -c 3 192.168.1.20 | grep rtt &&
-ping -c 3 google.com | grep rtt
+hosts=(
+    192.168.1.1
+    192.168.1.20
+    google.com
+)
+
+for h in "${hosts[@]}"; do
+    echo -ne "Pinging $h...\n  "
+    ping -c 3 "$h" | grep rtt
+done
+
+echo -ne "Checking http://google.com\n  "
+
+if ! wget http://google.com -O /dev/null 2>&1 | grep 'saved'; then
+    wget http://google.com -vdO - 2>&1 | less
+    echo 'Failed'
+    exit 1
+fi
+echo 'Successful'
