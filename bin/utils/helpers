@@ -1,0 +1,49 @@
+#!/bin/bash
+
+source "$DOTFILES_HOME/bin/utils/log"
+
+safe_link() {
+    from="$1"
+    to="$2"
+    printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
+    read -r response
+
+    if [ "$response" != 'n' ]; then
+        if [ -e "$from" ]; then
+            info "Moving \"$from\" to \"${from}.bak.$(date +%s)\""
+            echo mv "$from" "${from}.bak.$(date +%s)"
+            mv "$from" "${from}.bak.$(date +%s)"
+        fi
+
+        dir="$(dirname "$from")"
+        if [ ! -d "$dir" ]; then
+            info "Created directory \"$dir\""
+            mkdir -pv "$dir"
+        fi
+
+        ln -sf "$to" "$from"
+    fi
+}
+
+acquire_lock() {
+    LOCK_FILE="$1"
+    if [ -f "$LOCK_FILE" ]; then
+        warning "Cannot acquire lock at $LOCK_FILE"
+        return 1
+    else
+        info "Acquired lock at $LOCK_FILE"
+        touch "$LOCK_FILE"
+    fi
+    return 0
+}
+
+release_lock() {
+    LOCK_FILE="$1"
+    info "Realeasing lock at $LOCK_FILE"
+    if [ -f "$LOCK_FILE" ]; then
+        info "$(rm -vf "$LOCK_FILE")"
+        info "Realeased lock at $LOCK_FILE"
+    else
+        warning "Lock at $LOCK_FILE is already released"
+    fi
+}
