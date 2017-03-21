@@ -9,9 +9,9 @@ state() {
     nmcli d | grep wlp8s0 | grep -Po '\S*connected'
 }
 
-while IFS= read line; do
+while IFS= read -r line; do
     [ "$(state)" = "connected" ] && break
-    id=`echo $line | grep -Po '^[^#].*'`
+    id="$(echo "$line" | grep -Po '^[^#].*')"
     [ $? = 0 ] || continue
     echo "connecting to $id..."
     timeout 5s nmcli connection up id "$id"

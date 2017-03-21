@@ -3,16 +3,13 @@
 source ~/.dotfiles_config
 if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
     echo -n 'Enter vpn home directory: '
-    read DOTFILES_CONFIG_VPN_HOME
+    read -r DOTFILES_CONFIG_VPN_HOME
     echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
 fi
 
 VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"
 
 credentials_file="$VPN_HOME/credentials/current"
-selected_profile="$VPN_HOME/profiles/$(cat $VPN_HOME/profiles/current)"
+selected_profile="$VPN_HOME/profiles/$(cat "$VPN_HOME/profiles/current")"
 
-source ~/.dotfiles_config
-UPDATEVPN_SCRIPT="$DOTFILES_HOME/bin/updatevpn"
-
-sudo openvpn --config "${selected_profile}" --auth-user-pass "${credentials_file}";
+sudo openvpn --config "$selected_profile" --auth-user-pass "$credentials_file"

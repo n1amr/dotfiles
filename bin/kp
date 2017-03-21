@@ -1,15 +1,17 @@
 #!/bin/bash
 
+set -e
+
 source ~/.dotfiles_config
 if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo -n 'Enter Google Drive home directory path: '
-    read DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
+    read -r DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
     echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
 fi
 
 if [ -z "$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH" ]; then
     echo -n 'Enter Keepass kdbx file path (relative to Google drive path): '
-    read DOTFILES_CONFIG_KP_DATABASE_FILE_PATH
+    read -r DOTFILES_CONFIG_KP_DATABASE_FILE_PATH
     echo "export DOTFILES_CONFIG_KP_DATABASE_FILE_PATH='$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH'" >> ~/.dotfiles_config
 fi
 
@@ -20,9 +22,9 @@ DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 KP_DATABASE_FILE_PATH="$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH"
 
 method=null
-OPTIONS=''
+OPTIONS='--exclude-ops=delete'
 
-while [[ $# > 0 ]]; do
+while [[ $# != 0 ]]; do
     case "$1" in
         push|pull)
             method="$1"
@@ -34,13 +36,11 @@ while [[ $# > 0 ]]; do
     shift
 done
 
-cd "$DRIVE_PATH"
-
-if [ $method == push -o $method == pull ]; then
-    echo ${method}ing...
-    drive ${method} $OPTIONS -exclude-ops=delete "$KP_DATABASE_FILE_PATH"
+if [ "$method" = 'push' ] || [ "$method" = 'pull' ]; then
+    cd "$DRIVE_PATH"
+    echo "${method}ing..."
+    # shellcheck disable=SC2086
+    drive "$method" $OPTIONS "$KP_DATABASE_FILE_PATH"
 else
     echo 'Usage: kp <push|pull>'
 fi
-
-exit 0

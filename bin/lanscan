@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 pattern="192.168.1.*"
 color=true
 
@@ -20,7 +22,7 @@ done
 
 echo2 () {
     if [ -n "$color" ]; then
-        echo -e "\e[1;32m$@\e[m"
+        echo -e "\e[1;32m$*\e[m"
     else
         echo -e "$@"
     fi
@@ -32,22 +34,22 @@ unset ip mac
 
 while IFS='' read -r line; do
     [ -n "$verbose" ] && echo -e "$line"
-    if [ -n "$ip" -a -n "$mac" ]; then
+    if [ -n "$ip" ] && [ -n "$mac" ]; then
         echo2 "$ip $mac"
         unset ip mac
     fi
 
-    if echo $line | grep -q '^Nmap scan report for '; then
+    if echo "$line" | grep -q '^Nmap scan report for '; then
         if [ -n "$ip" ]; then
             echo2 "$ip"
             unset ip
         fi
 
-        ip="$(echo $line | sed 's/Nmap scan report for //g';)"
-    elif echo $line | grep -q '^MAC Address: '; then
-        mac="$(echo $line | sed 's/MAC Address: //g';)"
+        ip="${line//Nmap scan report for /}"
+    elif echo "$line" | grep -q '^MAC Address: '; then
+        mac="${line//MAC Address: /}"
     fi
-done < <(sudo nmap -sP -PE -PA21,23,80,3389 $pattern)
+done < <(sudo nmap -sP -PE -PA21,23,80,3389 "$pattern")
 
 if [ -n "$ip" ]; then
     echo2 "$ip"

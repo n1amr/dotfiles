@@ -29,20 +29,20 @@ if [[ $# -lt 1 ]]; then
     exit 1
 fi
 
-base=$1
-range=$(($end - $start + 1))
+base="$1"
+range="$(( end - start + 1 ))"
 
-for i in $(seq $start $end); do
+for i in $(seq "$start" "$end"); do
     ip="$base.$i"
 
-    progress=$(($i * 100 / $range))
+    progress="$(( i * 100 / range ))"
     [[ ! $quiet ]] && echo -en "\r\e[01;32m[$progress%] Checking $ip ...\e[m\r"
 
-    ping -W 1 -c 1 $ip>/dev/null;
+    ping -W 1 -c 1 "$ip" > /dev/null
     up=$?
 
     [[ ! $quiet ]] && echo -en "\r                                                        \r"
-    [ $up -eq 0 ] && echo "$ip";
+    [ $up -eq 0 ] && echo "$ip"
 done
 
 exit 0

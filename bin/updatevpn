@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -e
+
 source ~/.dotfiles_config
 if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
     echo -n 'Enter vpn home directory: '
-    read DOTFILES_CONFIG_VPN_HOME
+    read -r DOTFILES_CONFIG_VPN_HOME
     echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
 fi
 
@@ -37,23 +39,23 @@ done
 echo -e "Trying to update vpn credentials..."
 
 echo "Fetching from http://www.vpnbook.com/freevpn"
-cred=$(wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | head -2)
-if [ -z "$cred" -a x"$no_prompt" == x"false" ]; then
-    read -n 1 -p 'Fetch from twitter? (y/n) '
+cred="$(wget http://www.vpnbook.com/freevpn -qO - | grep -Po '(Password|Username)[^\r\n]*' | grep -Po '(?<=>)\w+?(?=<)' | head -2)"
+if [ -z "$cred" ] && [ "$no_prompt" == "false" ]; then
+    read -r -n 1 -p 'Fetch from twitter? (y/n) '
     echo
     if [[ $REPLY =~ ^[yY]$ ]]; then
         echo "Fetching from https://twitter.com/vpnbook"
         cred=$(/usr/bin/env t timeline vpnbook | head -2 | tail -1 | grep -Po 'Username.*' | sed 's/ /\n/g' | grep -Pv ':')
     fi
 fi
-if [ -z "$cred" -a x"$no_prompt" == x"false" ]; then
-    read -n 1 -p 'Enter manually? (y/n) '
+if [ -z "$cred" ] && [ "$no_prompt" == "false" ]; then
+    read -r -n 1 -p 'Enter manually? (y/n) '
     echo
     if [[ $REPLY =~ ^[yY]$ ]]; then
         echo -n "Enter username: "
-        read username
+        read -r username
         echo -n "Enter password: "
-        read password
+        read -r password
         cred="$(echo -e "$username\n$password")"
     fi
 fi
@@ -70,8 +72,8 @@ cat credentials.tmp &&
 echo
 
 # Prompt before modifying
-if [ x"$no_prompt" == x"false" ]; then
-    read -n 1 -p "Save? (y/n) "
+if [ "$no_prompt" == "false" ]; then
+    read -r -n 1 -p "Save? (y/n) "
     echo
     [[ $REPLY =~ ^[Yy]$ ]] || exit
 fi
@@ -85,7 +87,7 @@ mv credentials.tmp "$credentials_filename"
 echo "Saved to $(realpath \"$credentials_filename\")"
 
 # Update credentials in vpn connections
-new_password=$(cat "$credentials_filename" | tail -1)
+new_password="$(tail -1 "$credentials_filename")"
 for v in "${vpnconnections[@]}"; do
     nmcli connection modify "$v" vpn.secrets "password = $new_password" &&
     echo "Updated $v successfully"

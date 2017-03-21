@@ -1,6 +1,8 @@
 #!/bin/bash
 
-UPLOAD_DIR="$GDRIVE/uploads"
+set -e
+
+UPLOAD_DIR="$GDRIVE/uploads/"
 
 if [ ! -d "$UPLOAD_DIR" ]; then
     mkdir -pv "$UPLOAD_DIR"
@@ -8,22 +10,22 @@ fi
 
 shell_dir="$(pwd)"
 for file in "$@"; do
-    echo ==============================
+    echo "=============================="
     if [ -f "$file" ]; then
-        echo Uploading $file
+        echo "Uploading $file"
         cp -r "$file" "$UPLOAD_DIR/"
 
         dir="$(dirname "$file")"
         fname="${file:${#dir}+1}"
 
-        cd "$UPLOAD_DIR/"
+        cd "$UPLOAD_DIR"
 
         drive push -ignore-name-clashes -no-prompt "$fname"
         drive url "$fname"
 
         cd "$shell_dir"
     else
-        echo "file $file does not exist"
+        echo "File $file does not exist"
     fi
     echo
 done

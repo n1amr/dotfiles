@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -e
+
 source ~/.dotfiles_config
 if [ -z "$DOTFILES_CONFIG_COURSERA_HOME" ]; then
     echo -n 'Enter coursera home directory: '
-    read DOTFILES_CONFIG_COURSERA_HOME
+    read -r DOTFILES_CONFIG_COURSERA_HOME
     echo "export DOTFILES_CONFIG_COURSERA_HOME='$DOTFILES_CONFIG_COURSERA_HOME'" >> ~/.dotfiles_config
 fi
 

@@ -7,6 +7,6 @@ excludes="$DOTFILES_HOME/config/sync.rc/emergency-excludes"
 destination='/mnt/Storage/Backups/emergency'
 
 while IFS= read -r line; do
-    echo $line
+    echo "$line"
     rsync -avzbk --progress --delete --relative --exclude-from="$excludes" "$line" "$destination"
 done < "$includes"

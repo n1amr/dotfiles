@@ -7,18 +7,18 @@ fi
 
 # Set MY_HOME
 MY_HOME="$HOME"
-echo -n "Enter your home directory [$MY_HOME]: "
-read response
+printf "Enter your home directory [%s]: " "$MY_HOME"
+read -r response
 if [ ! -z "$response" ]; then
-    MY_HOME=`realpath "$response"`
+    MY_HOME="$(realpath "$response")"
 fi
 
 # Set DOTFILES_HOME
-DOTFILES_HOME=`realpath .`
-echo -n "Enter dofiles directory [$DOTFILES_HOME]: "
-read response
+DOTFILES_HOME="$(realpath .)"
+printf "Enter dofiles directory [%s]: " "$DOTFILES_HOME"
+read -r response
 if [ ! -z "$response" ]; then
-    DOTFILES_HOME=`realpath "$response"`
+    DOTFILES_HOME="$(realpath "$response")"
 fi
 
 DOTFILES_DIR="$MY_HOME/.dotfiles"
@@ -33,16 +33,16 @@ fi
 safe_link() {
     from="$1"
     to="$2"
-    echo -n "Link $from -> $to ? [y/n]"
-    read response
+    printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
+    read -r response
 
-    if [ x"$response" != xn ]; then
+    if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
             echo mv "$from" "${from}.bak.$(date +%s)"
             mv "$from" "${from}.bak.$(date +%s)"
         fi
 
-        dir=`dirname "$from"`
+        dir="$(dirname "$from")"
         if [ ! -d "$dir" ]; then
             mkdir -pv "$dir"
         fi
@@ -69,12 +69,12 @@ safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"
 safe_link ~/.vimrc "$DOTFILES_HOME/config/vim/vimrc"
 safe_link ~/.config/ranger/rc.conf "$DOTFILES_HOME/config/ranger.rc"
 
-echo -n """\
+cat >> "$DOTFILES_CONFIG_FILE" <<EOF
 #!/bin/bash
 
 export MY_HOME='$MY_HOME'
 export DOTFILES_HOME='$DOTFILES_HOME'
-""" >> "$DOTFILES_CONFIG_FILE"
+EOF
 
 chmod +x "$DOTFILES_CONFIG_FILE"
 

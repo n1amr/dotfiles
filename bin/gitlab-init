@@ -8,7 +8,7 @@ if [[ -x "${TOKEN_FILE}" ]]; then
 else
     echo "Please enter a new private token. From https://gitlab.com/profile/account"
     echo -n ">>> "
-    read GITLAB_PRIVATE_TOKEN
+    read -r GITLAB_PRIVATE_TOKEN
     echo "export GITLAB_PRIVATE_TOKEN = ${GITLAB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
     chmod +x "${TOKEN_FILE}"
 fi

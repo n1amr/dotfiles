@@ -3,40 +3,46 @@
 beep='paplay /usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
 battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ empty|percentage"'
 
-state() {
-    echo $(eval $battery | grep state | awk '{print $2}')
+
+state () {
+    eval "$battery" | grep 'state' | awk '{print $2}'
 }
 
-recheck() {
-    if [ ! $(state) == "discharging" ]; then exit; fi
+battery_percentage () {
+    eval "$battery" | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}'
 }
 
-# This gets the integer percentage of current battery capacity
-p=$(eval $battery | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}')
+recheck () {
+    [ "$(state)" == 'discharging' ] || exit
+}
 
-run_beep() {
-    for i in {10..0} ; do
-        for j in {0..3} ; do
-            eval $beep&
-            k=$i
-            while [ "$k" -gt 0 ] ; do
-                sleep 0.05;
-                k=$(( k - 1 ))
-            done;
-        done;
-        recheck;
-    done;
+
+# Get the integer percentage of current battery capacity
+p="$(battery_percentage)"
+
+run_beep () {
+    for i in {10..0}; do
+        for _ in {0..3}; do
+            eval "$beep" &
+            k="$i"
+            while [ "$k" -gt 0 ]; do
+                sleep 0.05
+                k="$(( k - 1 ))"
+            done
+        done
+        recheck
+    done
 
     for i in {0..3}; do
-        eval $beep
-        recheck;
+        eval "$beep"
+        recheck
     done
 }
 
-if [ "$p" -le 15 -a $(state) == "discharging" ] ; then
-    run_beep&
-    sleep 30;
+if [ "$p" -le 150 ] && [ "$(state)" == 'discharging' ]; then
+    run_beep &
+    sleep 30
 
-    recheck;
-    sudo pm-hibernate;
+    recheck
+    sudo pm-hibernate
 fi

@@ -19,7 +19,7 @@ CLEAN_ERRORS_LOG_FILE=/dev/tty
 LOGS_FOLDER="$BACKUP_ROOT_DIR/backup-logs"
 LOG_FILE="$LOGS_FOLDER/log"
 
-if [ "$1" == "file" -o "$2" == "file" ]; then
+if [ "$1" == "file" ] || [ "$2" == "file" ]; then
     OUTPUT_FILE="$LOGS_FOLDER/${timestamp}-output"
     ERRORS_LOG_FILE="$LOGS_FOLDER/${timestamp}-errors-log"
     CLEAN_OUTPUT_FILE="$LOGS_FOLDER/${timestamp}-clean-output"
@@ -32,7 +32,7 @@ if [ ! -d "$LOGS_FOLDER" ]; then
     mkdir "$LOGS_FOLDER";
 fi
 
-if [ "$1" == "more" -o "$2" == "more" ]; then
+if [ "$1" == "more" ] || [ "$2" == "more" ]; then
     EXCLUDES_FILE="$CONFIG_FOLDER/excludes-more"
 fi
 
@@ -58,7 +58,7 @@ echo "cleaning backups..." >> "$CLEAN_OUTPUT_FILE"
 
 shopt -s dotglob
 
-for f in "$BACKUP_ROOT_DIR/backup-2"* ; do
+for f in "$BACKUP_ROOT_DIR/backup-2"*; do
     if [ -d "$f" ]; then
         echo "Cleaning backup folder \"$f\"" >> "$CLEAN_OUTPUT_FILE"
 

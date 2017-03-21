@@ -1,8 +1,10 @@
+#!/bin/bash
+
 # Ping home when mic "hears" something.
 while :;
 do
-    rec -t raw /dev/null rate 32k silence 1 0.1 2% 1 0.0 2% && paplay /home/n1amr/.local/Schedule.ogg;
-    sleep 1;
+    rec -t raw /dev/null rate 32k silence 1 0.1 2% 1 0.0 2% && paplay /home/n1amr/.local/Schedule.ogg
+    sleep 1
 done
 
 # Ping home when mic "hears" something.

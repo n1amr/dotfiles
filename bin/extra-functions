@@ -1,7 +1,7 @@
 #!/bin/bash
 
 keybindings () {
-    less $DOTFILES_HOME/config/keybindings.$SHELLNAME
+    less "$DOTFILES_HOME/config/keybindings.$SHELLNAME"
 }
 
 bak () {
@@ -16,7 +16,7 @@ cdf () {
 }
 
 cdtree () {
-    cd "${@:-.}"
+    cd "${@:-.}" || exit
     tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX
 }
 
@@ -25,12 +25,13 @@ findword () {
 }
 
 hcd () {
-    history | grep -P "\d+\s+cd $@"
+    history | grep -P "\d+\s+cd $*"
 }
 
 print_videos_duration () {
     DELIM=';.;.;'
-    [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $@ 2> /dev/null \
+    # shellcheck disable=SC2016,SC2048,SC2086
+    [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
     | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
 }
 
@@ -41,15 +42,12 @@ print_title_comment() {
     elif [ ${#1} -eq 0 ]; then
         printf "%*s\n" $LENGTH "#" | tr ' ' '#'
     else
-        printf "%*s%*s\n" $(( (${#1} + 4 + $LENGTH) / 2)) "__${1// /$}__" $(( $LENGTH - (${#1} + 4 + $LENGTH) / 2)) "#" | tr ' _$' '#  '
+        printf "%*s%*s\n" $(( (${#1} + 4 + LENGTH) / 2)) "__${1// /$}__" $(( LENGTH - (${#1} + 4 + LENGTH) / 2)) "#" | tr ' _$' '#  '
     fi
 }
 
-rainbow () {
-    yes "$(seq 231 -1 16)" | while read i; do printf "\x1b[48;5;${i}m\n"; sleep .02; done
-}
-
 sum_videos_duration () {
+    # shellcheck disable=SC2068
     print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
@@ -62,9 +60,14 @@ swapescape_enable () {
 }
 
 swapescape_toggle () {
-    setxkbmap -query | grep -q 'caps:swapescape' && swapescape_disable || swapescape_enable
+    if setxkbmap -query | grep -q 'caps:swapescape'; then
+        swapescape_disable
+    else
+        swapescape_enable
+    fi
 }
 
 up () {
-    cd $(printf '../%.0s' {1..$@})
+    # shellcheck disable=SC2051
+    cd "$(printf '../%.0s' {1.."$1"})" || return
 }

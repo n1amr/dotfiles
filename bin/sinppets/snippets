@@ -1,7 +1,9 @@
+#!/bin/bash
+
 # Debug
 echo "Press CTRL+C to proceed."
 trap "pkill -f 'sleep 1h'" INT
-trap "set +x ; sleep 1h ; set -x" DEBUG
+trap "set +x; sleep 1h; set -x" DEBUG
 
 # Scan IPs
 sudo nmap -sP -PE -PA21,23,80,3389 192.168.1.*

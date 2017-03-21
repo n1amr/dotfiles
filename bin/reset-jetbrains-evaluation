@@ -1,15 +1,17 @@
 #!/bin/bash
 
+set -e
+
 if [ -e ~/.java/.userPrefs/jetbrains ]; then
-    mv -vf ~/.java/.userPrefs/jetbrains ~/jetbrains.`date +%s`
+    mv -vf ~/.java/.userPrefs/jetbrains ~/"jetbrains.$(date +%s)"
 fi
 
 # find ~/.java/.userPrefs/jetbrains -name 'evlsprt*' -exec rm -vrf {} +
 
-while IFS='' read line; do
-    rm -vrf $line
+while IFS='' read -r line; do
+    rm -vrf "$line"
 done <<EOF
-`grep -Pl 'JetBrains' -r ~/.java/.userPrefs`
+$(grep -Pl 'JetBrains' -r ~/.java/.userPrefs)
 EOF
 
 for config_dir in ~/.jetbrains/config/*; do

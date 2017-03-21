@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -e
+
 source ~/.dotfiles_config
 if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo -n 'Enter youtube home directory: '
-    read DOTFILES_CONFIG_YOUTUBE_HOME
+    read -r DOTFILES_CONFIG_YOUTUBE_HOME
     echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles_config
 fi
 
@@ -17,7 +19,7 @@ COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue'
 
 download=true
 
-while [[ $# > 0 ]]; do
+while [[ $# != 0 ]]; do
     echo "$1" >> "$URLS_FILE"
     echo "Added $1"
     download=false
@@ -29,17 +31,18 @@ if [ ! -d .downloader ]; then
     mkdir .downloader
 fi
 
-if $download ; then
+if $download; then
     touch "$URLS_FILE"
-    cat "$URLS_FILE" | sort | uniq | tee "$URLS_FILE" # remove dublicates
-    while IFS='' read line ; do
+    sort "$URLS_FILE" -u | tee "$URLS_FILE" # remove dublicates
+    while IFS='' read -r line; do
         if [[ -n $line ]]; then
-            command=`echo "$YOUTUBE_DOWNLADER $COMMON_ARGS \"$line\""`
+            command="$YOUTUBE_DOWNLADER $COMMON_ARGS \"$line\""
             echo -e "\e[1;32m$command\e[m"
 
-            $YOUTUBE_DOWNLADER $COMMON_ARGS "$line" &&
-                echo "$line" >> "$HISTORY_FILE" ||
-                echo "$line" >> "$FAILED_FILE"
+            # shellcheck disable=SC2086
+            "$YOUTUBE_DOWNLADER" $COMMON_ARGS "$line" &&
+            echo "$line" >> "$HISTORY_FILE" ||
+            echo "$line" >> "$FAILED_FILE"
             echo
         fi
     done < "$URLS_FILE" &&

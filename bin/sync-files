@@ -4,6 +4,6 @@ includes="$1"
 destination="$2"
 
 while IFS= read -r line; do
-    echo $line
+    echo "$line"
     rsync -av --delete --relative -b --backup-dir="$destination/trash" "$line" "$destination"
 done < "$includes"

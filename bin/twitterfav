@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cd /mnt/Storage/Lab/Java/Twitter-Favorites-Saver
-java -jar Start.jar
+set -e
+
+cd "/mnt/Storage/Lab/Java/Twitter-Favorites-Saver"
+java -jar "Start.jar"
