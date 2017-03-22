@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ -n "$DOTFILES_LOG" ] && return || export DOTFILES_LOG=true
+
 [ ! -d "$DOTFILES_HOME/logs" ] && mkdir "$DOTFILES_HOME/logs"
 readonly LOG_FILE="$DOTFILES_HOME/logs/$(basename "$0")"
 

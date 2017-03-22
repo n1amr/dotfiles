@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ -n "$DOTFILES_HELPERS" ] && return || export DOTFILES_HELPERS=true
+
 source "$DOTFILES_HOME/bin/utils/log"
 
 safe_link() {
@@ -22,28 +24,5 @@ safe_link() {
         fi
 
         ln -sf "$to" "$from"
-    fi
-}
-
-acquire_lock() {
-    LOCK_FILE="$1"
-    if [ -f "$LOCK_FILE" ]; then
-        warning "Cannot acquire lock at $LOCK_FILE"
-        return 1
-    else
-        info "Acquired lock at $LOCK_FILE"
-        touch "$LOCK_FILE"
-    fi
-    return 0
-}
-
-release_lock() {
-    LOCK_FILE="$1"
-    info "Realeasing lock at $LOCK_FILE"
-    if [ -f "$LOCK_FILE" ]; then
-        info "$(rm -vf "$LOCK_FILE")"
-        info "Realeased lock at $LOCK_FILE"
-    else
-        warning "Lock at $LOCK_FILE is already released"
     fi
 }
