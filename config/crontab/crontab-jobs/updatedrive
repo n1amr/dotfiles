@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
+
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 LOG_FILE="${DRIVE_PATH}/../.drive-log"
 UPDATE_SCRIPT="$DOTFILES_HOME/bin/updatedrive"

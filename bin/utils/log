@@ -2,11 +2,11 @@
 
 [ -n "$DOTFILES_LOG" ] && return || export DOTFILES_LOG=true
 
-[ ! -d "$DOTFILES_HOME/logs" ] && mkdir "$DOTFILES_HOME/logs"
-readonly LOG_FILE="$DOTFILES_HOME/logs/$(basename "$0")"
+readonly DOTFILES_LOG_FILE="${DOTFILES_LOG_FILE:-${DOTFILES_HOME}/logs/${0//*dotfiles\//}}"
+[ ! -d "$(dirname "$DOTFILES_LOG_FILE")" ] && mkdir -p "$(dirname "$DOTFILES_LOG_FILE")"
 
 _log() {
-    echo "[$(date +'%Y-%m-%d %T.%N')] $1: $2" | tee -a "$LOG_FILE" >&2 ;
+    echo "[$(date +'%Y-%m-%d %T.%N')] $1: $2" | tee -a "$DOTFILES_LOG_FILE" >&2
 }
 
 info ()    { _log "INFO"    "$*"; }
