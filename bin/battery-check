@@ -41,7 +41,7 @@ run_beep () {
     done
 }
 
-if [ "$p" -le 150 ] && [ "$(state)" == 'discharging' ]; then
+if [ "$p" -le 15 ] && [ "$(state)" == 'discharging' ]; then
     run_beep &
     sleep 30
 

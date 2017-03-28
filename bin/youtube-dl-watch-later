@@ -35,11 +35,9 @@ cleanup () {
     echo 'Exiting'
     release_lock "$LOCK_FILE"
 }
-trap 'cleanup' INT
+trap 'cleanup' EXIT INT
 
 acquire_lock "$LOCK_FILE" || exit 1
 
 # shellcheck disable=SC2086
 "$YOUTUBE_DOWNLADER" $COMMON_ARGS --cookie "$COOKIE_FILE" "$URL"
-
-release_lock "$LOCK_FILE"
