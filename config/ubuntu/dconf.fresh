@@ -1,0 +1,140 @@
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='on'
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='list-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+maximized=true
+
+[org/gnome/nautilus/list-view]
+default-visible-columns=['name', 'size', 'date_modified']
+default-zoom-level='small'
+use-tree-view=true
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'mime_type', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed']
+
+[org/gnome/evolution-data-server]
+network-monitor-gio-name=''
+migrated=true
+
+[org/gnome/deja-dup]
+backend='file'
+prompt-check='2017-03-31T09:02:44.456405Z'
+
+[org/gnome/deja-dup/file]
+path='/home/n1amr/deja-dup'
+
+[org/gnome/desktop/app-folders]
+folder-children=['Utilities', 'Sundry']
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+translate=true
+categories=['X-GNOME-Utilities']
+apps=['org.gnome.baobab.desktop', 'deja-dup-preferences.desktop', 'eog.desktop', 'evince.desktop', 'org.gnome.FileRoller.desktop', 'gnome-calculator.desktop', 'gnome-dictionary.desktop', 'org.gnome.Characters.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Screenshot.desktop', 'gnome-system-log.desktop', 'gnome-system-monitor.desktop', 'gnome-tweak-tool.desktop', 'gucharmap.desktop', 'seahorse.desktop', 'vinagre.desktop', 'yelp.desktop']
+name='X-GNOME-Utilities.directory'
+
+[org/gnome/desktop/app-folders/folders/Sundry]
+translate=true
+categories=['X-GNOME-Sundry']
+apps=['alacarte.desktop', 'authconfig.desktop', 'ca.desrt.dconf-editor.desktop', 'fedora-release-notes.desktop', 'firewall-config.desktop', 'flash-player-properties.desktop', 'gconf-editor.desktop', 'gnome-abrt.desktop', 'gnome-power-statistics.desktop', 'ibus-setup-anthy.desktop', 'ibus-setup.desktop', 'ibus-setup-hangul.desktop', 'ibus-setup-libbopomofo.desktop', 'ibus-setup-libpinyin.desktop', 'ibus-setup-m17n.desktop', 'ibus-setup-typing-booster.desktop', 'im-chooser.desktop', 'itweb-settings.desktop', 'jhbuild.desktop', 'javaws.desktop', 'java-1.7.0-openjdk-jconsole.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'log4j-logfactor5.desktop', 'nm-connection-editor.desktop', 'orca.desktop', 'setroubleshoot.desktop', 'system-config-date.desktop', 'system-config-firewall.desktop', 'system-config-keyboard.desktop', 'system-config-language.desktop', 'system-config-printer.desktop', 'system-config-users.desktop', 'vino-preferences.desktop']
+name='X-GNOME-Sundry.directory'
+
+[org/gnome/desktop/interface]
+scaling-factor=uint32 1
+cursor-size=24
+gtk-im-module='gtk-im-context-simple'
+enable-animations=true
+text-scaling-factor=1.0
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[org/gnome/desktop/wm/keybindings]
+show-desktop=['<Control><Super>d']
+
+[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-theme-transparency=false
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gnome/nm-applet/eap/e9476c62-1ade-49d8-b3dd-571678d90a29]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/software]
+check-timestamp=int64 1490965199
+
+[org/compiz]
+existing-profiles=['Default', 'unity']
+current-profile='unity'
+
+[org/compiz/profiles/unity-lowgfx/plugins/core]
+active-plugins=['core', 'composite', 'opengl', 'compiztoolbox', 'vpswitch', 'snap', 'mousepoll', 'resize', 'place', 'move', 'wall', 'grid', 'regex', 'imgpng', 'session', 'animation', 'fade', 'workarounds', 'scale', 'expo', 'ezoom', 'switcher']
+
+[org/compiz/profiles/unity]
+plugins-with-set-keys=['grid', 'place', 'unityshell', 'animation', 'expo', 'move', 'unitymtgrabhandles', 'staticswitcher', 'workarounds', 'ezoom', 'wall', 'vpswitch', 'core', 'resize', 'decor', 'gnomecompat', 'commands', 'opengl', 'snap', 'mousepoll', 'fade', 'session', 'matecompat', 'scale', 'composite', 'switcher']
+
+[org/compiz/profiles/unity/plugins/ezoom]
+zoom-box-fill-color='#2f2f2f4f'
+zoom-box-outline-color='#2f2f4f9f'
+
+[org/compiz/profiles/unity/plugins/wall]
+thumb-highlight-gradient-shadow-color='#dfdfdfff'
+arrow-base-color='#e6e6e6d9'
+arrow-shadow-color='#dcdcdcd9'
+
+[org/compiz/profiles/unity/plugins/unityshell]
+inactive-shadow-color='#000000a5'
+
+[org/compiz/profiles/unity/plugins/animation]
+unminimize-effects=['animation:Glide 2']
+close-matches=['((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) & !(role=toolTipTip | role=qtooltip_label) & !(type=Normal & override_redirect=1) & !(name=gnome-screensaver) & !(name=gnome-screenshot)', '((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) & !(class=\\.exe$))', '(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd)']
+open-matches=['((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) & !(role=toolTipTip | role=qtooltip_label) & !(type=Normal & override_redirect=1) & !(name=gnome-screensaver)', '((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) & !(class=\\.exe$))', '(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd)']
+
+[org/compiz/profiles/unity/plugins/switcher]
+background-color='#333333d9'
+
+[org/compiz/profiles/unity/plugins/decor]
+active-shadow-color='#00000080'
+inactive-shadow-color='#000000ff'
+
+[org/compiz/profiles/unity/plugins/gnomecompat]
+main-menu-key='Disabled'
+run-key='Disabled'
+
+[org/compiz/profiles/unity/plugins/staticswitcher]
+background-color='#333333d9'
+
+[org/compiz/profiles/unity/plugins/expo]
+distance=0.004999999888241291
+ground-color1='#b3b3b3cc'
+ground-color2='#b3b3b300'
+vp-saturation=40.0
+
+[org/compiz/profiles/unity/plugins/core]
+active-plugins=['core', 'composite', 'opengl', 'snap', 'mousepoll', 'copytex', 'grid', 'imgpng', 'place', 'move', 'compiztoolbox', 'unitymtgrabhandles', 'wall', 'vpswitch', 'resize', 'regex', 'commands', 'session', 'animation', 'expo', 'workarounds', 'ezoom', 'fade', 'scale', 'unityshell']
+
+[com/canonical/indicator/keyboard]
+migrated=true
+
+[com/canonical/unity/devices]
+blacklist=['2804074804071908-', 'D02C91932C917566-Storage']
+
+[com/canonical/unity/interface]
+text-scale-factor=1.0
+
+[com/canonical/unity/launcher]
+favorites=['application://ubiquity.desktop', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
+
+[com/ubuntu/content/hub/source]
+all=['webbrowser-app']
+contacts=@as []
+pictures=['']
+videos=['']
+
+[desktop/ibus/general]
+preload-engines=['xkb:us::eng']
+version='1.5.11'
