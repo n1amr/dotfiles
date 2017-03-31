@@ -5,7 +5,9 @@ bindkey "^[OB" down-line-or-beginning-search
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 
+bindkey "^[OH" beginning-of-line
 bindkey "^A" beginning-of-line
+bindkey "^[OF" end-of-line
 bindkey "^E" end-of-line
 bindkey "^B" backward-char
 bindkey "^F" forward-char

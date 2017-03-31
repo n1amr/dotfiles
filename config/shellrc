@@ -300,7 +300,7 @@ stty stop undef # to unmap ctrl-s
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 [ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
-terminal_resize
+# terminal_resize
 reset_ps1
 reset_keybindings vi
 block_caret
