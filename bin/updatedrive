@@ -65,9 +65,10 @@ if [ "$no_prompt" == "true" ]; then
 fi
 
 if [ "$exclude" == "true" ]; then
-    COMMONFLAGS="$COMMONFLAGS --exclude-ops=delete,update"
+    COMMONFLAGS="$COMMONFLAGS --exclude-ops=delete"
 fi
 
+set +e
 
 # Pull all
 for f in "${auto_pull_dirs[@]}"; do
