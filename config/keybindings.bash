@@ -31,6 +31,7 @@ bind '"\C-x\C-e": edit-and-execute-command'
 bind '"\C-x\C-k": "\C-e\C-u"' # push-line alternative
 bind '"\C-xa": alias-expand-line'
 bind '"\C-y": yank'
+bind '"\e.": insert-last-argument'
 
 bind '"\C-x\C-u" "\C-e\C-ucd ..\n\C-y"'
 

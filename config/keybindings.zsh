@@ -22,16 +22,17 @@ bindkey "^U" kill-whole-line
 bindkey "^W" backward-kill-word
 bindkey "^[^?" backward-kill-word
 
+bindkey "^_" undo
 bindkey "^J" accept-line
 bindkey "^L" clear-screen
 bindkey "^O" overwrite-mode
-bindkey "^Q" push-line
 bindkey "^V" quoted-insert
 bindkey "^X^E" edit-command-line
+bindkey "^Q" push-line
 bindkey "^Xa" _expand_alias
 bindkey "^Y" yank
+bindkey "^[." insert-last-word
 bindkey "^[[Z" reverse-menu-complete
-bindkey "^_" undo
 bindkey -s "^X^K" "^E^U"
 
 bindkey -s "^B" "^Qd^M"
