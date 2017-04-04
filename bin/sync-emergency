@@ -8,5 +8,5 @@ destination='/mnt/Storage/Backups/emergency'
 
 while IFS= read -r line; do
     echo "$line"
-    rsync -avzbk --progress --delete --relative --exclude-from="$excludes" "$line" "$destination"
+    rsync -avzk --progress --delete --relative --exclude-from="$excludes" "$line" "$destination"
 done < "$includes"
