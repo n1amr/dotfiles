@@ -31,13 +31,15 @@ if [ ! -f "$COOKIE_FILE" ]; then
     exit 1
 fi
 
+has_lock=false
+
 cleanup () {
     echo 'Exiting'
-    release_lock "$LOCK_FILE"
+    [ "$has_lock" = true ] && release_lock "$LOCK_FILE"
 }
 trap 'cleanup' EXIT INT
 
-acquire_lock "$LOCK_FILE" || exit 1
+acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
 # shellcheck disable=SC2086
 "$YOUTUBE_DOWNLADER" $COMMON_ARGS --cookie "$COOKIE_FILE" "$URL"
