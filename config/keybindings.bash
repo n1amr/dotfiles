@@ -1,3 +1,6 @@
+# \C-x => ctrl + x
+# \ex => alt + x
+
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'
 bind '"\e[A": history-search-backward'
@@ -22,8 +25,12 @@ bind '"\C-u": unix-line-discard'
 bind '"\C-w": unix-word-rubout'
 bind '"\e\C-?": unix-word-rubout'
 
+bind '"\e#": insert-comment'
+bind '"\e*": insert-completions'
+
 bind '"\C-_": undo'
 bind '"\C-j": accept-line'
+bind '"\C-o": operate-and-get-next'
 bind '"\C-l": clear-screen'
 bind '"\C-o": overwrite-mode'
 bind '"\C-v": quoted-insert'
@@ -33,15 +40,16 @@ bind '"\C-xa": alias-expand-line'
 bind '"\C-y": yank'
 bind '"\e.": insert-last-argument'
 
-bind '"\C-x\C-u" "\C-e\C-ucd ..\n\C-y"'
-
 bind '"\C-x\C-x" "\C-e\C-ukeybindings\n\C-y"'
 
-bind '"\C-gd" "\C-e\C-ugit diff\n\C-y"'
-bind '"\C-gl" "\C-e\C-ugit l\n\C-y"'
-bind '"\C-gs" "\C-e\C-ugit st\n\C-y"'
+bind '"\e[15~" "\C-e\C-u\C-p\C-j\C-y"'
+bind '"\el" "\C-e\C-ul\n\C-y"'
+bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 
-bind '"\C-xf" "\C-e\C-uranger\n\C-y"'
-bind '"\C-xr" "\C-e\C-uexec $SHELL\n\C-y"'
+bind '"\C-xf" "\C-e\C-uranger\C-j\C-y"'
+bind '"\C-xr" "\C-e\C-uexec $SHELL\C-j\C-y"'
 
-bind '"\e[15~" "\C-p\C-j"'
+# git
+bind '"\C-gd" "\C-e\C-ugit diff\C-j\C-y"'
+bind '"\C-gl" "\C-e\C-ugit l\C-j\C-y"'
+bind '"\C-gs" "\C-e\C-ugit st\C-j\C-y"'

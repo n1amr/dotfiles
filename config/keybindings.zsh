@@ -1,3 +1,6 @@
+# ^X => ctrl + x
+# ^[x => alt + x
+
 bindkey "^P" up-line-or-beginning-search
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
@@ -22,8 +25,11 @@ bindkey "^U" kill-whole-line
 bindkey "^W" backward-kill-word
 bindkey "^[^?" backward-kill-word
 
+bindkey -s "^[#" "^[OH#^J"  # insert comment
+
 bindkey "^_" undo
 bindkey "^J" accept-line
+bindkey "^O" accept-line-and-down-history
 bindkey "^L" clear-screen
 bindkey "^O" overwrite-mode
 bindkey "^V" quoted-insert
@@ -35,16 +41,17 @@ bindkey "^[." insert-last-word
 bindkey "^[[Z" reverse-menu-complete
 bindkey -s "^X^K" "^E^U"
 
-bindkey -s "^B" "^Qd^M"
-bindkey -s "^[u" "^Qcd ..^M"
-
 bindkey -s "^X^X" "^Qkeybindings^M"
 
-bindkey -s "^Gd" "^Qgit diff^M"
-bindkey -s "^Gl" "^Qgit l^M"
-bindkey -s "^Gs" "^Qgit st^M"
+bindkey -s "^[[15~" "^Q^P^J"
+bindkey -s "^[l" "^Ql^M"
+bindkey -s "^[u" "^Qcd ..^M"
+bindkey -s "^B" "^Qd^M"
 
 bindkey -s "^Xf" "^Qranger^M"
 bindkey -s "^Xr" "^Qexec \$SHELL^M"
 
-bindkey -s "^[[15~" "^P^J"
+# git
+bindkey -s "^Gd" "^Qgit diff^M"
+bindkey -s "^Gl" "^Qgit l^M"
+bindkey -s "^Gs" "^Qgit st^M"
