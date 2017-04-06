@@ -1,0 +1,37 @@
+#!/bin/bash
+# list of options at /usr/share/X11/xkb/rules/base.lst
+
+swapescape_disable () {
+    setxkbmap -option '' 2> /dev/null
+}
+
+swapescape_enable () {
+    setxkbmap -option caps:escape 2> /dev/null
+    setxkbmap -option shift:both_capslock 2> /dev/null
+}
+
+swapescape_toggle () {
+    if setxkbmap -query | grep -Pq 'caps:.*escape'; then
+        swapescape_disable
+    else
+        swapescape_enable
+    fi
+}
+
+case "$1" in
+    enable)
+    swapescape_enable
+    ;;
+
+    disable)
+    swapescape_disable
+    ;;
+
+    toggle)
+    swapescape_toggle
+    ;;
+
+    *)
+    echo "Usage: $0 (enable|disable|toggle)"
+    exit 1
+esac

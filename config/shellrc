@@ -304,4 +304,4 @@ EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 reset_ps1
 reset_keybindings vi
 block_caret
-swapescape_enable
+swapescape enable

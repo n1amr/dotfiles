@@ -58,22 +58,6 @@ sum_videos_duration () {
     print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
-swapescape_disable () {
-    setxkbmap -option '' 2> /dev/null
-}
-
-swapescape_enable () {
-    setxkbmap -option caps:swapescape 2> /dev/null
-}
-
-swapescape_toggle () {
-    if setxkbmap -query | grep -q 'caps:swapescape'; then
-        swapescape_disable
-    else
-        swapescape_enable
-    fi
-}
-
 up () {
     # shellcheck disable=SC2051
     cd "$(printf '../%.0s' {1.."$1"})" || return
