@@ -1,4 +1,5 @@
 map o open_with gui-open
+map <enter> open_with gui-open
 map <c-t> open_with trash
 set line_numbers relative
 set dirname_in_tabs true

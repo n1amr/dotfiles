@@ -2,12 +2,35 @@
 
 set -e
 
-PROJECT_HOME='/mnt/Storage/Lab/Java/javaProject'
+JAVA_PROJECT_HOME='/mnt/Storage/Lab/Java/javaProject'
+CPP_PROJECT_HOME='/mnt/Storage/Lab/C++/competitive-programming'
+PYTHON_PROJECT_HOME="$CPP_PROJECT_HOME/python"
+
 url="$*"
 num="$(echo "$url" | grep -Po '/\d+/' | cut -d '/' -f 2)"
-name=$(wget "$url" -qO - | grep -P '<div class="problem-statement"><div class="header"><div class="title">(.*?)</div>' -o | cut -d '>' -f 4 | cut -d '<' -f 1 | /usr/bin/tr -cd '[[:alnum:]] \n' | sed 's/\ /_/g')
-classname="_${num}_${name}"
+name="$(wget "$url" -qO - | grep -P '<div class="problem-statement"><div class="header"><div class="title">(.*?)</div>' -o | cut -d '>' -f 4 | cut -d '<' -f 1 | /usr/bin/tr -cd '[[:alnum:]] \n' | sed 's/\ /_/g')"
 
-sed "s/Template/${classname}/g" > "$PROJECT_HOME/src/${classname}.java" \
-    "$PROJECT_HOME/Contests/Template.java"
-echo "Created $PROJECT_HOME/src/${classname}.java"
+problem_name="${num}${name}"
+java_classname="_$problem_name"
+
+java_output_file="$JAVA_PROJECT_HOME/src/${java_classname}.java"
+if [ ! -f "$java_output_file" ]; then
+    sed "s/Template/${java_classname}/g" > "$java_output_file" \
+        "$JAVA_PROJECT_HOME/Contests/Template.java"
+    echo "Created $java_output_file"
+fi
+
+cpp_output_file="$CPP_PROJECT_HOME/${problem_name}.cpp"
+if [ ! -f "$cpp_output_file" ]; then
+    cp "$CPP_PROJECT_HOME/templates/codeforces.cpp" "$cpp_output_file"
+    echo "Created $cpp_output_file"
+    ln -s "$cpp_output_file" "$CPP_PROJECT_HOME/main.cpp" -f
+fi
+
+python_output_file="$PYTHON_PROJECT_HOME/${problem_name}.py"
+python_input_file="$PYTHON_PROJECT_HOME/${problem_name}.in"
+if [ ! -f "$python_output_file" ]; then
+    cp "$PYTHON_PROJECT_HOME/templates/codeforces.py" "$python_output_file"
+    echo "0" > "$python_input_file"
+    echo "Created $python_output_file"
+fi
