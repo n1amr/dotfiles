@@ -5,8 +5,10 @@
     ca = commit -a
     co = checkout
     df = diff
-    l = log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    l = log --graph --pretty='%C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an> %C(dim white)%d%C(reset)' --abbrev-commit
+    rbb = "!f() { git rebase -i HEAD~$1; }; f"
     st = status
+
 
 [color]
     ui = true
