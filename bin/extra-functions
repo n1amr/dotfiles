@@ -31,8 +31,8 @@ hcd () {
 print_pdf_counts () {
     DELIM=';.;.;'
     # shellcheck disable=SC2016,SC2048,SC2086
-    [ $# -ne 0 ] && exiftool -n -q -p '${PageCount}'"$DELIM"'${PageCount;our $sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null | 
-    awk -F "$DELIM" '{sum=$2;$2=":"; print $0} END{print "===============\nTotal: ", sum}'
+    [ $# -ne 0 ] && exiftool -n -q -p '${PageCount}'"$DELIM"'${PageCount;our $sum; $_=($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
+    | awk -F "$DELIM" '{sum=$2;$2=":"; print $0} END{print "===============\nTotal: ", sum}'
 }
 
 print_videos_duration () {
