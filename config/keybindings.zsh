@@ -45,10 +45,10 @@ bindkey -s "^X^X" "^Qkeybindings^M"
 
 bindkey -s "^[[15~" "^Q^P^J"
 bindkey -s "^[l" "^Ql^M"
+bindkey -s "^[r" "^Qr^M"
 bindkey -s "^[u" "^Qcd ..^M"
 bindkey -s "^B" "^Qd^M"
 
-bindkey -s "^Xf" "^Qranger^M"
 bindkey -s "^Xr" "^Qexec \$SHELL^M"
 
 # git

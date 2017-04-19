@@ -44,9 +44,9 @@ bind '"\C-x\C-x" "\C-e\C-ukeybindings\n\C-y"'
 
 bind '"\e[15~" "\C-e\C-u\C-p\C-j\C-y"'
 bind '"\el" "\C-e\C-ul\n\C-y"'
+bind '"\er" "\C-e\C-ur\n\C-y"'
 bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 
-bind '"\C-xf" "\C-e\C-uranger\C-j\C-y"'
 bind '"\C-xr" "\C-e\C-uexec $SHELL\C-j\C-y"'
 
 # git
