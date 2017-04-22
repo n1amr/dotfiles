@@ -1,36 +1,81 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-set -e
+import os
+import re
+import sys
 
-JAVA_PROJECT_HOME='/mnt/Storage/Lab/Java/javaProject'
-CPP_PROJECT_HOME='/mnt/Storage/Lab/C++/competitive-programming'
-PYTHON_PROJECT_HOME="$CPP_PROJECT_HOME/python"
+import bs4
+from requests import get
 
-url="$*"
-num="$(echo "$url" | grep -Po '/\d+/' | cut -d '/' -f 2)"
-name="$(wget "$url" -qO - | grep -P '<div class="problem-statement"><div class="header"><div class="title">(.*?)</div>' -o | cut -d '>' -f 4 | cut -d '<' -f 1 | /usr/bin/tr -cd '[[:alnum:]] \n' | sed 's/\ /_/g')"
+PYTHON_PROJECT_HOME = '/mnt/Storage/Lab/C++/competitive-programming/python'
+TEMPLATE_CODE_PATH = os.path.join(PYTHON_PROJECT_HOME,
+                                  'templates/codeforces.py')
 
-problem_name="${num}${name}"
-java_classname="_$problem_name"
 
-java_output_file="$JAVA_PROJECT_HOME/src/${java_classname}.java"
-if [ ! -f "$java_output_file" ]; then
-    sed "s/Template/${java_classname}/g" > "$java_output_file" \
-        "$JAVA_PROJECT_HOME/Contests/Template.java"
-    echo "Created $java_output_file"
-fi
+def extract_title(url, html):
+    num = re.search(r'/(\d+)/', url).groups()[0]
+    raw_title = html.find(attrs={'class': 'problem-statement'}).find(
+        attrs={'class': 'title'}).text
+    title = re.sub(r'\W+', '_', raw_title)
+    return f'{num}{title}'
 
-cpp_output_file="$CPP_PROJECT_HOME/${problem_name}.cpp"
-if [ ! -f "$cpp_output_file" ]; then
-    cp "$CPP_PROJECT_HOME/templates/codeforces.cpp" "$cpp_output_file"
-    echo "Created $cpp_output_file"
-    ln -s "$cpp_output_file" "$CPP_PROJECT_HOME/main.cpp" -f
-fi
 
-python_output_file="$PYTHON_PROJECT_HOME/${problem_name}.py"
-python_input_file="$PYTHON_PROJECT_HOME/${problem_name}.in"
-if [ ! -f "$python_output_file" ]; then
-    cp "$PYTHON_PROJECT_HOME/templates/codeforces.py" "$python_output_file"
-    echo "0" > "$python_input_file"
-    echo "Created $python_output_file"
-fi
+def copy(frompath, topath):
+    with open(frompath, 'r') as fromfile, open(topath, 'w') as tofile:
+        tofile.writelines(fromfile.readlines())
+    print('Created code file at', topath)
+
+
+def write_testcases(html, infile_path, outfile_path):
+    def extract_text(tag):
+        lines = []
+        for line in tag.children:
+            if isinstance(line, bs4.element.NavigableString):
+                lines.append(line)
+        return '\n'.join(lines)
+
+    input_output_sections = [*html.find(attrs={'class': 'sample-test'})]
+    testcases = len(input_output_sections) // 2
+
+    with open(infile_path, 'w') as infile, open(outfile_path, 'w') as outfile:
+        print(testcases, file=infile)
+        for i in range(testcases):
+            input_tag = [*input_output_sections[2 * i]][1]
+            input_text = extract_text(input_tag)
+            output_tag = [*input_output_sections[2 * i + 1]][1]
+            output_text = extract_text(output_tag)
+
+            print(file=infile)
+            print(input_text, file=infile)
+
+            print(f'Case #{i + 1}:', file=outfile)
+            print(output_text, file=outfile)
+            print(file=outfile)
+
+    print(f'Written {testcases} test cases to \n'
+          f'  {infile_path}, \n'
+          f'  {outfile_path}')
+
+
+def main(*argv):
+    if len(argv) < 2:
+        print('Usage: codeforces <url>')
+        sys.exit(1)
+
+    url = argv[1]
+    print('Loading from', url, '...')
+    response_text = get(url).content
+    html = bs4.BeautifulSoup(response_text, 'html5lib')
+
+    complete_name = extract_title(url, html)
+    code_path = os.path.join(PYTHON_PROJECT_HOME, f'{complete_name}.py')
+    infile_path = os.path.join(PYTHON_PROJECT_HOME, f'{complete_name}.in')
+    outfile_path = os.path.join(PYTHON_PROJECT_HOME,
+                                f'{complete_name}.correct.out')
+
+    copy(TEMPLATE_CODE_PATH, code_path)
+    write_testcases(html, infile_path, outfile_path)
+
+
+if __name__ == '__main__':
+    main(*sys.argv)
