@@ -34,6 +34,7 @@ bindkey "^L" clear-screen
 bindkey "^O" overwrite-mode
 bindkey "^V" quoted-insert
 bindkey "^X^E" edit-command-line
+bindkey -a "v" edit-command-line
 bindkey "^Q" push-line
 bindkey "^Xa" _expand_alias
 bindkey "^Y" yank
