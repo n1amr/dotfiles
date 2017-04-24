@@ -8,7 +8,9 @@
     l = log --graph --pretty='%C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an> %C(dim white)%d%C(reset)' --abbrev-commit
     rbb = "!f() { git rebase -i HEAD~$1; }; f"
     st = status
-    browse = "!f() { git-browse $1; }; f"
+    go = "!f() { git-browse $*; }; f"
+    cretae-github-repo = "!f() { hub create $*; }; f"
+    cretae-gitlab-repo = "!f() { gitlab_init $*; }; f"
 
 
 [color]
