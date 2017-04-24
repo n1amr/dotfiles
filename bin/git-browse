@@ -10,13 +10,13 @@ fi
 git_url="$(git config --get remote.origin.url)"
 git_url=${git_url%.git}
 
-git_protocol="$(echo $git_url | awk -v FS="(@|:)" '{print $1}')"
+git_protocol="$(echo "$git_url" | awk -v FS="(@|:)" '{print $1}')"
 if [[ "$git_protocol" == 'http' ]] || [[ "$git_protocol" == 'https' ]]; then
-    git_domain="$(echo $git_url | awk -F'/' '{print $3}')"
+    git_domain="$(echo "$git_url" | awk -F'/' '{print $3}')"
     git_url="$git_url"
 elif [[ $git_protocol == 'git' ]]; then
     git_url="${git_url#*@}"
-    git_domain="$(echo $git_url | awk -F':' '{print $1}')"
+    git_domain="$(echo "$git_url" | awk -F':' '{print $1}')"
     git_url="https://${git_url/:/\/}"
 elif [[ "$git_protocol" == 'github' ]] || [[ "$git_protocol" == 'gitlab' ]]; then
     git_domain="${git_protocol}.com"
@@ -29,38 +29,48 @@ url="${git_url}"
 
 git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
 
-if [[ "$1" == '' ]]; then
-    url="$url"
-elif [[ "$1" == '-' ]] || [[ "$1" == 'current' ]]; then
-    url="$url/tree/${git_branch}"
-elif [[ "$1" == i ]] || [[ "$1" == 'issues' ]]; then
-    url="$url/issues"
-elif [[ "$1" == b ]] || [[ "$1" == 'branches' ]]; then
-    url="$url/branches"
-elif [[ "$1" == w ]] || [[ "$1" == 'wiki' ]]; then
-    if [[ "$git_domain" == 'gitlab.com' ]]; then
-        url="$url/wikis"
-    else
-        url="$url/wiki"
-    fi
-elif [[ "$1" == s ]] || [[ "$1" == 'settings' ]]; then
-    if [[ "$git_domain" == 'gitlab.com' ]]; then
-        url="$url/edit"
-    else
-        url="$url/settings"
-    fi
-elif [[ "$1" == 'repo-settings' ]]; then
-    url="$url/settings/repository"
-elif [[ "$1" == r ]] || [[ "$1" == 'releases' ]]; then
-    if [[ "$git_domain" == 'gitlab.com' ]]; then
-        url="$url/tags"
-    else
-        url="$url/releases"
-    fi
-else
-    echo "ERROR: Unknown option $1"
-    exit 1
-fi
+action="$1"
+case "$action" in
+    '') action='home' ;;
+    '-') action='current' ;;
+    b) action='branches' ;;
+    i) action='issues' ;;
+    r) action='releases' ;;
+    s) action='settings' ;;
+    t) action='tags' ;;
+    w) action='wiki' ;;
+esac
+
+case "$action" in
+    'home') url="$url" ;;
+    'current') url="$url/tree/${git_branch}" ;;
+    'branches') url="$url/branches" ;;
+    'issues') url="$url/issues" ;;
+    'releases') url="$url/releases" ;;
+    'tags') url="$url/tags" ;;
+    'repo-settings') url="$url/settings/repository" ;;
+
+    'wiki')
+        if [[ "$git_domain" == 'gitlab.com' ]]; then
+            url="$url/wikis"
+        else
+            url="$url/wiki"
+        fi
+    ;;
+
+    'settings')
+        if [[ "$git_domain" == 'gitlab.com' ]]; then
+            url="$url/edit"
+        else
+            url="$url/settings"
+        fi
+    ;;
+
+    *)
+        echo "ERROR: Unknown action $action"
+        exit 1
+    ;;
+esac
 
 echo "Opening $url"
-gui-open $url
+gui-open "$url"
