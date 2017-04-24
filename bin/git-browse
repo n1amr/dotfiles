@@ -2,7 +2,7 @@
 
 set -e
 
-if [ ! -d .git ]; then
+if ! git rev-parse 1>/dev/null 2>&1; then
     echo "ERROR: This isnt a git directory"
     exit 1
 fi
@@ -13,11 +13,44 @@ git_domain="$(echo $git_url | awk -v FS="(@|:)" '{print $2}')"
 git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
 
 if [[ $git_url == https://* ]]; then
-    url="${git_domain}/${git_url}/tree/${git_branch}"
+    url="${git_domain}/${git_url}"
 elif [[ $git_url == git@* ]]; then
-    url="https://${git_domain}/${git_url#*:}/tree/${git_branch}"
+    url="https://${git_domain}/${git_url#*:}"
 else
     echo "ERROR: Remote origin is invalid"
+    exit 1
+fi
+
+if [[ "$1" == '' ]]; then
+    url="$url"
+elif [[ "$1" == '-' ]] || [[ "$1" == 'current' ]]; then
+    url="$url/tree/${git_branch}"
+elif [[ "$1" == i ]] || [[ "$1" == 'issues' ]]; then
+    url="$url/issues"
+elif [[ "$1" == b ]] || [[ "$1" == 'branches' ]]; then
+    url="$url/branches"
+elif [[ "$1" == w ]] || [[ "$1" == 'wiki' ]]; then
+    if [[ "$git_domain" == 'gitlab.com' ]]; then
+        url="$url/wikis"
+    else
+        url="$url/wiki"
+    fi
+elif [[ "$1" == s ]] || [[ "$1" == 'settings' ]]; then
+    if [[ "$git_domain" == 'gitlab.com' ]]; then
+        url="$url/edit"
+    else
+        url="$url/settings"
+    fi
+elif [[ "$1" == 'repo-settings' ]]; then
+    url="$url/settings/repository"
+elif [[ "$1" == r ]] || [[ "$1" == 'releases' ]]; then
+    if [[ "$git_domain" == 'gitlab.com' ]]; then
+        url="$url/tags"
+    else
+        url="$url/releases"
+    fi
+else
+    echo "ERROR: Unknown option $1"
     exit 1
 fi
 
