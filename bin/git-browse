@@ -9,17 +9,25 @@ fi
 
 git_url="$(git config --get remote.origin.url)"
 git_url=${git_url%.git}
-git_domain="$(echo $git_url | awk -v FS="(@|:)" '{print $2}')"
-git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
 
-if [[ $git_url == https://* ]]; then
-    url="${git_domain}/${git_url}"
-elif [[ $git_url == git@* ]]; then
-    url="https://${git_domain}/${git_url#*:}"
+git_protocol="$(echo $git_url | awk -v FS="(@|:)" '{print $1}')"
+if [[ "$git_protocol" == 'http' ]] || [[ "$git_protocol" == 'https' ]]; then
+    git_domain="$(echo $git_url | awk -F'/' '{print $3}')"
+    git_url="$git_url"
+elif [[ $git_protocol == 'git' ]]; then
+    git_url="${git_url#*@}"
+    git_domain="$(echo $git_url | awk -F':' '{print $1}')"
+    git_url="https://${git_url/:/\/}"
+elif [[ "$git_protocol" == 'github' ]] || [[ "$git_protocol" == 'gitlab' ]]; then
+    git_domain="${git_protocol}.com"
+    git_url="https://${git_protocol}.com/${git_url#*:}"
 else
     echo "ERROR: Remote origin is invalid"
     exit 1
 fi
+url="${git_url}"
+
+git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
 
 if [[ "$1" == '' ]]; then
     url="$url"
