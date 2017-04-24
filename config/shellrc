@@ -37,7 +37,7 @@ SAVEHIST=$HISTSIZE
 HISTCONTROL='ignoreboth'
 
 if [ $SHELLNAME = zsh ]; then
-    export ZSH="$DOTFILES_HOME/config/oh-my-zsh"
+    export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"
 
     ZSH_THEME="n1amr"
     ENABLE_CORRECTION="true"

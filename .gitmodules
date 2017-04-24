@@ -1,5 +1,5 @@
 [submodule "config/oh-my-zsh"]
-    path = config/oh-my-zsh
+    path = thirdparty/oh-my-zsh
     url = http://github.com/robbyrussell/oh-my-zsh.git
     branch = master
 [submodule "config/sublime-text-3"]
