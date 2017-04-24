@@ -9,8 +9,8 @@
     rbb = "!f() { git rebase -i HEAD~$1; }; f"
     st = status
     go = "!f() { git-browse $*; }; f"
-    create-github-repo = "!f() { github-init $*; }; f"
-    create-gitlab-repo = "!f() { gitlab-init $*; }; f"
+    create-github = "!f() { git-create-github $*; }; f"
+    create-gitlab = "!f() { git-create-gitlab $*; }; f"
 
 [color]
     ui = true
