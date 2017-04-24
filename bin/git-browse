@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+if [ ! -d .git ]; then
+    echo "ERROR: This isnt a git directory"
+    exit 1
+fi
+
+git_url="$(git config --get remote.origin.url)"
+git_url=${git_url%.git}
+git_domain="$(echo $git_url | awk -v FS="(@|:)" '{print $2}')"
+git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+
+if [[ $git_url == https://* ]]; then
+    url="${git_domain}/${git_url}/tree/${git_branch}"
+elif [[ $git_url == git@* ]]; then
+    url="https://${git_domain}/${git_url#*:}/tree/${git_branch}"
+else
+    echo "ERROR: Remote origin is invalid"
+    exit 1
+fi
+
+echo "Opening $url"
+gui-open $url
