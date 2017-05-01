@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
+import bs4
 import os
 import re
 import sys
-
-import bs4
 from requests import get
 
 PYTHON_PROJECT_HOME = '/mnt/Storage/Lab/C++/competitive-programming/python'
-TEMPLATE_CODE_PATH = os.path.join(PYTHON_PROJECT_HOME,
-                                  'templates/codeforces.py')
+CPP_PROJECT_HOME = '/mnt/Storage/Lab/C++/competitive-programming'
+JAVA_PROJECT_HOME = '/mnt/Storage/Lab/Java/javaProject'
 
 
 def extract_title(url, html):
@@ -57,24 +56,88 @@ def write_testcases(html, infile_path, outfile_path):
           f'  {outfile_path}')
 
 
+def generate(url, html, language, project_home, template_relpath,
+             code_path=None):
+    complete_name = extract_title(url, html)
+
+    if code_path is None:
+        code_path = os.path.join(project_home, f'{complete_name}.{language}')
+
+    template_path = os.path.join(project_home, template_relpath)
+    infile_path = os.path.join(project_home, f'{complete_name}.in')
+    outfile_path = os.path.join(project_home, f'{complete_name}.correct.out')
+
+    copy(template_path, code_path)
+    write_testcases(html, infile_path, outfile_path)
+
+    return code_path, infile_path, outfile_path
+
+
+def generate_cpp(url, html):
+    code_path, infile_path, _ = generate(url=url, html=html, language='cpp',
+                                         project_home=CPP_PROJECT_HOME,
+                                         template_relpath='templates/codeforces.cpp')
+
+    input_file = os.path.join(CPP_PROJECT_HOME, 'input')
+    if os.path.exists(input_file):
+        os.remove(input_file)
+    os.symlink(infile_path, input_file)
+    cmake_file = os.path.join(CPP_PROJECT_HOME, 'CMakeLists.txt')
+    with open(cmake_file, 'r') as f:
+        lines = f.readlines()
+    with open(cmake_file, 'w') as f:
+        for line in lines:
+            if line.count('add_executable(main ${SOURCE_FILES})'):
+                cpp_file_name = os.path.basename(code_path)
+                f.write(f'set(SOURCE_FILES {cpp_file_name})\n')
+            f.write(line)
+
+
+def generate_py(url, html):
+    generate(url=url, html=html, language='py',
+             project_home=PYTHON_PROJECT_HOME,
+             template_relpath='templates/codeforces.py')
+
+
+def generate_java(url, html):
+    project_home = JAVA_PROJECT_HOME
+    complete_name = extract_title(url, html)
+    class_name = f'_{complete_name}.java'
+    code_path = os.path.join(project_home, class_name)
+    generate(url=url, html=html, language='java',
+             project_home=project_home,
+             template_relpath='Contests/Template.java',
+             code_path=code_path)
+    with open(code_path, 'r') as f:
+        lines = f.readlines()
+    with open(code_path, 'w') as f:
+        for line in lines:
+            if line.count('class Template'):
+                line = line.replace('class Template', f'class _{complete_name}')
+            f.write(line)
+
+
 def main(*argv):
-    if len(argv) < 2:
-        print('Usage: codeforces <url>')
+    if len(argv) < 3:
+        print('Usage: codeforces <url> (cpp|py|java)')
         sys.exit(1)
 
     url = argv[1]
+    language = argv[2]
+
     print('Loading from', url, '...')
     response_text = get(url).content
+
     html = bs4.BeautifulSoup(response_text, 'html5lib')
 
-    complete_name = extract_title(url, html)
-    code_path = os.path.join(PYTHON_PROJECT_HOME, f'{complete_name}.py')
-    infile_path = os.path.join(PYTHON_PROJECT_HOME, f'{complete_name}.in')
-    outfile_path = os.path.join(PYTHON_PROJECT_HOME,
-                                f'{complete_name}.correct.out')
-
-    copy(TEMPLATE_CODE_PATH, code_path)
-    write_testcases(html, infile_path, outfile_path)
+    if language == 'cpp':
+        generate_cpp(url, html)
+    elif language == 'py':
+        generate_py(url, html)
+    elif language == 'java':
+        generate_java(url, html)
+    else:
+        raise ValueError('Invalid language')
 
 
 if __name__ == '__main__':

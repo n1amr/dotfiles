@@ -206,6 +206,7 @@ alias u='up'
 alias updatepip='pip install -U pip $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
 alias v='vim'
 alias vi='vim'
+alias vim-server='vim --servername "$(tmux list-sessions | grep attached | cut -d: -f1)"'
 alias vibindkey='reset_keybindings vi'
 alias wget='wget -c'
 
