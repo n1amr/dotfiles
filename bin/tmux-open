@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -n "$1" ]; then
+    PROGRAM=" \\\\; new-window '$1'"
+else
+    PROGRAM=''
+fi
+
+CMD='zsh -c ". ~/.zshrc; tmux attach'"$PROGRAM"\"
+exec gnome-terminal -e "$CMD"
