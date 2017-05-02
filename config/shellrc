@@ -211,6 +211,7 @@ alias vibindkey='reset_keybindings vi'
 alias wget='wget -c'
 
 if [ $SHELLNAME = zsh ]; then
+    alias -g 'A=2>&1'
     alias -g 'CP=| xsel -ib'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
