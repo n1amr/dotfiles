@@ -6,42 +6,49 @@
     co = checkout
     df = diff
     l = log --graph --pretty='%C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an> %C(dim white)%d%C(reset)' --abbrev-commit
-    rbb = "!f() { git rebase -i HEAD~$1; }; f"
     st = status
+    rbb = "!f() { git rebase -i HEAD~$1; }; f"
     go = "!f() { git-browse $*; }; f"
     create-github = "!f() { git-create-github $*; }; f"
     create-gitlab = "!f() { git-create-gitlab $*; }; f"
 
-[color]
-    ui = true
-
 [core]
     editor = vim
+    pager = less -FRX
     excludesfile = ~/.gitignore
     autocrlf = input
 
-[credential]
-    helper = cache
+[color]
+    ui = true
 
-[grep]
-    linenumber = true
-
-[push]
-    default = matching
-
-[user]
-    name = Amr Alaa
-    email = n1amr1@gmail.com
-    signingkey = 7C837246
-
-[commit]
-    gpgsign = false
+[pager]
+    diff = true
+    log = true
+    show = true
+    status = true
 
 [diff]
     tool = vimdiff
 
 [merge]
     tool = vimdiff
+
+[grep]
+    linenumber = true
+
+[user]
+    name = Amr Alaa
+    email = n1amr1@gmail.com
+    signingkey = 7C837246
+
+[credential]
+    helper = cache
+
+[commit]
+    gpgsign = false
+
+[push]
+    default = matching
 
 [url "git@github.com:"]
     insteadOf = "github:"
