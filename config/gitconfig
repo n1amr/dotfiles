@@ -14,7 +14,7 @@
 
 [core]
     editor = vim
-    pager = less -FRX
+    pager = less
     excludesfile = ~/.gitignore
     autocrlf = input
 
