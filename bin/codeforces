@@ -34,15 +34,16 @@ def write_testcases(html, infile_path, outfile_path):
         return '\n'.join(lines)
 
     input_output_sections = [*html.find(attrs={'class': 'sample-test'})]
-    testcases = len(input_output_sections) // 2
+    input_tags = [*filter(lambda tag: tag.attrs and 'input' in tag.attrs['class'], input_output_sections)]
+    output_tags = [*filter(lambda tag: tag.attrs and 'output' in tag.attrs['class'], input_output_sections)]
+    assert len(input_tags) == len(output_tags)
+    testcases = len(input_tags)
 
     with open(infile_path, 'w') as infile, open(outfile_path, 'w') as outfile:
         print(testcases, file=infile)
-        for i in range(testcases):
-            input_tag = [*input_output_sections[2 * i]][1]
-            input_text = extract_text(input_tag)
-            output_tag = [*input_output_sections[2 * i + 1]][1]
-            output_text = extract_text(output_tag)
+        for i, (input_tag, output_tag) in enumerate(zip(input_tags, output_tags)):
+            input_text = extract_text([*input_tag][1])
+            output_text = extract_text([*output_tag][1])
 
             print(file=infile)
             print(input_text, file=infile)
