@@ -79,7 +79,7 @@ def generate_cpp(url, html):
                                          template_relpath='templates/codeforces.cpp')
 
     input_file = os.path.join(CPP_PROJECT_HOME, 'input')
-    if os.path.exists(input_file):
+    if os.path.exists(input_file) or os.path.islink(input_file):
         os.remove(input_file)
     os.symlink(infile_path, input_file)
     cmake_file = os.path.join(CPP_PROJECT_HOME, 'CMakeLists.txt')
