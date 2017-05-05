@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+if [[ "$TMUX" == "" ]]; then
+    echo "Not in tmux"
+    exit 1
+fi
+servername="$(tmux display-message -p '#S')"
+
+if [[ $# > 0 ]]; then
+    vim --servername "$servername" --remote-tab-silent $@
+else
+    if vim --serverlist | grep -qi "^$servername\$"; then
+        echo "Another instance is running in current session"
+        exit 1
+    fi
+    vim --servername "$servername"
+fi
+
+exit 0
