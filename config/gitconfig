@@ -25,7 +25,7 @@
     diff = true
     log = true
     show = true
-    status = true
+    status = false
 
 [diff]
     tool = vimdiff
