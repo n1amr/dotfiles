@@ -55,7 +55,19 @@ safe_link() {
     fi
 }
 
-for cf in driverc gitconfig gitignore inputrc irbrc sqliterc tmux.conf vim; do
+config_files="
+    driverc
+    gitconfig
+    gitignore
+    inputrc
+    irbrc
+    sqliterc
+    tmux.conf
+    vim
+    wgetrc
+"
+
+for cf in $config_files; do
     safe_link ~/."$cf" "$DOTFILES_HOME/config/$cf"
 done
 

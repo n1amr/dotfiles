@@ -28,6 +28,14 @@ hcd () {
     history | grep -P "\d+\s+cd $*"
 }
 
+json() {
+    if [ -t 0 ]; then # argument
+         python -m json.tool <<< "$*" | pygmentize -l json;
+    else # pipe
+         python -m json.tool | pygmentize -l json;
+    fi;
+}
+
 linerange() {
     head -"$2" | tail -n +"$1"
 }
