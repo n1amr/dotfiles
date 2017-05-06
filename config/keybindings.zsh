@@ -3,8 +3,10 @@
 
 bindkey "^P" up-line-or-beginning-search
 bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 
