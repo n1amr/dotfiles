@@ -42,6 +42,10 @@ fi
 remote_name='origin'
 if git remote -v | grep -P '^origin' > /dev/null; then
     remote_name='gitlab'
+    git remote -v
+    echo "Remote name 'origin' is already used."
+    echo -n "Enter remote name [$remote_name]: "
+    read -r remote_name
 fi
 echo "Remote name is $remote_name"
 
