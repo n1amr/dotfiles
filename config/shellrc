@@ -215,7 +215,7 @@ if [ $SHELLNAME = zsh ]; then
     alias -g 'CP=| xsel -ib'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
-    alias -g "V=| vim -c 'silent! %sm/\e.\{-}m//g' -"
+    alias -g "V=| vim -c 'silent! %sm/\e.\{-}m//g' +1 -"
 fi
 
 ################################################################################
