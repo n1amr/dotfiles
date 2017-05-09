@@ -18,8 +18,11 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 PLAYLIST='WL'
 URL="https://youtube.com/playlist?list=$PLAYLIST"
 COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
-COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue --mark-watched --ignore-errors'
 LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"
+ARCHIVE_FILE="$YOUTUBE_HOME/.downloader/archive"
+OUTPUT_TEMPLATE='%(epoch)s. %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
+COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --convert-subs srt
+--continue --mark-watched --ignore-errors'
 
 cd "$YOUTUBE_HOME"
 if [ ! -d .downloader ]; then
@@ -42,4 +45,8 @@ trap 'cleanup' EXIT INT
 acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
 # shellcheck disable=SC2086
-"$YOUTUBE_DOWNLADER" $COMMON_ARGS --cookie "$COOKIE_FILE" "$URL"
+"$YOUTUBE_DOWNLADER" $COMMON_ARGS \
+    --cookie "$COOKIE_FILE" \
+    --download-archive "$ARCHIVE_FILE" \
+    -o "$OUTPUT_TEMPLATE" \
+    "$URL"
