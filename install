@@ -80,7 +80,7 @@ for cf in netrc trc; do
 done
 
 safe_link ~/.dotfiles_config "$DOTFILES_HOME/data/dotfiles_config"
-safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../n1amr.zsh-theme
+safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"
 safe_link ~/.vimrc "$DOTFILES_HOME/config/vim/vimrc"
