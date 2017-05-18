@@ -1,18 +1,25 @@
 #!/bin/bash
 
-set -e
-
 source ~/.dotfiles_config
 
 WIFI_LIST_FILE="$DOTFILES_HOME/data/wifi-list"
 [ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
 
-state() {
-    nmcli d | grep wlp8s0 | grep -Po '\S*connected'
+DEVICE='wlp8s0'
+
+status() {
+    nmcli d | grep "$DEVICE" | grep -Po '\S*connected'
 }
 
+disconnect() {
+    old_connection="$(nmcli --fields DEVICE,NAME con show --active | grep -Po "(?<=$DEVICE  )(.*)(?= )")"
+    [ -n "$old_connection" ] && nmcli connection down "$old_connection"
+}
+
+[ "$(status)" = "connected" ] && wget 'http://google.com' -q --spider 2>&1 || disconnect
+
 while IFS= read -r line; do
-    [ "$(state)" = "connected" ] && break
+    [ "$(status)" = "connected" ] && break
     (echo "$line" | grep -Pq '^(#.*|\s*)$') && continue
     id="$line"
     echo "connecting to $id..."
