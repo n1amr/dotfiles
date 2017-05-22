@@ -20,7 +20,7 @@ URL="https://youtube.com/playlist?list=$PLAYLIST"
 COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
 LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"
 ARCHIVE_FILE="$YOUTUBE_HOME/.downloader/archive"
-OUTPUT_TEMPLATE='%(epoch)s. %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
+OUTPUT_TEMPLATE='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --convert-subs srt
 --continue --mark-watched --ignore-errors'
 
@@ -49,4 +49,5 @@ acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
     --cookie "$COOKIE_FILE" \
     --download-archive "$ARCHIVE_FILE" \
     -o "$OUTPUT_TEMPLATE" \
+    --exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date +%s). $f"; done' \
     "$URL"
