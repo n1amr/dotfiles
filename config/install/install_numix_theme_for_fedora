@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /etc/yum.repos.d/
-wget http://download.opensuse.org/repositories/home:paolorotolo:numix/RedHat_RHEL-6/home:paolorotolo:numix.repo
-sudo dnf install numix-gtk-theme
