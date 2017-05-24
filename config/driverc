@@ -1,4 +1,4 @@
-export=docx,jpg,gif,html,odt,ods,pdf,png,pptx,svg,txt,xlsx
+export=pdf
 
 [list]
 depth=1
