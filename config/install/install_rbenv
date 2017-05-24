@@ -1,1 +1,9 @@
+#!/bin/bash
+
 git clone git@github.com:sstephenson/rbenv.git ~/.rbenv
+
+# Optionally, try to compile dynamic bash extension to speed up rbenv. Don't worry if it fails; rbenv will still work normally:
+cd ~/.rbenv && src/configure && make -C src
+
+# (Optional) Install ruby-build, which provides the rbenv install command 
+git clone git@github.com:rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
