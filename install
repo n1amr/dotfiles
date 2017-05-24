@@ -31,8 +31,10 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     DOTFILES_HOME="$DOTFILES_DIR"
 fi
 
-DOTFILES_CONFIG_FILE="$DOTFILES_HOME/data/dotfiles_config"
+DOTFILES_DATA_DIR="$DOTFILES_HOME/data"
 
+mkdir "$DOTFILES_DATA_DIR"
+DOTFILES_CONFIG_FILE="$DOTFILES_DATA_DIR/dotfiles_config"
 
 safe_link() {
     from="$1"
@@ -79,7 +81,7 @@ for cf in netrc trc; do
     safe_link ~/."$cf" "$DOTFILES_HOME/config/secret/$cf"
 done
 
-safe_link ~/.dotfiles_config "$DOTFILES_HOME/data/dotfiles_config"
+safe_link ~/.dotfiles_config "$DOTFILES_CONFIG_FILE"
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"
