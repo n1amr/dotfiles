@@ -32,9 +32,12 @@ if [ ! -d "$DOTFILES_DIR" ]; then
 fi
 
 DOTFILES_DATA_DIR="$DOTFILES_HOME/data"
+mkdir -pv "$DOTFILES_DATA_DIR"
+mkdir -pv "$DOTFILES_DATA_DIR/history"
+touch "$DOTFILES_DATA_DIR/history/zsh_history"
 
-mkdir "$DOTFILES_DATA_DIR"
 DOTFILES_CONFIG_FILE="$DOTFILES_DATA_DIR/dotfiles_config"
+
 
 safe_link() {
     from="$1"
@@ -84,7 +87,7 @@ done
 safe_link ~/.dotfiles_config "$DOTFILES_CONFIG_FILE"
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
 safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
-safe_link ~/.zsh_history.bak "$DOTFILES_HOME/config/history/zsh_history"
+safe_link ~/.zsh_history.bak "$DOTFILES_DATA_DIR/history/zsh_history"
 safe_link ~/.vimrc "$DOTFILES_HOME/config/vim/vimrc"
 safe_link ~/.config/ranger/rc.conf "$DOTFILES_HOME/config/ranger/rc.conf"
 safe_link ~/.config/ranger/rifle.conf "$DOTFILES_HOME/config/ranger/rifle.conf"
