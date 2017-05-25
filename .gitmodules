@@ -14,10 +14,6 @@
     path = config/vim
     url = http://gitlab.com/n1amr/vim-config
     branch = master
-[submodule "config/history"]
-    path = config/history
-    url = http://gitlab.com/n1amr/dotfiles-history.git
-    branch = master
 [submodule "notes"]
     path = notes
     url = http://gitlab.com/n1amr/notes-and-instructions.git
