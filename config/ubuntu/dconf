@@ -333,7 +333,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Title', true)
+sorting=('Year', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -365,7 +365,7 @@ print-wrap-mode='word'
 
 [org/gnome/gedit/preferences/editor]
 use-default-font=false
-scheme='cobalt'
+scheme='kate'
 editor-font='Droid Naskh Shift Alt Bold 18'
 wrap-last-split-mode='word'
 
@@ -376,7 +376,7 @@ show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
 virtual-root='file:///home/n1amr/ml-assignment-2/spam-classifier'
-tree-view=true
+tree-view=false
 root='file:///'
 
 [org/gnome/gedit/plugins]
@@ -388,7 +388,7 @@ replace-with-entry=['رامي لكح']
 
 [org/gnome/gedit/state/window]
 size=(1315, 343)
-state=132
+state=4
 bottom-panel-size=140
 side-panel-size=200
 side-panel-active-page='GeditWindowDocumentsPanel'
@@ -671,7 +671,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.exe'
+default-extension='.tar'
 volume-size=104857
 encrypt-header=true
 
@@ -699,7 +699,7 @@ search-filter-time-type='last_modified'
 sort-directories-first=true
 
 [org/gnome/nautilus/window-state]
-sidebar-width=225
+sidebar-width=223
 geometry='681x326+0+24'
 maximized=true
 
@@ -739,7 +739,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/5d4dedd8-b3aa-46b3-8dca-4483b2e254c6]
+[org/gnome/nm-applet/eap/3692caa5-19aa-46f6-bd1f-860f124b86eb]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -751,11 +751,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/3204348f-64c1-460f-886f-9fb110f72910]
+[org/gnome/nm-applet/eap/5d4dedd8-b3aa-46b3-8dca-4483b2e254c6]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+[org/gnome/nm-applet/eap/3204348f-64c1-460f-886f-9fb110f72910]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -779,7 +779,19 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/76d8dd7c-ebb5-47a2-a3a8-3b51ff9245d6]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/f8dd4a31-bbe2-429f-9217-5dbffec7837e]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/b5bce76b-5ac4-4c1c-b423-5db3da0ea0d8]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -803,11 +815,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/78806ec2-74d1-4027-809a-36d28b2464ee]
+[org/gnome/nm-applet/eap/4dd6c2c8-195e-4992-8159-3ca2e49f6a5e]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/4dd6c2c8-195e-4992-8159-3ca2e49f6a5e]
+[org/gnome/nm-applet/eap/78806ec2-74d1-4027-809a-36d28b2464ee]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -819,7 +831,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/cda73d4a-4993-4787-9414-8a7562de30b7]
+[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -831,7 +843,7 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/12019d52-b280-44bd-b6c2-2ab208404b5d]
+[org/gnome/nm-applet/eap/cda73d4a-4993-4787-9414-8a7562de30b7]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -924,7 +936,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(2.2947338713470722, 0.83265034624475887)
+window-ratio=(0.70267489711934161, 0.27044753086419754)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -964,7 +976,7 @@ container='ubuntu'
 path='file:///home/n1amr/deja-dup'
 
 [org/gnome/gnome-system-monitor]
-current-tab='processes'
+current-tab='resources'
 show-whose-processes='user'
 window-state=(1366, 701, 0, 24)
 maximized=true
@@ -1271,11 +1283,19 @@ network-traffic=false
 disk-usage=false
 
 [org/virt-manager/virt-manager]
-manager-window-height=672
-manager-window-width=1317
+manager-window-height=701
+manager-window-width=1366
+system-tray=true
 
 [org/virt-manager/virt-manager/details]
 show-toolbar=true
+
+[org/virt-manager/virt-manager/new-vm]
+graphics-type='system'
+
+[org/virt-manager/virt-manager/console]
+resize-guest=0
+scaling=2
 
 [org/virt-manager/virt-manager/confirm]
 delete-storage=true
@@ -1287,8 +1307,8 @@ forcepoweroff=false
 vm-window-size=(1317, 744)
 scaling=2
 
-[org/virt-manager/virt-manager/vms/e2dc9eee91154c3ab75f6a14a7f218e0]
-vm-window-size=(1317, 672)
+[org/virt-manager/virt-manager/vms/3f136768b62a4f16960cf60caa81defd]
+vm-window-size=(1315, 826)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/edc4728110dd4987a4f2ebb30f92f8a6]
@@ -1309,12 +1329,15 @@ vm-window-size=(847, 603)
 [org/virt-manager/virt-manager/vms/83137b24e42446908269c74f8f7bc3d9]
 vm-window-size=(1317, 744)
 
-[org/virt-manager/virt-manager/vms/3f136768b62a4f16960cf60caa81defd]
-vm-window-size=(1315, 826)
+[org/virt-manager/virt-manager/vms/e2dc9eee91154c3ab75f6a14a7f218e0]
+vm-window-size=(1317, 672)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/5064d8ed98744c82a7087b22fb570de6]
 vm-window-size=(1317, 672)
+
+[org/virt-manager/virt-manager/vms/aef693ba60f64ce39495bac1107498b1]
+vm-window-size=(1366, 701)
 
 [org/virt-manager/virt-manager/vms/b66ef6540be04f1d873a6d10dc18e768]
 vm-window-size=(1315, 715)
@@ -1365,8 +1388,8 @@ scaling=2
 [org/virt-manager/virt-manager/vms/4615b4cb8d2c403a9f84b8b0c9a389b3]
 vm-window-size=(1315, 715)
 
-[org/virt-manager/virt-manager/vms/303a4a79bb204d5ab31b634bde8168d8]
-vm-window-size=(1317, 744)
+[org/virt-manager/virt-manager/vms/4a692ef292884ff5a47bcde98c364ddb]
+vm-window-size=(1366, 701)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/4c890d0738bf4a5fac13d1101d5d1824]
@@ -1382,20 +1405,24 @@ vm-window-size=(1315, 672)
 [org/virt-manager/virt-manager/vms/6fcfb0cb2b2c470ea970b49885ff4021]
 vm-window-size=(1317, 744)
 
-[org/virt-manager/virt-manager/vms/e844a81824394506bf7994419beb287d]
+[org/virt-manager/virt-manager/vms/819e05b7bce04346914b344cc558b261]
 vm-window-size=(847, 603)
 
-[org/virt-manager/virt-manager/vms/819e05b7bce04346914b344cc558b261]
+[org/virt-manager/virt-manager/vms/e844a81824394506bf7994419beb287d]
 vm-window-size=(847, 603)
 
 [org/virt-manager/virt-manager/vms/42cde99f17cd4698ba4252c210c53791]
 vm-window-size=(847, 603)
 
+[org/virt-manager/virt-manager/vms/cbedfb0dd5cb4ea3ab4e7dfde234a1ff]
+vm-window-size=(1317, 744)
+scaling=2
+
 [org/virt-manager/virt-manager/vms/4f03c22b85374b88a73ba5f9d188d3da]
 vm-window-size=(1366, 701)
 scaling=2
 
-[org/virt-manager/virt-manager/vms/cbedfb0dd5cb4ea3ab4e7dfde234a1ff]
+[org/virt-manager/virt-manager/vms/303a4a79bb204d5ab31b634bde8168d8]
 vm-window-size=(1317, 744)
 scaling=2
 
@@ -1408,11 +1435,11 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 
 [org/gtk/settings/file-chooser]
 sort-column='name'
-sidebar-width=165
-window-position=(342, 36)
+sidebar-width=300
+window-position=(1, 36)
 show-size-column=true
 show-hidden=false
-window-size=(681, 676)
+window-size=(1364, 676)
 sort-directories-first=true
 date-format='regular'
 sort-order='ascending'
@@ -1424,7 +1451,7 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=int64 1493418621
+launch-time=int64 1495757494
 window-height=335
 show-details=true
 window-width=453
