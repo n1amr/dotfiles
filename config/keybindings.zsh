@@ -22,6 +22,7 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[C" forward-word
 
 bindkey "^H" backward-delete-char
+bindkey "^?" backward-delete-char
 bindkey "^K" kill-line
 bindkey "^U" kill-whole-line
 bindkey "^W" backward-kill-word
