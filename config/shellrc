@@ -164,8 +164,6 @@ alias fgrep='grep -F'
 alias g='grep'
 alias gdplshared='drive pull -ignore-name-clashes --ignore-conflict'
 alias gist='gistey -sf'
-alias gitnext="git checkout \`git log --reverse --ancestry-path HEAD..master --oneline | head -1 | awk '{print \$1}'\`"
-alias gitprev='git checkout HEAD~'
 alias gp='grep -P --color=auto'
 alias h='history'
 alias hbackup='yes | cp ~/.${SHELLNAME}_history ~/.${SHELLNAME}_history.bak;'

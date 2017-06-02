@@ -11,6 +11,8 @@
     go = "!f() { git-browse $*; }; f"
     create-github = "!f() { git-create-github $*; }; f"
     create-gitlab = "!f() { git-create-gitlab $*; }; f"
+    next = "!f() { git checkout \"$(git log --reverse --ancestry-path HEAD..master --oneline | head -1 | awk '{print $1}')\"; }; f"
+    prev = checkout HEAD~
 
 [core]
     editor = vim
