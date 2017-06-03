@@ -15,7 +15,6 @@ else
     chmod +x "$TOKEN_FILE"
 fi
 
-username="n1amr"
 private_token="$GITLAB_PRIVATE_TOKEN"
 url="https://gitlab.com/api/v3/projects?private_token=$private_token"
 
@@ -26,16 +25,21 @@ fi
 if [[ -z "$repo_name" ]]; then
     repo_name="$(basename "$(git rev-parse --show-toplevel)")"
 fi
+repo_name="$(echo -n "$repo_name" | tr -c '[:alnum:]' '_')"
 
-echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O /dev/null
-wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O /dev/null
+temp_file="$(mktemp .gitlab-create-response-XXXXX.tmp.html)"
+trap 'rm "$temp_file"' EXIT
+
+echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
+wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
 r=$?
-repo_link="git@gitlab.com:${username}/${repo_name}"
+repo_path="$(cat "$temp_file" | grep -Po '(?<=path_with_namespace":")(.*?)(?=")')"
+repo_link="git@gitlab.com:$repo_path"
 
-if [[ $r == 0 ]]; then
+if [[ $r == 0 ]] && [[ -n "$repo_link" ]]; then
     echo "Created repo successfully [$repo_link]"
 else
-    echo "error ($r)"
+    echo "Error ($r)"
     exit $r
 fi
 
