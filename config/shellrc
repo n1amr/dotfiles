@@ -234,8 +234,8 @@ $'%{\e[1;35m%}`__ps1_git_branch`'\
 $'%{\e[1;30m%}`__ps1_warnings`'\
 $'%{\e[2;32m%}`__ps1_command_eval`'\
 $'%{\e[0m%}\n '\
-$'%{\e[0;32m%}`[ $USER = "root" ] || echo "$"`'\
-$'%{\e[0;31m%}`[ $USER = "root" ] && echo "#"`'\
+$'%{\e[0;32m%}`[ "$USER" = "root" ] || echo "$"`'\
+$'%{\e[0;31m%}`[ "$USER" = "root" ] && echo "#"`'\
 $'%{\e[0m%} '
 
     elif [ $SHELLNAME = bash ]; then
@@ -250,8 +250,8 @@ $'%{\e[0m%} '
 '\[\e[1;30m\]$(__ps1_warnings)'\
 '\[\e[2;32m\]$(__ps1_command_eval)'\
 '\[\e[m\]\n '\
-'\[\e[0;32m\]`[ $USER = "root" ] || echo "$"`'\
-'\[\e[0;31m\]`[ $USER = "root" ] && echo "#"`'\
+'\[\e[0;32m\]`[ "$USER" = "root" ] || echo "$"`'\
+'\[\e[0;31m\]`[ "$USER" = "root" ] && echo "#"`'\
 '\[\e[m\] '
 
     fi
