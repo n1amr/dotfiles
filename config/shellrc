@@ -270,6 +270,7 @@ __ps1_pyenv_version () {
 __ps1_warnings () {
     msgs=()
     [ -z "$DISPLAY" ] && msgs=(${msgs[@]} "NO_DISPLAY")
+    [ "$USER" = 'root' ] && msgs=(${msgs[@]} "ROOT")
     msg="${msgs[@]}"
     msg="$(echo $msg | sed 's/ / | /g')"
     [ -n "$msg" ] && echo " ($msg)"
