@@ -1,6 +1,8 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+PATH="$DOTFILES_HOME/bin:$PATH"
 
 WIFI_LIST_FILE="$DOTFILES_HOME/data/wifi-list"
 [ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
@@ -11,17 +13,41 @@ status() {
     nmcli d | grep "$DEVICE" | grep -Po '\S*connected'
 }
 
-disconnect() {
-    old_connection="$(nmcli --fields DEVICE,NAME con show --active | grep -Po "(?<=$DEVICE  )(.*)(?= )")"
-    [ -n "$old_connection" ] && nmcli connection down "$old_connection"
+active_connection() {
+    nmcli --fields DEVICE,NAME con show --active | grep -Po "(?<=$DEVICE  )(.*)(?= )"
 }
 
-[ "$(status)" = "connected" ] && testnet > /dev/null 2>&1 || disconnect
+disconnect() {
+    old_connection="$(active_connection)"
+    echo "old_connection = \"$old_connection\""
+    if [ -n "$old_connection" ]; then
+        if nmcli connection down "$old_connection"; then
+            info "disconnected $old_connection"
+        else
+            error "could not disconnect \"$old_connection\""
+        fi
+    fi
+}
+
+info "status: $(status)"
+if [ "$(status)" = "connected" ] && testnet > /dev/null 2>&1; then
+    info "connected to: $(active_connection)"
+    exit 0
+else
+    disconnect
+fi
 
 while IFS= read -r line; do
     [ "$(status)" = "connected" ] && break
     (echo "$line" | grep -Pq '^(#.*|\s*)$') && continue
     id="$line"
-    echo "connecting to $id..."
+    info "connecting to \"$id\"..."
     timeout 5s nmcli connection up id "$id"
 done < "$WIFI_LIST_FILE"
+
+if [ "$(status)" = "connected" ] && testnet > /dev/null 2>&1; then
+    info "successfully connected to $(active_connection)"
+else
+    error "could not connect"
+    exit 1
+fi
