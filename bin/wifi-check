@@ -16,7 +16,7 @@ disconnect() {
     [ -n "$old_connection" ] && nmcli connection down "$old_connection"
 }
 
-[ "$(status)" = "connected" ] && wget 'http://google.com' -q --spider 2>&1 || disconnect
+[ "$(status)" = "connected" ] && testnet > /dev/null 2>&1 || disconnect
 
 while IFS= read -r line; do
     [ "$(status)" = "connected" ] && break
