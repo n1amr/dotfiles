@@ -5,7 +5,7 @@ source ~/.dotfiles_config
 WIFI_LIST_FILE="$DOTFILES_HOME/data/wifi-list"
 [ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
 
-DEVICE='wlp8s0'
+DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"
 
 status() {
     nmcli d | grep "$DEVICE" | grep -Po '\S*connected'
