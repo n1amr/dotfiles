@@ -10,7 +10,11 @@ hosts=(
 
 echo "Checking http://google.com"
 
-if ! curl -I http://google.com > /dev/null 2>&1; then
+test_google() {
+    timeout 10 sh -c 'curl -I http://google.com > /dev/null 2>&1'
+}
+
+if ! test_google; then
     for h in "${hosts[@]}"; do
         break
         echo -ne "Pinging $h...\n  "
