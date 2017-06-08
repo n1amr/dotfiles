@@ -317,6 +317,8 @@ stty stop undef # to unmap ctrl-s
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 [ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
+source load_ssh_agent --no-add
+
 # terminal_resize
 reset_ps1
 reset_keybindings vi
