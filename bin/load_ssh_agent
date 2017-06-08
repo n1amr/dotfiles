@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SSH_ENV="$HOME/.ssh/environment"
+
+[ "$1" = "--no-add" ] && no_add=true
+
+start_agent() {
+    ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
+    chmod 600 "$SSH_ENV"
+    . "$SSH_ENV" > /dev/null
+    [ "$no_add" = 'true' ] || ssh-add
+}
+
+[ ! -f "$SSH_ENV" ] && start_agent
+. "$SSH_ENV" > /dev/null
+[ -z "$SSH_AGENT_PID" ] && start_agent
+ps -ef | grep "$SSH_AGENT_PID" | grep "ssh-agent$" > /dev/null || start_agent
