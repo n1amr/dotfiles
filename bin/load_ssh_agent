@@ -16,4 +16,5 @@ start_agent() {
 [ ! -f "$SSH_ENV" ] && start_agent
 . "$SSH_ENV" > /dev/null
 [ -z "$SSH_AGENT_PID" ] && start_agent
+# shellcheck disable=SC2009
 ps -ef | grep "$SSH_AGENT_PID" | grep "ssh-agent$" > /dev/null || start_agent

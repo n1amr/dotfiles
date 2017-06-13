@@ -8,8 +8,8 @@ if [[ "$TMUX" == "" ]]; then
 fi
 servername="$(tmux display-message -p '#S')"
 
-if [[ $# > 0 ]]; then
-    vim --servername "$servername" --remote-tab-silent $@
+if [[ $# -gt 0 ]]; then
+    vim --servername "$servername" --remote-tab-silent "$@"
 else
     if vim --serverlist | grep -qi "^$servername\$"; then
         echo "Another instance is running in current session"

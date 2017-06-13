@@ -44,7 +44,7 @@ trap 'cleanup' EXIT INT
 
 acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
-# shellcheck disable=SC2086
+# shellcheck disable=SC2016,SC2086
 "$YOUTUBE_DOWNLADER" $COMMON_ARGS \
     --cookie "$COOKIE_FILE" \
     --download-archive "$ARCHIVE_FILE" \

@@ -6,7 +6,7 @@ remote_name=origin
 while [ $# != 0 ]; do
     case $1 in
         -r)
-        [[ $# < 2 ]] && echo "Error: No remote name" && exit 1
+        [[ $# -lt 2 ]] && echo "Error: No remote name" && exit 1
         remote_name="$2"
         shift
         ;;
@@ -27,7 +27,7 @@ if ! git rev-parse 1>/dev/null 2>&1; then
     exit 1
 fi
 
-git_url="$(git config --get remote.${remote_name}.url)"
+git_url="$(git config --get "remote.${remote_name}.url")"
 git_url=${git_url%.git}
 
 git_protocol="$(echo "$git_url" | awk -v FS="(@|:)" '{print $1}')"

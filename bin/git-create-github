@@ -2,7 +2,6 @@
 
 set -e
 
-repo_name="$1"
 TOKEN_FILE="$DOTFILES_HOME/data/github_token"
 
 if [[ -x "$TOKEN_FILE" ]]; then
@@ -15,6 +14,5 @@ else
     chmod +x "$TOKEN_FILE"
 fi
 
-username="n1amr"
 export GITHUB_TOKEN="$GITHUB_PRIVATE_TOKEN"
-hub create $*
+hub create "$@"
