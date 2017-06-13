@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ -d "$HOME/.ssh/" ] || return
+
 SSH_ENV="$HOME/.ssh/environment"
 
 [ "$1" = "--no-add" ] && no_add=true
