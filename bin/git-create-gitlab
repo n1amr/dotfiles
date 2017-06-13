@@ -33,7 +33,7 @@ trap 'rm "$temp_file"' EXIT
 echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
 wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
 r=$?
-repo_path="$(cat "$temp_file" | grep -Po '(?<=path_with_namespace":")(.*?)(?=")')"
+repo_path="$(grep -Po '(?<=path_with_namespace":")(.*?)(?=")' "$temp_file")"
 repo_link="git@gitlab.com:$repo_path"
 
 if [[ $r == 0 ]] && [[ -n "$repo_link" ]]; then
