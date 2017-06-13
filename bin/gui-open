@@ -1,3 +1,5 @@
 #!/bin/bash
 
-xdg-open "$@" > /dev/null 2>&1
+for file in "$@"; do
+    xdg-open "$file" > /dev/null 2>&1
+done
