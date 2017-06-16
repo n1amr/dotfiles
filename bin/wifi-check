@@ -19,13 +19,11 @@ active_connection() {
 
 disconnect() {
     old_connection="$(active_connection)"
-    echo "old_connection = \"$old_connection\""
     if [ -n "$old_connection" ]; then
-        if nmcli connection down "$old_connection"; then
+        nmcli connection down "$old_connection" && 
             info "disconnected $old_connection"
-        else
-            error "could not disconnect \"$old_connection\""
-        fi
+    else
+        error "could not disconnect \"$old_connection\""
     fi
 }
 

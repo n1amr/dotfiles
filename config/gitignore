@@ -3,6 +3,7 @@
 *.class
 *.gitignored
 *.gitignored.*
+*.iml
 *.jar
 *.pyc
 *.sw[klmnop]
