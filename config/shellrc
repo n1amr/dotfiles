@@ -28,7 +28,11 @@ export DOTFILES_HOME='$DOTFILES_HOME'
 
 # Load config file
 DOTFILES_CONFIG_FILE=~/.dotfiles_config
-[ -f "$DOTFILES_CONFIG_FILE" ] && source "$DOTFILES_CONFIG_FILE" || init_config_file
+if [ -f "$DOTFILES_CONFIG_FILE" ]; then
+    source "$DOTFILES_CONFIG_FILE"
+else
+    init_config_file
+fi
 
 # Initialize shell
 HISTFILE=~/.zsh_history
@@ -44,7 +48,7 @@ if [ $SHELLNAME = zsh ]; then
     DISABLE_UNTRACKED_FILES_DIRTY="true"
 
     plugins=(command-not-found common-aliases dircycle dirhistory extract git history jump pip rsync z)
-    source $ZSH/oh-my-zsh.sh
+    source "$ZSH/oh-my-zsh.sh"
 elif [ $SHELLNAME = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
 fi
@@ -55,7 +59,7 @@ fi
 export NAME='Amr Alaa'
 export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH=~/.ssh/id_rsa
 
 API_KEYS_FILE="$DOTFILES_HOME/config/secret/api_keys"
 [ -f "$API_KEYS_FILE" ] && source "$API_KEYS_FILE"
@@ -122,12 +126,12 @@ init_powerline () {
     POWERLINE_BASH_SELECT=1
 
     if [ $SHELLNAME = zsh ]; then
-        if [ -r $POWERLINE_ROOT/bindings/zsh/powerline.zsh ]; then
-            source $POWERLINE_ROOT/bindings/zsh/powerline.zsh
+        if [ -r "$POWERLINE_ROOT/bindings/zsh/powerline.zsh" ]; then
+            source "$POWERLINE_ROOT/bindings/zsh/powerline.zsh"
         fi
     elif [ $SHELLNAME = bash ]; then
-        if [ -r $POWERLINE_ROOT/bindings/bash/powerline.sh ]; then
-            source $POWERLINE_ROOT/bindings/bash/powerline.sh
+        if [ -r "$POWERLINE_ROOT/bindings/bash/powerline.sh" ]; then
+            source "$POWERLINE_ROOT/bindings/bash/powerline.sh"
         fi
     fi
 }
@@ -143,7 +147,7 @@ reset_keybindings () {
 }
 
 terminal_resize () {
-    eval `/usr/bin/resize | head -2`
+    eval "$(/usr/bin/resize | head -2)"
 }
 
 ################################################################################
@@ -195,7 +199,7 @@ alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir
 alias rb='ruby -e'
 alias rm='rm -i'
 alias s='subl -a'
-alias shellrc="\$EDITOR $DOTFILES_HOME/config/shellrc"
+alias shellrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 alias sshot='screenshot-nicename /mnt/Storage/Pictures/Screenshots/*from*'
 alias sync='sudo "$(which syncf)"'
 alias t-display-restore='tmux setenv -g DISPLAY :0'
@@ -260,7 +264,7 @@ $'%{\e[0m%} '
 }
 
 __ps1_git_branch () {
-    git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/ (\1)/'
+    git branch 2>/dev/null | grep '\*' | sed 's/* \(.*\)/ (\1)/'
 }
 
 __ps1_pyenv_version () {
@@ -271,8 +275,7 @@ __ps1_warnings () {
     msgs=()
     [ -z "$DISPLAY" ] && msgs=(${msgs[@]} "NO_DISPLAY")
     [ "$USER" = 'root' ] && msgs=(${msgs[@]} "ROOT")
-    msg="${msgs[@]}"
-    msg="$(echo $msg | sed 's/ / | /g')"
+    msg="${msgs// / | }"
     [ -n "$msg" ] && echo " ($msg)"
 }
 
