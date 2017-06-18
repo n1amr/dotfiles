@@ -19,14 +19,11 @@ last_month_dir=$(date --date="-1 month" +'%Y/%m')
 # last_month_dir=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
 
 auto_pull_dirs=(
-    "ASU/CSE 2017 - 4th year"
-    "ASU/CSE4"
     "Google Photos/${current_month_dir}"
     "Google Photos/${last_month_dir}"
 )
 
 auto_push_dirs=(
-#    "ASU/study"
 #    "Personal/Bookmarks"
 )
 
