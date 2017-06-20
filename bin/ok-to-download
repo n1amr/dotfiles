@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/data/download-connections"
+[ -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"
+
+DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"
+
+active_connection () {
+    nmcli --fields DEVICE,NAME con show --active | grep -Po "(?<=$DEVICE  )(.*)(?= )"
+}
+
+while IFS= read -r ssid; do
+    if [ "$(active_connection)" = "$ssid" ]; then
+        exit 0
+    fi
+done < "$DOWNLOAD_CONNECTIONS_LIST_FILE"
+
+exit 1

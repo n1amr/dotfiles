@@ -1,8 +1,15 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+
 if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo 'Cannot find youtube home directory'
+    exit 1
+fi
+
+if ! ok-to-download; then
+    info "Aborted! Current connection is not allowed to download"
     exit 1
 fi
 

@@ -3,6 +3,11 @@
 source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
 
+if ! ok-to-download; then
+    info "Aborted! Current connection is not allowed to download"
+    exit 1
+fi
+
 info "Started twitter-bots cron"
 
 BOTS_ROOT="$MY_HOME/.twitter-bots"
