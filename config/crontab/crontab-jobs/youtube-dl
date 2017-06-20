@@ -2,6 +2,7 @@
 
 source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
+export PATH="$DOTFILES_HOME/bin:$PATH"
 
 if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo 'Cannot find youtube home directory'
@@ -14,8 +15,6 @@ if ! ok-to-download; then
 fi
 
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-YOUTUBE_WATCH_LATER_DOWNLOADER="$DOTFILES_HOME/bin/youtube-dl-watch-later"
-YOUTUBE_LIST_DOWNLADER="$DOTFILES_HOME/bin/youtube-dl-list"
 LOG_FILE="$YOUTUBE_HOME/.downloader/log"
 
 exec >> "$LOG_FILE" 2>&1  # redirect output and error to log file
@@ -26,5 +25,5 @@ echo -e "\n====================\n"
 date
 echo -e "====================\n\n"
 
-$YOUTUBE_WATCH_LATER_DOWNLOADER
-$YOUTUBE_LIST_DOWNLADER
+youtube-dl-watch-later
+youtube-dl-list

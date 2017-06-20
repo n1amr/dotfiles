@@ -2,6 +2,7 @@
 
 source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
+export PATH="$DOTFILES_HOME/bin:$PATH"
 
 if ! ok-to-download; then
     info "Aborted! Current connection is not allowed to download"

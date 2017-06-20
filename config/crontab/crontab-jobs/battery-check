@@ -1,4 +1,6 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
-"$DOTFILES_HOME/bin/battery-check"
+export PATH="$DOTFILES_HOME/bin:$PATH"
+
+battery-check
