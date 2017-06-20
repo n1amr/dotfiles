@@ -19,6 +19,14 @@ mapfile -t courses < "$COURSES_LIST_FILE"
 for course in "${courses[@]}"; do
     if echo "${course}" | grep -v '^\s*#' | grep -q '\S'; then
         echo "Downloading ${course} into \"$COURSERA_HOME/${course}\""
-        coursera-dl --cache-syllabus --disable-url-skipping --resume --path "$COURSERA_HOME" -sl en "${course}" -n
+        coursera-dl \
+            -n \
+            --resume \
+            --cache-syllabus \
+            --disable-url-skipping \
+            --video-resolution 320p \
+            --path "$COURSERA_HOME" \
+            -sl en \
+            "${course}"
     fi
 done
