@@ -1,9 +1,9 @@
 #!/bin/bash
 
-[ -n "$DOTFILES_LOG" ] && return || export DOTFILES_LOG=true
-
-readonly DOTFILES_LOG_FILE="${DOTFILES_LOG_FILE:-${DOTFILES_HOME}/logs/${0//*dotfiles\//}}"
-[ ! -d "$(dirname "$DOTFILES_LOG_FILE")" ] && mkdir -p "$(dirname "$DOTFILES_LOG_FILE")"
+if [ -z "$DOTFILES_LOG_FILE" ]; then
+    readonly DOTFILES_LOG_FILE="${DOTFILES_LOG_FILE:-${DOTFILES_HOME}/logs/${0//*dotfiles\//}}"
+    [ ! -d "$(dirname "$DOTFILES_LOG_FILE")" ] && mkdir -p "$(dirname "$DOTFILES_LOG_FILE")"
+fi
 
 _log() {
     echo "[$(date +'%Y-%m-%d %T.%N')] $1: $2" | tee -a "$DOTFILES_LOG_FILE" >&2
