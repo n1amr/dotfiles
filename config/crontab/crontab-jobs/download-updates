@@ -1,0 +1,22 @@
+#!/bin/bash
+
+source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+PATH="$DOTFILES_HOME/bin:$PATH"
+
+if ! ok-to-download; then
+    info "Aborted! Current connection is not allowed to download"
+    exit 1
+fi
+
+exec >> "$DOTFILES_LOG_FILE" 2>&1
+
+echo
+date
+echo "================================================================================"
+
+sudo apt-get update
+sudo apt-get upgrade -dy
+sudo apt-get dist-upgrade -dy
+
+echo

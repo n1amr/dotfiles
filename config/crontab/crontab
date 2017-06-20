@@ -3,9 +3,9 @@
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
 *        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/battery-check &
-*/15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/twitter-bots &
 */15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/ring &
+*/15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/twitter-bots &
+*/15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/youtube-dl &
 */30     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive &
 0        */2      *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/updatevpn &
-*/15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/youtube-dl &
 #===============================================================================
