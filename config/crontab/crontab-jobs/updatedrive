@@ -2,6 +2,7 @@
 
 source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
+export PATH="$DOTFILES_HOME/bin:$PATH"
 
 if ! ok-to-download; then
     info "Aborted! Current connection is not allowed to download"
@@ -9,7 +10,6 @@ if ! ok-to-download; then
 fi
 
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
-LOG_FILE="${DRIVE_PATH}/../.drive-log"
-UPDATE_SCRIPT="$DOTFILES_HOME/bin/updatedrive"
+LOG_FILE="$DRIVE_PATH/../.drive-log"
 
-"$UPDATE_SCRIPT" --no-prompt >> "${LOG_FILE}" 2>&1
+updatedrive --no-prompt >> "${LOG_FILE}" 2>&1

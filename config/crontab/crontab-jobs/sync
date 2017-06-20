@@ -2,8 +2,9 @@
 
 source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
+export PATH="$DOTFILES_HOME/bin:$PATH"
 
 info "Started sync"
 sudo "$DOTFILES_HOME/bin/syncf" "$*"
-"$DOTFILES_HOME/bin/sync-emergency"
+sync-emergency
 info "Finished sync"
