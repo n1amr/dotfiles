@@ -12,4 +12,6 @@ fi
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 LOG_FILE="$DRIVE_PATH/../.drive-log"
 
-updatedrive --no-prompt >> "${LOG_FILE}" 2>&1
+info "Starting sync..."
+updatedrive --no-prompt >> "$LOG_FILE" 2>&1 || error "failed"
+info "Finished"
