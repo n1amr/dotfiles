@@ -12,8 +12,7 @@ else
     return
 fi
 
-MY_HOME="$HOME"
-DOTFILES_HOME="$MY_HOME/.dotfiles"
+DOTFILES_HOME="$HOME/.dotfiles"
 
 init_config_file () {
     echo "Note: Creating new config file."
@@ -21,10 +20,9 @@ init_config_file () {
 """\
 #!/bin/bash
 
-export MY_HOME='$MY_HOME'
 export DOTFILES_HOME='$DOTFILES_HOME'
-export PYENV_ROOT='$MY_HOME/.pyenv'
-export RBENV_ROOT='$MY_HOME/.rbenv'
+export PYENV_ROOT='$HOME/.pyenv'
+export RBENV_ROOT='$HOME/.rbenv'
 """ >> "$DOTFILES_CONFIG_FILE"
 }
 

@@ -9,7 +9,7 @@ if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles_config
 fi
 
-YOUTUBE_DOWNLADER="$MY_HOME/.pyenv/shims/youtube-dl"
+YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
 URLS_FILE="$YOUTUBE_HOME/.downloader/list"
