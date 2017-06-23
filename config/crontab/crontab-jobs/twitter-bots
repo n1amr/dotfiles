@@ -11,8 +11,8 @@ fi
 
 info "Started twitter-bots cron"
 
-BOTS_ROOT="$MY_HOME/.twitter-bots"
-BOT_SCRIPT="$MY_HOME/.pyenv/shims/pytbot"
+BOTS_ROOT="$HOME/.twitter-bots"
+BOT_SCRIPT="$PYENV_ROOT/shims/pytbot"
 
 info "Searching for bots in '$BOTS_ROOT'"
 for bot_root in "${BOTS_ROOT}"/bot-*; do

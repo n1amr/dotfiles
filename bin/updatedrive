@@ -9,9 +9,6 @@ if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
 fi
 
-GOPATH="$MY_HOME/.gopath"
-PATH="$GOPATH/bin:$PATH"
-
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
 
 current_month_dir=$(date +'%Y/%m')

@@ -6,12 +6,12 @@ if [ -f "~/.dotfiles_config" ]; then
     . "~/.dotfiles_config"
 fi
 
-# Set MY_HOME
-MY_HOME="$HOME"
-printf "Enter your home directory [%s]: " "$MY_HOME"
+# Set DST_HOME
+DST_HOME="$HOME"
+printf "Enter your home directory [%s]: " "$DST_HOME"
 read -r response
 if [ ! -z "$response" ]; then
-    MY_HOME="$(realpath "$response")"
+    DST_HOME="$(realpath "$response")"
 fi
 
 # Set DOTFILES_HOME
@@ -22,7 +22,7 @@ if [ ! -z "$response" ]; then
     DOTFILES_HOME="$(realpath "$response")"
 fi
 
-DOTFILES_DIR="$MY_HOME/.dotfiles"
+DOTFILES_DIR="$DST_HOME/.dotfiles"
 if [ ! -d "$DOTFILES_DIR" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
         mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
@@ -73,32 +73,32 @@ config_files="
 "
 
 for cf in $config_files; do
-    safe_link ~/."$cf" "$DOTFILES_HOME/config/$cf"
+    safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/$cf"
 done
 
 for cf in bashrc zshrc; do
-    safe_link ~/."$cf" "$DOTFILES_HOME/config/shellrc"
+    safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
 for cf in netrc trc; do
-    safe_link ~/."$cf" "$DOTFILES_HOME/config/secret/$cf"
+    safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/secret/$cf"
 done
 
-safe_link ~/.dotfiles_config "$DOTFILES_CONFIG_FILE"
+safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.conf"
+safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
+safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
+safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
+safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
+safe_link "$DST_HOME/.zsh_history.bak" "$DOTFILES_DATA_DIR/history/zsh_history"
+
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
-safe_link ~/".ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
-safe_link ~/.zsh_history.bak "$DOTFILES_DATA_DIR/history/zsh_history"
-safe_link ~/.vimrc "$DOTFILES_HOME/config/vim/vimrc"
-safe_link ~/.config/ranger/rc.conf "$DOTFILES_HOME/config/ranger/rc.conf"
-safe_link ~/.config/ranger/rifle.conf "$DOTFILES_HOME/config/ranger/rifle.conf"
 
 cat >> "$DOTFILES_CONFIG_FILE" <<EOF
 #!/bin/bash
 
-export MY_HOME='$MY_HOME'
 export DOTFILES_HOME='$DOTFILES_HOME'
-export PYENV_ROOT='$MY_HOME/.pyenv'
-export RBENV_ROOT='$MY_HOME/.rbenv'
+export PYENV_ROOT='$DST_HOME/.pyenv'
+export RBENV_ROOT='$DST_HOME/.rbenv'
 EOF
 
 chmod +x "$DOTFILES_CONFIG_FILE"
