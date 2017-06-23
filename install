@@ -97,6 +97,8 @@ cat >> "$DOTFILES_CONFIG_FILE" <<EOF
 
 export MY_HOME='$MY_HOME'
 export DOTFILES_HOME='$DOTFILES_HOME'
+export PYENV_ROOT='$MY_HOME/.pyenv'
+export RBENV_ROOT='$MY_HOME/.rbenv'
 EOF
 
 chmod +x "$DOTFILES_CONFIG_FILE"
