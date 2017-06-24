@@ -8,23 +8,33 @@ if [[ "$TMUX" == "" ]]; then
 fi
 servername="$(tmux display-message -p '#S')"
 
-switch_window () {
-    window_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_WINDOW_ID=)(.*)')"
-    window_index="$(tmux_windows | grep -P $window_id | grep -Po '(?<=#:)\d+')"
-    tmux select-window -t ":$window_index"
-}
+FORMAT='#{window_active}#{pane_active} #{window_id} #{pane_id}'
 
 tmux_windows () {
-    tmux list-windows -F '#{window_active} #{window_id} #:#{window_index}'
+    tmux list-windows -F "$FORMAT"
+}
+
+tmux_panes () {
+    tmux list-panes -F "$FORMAT"
+}
+
+switch_window () {
+    window_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_WINDOW_ID=)(.*)')"
+    tmux select-window -t "$window_id"
+
+    pane_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_PANE_ID=)(.*)')"
+    tmux select-pane -t "$pane_id"
+}
+
+save_vim_pane_id () {
+    window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
+    tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
+    pane_id="$(tmux_windows | grep '^1' | grep -Po '%\d+')"
+    tmux setenv VIM_SERVER_PANE_ID "$pane_id"
 }
 
 is_server_running () {
     vim --serverlist | grep -qi "^$servername\$"
-}
-
-save_vim_window_id () {
-    window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
-    tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
 }
 
 if is_server_running; then
@@ -37,7 +47,7 @@ if is_server_running; then
         exit 1
     fi
 else
-    save_vim_window_id
+    save_vim_pane_id
     vim --servername  "$servername" "$@"
 fi
 
