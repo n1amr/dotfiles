@@ -37,18 +37,34 @@ is_server_running () {
     vim --serverlist | grep -qi "^$servername\$"
 }
 
-if is_server_running; then
-    if [[ $# -gt 0 ]]; then
-        vim --servername "$servername" --remote "$@"
-        switch_window
+if test -t 0; then
+    # stdin is a terminal.
+    if is_server_running; then
+        if [[ $# -gt 0 ]]; then
+            vim --servername "$servername" --remote "$@"
+            switch_window
+        else
+            echo "Another instance is running in current session"
+            switch_window
+            exit 1
+        fi
     else
-        echo "Another instance is running in current session"
-        switch_window
-        exit 1
+        save_vim_pane_id
+        vim --servername "$servername" "$@"
     fi
 else
-    save_vim_pane_id
-    vim --servername  "$servername" "$@"
+    # If piped write to a temp file
+    TMPDIR=${TMPDIR:-/tmp} # default to /tmp if TMPDIR isn't set
+    tmpfile="$(mktemp "$TMPDIR/vim-XXXXXXXX")"
+
+    if is_server_running; then
+        cat > "$tmpfile"
+        vim --servername "$servername" "$@" --remote "$tmpfile"
+        switch_window
+    else
+        save_vim_pane_id
+        vim --servername "$servername" "$@" -c "silent! w! $tmpfile" -
+    fi
 fi
 
 exit 0
