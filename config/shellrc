@@ -47,7 +47,20 @@ if [ $SHELLNAME = zsh ]; then
     ENABLE_CORRECTION="true"
     DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-    plugins=(command-not-found common-aliases dircycle dirhistory extract git history jump pip rsync z)
+    plugins=(
+        command-not-found
+        common-aliases
+        dircycle
+        dirhistory
+        extract
+        git
+        history
+        jump
+        pip
+        rsync
+        you-should-use
+        z
+    )
     source "$ZSH/oh-my-zsh.sh"
 elif [ $SHELLNAME = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"

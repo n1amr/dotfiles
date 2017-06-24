@@ -91,7 +91,13 @@ safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/pr
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
 safe_link "$DST_HOME/.zsh_history.bak" "$DOTFILES_DATA_DIR/history/zsh_history"
 
+# oh-my-zsh custom config
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
+cd "$DOTFILES_HOME/config/zsh-plugins"
+for plugin in *; do
+    safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/plugins/$plugin" "../../../../config/zsh-plugins/$plugin"
+done
+cd -
 
 cat >> "$DOTFILES_CONFIG_FILE" <<EOF
 #!/bin/bash
