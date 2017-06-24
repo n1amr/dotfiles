@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+DOTFILES_HOME="$(dirname "$0")"
+DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
+TMP_HOME="$DOTFILES_HOME/data/tmp_home"
+
+clean () {
+    rm -vrf "$TMP_HOME"
+}
+
+install () {
+    mkdir -pv "$TMP_HOME"
+    cd "$TMP_HOME"
+
+    echo "Installing to $TMP_HOME"
+    (
+        echo .
+        echo "$DOTFILES_HOME"
+        for i in $(seq 1 23); do
+            echo y
+        done
+    ) | "$DOTFILES_HOME/install"
+}
+
+start () {
+    HOME="$TMP_HOME" zsh
+}
+
+if [ -e "$TMP_HOME" ]; then
+    printf "Another temp home exitsts. Clean (y/[n])? "
+    read -r response
+    if [ "$response" = 'y' ]; then
+        clean
+        install
+    else
+        printf "Reinstall to $TMP_HOME (y/[n])? "
+        read -r response
+        if [ "$response" = 'y' ]; then
+            install
+        fi
+    fi
+else
+    install
+fi
+
+echo "You can try my dotfiles in this shell."
+start
