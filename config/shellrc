@@ -149,6 +149,10 @@ init_powerline () {
     fi
 }
 
+remove_color_codes () {
+    sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
+}
+
 reset_keybindings () {
     if [ $SHELLNAME = zsh ]; then
         [ "$1" = 'vi' ] && bindkey -v
@@ -233,8 +237,8 @@ if [ $SHELLNAME = zsh ]; then
     alias -g 'CP=| xsel -ib'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
-    alias -g "V=| vim -c 'silent!%sm/\e.\{-}m//g' +1 -"
-    alias -g "VS=| vim-server -c 'silent!%sm/\e.\{-}m//g' +1 -"
+    alias -g "V=| remove_color_codes | vim -"
+    alias -g "VS=| remove_color_codes | vim-server"
 fi
 
 ################################################################################
