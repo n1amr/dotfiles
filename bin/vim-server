@@ -8,14 +8,37 @@ if [[ "$TMUX" == "" ]]; then
 fi
 servername="$(tmux display-message -p '#S')"
 
-if [[ $# -gt 0 ]]; then
-    vim --servername "$servername" --remote-tab-silent "$@"
-else
-    if vim --serverlist | grep -qi "^$servername\$"; then
+switch_window () {
+    window_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_WINDOW_ID=)(.*)')"
+    window_index="$(tmux_windows | grep -P $window_id | grep -Po '(?<=#:)\d+')"
+    tmux select-window -t ":$window_index"
+}
+
+tmux_windows () {
+    tmux list-windows -F '#{window_active} #{window_id} #:#{window_index}'
+}
+
+is_server_running () {
+    vim --serverlist | grep -qi "^$servername\$"
+}
+
+save_vim_window_id () {
+    window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
+    tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
+}
+
+if is_server_running; then
+    if [[ $# -gt 0 ]]; then
+        vim --servername "$servername" --remote "$@"
+        switch_window
+    else
         echo "Another instance is running in current session"
+        switch_window
         exit 1
     fi
-    vim --servername "$servername"
+else
+    save_vim_window_id
+    vim --servername  "$servername" "$@"
 fi
 
 exit 0
