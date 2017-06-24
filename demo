@@ -6,11 +6,17 @@ DOTFILES_HOME="$(dirname "$0")"
 DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
 TMP_HOME="$DOTFILES_HOME/data/tmp_home"
 
+RESTORE_DOTFILES_CONFIG=false
+DOTFILES_CONFIG_PATH="$DOTFILES_HOME/data/dotfiles_config"
+
 clean () {
     rm -vrf "$TMP_HOME"
 }
 
 install () {
+    cp "$DOTFILES_CONFIG_PATH" "${DOTFILES_CONFIG_PATH}.bak"
+    RESTORE_DOTFILES_CONFIG=true
+
     mkdir -pv "$TMP_HOME"
     cd "$TMP_HOME"
 
@@ -45,5 +51,11 @@ else
     install
 fi
 
+set +e
+
 echo "You can try my dotfiles in this shell."
 start
+
+if [ "$RESTORE_DOTFILES_CONFIG" = 'true' ]; then
+    mv "${DOTFILES_CONFIG_PATH}.bak" "${DOTFILES_CONFIG_PATH}"
+fi
