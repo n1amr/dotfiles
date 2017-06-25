@@ -108,7 +108,7 @@ last-crop-width=1
 last-crop-menu-choice=0
 
 [org/yorba/shotwell/printing]
-content-width=5.6140350877192979
+content-width=5.6988707653701374
 titles-font='Sans Bold 12'
 content-units=1
 images-per-page=1
@@ -202,7 +202,7 @@ name='Invert Colors'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
 binding='<Primary><Alt>slash'
-command="zsh -c '. ~/.zshrc; tmux-open vim'"
+command="zsh -c '. ~/.zshrc; tmux-open vim-server'"
 name='tmux-vim'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
@@ -290,8 +290,8 @@ maximized=true
 time-display=false
 
 [org/gnome/rhythmbox/player]
-play-order='shuffle'
-volume=1.0
+play-order='random-by-age-and-rating'
+volume=0.9999847412109375
 
 [org/gnome/rhythmbox/podcast]
 download-location='file:///mnt/Storage/Sounds/Music'
@@ -333,7 +333,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
-sorting=('Year', true)
+sorting=('Title', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -375,8 +375,8 @@ notebook-show-tabs-mode='always'
 show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
-virtual-root='file:///home/n1amr/ml-assignment-2/spam-classifier'
-tree-view=false
+virtual-root='file:///tmp/mozilla_n1amr0'
+tree-view=true
 root='file:///'
 
 [org/gnome/gedit/plugins]
@@ -388,7 +388,7 @@ replace-with-entry=['رامي لكح']
 
 [org/gnome/gedit/state/window]
 size=(1315, 343)
-state=4
+state=132
 bottom-panel-size=140
 side-panel-size=200
 side-panel-active-page='GeditWindowDocumentsPanel'
@@ -692,14 +692,14 @@ migrated=true
 check-timestamp=int64 1543484195
 
 [org/gnome/nautilus/preferences]
-search-view='icon-view'
+search-view='list-view'
 default-folder-viewer='list-view'
 confirm-trash=true
 search-filter-time-type='last_modified'
 sort-directories-first=true
 
 [org/gnome/nautilus/window-state]
-sidebar-width=223
+sidebar-width=194
 geometry='681x326+0+24'
 maximized=true
 
@@ -835,11 +835,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/c6861bac-934c-4ce4-aea4-8a3af76bfae4]
+[org/gnome/nm-applet/eap/6d0bc985-ce7b-4038-870f-33afa7a66ebe]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/6d0bc985-ce7b-4038-870f-33afa7a66ebe]
+[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -851,11 +851,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
+[org/gnome/nm-applet/eap/da06e200-4d24-486b-952b-3382bc638277]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/cb310088-bb96-4503-9f32-9ccf399f364a]
+[org/gnome/nm-applet/eap/c6861bac-934c-4ce4-aea4-8a3af76bfae4]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -867,7 +867,11 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/da06e200-4d24-486b-952b-3382bc638277]
+[org/gnome/nm-applet/eap/cb310088-bb96-4503-9f32-9ccf399f364a]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/00c98dd3-b8e4-4023-942b-329b3d33137f]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -936,7 +940,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(0.70267489711934161, 0.27044753086419754)
+window-ratio=(0.69024934373255109, 0.52080353819510739)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1009,8 +1013,8 @@ active-profile=['Default', 'default']
 [org/gnome/power-manager]
 info-history-type='charge'
 info-stats-type='discharge-accuracy'
-info-last-device='/org/freedesktop/UPower/devices/battery_BAT0'
-info-page-number=2
+info-last-device='/org/freedesktop/UPower/devices/line_power_ADP0'
+info-page-number=0
 info-stats-graph-smooth=true
 
 [org/gnome/sudoku]
@@ -1451,8 +1455,8 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=int64 1495757494
-window-height=335
+launch-time=int64 1498273851
+window-height=369
 show-details=true
 window-width=453
 
@@ -1490,7 +1494,7 @@ window-is-maximized=true
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=["gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux attach \\; new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; /home/n1amr/a.sh\"'", 'gnome-terminal -e bash', "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python'", "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python '", 'gnome-terminal']
+history=["gnome-terminal -e 'zsh -f'", "gnome-terminal -e 'zsh'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux attach \\; new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; /home/n1amr/a.sh\"'", 'gnome-terminal -e bash', "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python'", "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python '", 'gnome-terminal']
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
