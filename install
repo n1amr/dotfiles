@@ -84,6 +84,7 @@ for cf in netrc trc; do
     safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/secret/$cf"
 done
 
+safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
 safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.conf"
 safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
 safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
