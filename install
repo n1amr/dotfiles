@@ -85,8 +85,7 @@ for cf in netrc trc; do
 done
 
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
-safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.conf"
-safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
+safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/config/ranger"
 safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
 safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
