@@ -281,23 +281,14 @@ maximized=false
 height=600
 
 [org/gnome/rhythmbox]
-queue-as-sidebar=true
+queue-as-sidebar=false
 position=(0, 24)
+display-page-tree-height=228
 size=(1366, 701)
 display-page-tree-visible=true
 paned-position=185
 maximized=true
 time-display=false
-
-[org/gnome/rhythmbox/player]
-play-order='random-by-age-and-rating'
-volume=0.9999847412109375
-
-[org/gnome/rhythmbox/podcast]
-download-location='file:///mnt/Storage/Sounds/Music'
-
-[org/gnome/rhythmbox/podcast/source]
-show-browser=true
 
 [org/gnome/rhythmbox/plugins/audioscrobbler/Last.fm]
 scrobbling-enabled=true
@@ -325,6 +316,17 @@ show-browser=true
 [org/gnome/rhythmbox/plugins/lyrics]
 sites=['winampcn.com', 'terra.com.br', 'darklyrics.com', 'j-lyric.net', 'jetlyrics.com']
 
+[org/gnome/rhythmbox/player]
+play-order='random-by-age-and-rating'
+volume=0.9999847412109375
+
+[org/gnome/rhythmbox/podcast]
+download-location='file:///mnt/Storage/Sounds/Music'
+
+[org/gnome/rhythmbox/podcast/source]
+paned-position=146
+show-browser=true
+
 [org/gnome/rhythmbox/library]
 layout-filename='%ta (%at) - %tN - %tt'
 layout-path='%aa/%at'
@@ -333,6 +335,7 @@ layout-path='%aa/%at'
 media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
+paned-position=146
 sorting=('Title', true)
 show-browser=true
 
@@ -376,7 +379,7 @@ show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
 virtual-root='file:///tmp/mozilla_n1amr0'
-tree-view=true
+tree-view=false
 root='file:///'
 
 [org/gnome/gedit/plugins]
@@ -503,7 +506,7 @@ buttons-have-icons=false
 monospace-font-name='Ubuntu Mono 13'
 automatic-mnemonics=true
 enable-animations=true
-gtk-theme='Numix Daily'
+gtk-theme='Arc-Dark'
 toolbar-icons-size='large'
 clock-show-date=true
 toolkit-accessibility=false
@@ -699,7 +702,7 @@ search-filter-time-type='last_modified'
 sort-directories-first=true
 
 [org/gnome/nautilus/window-state]
-sidebar-width=194
+sidebar-width=157
 geometry='681x326+0+24'
 maximized=true
 
@@ -940,7 +943,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(0.69024934373255109, 0.52080353819510739)
+window-ratio=(1.1060427702570139, 1.2005928853754939)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1440,10 +1443,10 @@ isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-
 [org/gtk/settings/file-chooser]
 sort-column='name'
 sidebar-width=300
-window-position=(1, 36)
+window-position=(0, 24)
 show-size-column=true
 show-hidden=false
-window-size=(1364, 676)
+window-size=(1364, 672)
 sort-directories-first=true
 date-format='regular'
 sort-order='ascending'
@@ -1455,10 +1458,10 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=int64 1498273851
-window-height=369
+launch-time=int64 1498585565
+window-height=334
 show-details=true
-window-width=453
+window-width=483
 
 [apps/indicator-session]
 show-real-name-on-panel=false
@@ -1485,6 +1488,7 @@ keyrings-selected=['secret-service://login', 'secret-service:///org/freedesktop/
 sidebar-visible=true
 
 [ca/desrt/dconf-editor]
+saved-view='/com/canonical/unity/launcher/favorites'
 window-is-fullscreen=false
 window-height=672
 window-width=1364
