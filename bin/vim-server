@@ -8,17 +8,13 @@ if [[ "$TMUX" == "" ]]; then
 fi
 servername="$(tmux display-message -p '#S')"
 
-FORMAT='#{window_active}#{pane_active} #{window_id} #{pane_id}'
+FORMAT='#{window_active} #{window_id} #{pane_id}'
 
 tmux_windows () {
     tmux list-windows -F "$FORMAT"
 }
 
-tmux_panes () {
-    tmux list-panes -F "$FORMAT"
-}
-
-switch_window () {
+switch_pane () {
     window_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_WINDOW_ID=)(.*)')"
     tmux select-window -t "$window_id"
 
@@ -26,9 +22,10 @@ switch_window () {
     tmux select-pane -t "$pane_id"
 }
 
-save_vim_pane_id () {
+save_vim_pane_info () {
     window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
     tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
+
     pane_id="$(tmux_windows | grep '^1' | grep -Po '%\d+')"
     tmux setenv VIM_SERVER_PANE_ID "$pane_id"
 }
@@ -42,29 +39,27 @@ if test -t 0; then
     if is_server_running; then
         if [[ $# -gt 0 ]]; then
             vim --servername "$servername" --remote "$@"
-            switch_window
+            switch_pane
         else
             echo "Another instance is running in current session"
-            switch_window
+            switch_pane
             exit 1
         fi
     else
-        save_vim_pane_id
+        save_vim_pane_info
         vim --servername "$servername" "$@"
     fi
 else
     # If piped write to a temp file
-    TMPDIR=${TMPDIR:-/tmp} # default to /tmp if TMPDIR isn't set
+    TMPDIR="${TMPDIR:-/tmp}" # default to /tmp if TMPDIR isn't set
     tmpfile="$(mktemp "$TMPDIR/vim-XXXXXXXX")"
 
     if is_server_running; then
         cat > "$tmpfile"
         vim --servername "$servername" "$@" --remote "$tmpfile"
-        switch_window
+        switch_pane
     else
-        save_vim_pane_id
+        save_vim_pane_info
         vim --servername "$servername" "$@" -c "silent! w! $tmpfile" -
     fi
 fi
-
-exit 0
