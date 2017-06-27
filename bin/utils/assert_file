@@ -1,0 +1,21 @@
+#!/bin/bash
+
+[ -n "$DOTFILES_ASSERT_FILE" ] && return || export DOTFILES_ASSERT_FILE=true
+
+source "$DOTFILES_HOME/bin/utils/log"
+
+assert_dir () {
+    dir="$1"
+    if [[ ! -d "$dir" ]]; then
+        mkdir -pv "$dir"
+    fi
+}
+
+assert_file () {
+    file="$1"
+    if [[ ! -f "$file" ]]; then
+        assert_dir "$(dirname "$file")"
+        info "Created new file "$file""
+        touch "$file"
+    fi
+}
