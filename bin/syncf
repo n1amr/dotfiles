@@ -44,8 +44,6 @@ fi
 EXCLUDES_FILE="${EXCLUDES_FILE:-$SYNCF_RC/default-excludes}"
 assert_file "$EXCLUDES_FILE"
 
-ENABLE_BACKUP="${ENABLE_BACKUP:-true}"
-
 BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_RC/default-backup-clean-files}"
 assert_file "$BACKUP_CLEAN_FILE"
 
@@ -62,8 +60,9 @@ trap 'exit 2' INT
 RSYNC_ARGS=(-av --delete --relative --exclude-from="$EXCLUDES_FILE")
 RSYNC_ARGS+=(--log-file="$log_file")
 
-if [[ "$BACKUP_DISABLE" != "true" ]]; then
-    info "Backup is disabled"
+BACKUP_DISABLE="${BACKUP_DISABLE:-false}"
+if [[ "$BACKUP_DISABLE" = "false" ]]; then
+    info "Backup is enabled"
     RSYNC_ARGS+=(-b --backup-dir="$backup_dir")
 fi
 
@@ -88,11 +87,14 @@ for bd in "$BACKUP_ROOT_DIR/backup-2"*; do
     if [ -d "$bd" ]; then
         info "Cleaning backup directory \"$bd\" ..."
         while IFS='' read -r line; do
-            find "$bd" | grep -F "$line" > /dev/null | xargs -d '\n' rm -rfv
+            path="$bd$line"
+            if [ -e "$path" ]; then
+                info "Cleaning $path"
+                rm -rfv "$bd$line"
+            fi
         done < "$BACKUP_CLEAN_FILE"
 
+        find "$bd" -type d -empty -delete
         rsync -av --progress --remove-source-files "$bd/" "$BACKUP_ROOT_DIR/backup/"
     fi
-
-    find "$bd" -type d -empty -delete
 done
