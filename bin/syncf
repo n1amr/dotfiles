@@ -1,74 +1,98 @@
 #!/bin/bash
 
-DESTINATION_DIR="/media/n1amr/backup-hdd/ubuntu"
+set -e
+
+source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/utils/assert_file"
+
+info "Started at $(date)"
+
+SYNCF_RC="$DOTFILES_HOME/data/sync.rc"
+
+profile='default'
+if [[ -n "$1" ]]; then
+    profile="$1"
+fi
+
+profile_file="$SYNCF_RC/profiles/$profile"
+assert_file "$profile_file"
+info "Selected profile: $profile"
+
+export SYNCF_RC
+source "$profile_file"
+
+required_parameters=(
+    DESTINATION_DIR
+    INCLUDES_FILE
+)
+
+for param_name in "${required_parameters[@]}"; do
+    param_value="${!param_name}"
+    info "$param_name=$param_value"
+    if [[ -z "$param_value" ]]; then
+        error "$param_name has no value in profile file."
+        exit 1
+    fi
+done
+
 if [ ! -d "$DESTINATION_DIR" ]; then
-    echo "Destination directory not found: $DESTINATION_DIR"
+    error "Destination directory not found: $DESTINATION_DIR"
     exit 1
 fi
 
-BACKUP_ROOT_DIR="$DESTINATION_DIR/backups"
+EXCLUDES_FILE="${EXCLUDES_FILE:-$SYNCF_RC/default-excludes}"
+assert_file "$EXCLUDES_FILE"
 
-source ~/.dotfiles_config
-CONFIG_DIR="$DOTFILES_HOME/data/sync.rc"
+ENABLE_BACKUP="${ENABLE_BACKUP:-true}"
 
+BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_RC/default-backup-clean-files}"
+assert_file "$BACKUP_CLEAN_FILE"
+
+BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$DESTINATION_DIR/backups}"
 timestamp="$(date +%F-%H-%M-%S)"
-
-INCLUDES_FILE="$CONFIG_DIR/includes"
-EXCLUDES_FILE="$CONFIG_DIR/excludes"
-BACKUP_CLEAN_FILE="$CONFIG_DIR/backup-clean-files"
-OUTPUT_FILE=/dev/tty
-ERRORS_LOG_FILE=/dev/tty
-CLEAN_OUTPUT_FILE=/dev/tty
-CLEAN_ERRORS_LOG_FILE=/dev/tty
-
-LOG_DIR="$BACKUP_ROOT_DIR/backup-logs"
-LOG_FILE="$LOG_DIR/log"
-
-if [ "$1" == "file" ] || [ "$2" == "file" ]; then
-    OUTPUT_FILE="$LOG_DIR/${timestamp}-output"
-    ERRORS_LOG_FILE="$LOG_DIR/${timestamp}-errors-log"
-    CLEAN_OUTPUT_FILE="$LOG_DIR/${timestamp}-clean-output"
-    CLEAN_ERRORS_LOG_FILE="$LOG_DIR/${timestamp}-clean-error-log"
-fi
-
 backup_dir="$BACKUP_ROOT_DIR/backup-${timestamp}"
+log_file="$BACKUP_ROOT_DIR/logs/backup-${timestamp}.log"
+assert_file "$log_file"
 
-if [ ! -d "$LOG_DIR" ]; then
-    mkdir "$LOG_DIR"
-fi
-
-if [ "$1" == "more" ] || [ "$2" == "more" ]; then
-    EXCLUDES_FILE="$CONFIG_DIR/excludes-more"
-fi
+info "Logging to $log_file"
 
 trap 'exit 2' INT
 
-while IFS='' read -r line || [ -n "$line" ]; do
-    if [ ! "${line:0:1}" = "#" ] && [ x"$line" != x ]; then
-        echo "Syncing \"$line\" ..." >> "$OUTPUT_FILE"
-        rsync -av --delete --relative --log-file="$LOG_FILE" --exclude-from="$EXCLUDES_FILE" -b --backup-dir="$backup_dir" "$line" "$DESTINATION_DIR" >> "$OUTPUT_FILE" 2>> "$ERRORS_LOG_FILE"
+RSYNC_ARGS=(-av --delete --relative --exclude-from="$EXCLUDES_FILE")
+RSYNC_ARGS+=(--log-file="$log_file")
+
+if [[ "$BACKUP_DISABLE" != "true" ]]; then
+    info "Backup is disabled"
+    RSYNC_ARGS+=(-b --backup-dir="$backup_dir")
+fi
+
+set +e
+while IFS='' read -r line; do
+    if echo "$line" | grep -P "^\s*#"; then
+        info "Ignored $line"
+        continue
     fi
+    info "Syncing $line ..."
+    rsync "${RSYNC_ARGS[@]}" "$line" "$DESTINATION_DIR"
 done < "$INCLUDES_FILE"
+set -e
+info "Finished syncing"
 
-echo "finished syncing" >> "$OUTPUT_FILE"
-
-################################################################################
-###############################  Clean backups  ################################
-
-echo "cleaning backups..." >> "$CLEAN_OUTPUT_FILE"
+[[ "$BACKUP_DISABLE" = "true" ]] && exit
 
 shopt -s dotglob
 
-for f in "$BACKUP_ROOT_DIR/backup-2"*; do
-    if [ -d "$f" ]; then
-        echo "Cleaning backup directory \"$f\"" >> "$CLEAN_OUTPUT_FILE"
-
-        while IFS='' read -r line || [ -n "$line" ]; do
-            find "$f" | grep -F "$line" | xargs -d '\n' rm -rfv >> "$CLEAN_OUTPUT_FILE" 2>> "$CLEAN_ERRORS_LOG_FILE"
+info "Cleaning backups..."
+for bd in "$BACKUP_ROOT_DIR/backup-2"*; do
+    if [ -d "$bd" ]; then
+        info "Cleaning backup directory \"$bd\" ..."
+        while IFS='' read -r line; do
+            find "$bd" | grep -F "$line" > /dev/null | xargs -d '\n' rm -rfv
         done < "$BACKUP_CLEAN_FILE"
 
-        rsync -a --progress --remove-source-files "$f/" "$BACKUP_ROOT_DIR/backup" >> "$CLEAN_OUTPUT_FILE" 2>> "$CLEAN_ERRORS_LOG_FILE"
+        rsync -av --progress --remove-source-files "$bd/" "$BACKUP_ROOT_DIR/backup/"
     fi
 
-    find "$f" -type d -empty -delete >> "$CLEAN_OUTPUT_FILE" 2>> "$CLEAN_ERRORS_LOG_FILE"
+    find "$bd" -type d -empty -delete
 done
