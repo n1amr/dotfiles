@@ -9,5 +9,5 @@
 *        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/bin/battery-check &
 *        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/bin/wifi-check &
 00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/download-updates &
-00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/sync file more &
+00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/sync more &
 #===============================================================================
