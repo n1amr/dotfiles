@@ -52,6 +52,7 @@ if [ $SHELLNAME = zsh ]; then
         common-aliases
         dircycle
         dirhistory
+        dirpersist
         extract
         git
         history
