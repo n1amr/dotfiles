@@ -1,2 +1,3 @@
-/thirdparty/* linguist-vendored
+/bin/thirdparty/* linguist-vendored
 /config/ipython/* linguist-vendored
+/thirdparty/* linguist-vendored

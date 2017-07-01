@@ -1,10 +1,14 @@
-[submodule "config/sublime-text-3"]
-    path = config/sublime-text-3
-    url = http://gitlab.com/n1amr/sublime-text-3-config.git
+[submodule "bin/thirdparty/vim-stream"]
+    path = bin/thirdparty/vim-stream
+    url = http://github.com/MilesCranmer/vim-stream.git
     branch = master
 [submodule "config/secret"]
     path = config/secret
     url = http://gitlab.com/n1amr/dotfiles-secret.git
+    branch = master
+[submodule "config/sublime-text-3"]
+    path = config/sublime-text-3
+    url = http://gitlab.com/n1amr/sublime-text-3-config.git
     branch = master
 [submodule "config/vim"]
     path = config/vim
