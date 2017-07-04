@@ -59,7 +59,6 @@ if [ $SHELLNAME = zsh ]; then
         jump
         pip
         rsync
-        you-should-use
         z
     )
     source "$ZSH/oh-my-zsh.sh"
