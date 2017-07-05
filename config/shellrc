@@ -345,4 +345,3 @@ source load_ssh_agent --no-add
 reset_ps1
 reset_keybindings vi
 block_caret
-swapescape enable
