@@ -120,8 +120,10 @@ print_welcome () {
 }
 
 block_caret () {
-    tput cnorm '\e[?8c'
-    tput cvvis '\e[?8c'
+    if [[ "$(tty)" == */tty* ]]; then
+        tput cnorm '\e[?8c'
+        tput cvvis '\e[?8c'
+    fi
 }
 
 init_fzf () {
