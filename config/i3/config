@@ -190,6 +190,7 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 # bindsym Control+$K_Alt+t exec --no-startup-id $I3_HOME/scripts/toggle-lang.sh
 exec_always $I3_HOME/scripts/keyboard-config.sh
 
+# Keyboard Shortcuts
 bindsym Control+$K_Alt+l exec i3lock
 bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
 bindsym Control+$K_Alt+i exec xcalib -i -a
@@ -197,3 +198,6 @@ bindsym Control+$K_Alt+i exec xcalib -i -a
 bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
 bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
 bindsym Control+$K_Alt+slash exec zsh -c '. ~/.zshrc && tmux-open vim-server'
+
+# Startup Applications
+exec zsh -c '. ~/.zshrc && tmux-open'
