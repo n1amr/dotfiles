@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 source ~/.dotfiles_config
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$( type -t pyenv > /dev/null && pyenv init - )"
