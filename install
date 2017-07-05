@@ -70,6 +70,7 @@ config_files="
     tmux.conf
     vim
     wgetrc
+    xinitrc
 "
 
 for cf in $config_files; do

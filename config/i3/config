@@ -9,6 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+set $I3_HOME ~/.config/i3
+
 # Mod1 = Alt, Mod4 = Win
 set $mod Mod4
 
@@ -176,8 +178,8 @@ bindsym XF86MonBrightnessUp   exec xbacklight -inc 20 # increase screen brightne
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec ~/.config/i3/scripts/toggle-touchpad.sh
-exec --no-startup-id ~/.config/i3/scripts/enable-nat2fing-scroll.sh
+bindsym XF86TouchpadToggle exec $I3_HOME/scripts/toggle-touchpad.sh
+exec --no-startup-id $I3_HOME/scripts/enable-nat2fing-scroll.sh
 
 # Print Screnn
 bindsym --release Print exec gnome-screenshot
@@ -185,16 +187,12 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 
 # TODO
 # KB latyout switch
-# bindsym Control+$K_Alt+t exec --no-startup-id ~/.config/i3/scripts/toggle-lang.sh
-# bindsym Shift_L+Alt_L exec tmux new-window
-exec "setxkbmap -layout us,ar"
-exec "setxkbmap -option grp:alt_shift_toggle"
-exec "setxkbmap -option caps:escape"
-exec "setxkbmap -option shift:both_capslock"
+# bindsym Control+$K_Alt+t exec --no-startup-id $I3_HOME/scripts/toggle-lang.sh
+exec_always $I3_HOME/scripts/keyboard-config.sh
 
 bindsym Control+$K_Alt+l exec i3lock
-bindsym Control+$K_Alt+k exec zsh -c 'xdotool mousemove --sync 683 384'
-bindsym Control+$K_Alt+i exec zsh -c 'xcalib -i -a'
+bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
+bindsym Control+$K_Alt+i exec xcalib -i -a
 
 bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
 bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
