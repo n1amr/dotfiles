@@ -104,6 +104,14 @@ eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
 export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/data/bin:$PATH"
 
+# Remove duplicates
+if [ $SHELLNAME = zsh ]; then
+    export -U PATH
+elif [ $SHELLNAME = bash ]; then
+    export PATH="$(echo -n "${PATH}:" | awk -v RS=':' -v ORS=":" '!a[$1]++')"
+    export PATH="${PATH%?}"
+fi
+
 ################################################################################
 #################################  Functions  ##################################
 
