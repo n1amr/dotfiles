@@ -53,6 +53,7 @@ case "$action" in
     '') action='home' ;;
     '-') action='current' ;;
     b) action='branches' ;;
+    c) action='commits' ;;
     i) action='issues' ;;
     r) action='releases' ;;
     s) action='settings' ;;
@@ -67,6 +68,14 @@ case "$action" in
     'releases') url="$url/releases" ;;
     'tags') url="$url/tags" ;;
     'repo-settings') url="$url/settings/repository" ;;
+
+    'commits')
+        if [[ -z "$git_branch" ]]; then
+            echo "Error: No branch"
+            exit 1
+        fi
+        url="$url/commits/${git_branch}"
+    ;;
 
     'current')
         if [[ -z "$git_branch" ]]; then
