@@ -49,11 +49,18 @@ url="${git_url}"
 
 git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)" || git_branch=''
 
+print_help () {
+    echo -n '''
+Usage: git (browse|go) ([|home] | [-|current] | [b|branches] | [c|commits] | [h|help] | [i|issues] | [r|releases] | [s|settings] | [t|tags] | [w|wiki] | [repo-settings])
+''' | tail +2
+}
+
 case "$action" in
     '') action='home' ;;
     '-') action='current' ;;
     b) action='branches' ;;
     c) action='commits' ;;
+    h) action='help' ;;
     i) action='issues' ;;
     r) action='releases' ;;
     s) action='settings' ;;
@@ -62,6 +69,7 @@ case "$action" in
 esac
 
 case "$action" in
+    'help') print_help; exit 0 ;;
     'home') url="$url" ;;
     'branches') url="$url/branches" ;;
     'issues') url="$url/issues" ;;
@@ -103,6 +111,7 @@ case "$action" in
 
     *)
         echo "ERROR: Unknown action $action"
+        print_help
         exit 1
     ;;
 esac
