@@ -62,6 +62,8 @@ safe_link() {
 
 config_files="
     driverc
+    emacs
+    emacs.d
     gitconfig
     gitignore
     inputrc
