@@ -47,7 +47,7 @@ assert_file "$EXCLUDES_FILE"
 BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_RC/default-backup-clean-files}"
 assert_file "$BACKUP_CLEAN_FILE"
 
-BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$DESTINATION_DIR/backups}"
+BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$DESTINATION_DIR.backups}"
 timestamp="$(date +%F-%H-%M-%S)"
 backup_dir="$BACKUP_ROOT_DIR/backup-${timestamp}"
 log_file="$BACKUP_ROOT_DIR/logs/backup-${timestamp}.log"
@@ -94,7 +94,7 @@ for bd in "$BACKUP_ROOT_DIR/backup-2"*; do
             fi
         done < "$BACKUP_CLEAN_FILE"
 
-        find "$bd" -type d -empty -delete
         rsync -av --progress --remove-source-files "$bd/" "$BACKUP_ROOT_DIR/backup/"
+        find "$bd" -type d -empty -delete
     fi
 done
