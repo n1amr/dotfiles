@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+file="${1:-.}"
+url="$(drive url "$file" | grep -Po 'https?://\S+$')"
+echo "Opening $url"
+firefox "$url"
