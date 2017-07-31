@@ -16,8 +16,8 @@ cdf () {
 }
 
 cdtree () {
-    cd "${@:-.}" || exit
-    tree -CL 1 --dirsfirst "$(realpath .)" | less -FRNX
+    cd "${@:-.}" || return
+    tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
 }
 
 findword () {
