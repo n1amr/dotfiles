@@ -1,3 +1,4 @@
 /bin/thirdparty/* linguist-vendored
 /config/ipython/* linguist-vendored
+/config/irssi/scripts/* linguist-vendored
 /thirdparty/* linguist-vendored
