@@ -1,0 +1,9 @@
+#!/bin/bash
+
+password="$(cat password)"
+if [ -f config.template ]; then
+  cat config.template | sed "s/PASSWORD/${password}/g" > config
+else
+  echo "config.template is not found"
+  exit 1
+fi
