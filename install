@@ -89,6 +89,7 @@ done
 
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
 safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/config/ranger"
+safe_link "$DST_HOME/.config/vlc" "$DOTFILES_HOME/config/vlc"
 safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
 safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link "$DST_HOME/.irssi" "$DOTFILES_HOME/config/irssi"
