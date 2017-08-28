@@ -1,4 +1,4 @@
-export=pdf
+export=odt,ods,pdf,png,txt
 
 [list]
 depth=1
