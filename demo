@@ -2,8 +2,7 @@
 
 set -e
 
-DOTFILES_HOME="$(dirname "$0")"
-DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
+DOTFILES_HOME="$(realpath "$(dirname "$0")")"
 TMP_HOME="$DOTFILES_HOME/data/tmp_home"
 
 RESTORE_DOTFILES_CONFIG=false
@@ -20,14 +19,7 @@ install () {
     mkdir -pv "$TMP_HOME"
     cd "$TMP_HOME"
 
-    echo "Installing to $TMP_HOME"
-    (
-        echo .
-        echo "$DOTFILES_HOME"
-        for i in $(seq 1 23); do
-            echo y
-        done
-    ) | "$DOTFILES_HOME/install"
+    "$DOTFILES_HOME/install" --no-interactive --user-home "$TMP_HOME" --dotfiles-path "$DOTFILES_HOME"
 }
 
 start () {

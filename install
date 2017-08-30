@@ -2,24 +2,41 @@
 
 set -e
 
+DOTFILES_HOME="$(realpath "$(dirname "$0")")"
+DST_HOME="$HOME"
+interactive=true
+
+while [ $# != 0 ]; do
+    case "$1" in
+        --user-home)      DST_HOME="$2";      shift ;;
+        --dotfiles-path)  DOTFILES_HOME="$2"; shift ;;
+        --no-interactive) interactive=false ;;
+        *)
+            echo 'Invalid Syntax'
+            exit 1
+        ;;
+    esac
+    shift
+done
+
 if [ -f "~/.dotfiles_config" ]; then
     . "~/.dotfiles_config"
 fi
 
-# Set DST_HOME
-DST_HOME="$HOME"
-printf "Enter your home directory [%s]: " "$DST_HOME"
-read -r response
-if [ ! -z "$response" ]; then
-    DST_HOME="$(realpath "$response")"
-fi
+if [ "$interactive" = 'true' ]; then
+    # Set DST_HOME
+    printf "Enter your home directory [%s]: " "$DST_HOME"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DST_HOME="$(realpath "$response")"
+    fi
 
-# Set DOTFILES_HOME
-DOTFILES_HOME="$(realpath .)"
-printf "Enter dofiles directory [%s]: " "$DOTFILES_HOME"
-read -r response
-if [ ! -z "$response" ]; then
-    DOTFILES_HOME="$(realpath "$response")"
+    # Set DOTFILES_HOME
+    printf "Enter dofiles directory [%s]: " "$DOTFILES_HOME"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DOTFILES_HOME="$(realpath "$response")"
+    fi
 fi
 
 DOTFILES_DIR="$DST_HOME/.dotfiles"
@@ -38,12 +55,16 @@ touch "$DOTFILES_DATA_DIR/history/zsh_history"
 
 DOTFILES_CONFIG_FILE="$DOTFILES_DATA_DIR/dotfiles_config"
 
-
 safe_link() {
     from="$1"
     to="$2"
-    printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
-    read -r response
+
+    if [ "$interactive" = 'true' ]; then
+        printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
+        read -r response
+    else
+        response='y'
+    fi
 
     if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
@@ -83,9 +104,13 @@ for cf in bashrc zshrc; do
     safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
-for cf in netrc trc; do
-    safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/secret/$cf"
-done
+custom_install="$DOTFILES_DATA_DIR/custom_install"
+if [ -x "$custom_install" ]; then
+    export interactive
+    export DST_HOME
+    export DOTFILES_HOME
+    "$custom_install"
+fi
 
 safe_link "$DST_HOME/.config/autostart" "$DOTFILES_HOME/config/autostart"
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
@@ -121,7 +146,13 @@ cat "$DOTFILES_CONFIG_FILE"
 echo "===== End ====="
 
 # fzf install
-"$DOTFILES_HOME/thirdparty/fzf/install"
+if [ "$interactive" = 'true' ]; then
+    "$DOTFILES_HOME/thirdparty/fzf/install"
+else
+    "$DOTFILES_HOME/thirdparty/fzf/install" --all
+fi
 
 echo "Successful!"
-exec "$SHELL"
+if [ "$interactive" = 'true' ]; then
+    exec "$SHELL"
+fi
