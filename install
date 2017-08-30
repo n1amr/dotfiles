@@ -104,9 +104,12 @@ for cf in bashrc zshrc; do
     safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
-for cf in netrc trc; do
-    safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/secret/$cf"
-done
+custom_install="$DOTFILES_HOME/data/custom_install"
+if [ -x "$custom_install" ]; then
+    export DST_HOME
+    export DOTFILES_HOME
+    "$custom_install"
+fi
 
 safe_link "$DST_HOME/.config/autostart" "$DOTFILES_HOME/config/autostart"
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"

@@ -74,7 +74,7 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH=~/.ssh/id_rsa
 
-API_KEYS_FILE="$DOTFILES_HOME/config/secret/api_keys"
+API_KEYS_FILE="$DOTFILES_HOME/data/keys/api_keys"
 [ -f "$API_KEYS_FILE" ] && source "$API_KEYS_FILE"
 
 export D='/mnt/Storage'

@@ -2,7 +2,7 @@
 
 set -e
 
-TOKEN_FILE="$DOTFILES_HOME/data/github_token"
+TOKEN_FILE="$DOTFILES_HOME/data/keys/github_token"
 
 if [[ -x "$TOKEN_FILE" ]]; then
     source "$TOKEN_FILE"
