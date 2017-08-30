@@ -13,8 +13,10 @@ clean () {
 }
 
 install () {
-    cp "$DOTFILES_CONFIG_PATH" "${DOTFILES_CONFIG_PATH}.bak"
-    RESTORE_DOTFILES_CONFIG=true
+    if [ -f "$DOTFILES_CONFIG_PATH" ]; then
+        cp "$DOTFILES_CONFIG_PATH" "${DOTFILES_CONFIG_PATH}.bak"
+        RESTORE_DOTFILES_CONFIG=true
+    fi
 
     mkdir -pv "$TMP_HOME"
     cd "$TMP_HOME"
@@ -23,7 +25,7 @@ install () {
 }
 
 start () {
-    HOME="$TMP_HOME" zsh
+    HOME="$TMP_HOME" "$SHELL"
 }
 
 if [ -e "$TMP_HOME" ]; then
