@@ -3,7 +3,7 @@
 set -e
 
 repo_name="$1"
-TOKEN_FILE="$DOTFILES_HOME/data/keys/gitlab_token"
+TOKEN_FILE="$DOTFILES_HOME/custom/keys/gitlab_token"
 
 if [[ -x "$TOKEN_FILE" ]]; then
     source "$TOKEN_FILE"

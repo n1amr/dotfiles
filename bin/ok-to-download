@@ -2,7 +2,7 @@
 
 set -e
 
-DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/data/download-connections"
+DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/custom/download-connections"
 [ -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"
 
 DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"

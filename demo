@@ -3,10 +3,10 @@
 set -e
 
 DOTFILES_HOME="$(realpath "$(dirname "$0")")"
-TMP_HOME="$DOTFILES_HOME/data/tmp_home"
+TMP_HOME="$DOTFILES_HOME/custom/tmp_home"
 
 RESTORE_DOTFILES_CONFIG=false
-DOTFILES_CONFIG_PATH="$DOTFILES_HOME/data/dotfiles_config"
+DOTFILES_CONFIG_PATH="$DOTFILES_HOME/custom/dotfiles_config"
 
 clean () {
     rm -vrf "$TMP_HOME"

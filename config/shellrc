@@ -74,7 +74,7 @@ export EMAIL='n1amr1@gmail.com'
 export DDNS='n1amr.ddns.net'
 export SSH_KEY_PATH=~/.ssh/id_rsa
 
-API_KEYS_FILE="$DOTFILES_HOME/data/keys/api_keys"
+API_KEYS_FILE="$DOTFILES_HOME/custom/keys/api_keys"
 [ -f "$API_KEYS_FILE" ] && source "$API_KEYS_FILE"
 
 export D='/mnt/Storage'
@@ -102,7 +102,7 @@ export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
 eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
 eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
 export PATH="$DOTFILES_HOME/bin:$PATH"
-export PATH="$DOTFILES_HOME/data/bin:$PATH"
+export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
 # Remove duplicates
 if [ $SHELLNAME = zsh ]; then
