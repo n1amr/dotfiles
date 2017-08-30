@@ -48,12 +48,12 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     DOTFILES_HOME="$DOTFILES_DIR"
 fi
 
-DOTFILES_DATA_DIR="$DOTFILES_HOME/data"
-mkdir -pv "$DOTFILES_DATA_DIR"
-mkdir -pv "$DOTFILES_DATA_DIR/history"
-touch "$DOTFILES_DATA_DIR/history/zsh_history"
+DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
+mkdir -pv "$DOTFILES_CUSTOM_DIR"
+mkdir -pv "$DOTFILES_CUSTOM_DIR/history"
+touch "$DOTFILES_CUSTOM_DIR/history/zsh_history"
 
-DOTFILES_CONFIG_FILE="$DOTFILES_DATA_DIR/dotfiles_config"
+DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
 
 safe_link() {
     from="$1"
@@ -104,7 +104,7 @@ for cf in bashrc zshrc; do
     safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
-custom_install="$DOTFILES_HOME/data/custom_install"
+custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
 if [ -x "$custom_install" ]; then
     export DST_HOME
     export DOTFILES_HOME
@@ -119,7 +119,7 @@ safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
 safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link "$DST_HOME/.irssi" "$DOTFILES_HOME/config/irssi"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
-safe_link "$DST_HOME/.zsh_history.bak" "$DOTFILES_DATA_DIR/history/zsh_history"
+safe_link "$DST_HOME/.zsh_history.bak" "$DOTFILES_CUSTOM_DIR/history/zsh_history"
 
 # oh-my-zsh custom config
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme

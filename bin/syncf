@@ -8,7 +8,7 @@ source "$DOTFILES_HOME/bin/utils/assert_file"
 
 info "Started at $(date)"
 
-SYNCF_RC="$DOTFILES_HOME/data/sync.rc"
+SYNCF_RC="$DOTFILES_HOME/custom/sync.rc"
 
 profile='default'
 if [[ -n "$1" ]]; then
