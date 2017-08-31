@@ -127,19 +127,21 @@ chatnets = {
 
 channels = (
   { name = "#lobby"; chatnet = "EsperNet"; autojoin = "No"; },
-  { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#python"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "##c++-friendly"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#ubuntu"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#ubuntu-offtopic"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
   { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
+  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
   { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
   { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
-  { name = "silc"; chatnet = "SILC"; autojoin = "No"; }
+  { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
+
+  { name = "##c++-friendly"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#java"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#python"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#ubuntu"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#ubuntu-offtopic"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; }
 );
 
 aliases = {
@@ -209,6 +211,7 @@ aliases = {
   7 = "WINDOW GOTO 7";
   8 = "WINDOW GOTO 8";
   9 = "WINDOW GOTO 9";
+  l = "logtail";
 };
 
 statusbar = {
@@ -410,3 +413,6 @@ settings = {
   };
 };
 logs = { };
+ignores = (
+  { level = "JOINS PARTS QUITS NICKS"; channels = ( "#python" ); }
+);
