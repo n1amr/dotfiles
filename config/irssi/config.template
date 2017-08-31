@@ -1,14 +1,5 @@
 servers = (
   {
-    address = "irc.ubuntu.com";
-    chatnet = "Ubuntu";
-    port = "6697";
-    use_ssl = "yes";
-  },
-  { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
-  { address = "irc.esper.net"; chatnet = "EsperNet"; port = "6667"; },
-  {
     address = "chat.freenode.net";
     chatnet = "Freenode";
     port = "6697";
@@ -16,13 +7,22 @@ servers = (
     ssl_verify = "yes";
     autoconnect = "yes";
   },
+  { address = "irc.snoonet.org"; chatnet = "Snoonet"; port = "6667"; },
+  { 
+    address = "irc.undernet.org";
+    chatnet = "Undernet";
+    port = "6667";
+  },
+
+  { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
+  { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
+  { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
+  { address = "irc.esper.net"; chatnet = "EsperNet"; port = "6667"; },
   {
     address = "irc.gamesurge.net";
     chatnet = "GameSurge";
     port = "6667";
   },
-  { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
-  { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
   {
     address = "irc.ircsource.net";
     chatnet = "IRCSource";
@@ -36,21 +36,40 @@ servers = (
     port = "6667";
   },
   { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },
-  { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
-  { 
-    address = "irc.undernet.org";
-    chatnet = "Undernet";
-    port = "6667";
-  }
+  {
+    address = "irc.ubuntu.com";
+    chatnet = "Ubuntu";
+    port = "6697";
+    use_ssl = "yes";
+  },
+  { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
+  { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; }
 );
 
 chatnets = {
-  Ubuntu = { 
+  Freenode = {
     type = "IRC";
+    # autosendcmd = "/msg NickServ IDENTIFY n1amr PASSWORD ;wait 2000";
     max_kicks = "1";
     max_msgs = "4";
     max_whois = "1";
+    sasl_mechanism = "PLAIN";
+    sasl_username = "n1amr";
+    sasl_password = "PASSWORD";
   };
+  Snoonet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  Undernet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+
   DALnet = {
     type = "IRC";
     max_kicks = "4";
@@ -69,23 +88,7 @@ chatnets = {
     max_msgs = "4";
     max_whois = "1";
   };
-  Freenode = {
-    type = "IRC";
-    # autosendcmd = "/msg NickServ IDENTIFY n1amr PASSWORD ;wait 2000";
-    max_kicks = "1";
-    max_msgs = "4";
-    max_whois = "1";
-    sasl_mechanism = "PLAIN";
-    sasl_username = "n1amr";
-    sasl_password = "PASSWORD";
-  };
   GameSurge = {
-    type = "IRC";
-    max_kicks = "1";
-    max_msgs = "1";
-    max_whois = "1";
-  };
-  IRCnet = { 
     type = "IRC";
     max_kicks = "1";
     max_msgs = "1";
@@ -95,6 +98,12 @@ chatnets = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
+    max_whois = "1";
+  };
+  IRCnet = { 
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
     max_whois = "1";
   };
   NetFuze = {
@@ -117,23 +126,15 @@ chatnets = {
     max_whois = "1";
   };
   SILC = { type = "SILC"; };
-  Undernet = {
+  Ubuntu = { 
     type = "IRC";
     max_kicks = "1";
-    max_msgs = "1";
+    max_msgs = "4";
     max_whois = "1";
   };
 };
 
 channels = (
-  { name = "#lobby"; chatnet = "EsperNet"; autojoin = "No"; },
-  { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
-  { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
-  { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
-  { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
-  { name = "silc"; chatnet = "SILC"; autojoin = "No"; },
-
   { name = "##c++-friendly"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
@@ -141,7 +142,15 @@ channels = (
   { name = "#python"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#ubuntu"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#ubuntu-offtopic"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; }
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
+
+  { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
+  { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
+  { name = "#irssi"; chatnet = "IRCNet"; autojoin = "No"; },
+  { name = "#lobby"; chatnet = "EsperNet"; autojoin = "No"; },
+  { name = "#netfuze"; chatnet = "NetFuze"; autojoin = "No"; },
+  { name = "#oftc"; chatnet = "OFTC"; autojoin = "No"; },
+  { name = "silc"; chatnet = "SILC"; autojoin = "No"; }
 );
 
 aliases = {
@@ -410,6 +419,12 @@ settings = {
     awl_sort = "refnum";
     logresume_channel_lines = "1000";
     logresume_query_lines = "1000";
+  };
+  "irc/dcc" = {
+    dcc_autorename = "yes";
+    dcc_autoresume = "yes";
+    dcc_file_create_mode = "644";
+    dcc_download_path = "/mnt/Storage/Downloads";
   };
 };
 logs = { };
