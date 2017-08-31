@@ -58,7 +58,7 @@ abstracts = {
   sb_uc_ops = "%Ro%K$*";
   sb_uc_halfops = "%Bho%b$*";
   sb_uc_voices = "%Gv%K$*";
-  sb_uc_normal = "%w$*%K";
+  sb_uc_normal = "%W$*%K";
   sb_uc_space = " ";
 
   line_start = "";
@@ -81,7 +81,7 @@ abstracts = {
 
   # All of below: $0 = mode, $1 = nick
   msgnick = "$0$1- %|";
-  ownmsgnick = "{msgnick %G$1%K%_|}%w";
+  ownmsgnick = "{msgnick %G$1%K%_|}%W";
   ownnick = "$*";
 
   # v3.05-hilight is now on red background and white text
@@ -89,7 +89,7 @@ abstracts = {
   # (if you liked the old fashioned hilight, comment out next lines below and enable the noted ones)
   #
 
-  pubmsgnick = "{msgnick %r$1%K%_|}%w";
+  pubmsgnick = "{msgnick %r$1%K%_|}%W";
   pubnick = "$*";
   pubmsgmenick = "%1%W{msgnick $1-|}";
   menick = "$*%n";
@@ -98,7 +98,7 @@ abstracts = {
 
   # Got rid of on version 3.05:
   #
-  #pubmsgnick = "{msgnick %r$1%K%_|}%w";
+  #pubmsgnick = "{msgnick %r$1%K%_|}%W";
   #pubnick = "$*";
   #pubmsgmenick = "%G%K{msgnick $1-%R|}%0%W";
   #menick = "$*%n";
@@ -118,8 +118,8 @@ abstracts = {
 
   #
   # msn-styled:
-  #ownprivmsg = "%:%w[$0(%1-)]";
-  ownprivmsg = "%w[$0(%1-)]";
+  #ownprivmsg = "%:%W[$0(%1-)]";
+  ownprivmsg = "%W[$0(%1-)]";
 
   ownprivmsgnick = "{msgnick $*}";
 
@@ -184,7 +184,7 @@ abstracts = {
   sbaway = "%raway!%n";
   sbservertag = "$0%K";
   sbnickmode = "";
-  sb_act_sep = "%w$*%n";
+  sb_act_sep = "%W$*%n";
   sb_act_text = "%K$*%n";
   sb_act_msg = "%2%W$*%n";
   sb_act_hilight = "%5%W $0%W$1-%n";
@@ -195,12 +195,12 @@ formats = {
     query_start = "        %g*%K | %gStarting query%W on {server $1} w/ {nick $0}";
     join = "        %g*%K | %K{channick_hilight $0} %gjoined%K {channel $2}";
     part = "        %r*%K | %K{channick $0} %rleft%K {channel $2}";
-    quit = "        %r*%K | %K{channick $0} %rquit%k %w(%KReason: {reason $2}%w)";
-    quit_once = "        %r*%K | %K{channick $0} [{chanhost $1}] %rquit%K %w(%KReason: \012{reason $2}%w)";
+    quit = "        %r*%K | %K{channick $0} %rquit%k %W(%KReason: {reason $2}%W)";
+    quit_once = "        %r*%K | %K{channick $0} [{chanhost $1}] %rquit%K %W(%KReason: \012{reason $2}%W)";
     nick_changed = "        %y*%K | %K{channick_hilight $0} %yis now known as%K {channick_hilight $1}";
 
     own_msg = "{ownmsgnick $2 {ownnick $[-10]0}}%W$1";
-    own_msg_channel = "{ownmsgnick $3 {ownnick $[-10]0}{msgchannel $1}}%w%_$2";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $[-10]0}{msgchannel $1}}%W%_$2";
     pubmsg_me = "{pubmsgmenick $2 {menick $[-10]0}}%_$1";
     pubmsg_me_channel = "{pubmsgmenick $3 {menick $[-10]0}{msgchannel $1}}$2";
     pubmsg_hilight = "{pubmsghinick $0 $3 $[-10]1}$2";
@@ -401,8 +401,8 @@ formats = {
     msg_private = "{privmsg $0 $1}%W$2";
 
     # msn-styled:
-    # own_msg_private_query = "{ownprivnick $2}%w$1%:";
-    # msg_private_query = "{privmsgnick $0}%w$2%:";
+    # own_msg_private_query = "{ownprivnick $2}%W$1%:";
+    # msg_private_query = "{privmsgnick $0}%W$2%:";
 
   };
   "fe-common/irc/dcc" = {
@@ -498,7 +498,7 @@ formats = {
     topic = "        %p*%K | %WTopic for channel {channel $0}: %_$1%_";
     no_topic = "        %p*%K | %WNo topic for channel %_$0%_";
     topic_info = "        %p*%K | %WTopic is set by {channick_hilight $0} {mode $1}";
-    chanmode_change = "        %y*%K | {nick $2} %ychanged mode%K on channel {channel $0} %w(%K{mode $1}%w)";
+    chanmode_change = "        %y*%K | {nick $2} %ychanged mode%K on channel {channel $0} %W(%K{mode $1}%W)";
     server_chanmode_change = "        %g*%K | {netsplit ServerMode}%K/{channelhilight $0}: {mode $1} by {nick $2}";
     channel_mode = "        %y*%K | %yChannel settings%K: {mode $1}";
     bantype = "        %y*%K | Ban type %ychanged%K to {channel $0}";
@@ -510,9 +510,9 @@ formats = {
     no_invitelist = "        %p*%K | %W%KInvite list is empty in channel {channel $0}";
     invitelist = "{channel $0}: invite {ban $1}";
     no_such_channel = "        %r*%K | {channel $0}: %rNo such%K channel";
-    channel_change = "        %y*%K | %ychannel settings changed%K: %w(%K{mode $1}%w)";
+    channel_change = "        %y*%K | %ychannel settings changed%K: %W(%K{mode $1}%W)";
     channel_synced = "        %p*%K | %W%KJoin to {channel $0} was synced in {hilight $1} secs";
-    usermode_change = "        %y*%K | {nick $2} %ygave privileges%K on channel {channel $0} to %w(%K{mode $0}%w)";
+    usermode_change = "        %y*%K | {nick $2} %ygave privileges%K on channel {channel $0} to %W(%K{mode $0}%W)";
     user_mode = "        %p*%K | %W%KYour user mode is {mode $0}";
     #   away = "        %g*%K | You have been %gmarked%K as being away";
     #   unaway = "        %g*%K | You are %gno longer marked%K as being away";
@@ -543,13 +543,13 @@ formats = {
     whois_not_found = "        %r*%K | There is %rno such%K nick {channick_hilight $0}";
     who = "{channelhilight $[-10]0} %|{nick $[!9]1} $[!3]2 $[!2]3 $4@$5 {comment {hilight $6}}";
     end_of_who = "        %p*%K | %W%KEnd of /WHO list";
-    own_notice = "%g>%K{ownnotice notice $0}%g< %w$1";
+    own_notice = "%g>%K{ownnotice notice $0}%g< %W$1";
     #   own_action = "{nick $[-11]0}%n $1";
     #   own_action_target = "{ownaction_target $0 $2}$1";
     own_ctcp = "{ownctcp ctcp $0}$1 $2";
-    notice_server = "%g>%K{servernotice $0}%g< %w$1";
+    notice_server = "%g>%K{servernotice $0}%g< %W$1";
     #   notice_public = "%g>%K{notice $0{pubnotice_channel%g< $1}}$2";
-    notice_private = "%g>%K{notice $0{pvtnotice_host $1}}%g< %w$2";
+    notice_private = "%g>%K{notice $0{pvtnotice_host $1}}%g< %W$2";
     #   action_private = "{pvtaction $0}$2";
     #   action_private_query = "{pvtaction_query $0}$2";
     #   action_public = " {nick $[-11]0}%n $1";
