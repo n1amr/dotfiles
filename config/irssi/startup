@@ -1,2 +1,3 @@
 script load awl
+script load logresume
 script load nickcolor
