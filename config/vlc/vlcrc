@@ -136,7 +136,7 @@
 [postproc] # Video post processing filter
 
 # Post processing quality (integer)
-#postproc-q=6
+postproc-q=1
 
 # FFmpeg post processing filter chains (string)
 #postproc-name=default
@@ -2581,7 +2581,7 @@ freetype-font=DejaVu Sans
 #freetype-outline-color=0
 
 # Outline thickness (integer)
-#freetype-outline-thickness=4
+freetype-outline-thickness=6
 
 # Shadow opacity (integer)
 #freetype-shadow-opacity=128
@@ -2806,7 +2806,7 @@ freetype-font=DejaVu Sans
 #alsa-audio-channels=6
 
 # Software gain (float)
-#alsa-gain=1.000000
+alsa-gain=2.197000
 
 [amem] # Audio memory output
 
@@ -3473,7 +3473,7 @@ sout-x264-tune=film
 #audio-time-stretch=1
 
 # Audio output module (string)
-#aout=
+aout=any
 
 # Audio filters (string)
 #audio-filter=
@@ -3611,7 +3611,7 @@ sout-x264-tune=film
 #deinterlace-mode=blend
 
 # Video output module (string)
-#vout=
+vout=xcb_x11
 
 # Video filter module (string)
 #video-filter=
@@ -3884,7 +3884,7 @@ sub-language=en
 #packetizer=
 
 # VoD server module (string)
-#vod-server=
+vod-server=any
 
 # Use a plugins cache (boolean)
 #plugins-cache=1
