@@ -1,18 +1,8 @@
-.*\.(driveignored|class|pyc)$
+.*\.(driveignored|class|pyc|bak)$
+.*\.bak\.\d+$
 .*_exports$
-ASU/CSE 2017 - 4th year/First term$
-ASU/CSE 2017 - 4th year/Second Term/Bigdata$
-ASU/CSE 2017 - 4th year/Second Term/EMC exam syllabus$
-ASU/CSE 2017 - 4th year/Second Term/table.jpg
-ASU/CSE 2017 - 4th year/Second Term/اخر جدول دراسى بعوووون الله .jpg$
-ASU/CSE2016-4th year/First term $
-ASU/CSE4/Second Term/Machine Learning/Slides/pdf$
-ASU/study/first-term/security/project/resources/Addison.Wesley.Donald.E.Knuth.The.Art.of.Computer.Programming.Volume.2.pdf$
-ASU/study/first-term/security/project/resources/The_Art_of_Computer_Programming - Vol 1.pdf$
-ASU/study/first-term/security/project/rsa-crypt/build$
-ASU/study/first-term/security/project/rsa-crypt/src/test/lib/googletest-master$
-ASU/study/second-term/image-processing/project/mcq-checker/data/dataset$
+Other/CVs/Shaza_Ismail_Mar_17.pdf
 __pycache__$
 cmake-build-debug$
 desktop\.ini$
-~.*\.(ppt|pptx|doc|docx|xls|xlsx)$
+~[^/]*\.(ppt|pptx|doc|docx|xls|xlsx)$
