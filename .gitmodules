@@ -6,10 +6,6 @@
     path = config/vim
     url = http://gitlab.com/n1amr/vim-config
     branch = master
-[submodule "config/zsh-plugins/you-should-use"]
-    path = config/zsh-plugins/you-should-use
-    url = http://github.com/MichaelAquilina/zsh-you-should-use
-    branch = master
 [submodule "notes"]
     path = notes
     url = http://gitlab.com/n1amr/notes-and-instructions.git
@@ -25,4 +21,8 @@
 [submodule "thirdparty/vim-stream"]
     path = thirdparty/vim-stream
     url = http://github.com/MilesCranmer/vim-stream.git
+    branch = master
+[submodule "thirdparty/zsh-plugins/you-should-use"]
+    path = thirdparty/zsh-plugins/you-should-use
+    url = http://github.com/MichaelAquilina/zsh-you-should-use
     branch = master
