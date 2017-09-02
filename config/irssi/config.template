@@ -13,6 +13,13 @@ servers = (
     chatnet = "Undernet";
     port = "6667";
   },
+  {
+    address = "irc.oftc.net";
+    chatnet = "OFTC";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+  },
 
   { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
@@ -29,7 +36,6 @@ servers = (
     port = "6667";
   },
   { address = "irc.netfuze.net"; chatnet = "NetFuze"; port = "6667"; },
-  { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
   { 
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
@@ -69,6 +75,7 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
+  OFTC = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
 
   DALnet = {
     type = "IRC";
@@ -112,7 +119,6 @@ chatnets = {
     max_msgs = "1";
     max_whois = "1";
   };
-  OFTC = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
   QuakeNet = {
     type = "IRC";
     max_kicks = "1";
@@ -143,6 +149,7 @@ channels = (
   { name = "#ubuntu"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#ubuntu-offtopic"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#tor"; chatnet = "OFTC"; autojoin = "No"; },
 
   { name = "#gamesurge"; chatnet = "GameSurge"; autojoin = "No"; },
   { name = "#ircsource"; chatnet = "IRCSource"; autojoin = "No"; },
