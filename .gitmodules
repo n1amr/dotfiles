@@ -1,7 +1,3 @@
-[submodule "bin/thirdparty/vim-stream"]
-    path = bin/thirdparty/vim-stream
-    url = http://github.com/MilesCranmer/vim-stream.git
-    branch = master
 [submodule "config/sublime-text-3"]
     path = config/sublime-text-3
     url = http://gitlab.com/n1amr/sublime-text-3-config.git
@@ -25,4 +21,8 @@
 [submodule "thirdparty/oh-my-zsh"]
     path = thirdparty/oh-my-zsh
     url = http://github.com/robbyrussell/oh-my-zsh.git
+    branch = master
+[submodule "thirdparty/vim-stream"]
+    path = thirdparty/vim-stream
+    url = http://github.com/MilesCranmer/vim-stream.git
     branch = master
