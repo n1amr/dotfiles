@@ -347,6 +347,8 @@ fi
 
 stty stop undef # to unmap ctrl-s
 
+eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
+
 EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 [ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
