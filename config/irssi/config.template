@@ -438,7 +438,12 @@ settings = {
     dcc_download_path = "/mnt/Storage/Downloads";
   };
 };
+
 logs = { };
+
 ignores = (
-  { level = "JOINS PARTS QUITS NICKS"; channels = ( "#python" ); }
+  {
+    level = "JOINS PARTS QUITS NICKS";
+    channels = ( "#irssi", "##java", "#python", "#ubuntu", "#vim" );
+  }
 );
