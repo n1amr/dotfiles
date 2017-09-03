@@ -354,6 +354,12 @@ EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
 
 source load_ssh_agent --no-add
 
+if [ $SHELLNAME = zsh ]; then
+    source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
+elif [ $SHELLNAME = bash ]; then
+    source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.bash"
+fi
+
 # terminal_resize
 reset_ps1
 reset_keybindings vi

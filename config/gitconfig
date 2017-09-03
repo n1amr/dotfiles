@@ -60,3 +60,15 @@
 
 [url "git@gitlab.com:"]
     insteadOf = "gitlab:"
+
+[gitflow "branch"]
+    master = master
+    develop = develop
+
+[gitflow "prefix"]
+    bugfix = bugfix/
+    feature = feature/
+    hotfix = hotfix/
+    release = release/
+    support = support/
+    versiontag = ""
