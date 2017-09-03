@@ -48,6 +48,7 @@
 
 [commit]
     gpgsign = false
+    verbose = true
 
 [push]
     default = matching
