@@ -437,6 +437,7 @@ settings = {
     dcc_file_create_mode = "644";
     dcc_download_path = "/mnt/Storage/Downloads";
   };
+  "irc/core" = { alternate_nick = "n1amr1"; };
 };
 
 logs = { };
