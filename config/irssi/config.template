@@ -167,6 +167,9 @@ aliases = {
   B = "BAN";
   BACK = "AWAY";
   BANS = "BAN";
+  BEEP_OFF = "SET -clear beep_msg_level";
+  BEEP_PRIVATE = "SET beep_msg_level MSGS DCC DCCMSGS HILIGHT NOTICES";
+  BEEP_PUBLIC = "SET beep_msg_level MSGS DCC DCCMSGS HILIGHT NOTICES PUBLIC";
   BYE = "QUIT";
   C = "CLEAR";
   CALC = "EXEC - if command -v bc >/dev/null 2>&1\\; then printf '%s=' '$*'\\; echo '$*' | bc -l\\; else echo bc was not found\\; fi";
