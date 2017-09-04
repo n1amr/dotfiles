@@ -451,3 +451,4 @@ ignores = (
     channels = ( "#irssi", "##java", "#python", "#ubuntu", "#vim" );
   }
 );
+keyboard = ( { key = "^L"; id = "command"; data = "CLEAR"; } );
