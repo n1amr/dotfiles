@@ -65,6 +65,20 @@ print_title_comment() {
     fi
 }
 
+psgkill () {
+    serach_result="$(psgrep "$@")"
+    echo "$serach_result" | less -SFRX
+    echo -ne "\nAre you sure? [y/n] "
+    read -r response
+    if [[ "$response" = 'y' ]]; then
+        kill -9 $(echo "$serach_result" | tail +2 | awk '{print $2}' | tr '\n' ' ');
+    fi
+}
+
+psgrep () {
+    ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
+}
+
 sum_videos_duration () {
     # shellcheck disable=SC2068
     print_videos_duration $@ | tail -1 | awk '{print $2}'
