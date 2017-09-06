@@ -3611,7 +3611,7 @@ aout=any
 #deinterlace-mode=blend
 
 # Video output module (string)
-vout=xcb_x11
+vout=xcb_glx
 
 # Video filter module (string)
 #video-filter=
