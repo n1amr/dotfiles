@@ -9,6 +9,7 @@
 *.sw[klmnop]
 .fuse_hidden*
 .idea/
+.ipynb_checkpoints
 /build/
 /cmake-build-debug/
 /out/
