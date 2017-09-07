@@ -112,7 +112,6 @@ if [ -x "$custom_install" ]; then
     "$custom_install"
 fi
 
-safe_link "$DST_HOME/.config/autostart" "$DOTFILES_HOME/config/autostart"
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
 safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/config/ranger"
 safe_link "$DST_HOME/.config/vlc" "$DOTFILES_HOME/config/vlc"
