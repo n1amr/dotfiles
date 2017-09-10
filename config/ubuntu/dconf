@@ -11,7 +11,7 @@ show-time=true
 
 [com/canonical/indicator/datetime]
 show-day=true
-timezone-name='Africa/Cairo Cairo'
+timezone-name='Asia/Dubai Dubai'
 show-seconds=true
 show-date=true
 time-format='12-hour'
@@ -318,7 +318,7 @@ sites=['winampcn.com', 'terra.com.br', 'darklyrics.com', 'j-lyric.net', 'jetlyri
 
 [org/gnome/rhythmbox/player]
 play-order='random-by-age-and-rating'
-volume=0.9999847412109375
+volume=1.0
 
 [org/gnome/rhythmbox/podcast]
 download-location='file:///mnt/Storage/Sounds/Music'
@@ -336,7 +336,7 @@ media-type='audio/mpeg'
 
 [org/gnome/rhythmbox/library/source]
 paned-position=146
-sorting=('Title', true)
+sorting=('Location', true)
 show-browser=true
 
 [org/gnome/rhythmbox/sources]
@@ -378,8 +378,8 @@ notebook-show-tabs-mode='always'
 show-tabs-mode='auto'
 
 [org/gnome/gedit/plugins/filebrowser]
-virtual-root='file:///tmp/mozilla_n1amr0'
-tree-view=false
+virtual-root='file:///mnt/Storage/Shared/youtube'
+tree-view=true
 root='file:///'
 
 [org/gnome/gedit/plugins]
@@ -506,7 +506,7 @@ buttons-have-icons=false
 monospace-font-name='Ubuntu Mono 13'
 automatic-mnemonics=true
 enable-animations=true
-gtk-theme='Arc-Dark'
+gtk-theme='Numix'
 toolbar-icons-size='large'
 clock-show-date=true
 toolkit-accessibility=false
@@ -559,7 +559,7 @@ idle-delay=uint32 0
 disable-lock-screen=false
 
 [org/gnome/desktop/privacy]
-remember-recent-files=false
+remember-recent-files=true
 
 [org/gnome/desktop/wm/preferences]
 theme='Adwaita'
@@ -674,7 +674,7 @@ list-mode='as-folder'
 show-path=false
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.tar'
+default-extension='.zip'
 volume-size=104857
 encrypt-header=true
 
@@ -778,6 +778,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/e2818acc-253d-49a7-9715-a3d8cbef9b0e]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/1c2123b4-3906-44e7-8b2a-fc7112965be1]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -786,7 +790,15 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/db352abf-d0d2-45a0-afc1-b9cc5608223b]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/e5c9f862-be40-47c8-b6dd-598634c5b633]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/e331dde8-c1de-4222-be71-339101d27feb]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -810,6 +822,14 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/33e49806-3db7-4a4d-823b-12894076952b]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/2e6608e1-1edf-426b-9ab7-6d133aba8a19]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/71a92526-c166-4228-a81e-c0f54e9e52db]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -830,6 +850,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
+[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
 [org/gnome/nm-applet/eap/5ec8f238-0da3-4057-8f21-0dc6bc5cfe27]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
@@ -839,10 +863,6 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/6d0bc985-ce7b-4038-870f-33afa7a66ebe]
-ignore-phase2-ca-cert=false
-ignore-ca-cert=false
-
-[org/gnome/nm-applet/eap/705abde1-828b-45d2-bd4b-90b19085dbe6]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -870,11 +890,15 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
-[org/gnome/nm-applet/eap/cb310088-bb96-4503-9f32-9ccf399f364a]
+[org/gnome/nm-applet/eap/ac6c2a25-f3ac-4b39-9815-8a5971b5d645]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
 [org/gnome/nm-applet/eap/00c98dd3-b8e4-4023-942b-329b3d33137f]
+ignore-phase2-ca-cert=false
+ignore-ca-cert=false
+
+[org/gnome/nm-applet/eap/cb310088-bb96-4503-9f32-9ccf399f364a]
 ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 
@@ -943,7 +967,7 @@ priority=0
 document-directory=@ms 'file:///mnt/Storage/Lab/Resources/Notes'
 
 [org/gnome/evince/default]
-window-ratio=(1.1060427702570139, 1.2005928853754939)
+window-ratio=(2.8855700373898898, 1.1899709721774261)
 continuous=true
 fullscreen=false
 show-sidebar=false
@@ -1310,12 +1334,12 @@ removedev=true
 unapplied-dev=false
 forcepoweroff=false
 
-[org/virt-manager/virt-manager/vms/e2a31eff993643d4ac3cb456e77112c4]
-vm-window-size=(1317, 744)
-scaling=2
-
 [org/virt-manager/virt-manager/vms/3f136768b62a4f16960cf60caa81defd]
 vm-window-size=(1315, 826)
+scaling=2
+
+[org/virt-manager/virt-manager/vms/e2a31eff993643d4ac3cb456e77112c4]
+vm-window-size=(1317, 744)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/edc4728110dd4987a4f2ebb30f92f8a6]
@@ -1326,15 +1350,15 @@ scaling=2
 vm-window-size=(1315, 826)
 scaling=2
 
+[org/virt-manager/virt-manager/vms/83137b24e42446908269c74f8f7bc3d9]
+vm-window-size=(1317, 744)
+
 [org/virt-manager/virt-manager/vms/41b3337fe9994c9e8090b0bc2adf8626]
 vm-window-size=(1366, 701)
 scaling=2
 
 [org/virt-manager/virt-manager/vms/977ff189696f4ef789f1757da55bee7d]
 vm-window-size=(847, 603)
-
-[org/virt-manager/virt-manager/vms/83137b24e42446908269c74f8f7bc3d9]
-vm-window-size=(1317, 744)
 
 [org/virt-manager/virt-manager/vms/e2dc9eee91154c3ab75f6a14a7f218e0]
 vm-window-size=(1317, 672)
@@ -1355,15 +1379,18 @@ vm-window-size=(847, 638)
 [org/virt-manager/virt-manager/vms/63400215d71a4b2ea7d900f501c1e638]
 vm-window-size=(847, 603)
 
-[org/virt-manager/virt-manager/vms/9f059883f8aa4d4dbe03411c34407d96]
+[org/virt-manager/virt-manager/vms/52278b4ae8e344528dcbed272ec701c5]
 vm-window-size=(1366, 701)
 
-[org/virt-manager/virt-manager/vms/8a936bba9f0f47b68b13a679723f6314]
-vm-window-size=(1317, 672)
+[org/virt-manager/virt-manager/vms/9f059883f8aa4d4dbe03411c34407d96]
+vm-window-size=(1366, 701)
 
 [org/virt-manager/virt-manager/vms/d679d4549d2540d4acc8c028053b0b79]
 vm-window-size=(1317, 744)
 scaling=2
+
+[org/virt-manager/virt-manager/vms/8a936bba9f0f47b68b13a679723f6314]
+vm-window-size=(1317, 672)
 
 [org/virt-manager/virt-manager/vms/4129244ea13947cd810a81337f854deb]
 vm-window-size=(1317, 744)
@@ -1438,15 +1465,15 @@ autoconnect=['qemu:///system']
 uris=['qemu:///system']
 
 [org/virt-manager/virt-manager/urls]
-isos=['/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-dual.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/debian-live-8.5.0-amd64-xfce-desktop.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/CentOS-7-x86_64-Everything-1511.iso', '/mnt/Storage/Programs/System/Operating Systems/Windows/Windows 10/MICROSOFT.WINDOWS.10.ENTERPRISE.RTM.10240.X64.VOL.ENGLISH.DVD.ISO', '/mnt/Storage/Programs/System/Operating Systems/Linux/Fedora-Live-Workstation-x86_64-23-10.iso', '/mnt/Storage/Programs/System/Operating Systems/Other/Remix_OS_for_PC_64_B2015123002.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/kali-linux-2016.1-amd64.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/gparted-live-0.26.0-2-amd64.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/manjaro-xfce-15.12-x86_64.iso', '/mnt/Storage/Programs/System/Operating Systems/Remix_OS_for_PC_64_B2015123002.iso']
+isos=['/mnt/Storage/Programs/Operating Systems/Windows/Windows 7/en_windows_7_professional_with_sp1_x64_dvd_u_676939.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/parabola-2016.06.01-dual.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/debian-live-8.5.0-amd64-xfce-desktop.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/CentOS-7-x86_64-Everything-1511.iso', '/mnt/Storage/Programs/System/Operating Systems/Windows/Windows 10/MICROSOFT.WINDOWS.10.ENTERPRISE.RTM.10240.X64.VOL.ENGLISH.DVD.ISO', '/mnt/Storage/Programs/System/Operating Systems/Linux/Fedora-Live-Workstation-x86_64-23-10.iso', '/mnt/Storage/Programs/System/Operating Systems/Other/Remix_OS_for_PC_64_B2015123002.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/kali-linux-2016.1-amd64.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/gparted-live-0.26.0-2-amd64.iso', '/mnt/Storage/Programs/System/Operating Systems/Linux/manjaro-xfce-15.12-x86_64.iso']
 
 [org/gtk/settings/file-chooser]
 sort-column='name'
-sidebar-width=300
-window-position=(0, 24)
+sidebar-width=379
+window-position=(1, 36)
 show-size-column=true
 show-hidden=false
-window-size=(1364, 672)
+window-size=(1364, 676)
 sort-directories-first=true
 date-format='regular'
 sort-order='ascending'
@@ -1458,10 +1485,10 @@ custom-colors=[(0.13, 0.0065000000000000058, 0.0065000000000000058, 1.0), (0.350
 
 [apps/update-manager]
 first-run=false
-launch-time=int64 1498585565
-window-height=334
+launch-time=int64 1504868138
+window-height=355
 show-details=true
-window-width=483
+window-width=453
 
 [apps/indicator-session]
 show-real-name-on-panel=false
@@ -1471,8 +1498,8 @@ width=1317
 height=744
 
 [apps/seahorse/windows/key-manager]
-width=1317
-height=672
+width=1366
+height=701
 
 [apps/seahorse]
 server-auto-retrieve=true
@@ -1484,21 +1511,21 @@ server-publish-to='hkp://pgp.mit.edu'
 [apps/seahorse/listing]
 sidebar-width=215
 item-filter=''
-keyrings-selected=['secret-service://login', 'secret-service:///org/freedesktop/secrets/collection/a', 'secret-service:///org/freedesktop/secrets/collection/login']
+keyrings-selected=['secret-service://login', 'secret-service:///org/freedesktop/secrets/collection/a', 'gnupg://']
 sidebar-visible=true
 
 [ca/desrt/dconf-editor]
-saved-view='/com/canonical/unity/launcher/favorites'
+saved-view='/org/gnome/settings-daemon/plugins/media-keys/'
 window-is-fullscreen=false
-window-height=672
-window-width=1364
-window-is-maximized=true
+window-height=653
+window-width=1366
+window-is-maximized=false
 
 [desktop/gnome/crypto/pgp]
 keyservers=['hkp://keyserver.ubuntu.com:11371', 'hkp://pool.sks-keyservers.net', 'ldap://keyserver.pgp.com', 'hkp://pgp.mit.edu']
 
 [desktop/unity/runner]
-history=["gnome-terminal -e 'zsh -f'", "gnome-terminal -e 'zsh'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux attach \\; new-window vim\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; /home/n1amr/a.sh\"'", 'gnome-terminal -e bash', "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python'", "pycharm '/mnt/Storage/Lab/C++/competitive-programming/python '", 'gnome-terminal']
+history=['unity', 'unity --restart', 'unity --reload', 'unite --restart', 'unite --reload', 'gnome-terminal -e sh', "gnome-terminal -e 'zsh -f'", "gnome-terminal -e 'zsh'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux\"'", "gnome-terminal -e 'zsh -c \". /home/n1amr/.zshrc; tmux new-window vim\"'"]
 
 [desktop/ibus/general]
 preload-engines=['xkb:us::eng']
