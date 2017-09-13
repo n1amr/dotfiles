@@ -2,6 +2,7 @@
 .*\.bak\.\d+$
 .*_exports$
 Other/CVs/Shaza_Ismail_Mar_17.pdf
+Other/Interview Questions/Common-HR-questions-in-Valeo.docx
 __pycache__$
 cmake-build-debug$
 desktop\.ini$
