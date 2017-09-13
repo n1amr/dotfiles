@@ -26,6 +26,10 @@
     path = thirdparty/oh-my-zsh
     url = http://github.com/robbyrussell/oh-my-zsh.git
     branch = master
+[submodule "thirdparty/tmux-plugins/tmux-yank"]
+    path = thirdparty/tmux-plugins/tmux-yank
+    url = http://github.com/tmux-plugins/tmux-yank
+    branch = master
 [submodule "thirdparty/vim-stream"]
     path = thirdparty/vim-stream
     url = http://github.com/MilesCranmer/vim-stream.git
