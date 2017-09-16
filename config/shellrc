@@ -160,6 +160,11 @@ init_powerline () {
     fi
 }
 
+ranger () {
+    command ranger --choosedir=$HOME/.rangerdir "$@"
+    cd "$(cat $HOME/.rangerdir)"
+}
+
 remove_color_codes () {
     sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
 }
@@ -224,7 +229,6 @@ alias pss='ps -e lx'
 alias py='python -c'
 alias qcommit='git add -A && git commit -m "$(date)"'
 alias r='ranger'
-alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias rb='ruby -e'
 alias rm='rm -i'
 alias s='subl -a'
