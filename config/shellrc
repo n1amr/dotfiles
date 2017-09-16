@@ -115,16 +115,11 @@ fi
 ################################################################################
 #################################  Functions  ##################################
 
-print_welcome () {
-    [ "$COLUMNS" -gt "98" ] && echo -e \
-"""\
-\e[1;31m         _                               _   \e[1;34m                  _                                _  \e[m\n\
-\e[1;31m  _ __  / |  __ _  _ __ ___   _ __  _   | |  \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___ | | \e[m\n\
-\e[1;31m | '_  \| | / _\` || '_ \` _  \| '__|(_) / __) \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _  \ / _ \| | \e[m\n\
-\e[1;31m | | | || || (_| || | | | | || |    _  \__ \ \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/|_| \e[m\n\
-\e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m\n\
-\e[1;31m                                        |_|  \e[1;34m                                                      \e[m\
-"""
+bak () {
+    while [ $# != 0 ]; do
+        cp -ir "$1" "$1.bak.$(date +%s)"
+        shift
+    done
 }
 
 block_caret () {
@@ -132,6 +127,23 @@ block_caret () {
         tput cnorm '\e[?8c'
         tput cvvis '\e[?8c'
     fi
+}
+
+cdf () {
+    diff -u "$1" "$2" | colordiff | less -FRX
+}
+
+cdtree () {
+    cd "${@:-.}" || return
+    tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
+}
+
+findword () {
+    grep -P "$1" /usr/share/dict/words
+}
+
+hcd () {
+    history | grep -P "\d+\s+cd $*"
 }
 
 init_fzf () {
@@ -160,6 +172,73 @@ init_powerline () {
     fi
 }
 
+json () {
+    if [ -t 0 ]; then # argument
+         python -m json.tool <<< "$*" | pygmentize -l json;
+    else # pipe
+         python -m json.tool | pygmentize -l json;
+    fi;
+}
+
+keybindings () {
+    less "$DOTFILES_HOME/config/keybindings.$SHELLNAME"
+}
+
+linerange () {
+    head -"$2" | tail -n +"$1"
+}
+
+print_pdf_counts () {
+    DELIM=';.;.;'
+    # shellcheck disable=SC2016,SC2048,SC2086
+    [ $# -ne 0 ] && exiftool -n -q -p '${PageCount}'"$DELIM"'${PageCount;our $sum; $_=($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
+    | awk -F "$DELIM" '{sum=$2;$2=":"; print $0} END{print "===============\nTotal: ", sum}'
+}
+
+print_title_comment () {
+    LENGTH=80
+    if [ ${#1} -ge $LENGTH ]; then
+        echo "### ${1} ###"
+    elif [ ${#1} -eq 0 ]; then
+        printf "%*s\n" $LENGTH "#" | tr ' ' '#'
+    else
+        printf "%*s%*s\n" $(( (${#1} + 4 + LENGTH) / 2)) "__${1// /$}__" $(( LENGTH - (${#1} + 4 + LENGTH) / 2)) "#" | tr ' _$' '#  '
+    fi
+}
+
+print_welcome () {
+    [ "$COLUMNS" -gt "98" ] && echo -e \
+"""\
+\e[1;31m         _                               _   \e[1;34m                  _                                _  \e[m\n\
+\e[1;31m  _ __  / |  __ _  _ __ ___   _ __  _   | |  \e[1;34m __      __  ___ | |  ___   ___   _ __ ___    ___ | | \e[m\n\
+\e[1;31m | '_  \| | / _\` || '_ \` _  \| '__|(_) / __) \e[1;34m \ \ /\ / / / _ \| | / __| / _ \ | '_ \` _  \ / _ \| | \e[m\n\
+\e[1;31m | | | || || (_| || | | | | || |    _  \__ \ \e[1;34m  \ V  V / |  __/| || (__ | (_) || | | | | ||  __/|_| \e[m\n\
+\e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m\n\
+\e[1;31m                                        |_|  \e[1;34m                                                      \e[m\
+"""
+}
+
+print_videos_duration () {
+    DELIM=';.;.;'
+    # shellcheck disable=SC2016,SC2048,SC2086
+    [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
+    | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
+}
+
+psgkill () {
+    serach_result="$(psgrep "$@")"
+    echo "$serach_result" | less -SFRX
+    echo -ne "\nAre you sure? [y/n] "
+    read -r response
+    if [[ "$response" = 'y' ]]; then
+        kill -9 $(echo "$serach_result" | tail +2 | awk '{print $2}' | tr '\n' ' ');
+    fi
+}
+
+psgrep () {
+    ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
+}
+
 ranger () {
     command ranger --choosedir=$HOME/.rangerdir "$@"
     cd "$(cat $HOME/.rangerdir)"
@@ -179,8 +258,18 @@ reset_keybindings () {
     fi
 }
 
+sum_videos_duration () {
+    # shellcheck disable=SC2068
+    print_videos_duration $@ | tail -1 | awk '{print $2}'
+}
+
 terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
+}
+
+up () {
+    # shellcheck disable=SC2051
+    cd "$(printf '../%.0s' {1.."$1"})" || return
 }
 
 ################################################################################
@@ -352,9 +441,6 @@ fi
 stty stop undef # to unmap ctrl-s
 
 eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
-
-EXTRA_FUNCTIONS="$DOTFILES_HOME/bin/extra-functions"
-[ -f "$EXTRA_FUNCTIONS" ] && source "$EXTRA_FUNCTIONS"
 
 source load_ssh_agent --no-add
 
