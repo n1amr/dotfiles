@@ -43,7 +43,6 @@ bind '"\e.": insert-last-argument'
 bind '"\C-x\C-x" "\C-e\C-ukeybindings\n\C-y"'
 
 bind '"\e[15~" "\C-e\C-u\C-p\C-j\C-y"'
-bind '"\el" "\C-e\C-ul\n\C-y"'
 bind '"\er" "\C-e\C-ur\n\C-y"'
 bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 

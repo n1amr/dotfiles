@@ -48,7 +48,6 @@ bindkey -s "^X^K" "^E^U"
 bindkey -s "^X^X" "^Qkeybindings^M"
 
 bindkey -s "^[[15~" "^Q^P^J"
-bindkey -s "^[l" "^Ql^M"
 bindkey -s "^[r" "^Qr^M"
 bindkey -s "^[u" "^Qcd ..^M"
 
