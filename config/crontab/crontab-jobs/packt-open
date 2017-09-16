@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export DISPLAY=:0
+/usr/bin/firefox 'https://www.packtpub.com/packt/offers/free-learning'
