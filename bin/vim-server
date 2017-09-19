@@ -6,7 +6,7 @@ if [[ "$TMUX" == "" ]]; then
     echo "Not in tmux"
     exit 1
 fi
-servername="$(tmux display-message -p '#S')"
+servername="$(echo "tmux-$(tmux display-message -p '#S')" | tr 'a-z ' 'A-Z_')"
 
 FORMAT='#{window_active} #{window_id} #{pane_id}'
 
