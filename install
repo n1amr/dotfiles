@@ -89,6 +89,7 @@ config_files="
     gitignore
     inputrc
     irbrc
+    profile
     sqliterc
     tmux.conf
     vim
