@@ -369,6 +369,7 @@ $'%{\e[0;32m%}`[ "$USER" = "root" ] || echo "$"`'\
 $'%{\e[0;31m%}`[ "$USER" = "root" ] && echo "#"`'\
 $'%{\e[0m%} '
 
+        export PS2='%{$fg[red]%} > %{$reset_color%}'
     elif [ $SHELLNAME = bash ]; then
         export PS1=\
 '\[\e[m\]'\
@@ -385,6 +386,7 @@ $'%{\e[0m%} '
 '\[\e[0;31m\]`[ "$USER" = "root" ] && echo "#"`'\
 '\[\e[m\] '
 
+        export PS2='\[\e[0;31m\] > \[\e[m\]'
     fi
 
     ps1_command_reset
