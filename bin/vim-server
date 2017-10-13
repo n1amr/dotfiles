@@ -6,12 +6,12 @@ if [[ "$TMUX" == "" ]]; then
     echo "Not in tmux"
     exit 1
 fi
-servername="$(echo "tmux-$(tmux display-message -p '#S')" | tr 'a-z ' 'A-Z_')"
 
-FORMAT='#{window_active} #{window_id} #{pane_id}'
+SERVERNAME_PREFIX="$(echo "tmux-$(tmux display-message -p '#S')" | tr 'a-z ' 'A-Z_')"
+TMUX_LIST_FORMAT='#{window_active} #{window_id} #{pane_id}'
 
 tmux_windows () {
-    tmux list-windows -F "$FORMAT"
+    tmux list-windows -F "$TMUX_LIST_FORMAT"
 }
 
 switch_pane () {
@@ -23,6 +23,8 @@ switch_pane () {
 }
 
 save_vim_pane_info () {
+    tmux setenv VIM_SERVER_NAME "$servername"
+
     window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
     tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
 
@@ -33,6 +35,15 @@ save_vim_pane_info () {
 is_server_running () {
     vim --serverlist | grep -qi "^$servername\$"
 }
+
+# Retrieve old server name or create a random one if empty or not running
+set +e
+servername="$(tmux showenv | grep -Po '(?<=VIM_SERVER_NAME=)(.*)')"
+if [ -z "$servername" -o ! is_server_running ]; then
+    random_id="$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 6)"
+    servername="$SERVERNAME_PREFIX-$random_id"
+fi
+set -e
 
 if test -t 0; then
     # stdin is a terminal.
