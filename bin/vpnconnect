@@ -15,3 +15,4 @@ credentials_file="$VPN_HOME/credentials/current"
 selected_profile="$VPN_HOME/profiles/$(cat "$VPN_HOME/profiles/current")"
 
 sudo openvpn --config "$selected_profile" --auth-user-pass "$credentials_file"
+# sudo openvpn --config "$selected_profile" --auth-user-pass "$credentials_file" --socks-proxy 127.0.0.1 1080 --server-poll-timeout 120
