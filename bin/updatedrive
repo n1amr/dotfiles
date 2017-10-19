@@ -9,22 +9,24 @@ if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
 fi
 
+UPDATEDRIVE_CONFIG_FILE="$DOTFILES_HOME/custom/updatedriverc"
+if [ ! -f "$UPDATEDRIVE_CONFIG_FILE" ]; then
+    cat > "$UPDATEDRIVE_CONFIG_FILE" <<EOF
+export auto_pull_dirs=(
+    "File1"
+    "Dir2"
+)
+
+export auto_push_dirs=(
+    "File3"
+    "Dir4"
+)
+EOF
+fi
+
+source "$UPDATEDRIVE_CONFIG_FILE"
+
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
-
-current_month_dir=$(date +'%Y/%m')
-last_month_dir=$(date --date="-1 month" +'%Y/%m')
-# last_month_dir=$(date --date="$(date +%Y-%m-15) -1 month" +'%Y/%m')
-
-auto_pull_dirs=(
-    "Google Photos/${current_month_dir}"
-    "Google Photos/${last_month_dir}"
-    "ASU/Master"
-    "ASU/TA"
-)
-
-auto_push_dirs=(
-#    "Personal/Bookmarks"
-)
 
 echo -e "$(date)\n"
 
@@ -86,5 +88,3 @@ for f in "${auto_push_dirs[@]}"; do
     # shellcheck disable=SC2086
     drive push $COMMONFLAGS $PUSHFLAGS "$f"
 done
-
-exit 0
