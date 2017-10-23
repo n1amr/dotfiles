@@ -3,6 +3,8 @@
 set -e
 
 source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/lock"
+
 if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo -n 'Enter Google Drive home directory path: '
     read -r DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
@@ -27,6 +29,7 @@ fi
 source "$UPDATEDRIVE_CONFIG_FILE"
 
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
+LOCK_FILE="$DRIVE_PATH/.updatedrive.lock"
 
 echo -e "$(date)\n"
 
@@ -67,6 +70,16 @@ if [ "$exclude" == "true" ]; then
 fi
 
 set +e
+
+has_lock=false
+
+cleanup () {
+    echo 'Exiting'
+    [ "$has_lock" = true ] && release_lock "$LOCK_FILE"
+}
+trap 'cleanup' EXIT INT
+
+acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
 # Pull all
 for f in "${auto_pull_dirs[@]}"; do
