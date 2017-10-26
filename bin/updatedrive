@@ -69,7 +69,6 @@ if [ "$exclude" == "true" ]; then
     COMMONFLAGS="$COMMONFLAGS --exclude-ops=delete"
 fi
 
-set +e
 
 has_lock=false
 
@@ -79,7 +78,15 @@ cleanup () {
 }
 trap 'cleanup' EXIT INT
 
+# exit if another instance if running
+if ps aux | grep -P 'drive (push|pull)' | grep -v 'grep' > /dev/null; then
+    echo "Another drive instance is running. Exitting"
+    exit 0
+fi
+
 acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
+
+set +e
 
 # Pull all
 for f in "${auto_pull_dirs[@]}"; do
