@@ -463,3 +463,8 @@ fi
 reset_ps1
 reset_keybindings vi
 block_caret
+
+DOTFILES_CUSTOM_POST_INIT="$DOTFILES_HOME/custom/config/dotfiles/shellrc/post_init.sh"
+if [ -f "$DOTFILES_CUSTOM_POST_INIT" ]; then
+    source "$DOTFILES_CUSTOM_POST_INIT"
+fi

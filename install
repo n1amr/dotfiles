@@ -50,6 +50,8 @@ fi
 
 DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
 mkdir -pv "$DOTFILES_CUSTOM_DIR"
+mkdir -pv "$DOTFILES_CUSTOM_DIR/bin"
+mkdir -pv "$DOTFILES_CUSTOM_DIR/config/dotfiles"
 touch "$DOTFILES_CUSTOM_DIR/zsh_history"
 
 DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
