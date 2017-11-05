@@ -11,17 +11,17 @@ if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
 fi
 
-UPDATEDRIVE_CONFIG_FILE="$DOTFILES_HOME/custom/updatedriverc"
+UPDATEDRIVE_CONFIG_FILE="$DOTFILES_HOME/custom/config/dotfiles/updatedriverc"
 if [ ! -f "$UPDATEDRIVE_CONFIG_FILE" ]; then
     cat > "$UPDATEDRIVE_CONFIG_FILE" <<EOF
 export auto_pull_dirs=(
-    "File1"
-    "Dir2"
+    # "File1"
+    # "Dir2"
 )
 
 export auto_push_dirs=(
-    "File3"
-    "Dir4"
+    # "File3"
+    # "Dir4"
 )
 EOF
 fi

@@ -4,7 +4,7 @@ source ~/.dotfiles_config
 source "$DOTFILES_HOME/bin/utils/log"
 PATH="$DOTFILES_HOME/bin:$PATH"
 
-WIFI_LIST_FILE="$DOTFILES_HOME/custom/wifi-list"
+WIFI_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/wifi-check-list"
 [ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
 
 DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"
