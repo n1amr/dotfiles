@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+PLUGIN_SCRIPT="$(dirname "$0")/../thirdparty/oh-my-zsh/plugins/extract/extract.plugin.zsh"
+source "$PLUGIN_SCRIPT"
+extract $*
