@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while [ $# != 0 ]; do
+    cp -ir "$1" "$1.bak.$(date +%s)"
+    shift
+done
