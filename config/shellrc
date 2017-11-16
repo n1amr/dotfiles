@@ -94,8 +94,6 @@ fi
 ################################################################################
 ####################################  PATH  ####################################
 
-export ANDROID_HOME="$D/ubuntu/usr/local/android-sdk"
-
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
