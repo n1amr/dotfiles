@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for f in $*; do
+    echo "Converting $f"
+    pandoc -V geometry:margin=1in -o "$f".pdf "$f"
+done
