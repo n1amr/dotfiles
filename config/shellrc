@@ -279,7 +279,7 @@ vdiff () {
 
 alias apt='sudo apt'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
-alias beep='paplay /home/n1amr/.local/Schedule.ogg'
+alias beep='paplay "$DOTFILES_HOME/resources/Schedule.ogg"'
 alias c='clear'
 alias cape='toggle_swapescape'
 alias clock='tty-clock -scn -C 2'
