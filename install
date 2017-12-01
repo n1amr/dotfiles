@@ -96,6 +96,7 @@ config_files="
     vim
     wgetrc
     xinitrc
+    xsessionrc
 "
 
 for cf in $config_files; do
