@@ -265,6 +265,16 @@ terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
 }
 
+tmuxsession () {
+    session="$1"
+    (tmux has-session -t "$session" || tmux new-session -d -s "$session") &&
+        if [[ -z "$TMUX" ]]; then
+            tmux attach -t "$session";
+        else
+            tmux switch-client -t "$session";
+        fi
+}
+
 up () {
     # shellcheck disable=SC2051
     cd "$(printf '../%.0s' {1.."$1"})" || return
@@ -328,7 +338,8 @@ alias sync='sudo "$(which syncf)"'
 alias t-display-restore='tmux setenv -g DISPLAY :0'
 alias t='tmux'
 alias tf='tail -f'
-alias tssh='(tmux has-session -t ssh || tmux new-session -d -s ssh) && if [[ -z "$TMUX" ]]; then tmux attach -t ssh; else tmux switch-client -t ssh; fi'
+alias tmain='tmuxsession main'
+alias tssh='tmuxsession ssh'
 alias twitter='/home/n1amr/.rbenv/shims/t'
 alias u='up'
 alias updatepip='pip install -U pip $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | /usr/bin/tr "\n" " ")'
