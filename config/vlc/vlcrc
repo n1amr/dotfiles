@@ -610,7 +610,7 @@ sout-x264-tune=film
 #alsa-audio-channels=6
 
 # Software gain (float)
-alsa-gain=2.197000
+#alsa-gain=1.000000
 
 [afile] # File audio output
 
@@ -3980,7 +3980,7 @@ metadata-network-access=1
 #control=
 
 # MouseWheel up-down axis Control (integer)
-#hotkeys-mousewheel-mode=0
+hotkeys-mousewheel-mode=2
 
 # Fullscreen (string)
 #global-key-toggle-fullscreen=
