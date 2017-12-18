@@ -33,13 +33,15 @@ save_vim_pane_info () {
 }
 
 is_server_running () {
+    local servername
+    servername="$1"
     vim --serverlist | grep -qi "^$servername\$"
 }
 
 # Retrieve old server name or create a random one if empty or not running
 set +e
 servername="$(tmux showenv | grep -Po '(?<=VIM_SERVER_NAME=)(.*)')"
-if [ -z "$servername" -o ! is_server_running ]; then
+if [ -z "$servername" ] || ! is_server_running "$servername"; then
     random_id="$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 6)"
     servername="$SERVERNAME_PREFIX-$random_id"
 fi
@@ -47,7 +49,7 @@ set -e
 
 if test -t 0; then
     # stdin is a terminal.
-    if is_server_running; then
+    if is_server_running "$servername"; then
         if [[ $# -gt 0 ]]; then
             vim --servername "$servername" --remote "$@"
             switch_pane
@@ -65,7 +67,7 @@ else
     TMPDIR="${TMPDIR:-/tmp}" # default to /tmp if TMPDIR isn't set
     tmpfile="$(mktemp "$TMPDIR/vim-XXXXXXXX")"
 
-    if is_server_running; then
+    if is_server_running "$servername"; then
         cat > "$tmpfile"
         vim --servername "$servername" "$@" --remote "$tmpfile"
         switch_pane
