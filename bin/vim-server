@@ -2,6 +2,8 @@
 
 set -e
 
+export DISPLAY="${DISPLAY:-:0}"
+
 if [[ "$TMUX" == "" ]]; then
     echo "Not in tmux"
     exit 1
