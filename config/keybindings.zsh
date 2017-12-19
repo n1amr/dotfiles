@@ -24,7 +24,7 @@ bindkey "^[[C" forward-word
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 bindkey "^K" kill-line
-bindkey "^U" kill-whole-line
+bindkey "^U" vi-kill-line
 bindkey "^W" backward-kill-word
 bindkey "^[^?" backward-kill-word
 
