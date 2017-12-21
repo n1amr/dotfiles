@@ -1,0 +1,7 @@
+#!/bin/bash
+
+AUTO_SAVE_PATH="/mnt/Storage/Pictures/Screenshots/"
+SOUND_PATH="$HOME/.dotfiles/resources/sounds/camera-shutter.oga"
+
+gnome-screenshot -f "$AUTO_SAVE_PATH/screenshot-$(date +%Y%m%d%H%M%S).png" $*
+play -q "$SOUND_PATH" &
