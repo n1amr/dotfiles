@@ -364,7 +364,7 @@ fi
 
 reset_ps1() {
     if [ $SHELLNAME = zsh ]; then
-        export PS1=\
+        PS1=\
 $'%{\e[0m%}'\
 $'%{\e[1;31m%}%n@%m'\
 $'%{\e[0m%}:'\
@@ -378,9 +378,9 @@ $'%{\e[0;32m%}`[ "$USER" = "root" ] || echo "$"`'\
 $'%{\e[0;31m%}`[ "$USER" = "root" ] && echo "#"`'\
 $'%{\e[0m%} '
 
-        export PS2='%{$fg[red]%} > %{$reset_color%}'
+        PS2='%{$fg[red]%} > %{$reset_color%}'
     elif [ $SHELLNAME = bash ]; then
-        export PS1=\
+        PS1=\
 '\[\e[m\]'\
 '${debian_chroot:+($debian_chroot) }'\
 '\[\e[1;31m\]\u@\h'\
@@ -395,7 +395,7 @@ $'%{\e[0m%} '
 '\[\e[0;31m\]`[ "$USER" = "root" ] && echo "#"`'\
 '\[\e[m\] '
 
-        export PS2='\[\e[0;31m\] > \[\e[m\]'
+        PS2='\[\e[0;31m\] > \[\e[m\]'
     fi
 
     ps1_command_reset
