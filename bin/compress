@@ -1,0 +1,24 @@
+#!/bin/bash
+
+infiles=("$@")
+
+curdirpath="$(pwd)"
+curdirname="$(basename "$curdirpath")"
+filename="$curdirname"
+
+if [ -f "$filename.tar.gz" ]; then
+    i=1
+    while [ -f "${filename}_$i.tar.gz" ]; do
+        i=$((i + 1))
+    done
+    filename="${filename}_$i.tar.gz"
+else
+    filename="$filename.tar.gz"
+fi
+
+files=()
+for f in "${infiles[@]}"; do
+    files+=("../$curdirname/${f/$curdirpath\//}")
+done
+
+tar -zcvf "$filename" "${files[@]}"
