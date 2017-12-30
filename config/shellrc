@@ -35,7 +35,7 @@ else
 fi
 
 # Initialize shell
-HISTFILE=~/.zsh_history
+HISTFILE=~/.shell_history
 HISTSIZE=10000000
 SAVEHIST=$HISTSIZE
 HISTCONTROL='ignoreboth'
