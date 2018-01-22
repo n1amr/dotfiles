@@ -1,20 +1,30 @@
 #!/bin/bash
 
-[ -d "$HOME/.ssh/" ] || return
+if [ ! -z "$SSH_AUTH_SOCK" ] && nc -z -U "$SSH_AUTH_SOCK" > /dev/null 2>&1; then
+    # Agent socket is already running
+    return
+fi
+
+if [ -d "$HOME/.ssh/" ]; then
+    mkdir "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
 [ "$1" = "--no-add" ] && no_add=true
 
-start_agent() {
+start_new_agent() {
     ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
     chmod 600 "$SSH_ENV"
     . "$SSH_ENV" > /dev/null
     [ "$no_add" = 'true' ] || ssh-add
 }
 
-[ ! -f "$SSH_ENV" ] && start_agent
-. "$SSH_ENV" > /dev/null
-[ -z "$SSH_AGENT_PID" ] && start_agent
-# shellcheck disable=SC2009
-ps -ef | grep "$SSH_AGENT_PID" | grep "ssh-agent$" > /dev/null || start_agent
+if [ -f "$SSH_ENV" ]; then
+    . "$SSH_ENV" > /dev/null
+fi
+
+if [ -z "$SSH_AUTH_SOCK" ] || ! nc -z -U "$SSH_AUTH_SOCK" > /dev/null 2>&1; then
+    start_new_agent
+fi
