@@ -2,12 +2,14 @@
 
 if [ ! -z "$SSH_AUTH_SOCK" ] && nc -z -U "$SSH_AUTH_SOCK" > /dev/null 2>&1; then
     # Agent socket is already running
-    return
+    if ! echo "$SSH_AUTH_SOCK" | grep /keyring/ > /dev/null; then
+        return
+    fi
 fi
 
-if [ -d "$HOME/.ssh/" ]; then
-    mkdir "$HOME/.ssh"
-    chmod 700 "$HOME/.ssh"
+if [ ! -d "$HOME/.ssh/" ]; then
+    mkdir "$HOME/.ssh/"
+    chmod 700 "$HOME/.ssh/"
 fi
 
 SSH_ENV="$HOME/.ssh/environment"
