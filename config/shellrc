@@ -460,7 +460,7 @@ fi
 
 eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
 
-source load_ssh_agent --no-add
+source load_ssh_agent
 
 if [ $SHELLNAME = zsh ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"

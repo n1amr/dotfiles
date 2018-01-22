@@ -12,13 +12,13 @@ fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
-[ "$1" = "--no-add" ] && no_add=true
+[ "$1" = "--add" ] && add=true
 
 start_new_agent() {
     ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
     chmod 600 "$SSH_ENV"
     . "$SSH_ENV" > /dev/null
-    [ "$no_add" = 'true' ] || ssh-add
+    [ "$add" = 'true' ] && ssh-add
 }
 
 if [ -f "$SSH_ENV" ]; then
