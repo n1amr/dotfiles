@@ -10,14 +10,11 @@ info "Started at $(date)"
 
 SYNCF_RC="$DOTFILES_HOME/custom/config/dotfiles/sync.rc"
 
-profile='default'
-if [[ -n "$1" ]]; then
-    profile="$1"
-fi
+profile="${1:-default}"
+info "Selected profile: $profile"
 
 profile_file="$SYNCF_RC/profiles/$profile"
 assert_file "$profile_file"
-info "Selected profile: $profile"
 
 export SYNCF_RC
 source "$profile_file"

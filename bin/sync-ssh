@@ -1,0 +1,137 @@
+#!/bin/bash
+
+set -e
+
+trap int_trap INT
+int_trap() {
+    info "Interrupted"
+    exit 1
+}
+
+source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/utils/assert_file"
+
+info "Started at $(date)"
+
+CONFIG_ROOT_PATH="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh"
+
+profile="${1:-default}"
+info "Selected profile: $profile"
+
+profile_file="$CONFIG_ROOT_PATH/profiles/$profile"
+assert_file "$profile_file"
+
+export CONFIG_ROOT_PATH
+source "$profile_file"
+
+required_parameters=(
+    BACKUP_ROOT
+    HOST
+)
+
+for param_name in "${required_parameters[@]}"; do
+    param_value="${!param_name}"
+    info "$param_name=$param_value"
+    if [[ -z "$param_value" ]]; then
+        error "$param_name has no value in profile file."
+        exit 1
+    fi
+done
+
+mkdir_backup() {
+    backup_dir="$1"
+    mkdir -p "$backup_dir"
+    rsync -a -s --rsh='ssh -p 4965 -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
+}
+
+generate_exclude_opts_result=()
+generate_exclude_opts() {
+    TRANSFER_ROOT="$1"
+
+    generate_exclude_opts_result=()
+
+    while true; do
+        last_char="${TRANSFER_ROOT:${#TRANSFER_ROOT} - 1}"
+        if [[ "$last_char" != '/' ]]; then
+            break;
+        fi
+        TRANSFER_ROOT="${TRANSFER_ROOT:0:${#TRANSFER_ROOT} - 1}"
+    done
+
+    arr=()
+    for ex_path in ${EXCLUDES[@]}; do
+        if [[ "$ex_path" == "$TRANSFER_ROOT"/* ]]; then
+            new_path="${ex_path:${#TRANSFER_ROOT}}"
+            arr+=(--exclude="$new_path")
+        fi
+    done
+
+    generate_exclude_opts_result=("${arr[@]}")
+}
+
+rsync_args_result=()
+rsync_args() {
+    OPERATION="$1"
+    path="$2"
+    backup_dir="$3"
+
+    rsync_args_result=()
+
+    args=()
+    args+=(-av --progress -h)
+    args+=(-s --rsh='ssh -T -o Compression=no -x')
+
+    if [[ ! "$OPERATION" = *_OVERWRITE* ]]; then
+        args+=(-u)
+    fi
+
+    args+=(-b --backup-dir="$backup_dir")
+
+    if [[ "$OPERATION" = *_MIRROR* ]]; then
+        args+=(--delete)
+    fi
+
+    generate_exclude_opts "$path"
+    args+=("${generate_exclude_opts_result[@]}")
+
+    if [[ "$OPERATION" = PULL* ]]; then
+        args+=("${HOST}:$path")
+        args+=("$path")
+    elif [[ "$OPERATION" = PUSH* ]]; then
+        args+=("$path")
+        args+=("${HOST}:$path")
+    fi
+
+    rsync_args_result=("${args[@]}")
+}
+
+run_operation() {
+    OPERATION="$1"
+    local -n PATHS=$2
+
+    for path in "${PATHS[@]}"; do
+        backup_dir="$BACKUP_ROOT/$(realpath "$path")"
+        mkdir_backup "$backup_dir"
+        info "$OPERATION: $path"
+
+        rsync_args "$OPERATION" "$path" "$backup_dir"
+        rsync "${rsync_args_result[@]}"
+    done
+}
+
+OPERATIONS=(
+    PULL
+    PULL_MIRROR
+    PUSH
+    PUSH_MIRROR
+    PUSH_MIRROR_OVERWRITE
+)
+
+for OP in "${OPERATIONS[@]}"; do
+    run_operation "$OP" "${OP}_PATHS"
+done
+
+info "Cleaning empty directories..."
+find "$BACKUP_ROOT" -type d -empty -delete
+ssh "$HOST" find "$BACKUP_ROOT" -type d -empty -delete
