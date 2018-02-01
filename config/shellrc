@@ -127,6 +127,17 @@ block_caret () {
     fi
 }
 
+calc () {
+    if [[ "$1" == '-s' ]]; then
+        setup="$2"
+        query="$3"
+        python -c 'import math; '"$setup"'; print('"$query"')'
+    else
+        query="$1"
+        python -c 'import math; print('"$query"')'
+    fi
+}
+
 cdf () {
     diff -u "$1" "$2" | colordiff | less -FRX
 }
