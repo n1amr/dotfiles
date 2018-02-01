@@ -17,23 +17,20 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
 PLAYLIST='WL'
 URL="https://youtube.com/playlist?list=$PLAYLIST"
-COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
-LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"
-ARCHIVE_FILE="$YOUTUBE_HOME/.downloader/archive"
-OUTPUT_TEMPLATE='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
-COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --convert-subs srt
---continue --mark-watched --ignore-errors'
 
-cd "$YOUTUBE_HOME"
-if [ ! -d .downloader ]; then
-    mkdir .downloader
+if [ ! -d "$YOUTUBE_HOME/.downloader/" ]; then
+    mkdir "$YOUTUBE_HOME/.downloader/"
 fi
 
+COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
+ARCHIVE_FILE="$YOUTUBE_HOME/.downloader/archive"
+
 if [ ! -f "$COOKIE_FILE" ]; then
-    echo "Please copy cookies.txt to $COOKIE_FILE"
+    echo "Please copy cookies.txt into '$COOKIE_FILE'"
     exit 1
 fi
 
+LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"
 has_lock=false
 
 cleanup () {
@@ -44,10 +41,16 @@ trap 'cleanup' EXIT INT
 
 acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
-# shellcheck disable=SC2016,SC2086
-"$YOUTUBE_DOWNLADER" $COMMON_ARGS \
-    --cookie "$COOKIE_FILE" \
-    --download-archive "$ARCHIVE_FILE" \
-    -o "$OUTPUT_TEMPLATE" \
-    --exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date +%s). $f"; done' \
-    "$URL"
+ARGS=()
+ARGS+=(-f 18)
+ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
+ARGS+=(--continue --ignore-errors)
+ARGS+=(--mark-watched)
+ARGS+=(--cookie "$COOKIE_FILE")
+ARGS+=(--download-archive "$ARCHIVE_FILE")
+ARGS+=(-o '%(title)s - (@%(uploader)s - %(id)s).%(ext)s')
+ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date +%s). $f"; done')
+ARGS+=("$URL")
+
+cd "$YOUTUBE_HOME"
+"$YOUTUBE_DOWNLADER" "${ARGS[@]}"
