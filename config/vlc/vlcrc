@@ -1894,13 +1894,13 @@ freetype-font=DejaVu Sans
 #freetype-opacity=255
 
 # Text default color (integer)
-#freetype-color=16777215
+freetype-color=16574799
 
 # Force bold (boolean)
 #freetype-bold=0
 
 # Background opacity (integer)
-#freetype-background-opacity=0
+freetype-background-opacity=128
 
 # Background color (integer)
 #freetype-background-color=0
