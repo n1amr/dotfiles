@@ -4016,7 +4016,7 @@ key-play-pause=k
 #global-key-faster=
 
 # Faster (string)
-#key-faster=+
+key-faster==
 
 # Slower (string)
 #global-key-slower=
@@ -4028,7 +4028,7 @@ key-play-pause=k
 #global-key-rate-normal=
 
 # Normal rate (string)
-#key-rate-normal==
+key-rate-normal=0
 
 # Faster (fine) (string)
 #global-key-rate-faster-fine=
