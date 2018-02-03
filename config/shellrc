@@ -278,12 +278,14 @@ terminal_resize () {
 
 tmuxsession () {
     session="$1"
-    (tmux has-session -t "$session" || tmux new-session -d -s "$session") &&
-        if [[ -z "$TMUX" ]]; then
-            tmux attach -t "$session";
-        else
-            tmux switch-client -t "$session";
-        fi
+    if ! tmux has-session -t "$session"; then
+        tmux new-session -d -s "$session"
+    fi
+    if [[ -z "$TMUX" ]]; then
+        tmux attach -t "$session"
+    else
+        tmux switch-client -t "$session"
+    fi
 }
 
 up () {
