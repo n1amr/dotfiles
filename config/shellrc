@@ -240,7 +240,7 @@ psgkill () {
     echo -ne "\nAre you sure? [y/n] "
     read -r response
     if [[ "$response" = 'y' ]]; then
-        kill -9 $(echo "$serach_result" | tail +2 | awk '{print $2}' | tr '\n' ' ');
+        kill -9 $(echo "$serach_result" | remove_color_codes | tail +2 | awk '{print $2}' | tr '\n' ' ');
     fi
 }
 
