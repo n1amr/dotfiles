@@ -1,5 +1,6 @@
 ################################################################################
 ###############################  Initialization  ###############################
+# shellcheck disable=SC2148
 
 # Determine shell type
 unset SHELLNAME
@@ -14,40 +15,35 @@ fi
 
 DOTFILES_HOME="$HOME/.dotfiles"
 
-init_config_file () {
-    echo "Note: Creating new config file."
-    echo -n \
-"""\
-#!/bin/bash
-
-export DOTFILES_HOME='$DOTFILES_HOME'
-export PYENV_ROOT='$HOME/.pyenv'
-export RBENV_ROOT='$HOME/.rbenv'
-""" >> "$DOTFILES_CONFIG_FILE"
-}
-
 # Load config file
 DOTFILES_CONFIG_FILE=~/.dotfiles_config
 if [ -f "$DOTFILES_CONFIG_FILE" ]; then
     source "$DOTFILES_CONFIG_FILE"
 else
-    init_config_file
+    echo "Note: Creating new config file."
+    (
+        echo '#!/bin/bash'
+        echo
+        echo "export DOTFILES_HOME='$DOTFILES_HOME'"
+        echo "export PYENV_ROOT='$HOME/.pyenv'"
+        echo "export RBENV_ROOT='$HOME/.rbenv'"
+    ) >> "$DOTFILES_CONFIG_FILE"
 fi
 
 # Initialize shell
-HISTFILE=~/.shell_history
-HISTSIZE=10000000
-SAVEHIST=$HISTSIZE
-HISTCONTROL='ignoreboth'
+export HISTFILE=~/.shell_history
+export HISTSIZE=10000000
+export SAVEHIST=$HISTSIZE
+export HISTCONTROL='ignoreboth'
 
-if [ $SHELLNAME = zsh ]; then
+if [ "$SHELLNAME" = zsh ]; then
     export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"
 
-    ZSH_THEME="n1amr"
-    ENABLE_CORRECTION="true"
-    DISABLE_UNTRACKED_FILES_DIRTY="true"
+    export ZSH_THEME="n1amr"
+    export ENABLE_CORRECTION="true"
+    export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-    plugins=(
+    export plugins=(
         command-not-found
         common-aliases
         dircycle
@@ -62,7 +58,7 @@ if [ $SHELLNAME = zsh ]; then
         z
     )
     source "$ZSH/oh-my-zsh.sh"
-elif [ $SHELLNAME = bash ]; then
+elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
 fi
 
@@ -103,10 +99,10 @@ export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
 # Remove duplicates
-if [ $SHELLNAME = zsh ]; then
+if [ "$SHELLNAME" = zsh ]; then
     export -U PATH
-elif [ $SHELLNAME = bash ]; then
-    export PATH="$(echo -n "${PATH}:" | awk -v RS=':' -v ORS=":" '!a[$1]++')"
+elif [ "$SHELLNAME" = bash ]; then
+    PATH="$(echo -n "${PATH}:" | awk -v RS=':' -v ORS=":" '!a[$1]++')"
     export PATH="${PATH%?}"
 fi
 
@@ -156,9 +152,9 @@ hcd () {
 }
 
 init_fzf () {
-    if [ $SHELLNAME = zsh ]; then
+    if [ "$SHELLNAME" = zsh ]; then
         [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-    elif [ $SHELLNAME = bash ]; then
+    elif [ "$SHELLNAME" = bash ]; then
         [ -f ~/.fzf.bash ] && source ~/.fzf.bash
     fi
 }
@@ -167,14 +163,14 @@ init_powerline () {
     POWERLINE_ROOT="$(pip show powerline-status | grep -Po '(?<=Location: ).*')/powerline"
 
     powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
+    export POWERLINE_BASH_CONTINUATION=1
+    export POWERLINE_BASH_SELECT=1
 
-    if [ $SHELLNAME = zsh ]; then
+    if [ "$SHELLNAME" = zsh ]; then
         if [ -r "$POWERLINE_ROOT/bindings/zsh/powerline.zsh" ]; then
             source "$POWERLINE_ROOT/bindings/zsh/powerline.zsh"
         fi
-    elif [ $SHELLNAME = bash ]; then
+    elif [ "$SHELLNAME" = bash ]; then
         if [ -r "$POWERLINE_ROOT/bindings/bash/powerline.sh" ]; then
             source "$POWERLINE_ROOT/bindings/bash/powerline.sh"
         fi
@@ -195,6 +191,14 @@ keybindings () {
 
 linerange () {
     head -"$2" | tail -n +"$1"
+}
+
+man() {
+    command man "$@" | pipe_to_editor
+}
+
+pipe_to_editor() {
+    remove_color_codes | vim -
 }
 
 print_pdf_counts () {
@@ -240,17 +244,20 @@ psgkill () {
     echo -ne "\nAre you sure? [y/n] "
     read -r response
     if [[ "$response" = 'y' ]]; then
-        kill -9 $(echo "$serach_result" | remove_color_codes | tail +2 | awk '{print $2}' | tr '\n' ' ');
+        PIDS=($(echo "$serach_result" | remove_color_codes | tail +2 | awk '{print $2}' | tr '\n' ' '))
+        kill -9 "${PIDS[@]}"
     fi
 }
 
 psgrep () {
+    # shellcheck disable=SC2009
     ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
 }
 
+# shellcheck disable=SC2164
 ranger () {
-    command ranger --choosedir=$HOME/.rangerdir "$@"
-    cd "$(cat $HOME/.rangerdir)"
+    command ranger --choosedir="$HOME/.rangerdir" "$@"
+    cd "$(cat "$HOME/.rangerdir")"
 }
 
 remove_color_codes () {
@@ -258,10 +265,10 @@ remove_color_codes () {
 }
 
 reset_keybindings () {
-    if [ $SHELLNAME = zsh ]; then
+    if [ "$SHELLNAME" = zsh ]; then
         [ "$1" = 'vi' ] && bindkey -v
         source "$DOTFILES_HOME/config/keybindings.zsh"
-    elif [ $SHELLNAME = bash ]; then
+    elif [ "$SHELLNAME" = bash ]; then
         [ "$1" = 'vi' ] && set -o vi
         source "$DOTFILES_HOME/config/keybindings.bash"
     fi
@@ -294,7 +301,7 @@ up () {
 }
 
 vdiff () {
-    diff -u "$@" | vim -
+    diff -u "$@" | pipe_to_editor
 }
 
 ################################################################################
@@ -302,20 +309,22 @@ vdiff () {
 
 alias apt='sudo apt'
 alias beep='paplay "$DOTFILES_HOME/resources/Schedule.ogg"'
-alias c='clear'
-alias cape='toggle_swapescape'
 alias clock='tty-clock -scn -C 2'
-alias clr='clear'
 alias cp='cp -i'
 alias display-restore='export DISPLAY=:0 && tmux setenv DISPLAY :0'
-alias dl='trash -v'
+alias dl='trash'
 alias emacs='DISPLAY= emacs'
-alias f='find .'
 alias fgrep='grep -F'
 alias g='grep'
+alias ga='git add'
+alias gc='git commit -v'
+alias gcl='git clone --recursive'
+alias gd='git diff'
+alias gdca='git diff --cached'
 alias gdplshared='drive pull -ignore-name-clashes --ignore-conflict'
 alias gist='gistey -sf'
 alias gp='grep -P --color=auto'
+alias gst='git status'
 alias h='history'
 alias hbackup='yes | cp ~/.${SHELLNAME}_history ~/.${SHELLNAME}_history.bak;'
 alias hgp="fc -El 0 | grep"
@@ -328,8 +337,8 @@ alias l='ls -lgoh'
 alias la='ls -lAFh'
 alias ll='ls -l'
 alias ls='ls --color=yes'
-alias m='mark'
 alias matlab-cli='DISPLAY= matlab'
+alias md='mkdir -pv'
 alias mkdir='mkdir -pv'
 alias mv='mv -i'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -340,13 +349,11 @@ alias p='ipython'
 alias psg='psgrep'
 alias pss='ps -e lx'
 alias py='python -c'
-alias qcommit='git add -A && git commit -m "$(date)"'
 alias r='ranger'
 alias rb='ruby -e'
 alias rm='rm -i'
 alias s='subl -a'
 alias shellrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
-alias sshot='screenshot-nicename /mnt/Storage/Pictures/Screenshots/*from*'
 alias sync='sudo "$(which syncf)"'
 alias t-display-restore='tmux setenv -g DISPLAY :0'
 alias t='tmux'
@@ -359,23 +366,26 @@ alias updatepip='pip install -U pip $(pip freeze --local | grep -v ^-e | cut -d 
 alias v='vim'
 alias vi='vim'
 alias vibindkey='reset_keybindings vi'
+alias vimrc='"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
 alias vs='vim-server'
 alias wget='wget -c'
 
-if [ $SHELLNAME = zsh ]; then
+if [ "$SHELLNAME" = zsh ]; then
     alias -g 'A=2>&1'
     alias -g 'CP=| xsel -ib'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
-    alias -g "V=| remove_color_codes | vim -"
+    alias -g "V=| pipe_to_editor"
     alias -g "VS=| remove_color_codes | vim-server"
+    alias -g "HLP= --help 2>&1 | pipe_to_editor"
 fi
 
 ################################################################################
 #################################  PS1 create  #################################
 
+# shellcheck disable=SC2025,SC2026,SC2154
 reset_ps1() {
-    if [ $SHELLNAME = zsh ]; then
+    if [ "$SHELLNAME" = zsh ]; then
         PS1=\
 $'%{\e[0m%}'\
 $'%{\e[1;31m%}%n@%m'\
@@ -391,7 +401,7 @@ $'%{\e[0;31m%}`[ "$USER" = "root" ] && echo "#"`'\
 $'%{\e[0m%} '
 
         PS2='%{$fg[red]%} > %{$reset_color%}'
-    elif [ $SHELLNAME = bash ]; then
+    elif [ "$SHELLNAME" = bash ]; then
         PS1=\
 '\[\e[m\]'\
 '${debian_chroot:+($debian_chroot) }'\
@@ -423,8 +433,9 @@ __ps1_pyenv_version () {
 
 __ps1_warnings () {
     msgs=()
-    [ "$DISPLAY" != ':0' ] && msgs=(${msgs[@]} "DISPLAY=$DISPLAY")
-    [ "$USER" = 'root' ] && msgs=(${msgs[@]} "ROOT")
+    [ "$DISPLAY" != ':0' ] && msgs+=("DISPLAY=$DISPLAY")
+    [ "$USER" = 'root' ] && msgs+=("ROOT")
+    [ "$SHELLNAME" != 'zsh' ] && msgs+=("SHELL=$SHELLNAME")
     msg="${msgs// / | }"
     [ -n "$msg" ] && echo " ($msg)"
 }
@@ -458,9 +469,9 @@ ps1_memory() {
 ################################  Finalization  ################################
 
 # Options
-if [ $SHELLNAME = zsh ]; then
+if [ "$SHELLNAME" = zsh ]; then
     unsetopt EXTENDED_HISTORY
-elif [ $SHELLNAME = bash ]; then
+elif [ "$SHELLNAME" = bash ]; then
     shopt -s autocd
     shopt -s globstar
 fi
@@ -474,9 +485,9 @@ eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
 
 source load_ssh_agent
 
-if [ $SHELLNAME = zsh ]; then
+if [ "$SHELLNAME" = zsh ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
-elif [ $SHELLNAME = bash ]; then
+elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.bash"
 fi
 
