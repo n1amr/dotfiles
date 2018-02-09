@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Selected pyenv version: $(pyenv version)"
+echo "Python version: $(python --version)"
+
+packages=(pip $(pip freeze --local | grep -v ^-e | cut -d = -f 1 | sort | tr '\n' ' '))
+echo "Packages to update: ${packages[@]}"
+pip install -U "${packages[@]}"
