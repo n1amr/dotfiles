@@ -274,6 +274,14 @@ reset_keybindings () {
     fi
 }
 
+run_custom_hook() {
+    HOOK="$1"
+    DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
+    if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
+        source "$DOTFILES_CUSTOM_HOOK_FILE"
+    fi
+}
+
 sum_videos_duration () {
     # shellcheck disable=SC2068
     print_videos_duration $@ | tail -1 | awk '{print $2}'
@@ -496,7 +504,4 @@ reset_ps1
 reset_keybindings vi
 block_caret
 
-DOTFILES_CUSTOM_POST_INIT="$DOTFILES_HOME/custom/config/dotfiles/shellrc/post_init.sh"
-if [ -f "$DOTFILES_CUSTOM_POST_INIT" ]; then
-    source "$DOTFILES_CUSTOM_POST_INIT"
-fi
+run_custom_hook 'post-shellrc'
