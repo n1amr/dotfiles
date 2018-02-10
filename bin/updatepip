@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "Selected pyenv version: $(pyenv version)"
 echo "Python version: $(python --version)"
 

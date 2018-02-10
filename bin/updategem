@@ -2,17 +2,9 @@
 
 set -e
 
-export PATH="/home/n1amr/.rbenv/bin:$PATH"
-eval "$( [[ $(type -t rbenv) ]] && rbenv init -)"
+echo "Selected rbenv version: $(rbenv version)"
+echo "Ruby version: $(ruby --version)"
 
-VERSIONS=(system 2.3.1)
-for v in "${VERSIONS[@]}"; do
-    rbenv shell "$v"
-    echo -e "\e[0;32mUpdating ruby $v packages\e[m"
-    if [[ "$v" == system ]]; then
-        sudo gem update
-    else
-        gem update
-    fi
-    gem list
-done
+packages=($(gem list | cut -d ' ' -f 1 | sort | tr '\n' ' '))
+echo "Packages to update: ${packages[@]}"
+gem update --verbose "${packages[@]}"
