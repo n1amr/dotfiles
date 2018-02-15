@@ -1,4 +1,4 @@
-# Crontab file for Home Directory for (root)
+# Crontab file for Home Directory for (root@dell)
 #===============================================================================
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
@@ -6,8 +6,8 @@
 35       15       23       1        *        /usr/share/wakeup/setnextalarm.py n1amr >/dev/null 2>&1
 35       15       23       1        *        /usr/bin/wakeup n1amr 0 >/dev/null 2>&1 #entered by setnextalarm
 00       5        *        *        *        updatedb &
-*        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/bin/battery-check &
-*        *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/bin/wifi-check &
-00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/download-updates &
-00       5        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/sync more &
+*        *        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/bin/battery-check" &
+*        *        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/bin/wifi-check" &
+00       5        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/config/crontab/crontab-jobs/download-updates" &
+00       5        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/config/crontab/crontab-jobs/sync" more &
 #===============================================================================

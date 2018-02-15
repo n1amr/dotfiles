@@ -1,8 +1,8 @@
-# Crontab file for Home Directory for Amr Alaa (n1amr)
+# Crontab file for Home Directory for Amr Alaa (n1amr@dell)
 #===============================================================================
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
-5        1        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/packt-open &
-*/15     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/ring &
-*/30     *        *        *        *        . ~/.dotfiles_config && $DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive &
+5        1        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/config/crontab/crontab-jobs/packt-open" &
+*/15     *        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/config/crontab/crontab-jobs/ring" &
+*/30     *        *        *        *        . ~/.dotfiles_config && "$DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive" &
 #===============================================================================
