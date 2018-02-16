@@ -18,19 +18,19 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 PLAYLIST='WL'
 URL="https://youtube.com/playlist?list=$PLAYLIST"
 
-if [ ! -d "$YOUTUBE_HOME/.downloader/" ]; then
-    mkdir "$YOUTUBE_HOME/.downloader/"
+if [ ! -d "$YOUTUBE_HOME/.youtube-dl/" ]; then
+    mkdir "$YOUTUBE_HOME/.youtube-dl/"
 fi
 
-COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
-ARCHIVE_FILE="$YOUTUBE_HOME/.downloader/archive"
+COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
+ARCHIVE_FILE="$YOUTUBE_HOME/.youtube-dl/archive"
 
 if [ ! -f "$COOKIE_FILE" ]; then
     echo "Please copy cookies.txt into '$COOKIE_FILE'"
     exit 1
 fi
 
-LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"
+LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"
 has_lock=false
 
 cleanup () {

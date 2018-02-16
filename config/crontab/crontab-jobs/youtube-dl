@@ -15,11 +15,11 @@ if ! ok-to-download; then
 fi
 
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-LOG_FILE="$YOUTUBE_HOME/.downloader/log"
+LOG_FILE="$YOUTUBE_HOME/.youtube-dl/log"
 
 exec >> "$LOG_FILE" 2>&1  # redirect output and error to log file
 
-[ ! -d "$YOUTUBE_HOME/.downloader" ] && mkdir -pv "$YOUTUBE_HOME/.downloader"
+[ ! -d "$YOUTUBE_HOME/.youtube-dl" ] && mkdir -pv "$YOUTUBE_HOME/.youtube-dl"
 
 echo -e "\n====================\n"
 date

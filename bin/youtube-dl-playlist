@@ -40,16 +40,16 @@ fi
 TARGET_DIR="$(realpath "$TARGET_DIR")"
 
 PLAYLIST_URL="https://youtube.com/playlist?list=$PLAYLIST_ID"
-COOKIE_FILE="$YOUTUBE_HOME/.downloader/cookies.txt"
-LOCK_FILE="$YOUTUBE_HOME/.downloader/lock"; export LOCK_FILE
+COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
+LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"; export LOCK_FILE
 ARCHIVE_FILE="$TARGET_DIR/.download_archive"
 OUTPUT_TEMPLATE='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --convert-subs srt
 --continue --mark-watched --ignore-errors'
 
 cd "$YOUTUBE_HOME"
-if [ ! -d .downloader ]; then
-    mkdir .downloader
+if [ ! -d .youtube-dl ]; then
+    mkdir .youtube-dl
 fi
 
 if [ ! -f "$COOKIE_FILE" ]; then

@@ -12,9 +12,9 @@ fi
 YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
-URLS_FILE="$YOUTUBE_HOME/.downloader/list"
-HISTORY_FILE="$YOUTUBE_HOME/.downloader/history"
-FAILED_FILE="$YOUTUBE_HOME/.downloader/failed"
+URLS_FILE="$YOUTUBE_HOME/.youtube-dl/list"
+HISTORY_FILE="$YOUTUBE_HOME/.youtube-dl/history"
+FAILED_FILE="$YOUTUBE_HOME/.youtube-dl/failed"
 COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --continue'
 
 download=true
@@ -27,8 +27,8 @@ while [[ $# != 0 ]]; do
 done
 
 cd "$YOUTUBE_HOME"
-if [ ! -d .downloader ]; then
-    mkdir .downloader
+if [ ! -d .youtube-dl ]; then
+    mkdir .youtube-dl
 fi
 
 if $download; then
