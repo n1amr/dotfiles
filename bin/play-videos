@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e
+
+EXTENSIONS=(
+    mp4 mkv 3gp avi mpg mpeg webm flv mov ogv wmv
+    3g2 amv asf drc f4a f4p f4v m2v m4p m4v mng mp2 mpe mpv mxf nsv ogg qt rm rmvb roq svi vob yuv
+)
+
+PATTERN="\.($(echo "${EXTENSIONS[@]}" | tr ' ' '|'))\$"
+
+supported_mime() {
+    exiftool "$1" | grep MIME | grep -i video > /dev/null
+}
+
+supported_extension() {
+    echo "$1" | grep -Pi "$PATTERN"
+}
+
+list_files_recursively() {
+    for p in "$@"; do
+        find "$p" -type f | sort
+    done
+}
+
+play_videos() {
+    PATHS=("$@")
+    [[ -z "${PATHS[@]}" ]] && PATHS=(.)
+
+    files=()
+    while IFS='' read -r f; do
+        echo "check: $f"
+        if [[ -f "$f" ]] && supported_extension "$f"; then
+            echo -en "\e[2A\r"
+            echo "  yes: $f"
+            files+=("$f")
+        fi
+    done < <(list_files_recursively "${PATHS[@]}")
+
+    if [[ -z "${files[@]}" ]]; then
+        echo "No videos are found"
+        exit 1
+    fi
+
+    tmp_m3u_file="$(mktemp /tmp/playlist-XXXXXX.m3u)"
+    generate-m3u-playlist "${files[@]}" > "$tmp_m3u_file"
+    ( vlc "$tmp_m3u_file" > /dev/null 2>&1 & )
+}
+
+play_videos "$@"
