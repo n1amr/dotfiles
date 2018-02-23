@@ -2,47 +2,52 @@
 
 set -e
 
+source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/utils/assert_file"
+
+CONFIG_ROOT_PATH="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh"
+
+VALID_OPERATIONS=(
+    PULL
+    PULL_MIRROR
+    PUSH
+    PUSH_MIRROR
+    PUSH_MIRROR_OVERWRITE
+)
+
+REQUIRED_PARAMETERS=(
+    BACKUP_ROOT
+    HOST
+)
+
 trap int_trap INT
 int_trap() {
     info "Interrupted"
     exit 1
 }
 
-source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/log"
-source "$DOTFILES_HOME/bin/utils/assert_file"
-
-info "Started at $(date)"
-
-CONFIG_ROOT_PATH="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh"
-
-profile="${1:-default}"
-info "Selected profile: $profile"
-
-profile_file="$CONFIG_ROOT_PATH/profiles/$profile"
-assert_file "$profile_file"
-
-export CONFIG_ROOT_PATH
-source "$profile_file"
-
-required_parameters=(
-    BACKUP_ROOT
-    HOST
-)
-
-for param_name in "${required_parameters[@]}"; do
-    param_value="${!param_name}"
-    info "$param_name=$param_value"
-    if [[ -z "$param_value" ]]; then
-        error "$param_name has no value in profile file."
-        exit 1
-    fi
-done
+validate_required_parameters() {
+    for param_name in "${REQUIRED_PARAMETERS[@]}"; do
+        param_value="${!param_name}"
+        info "$param_name=$param_value"
+        if [[ -z "$param_value" ]]; then
+            error "$param_name has no value."
+            exit 1
+        fi
+    done
+}
 
 mkdir_backup() {
     backup_dir="$1"
     mkdir -p "$backup_dir"
     rsync -a -s --rsh='ssh -p 4965 -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
+}
+
+clean_empty_directories() {
+    info "Cleaning empty directories..."
+    find "$BACKUP_ROOT" -type d -empty -delete
+    ssh "$HOST" find "$BACKUP_ROOT" -type d -empty -delete
 }
 
 generate_exclude_opts_result=()
@@ -64,6 +69,7 @@ generate_exclude_opts() {
         if [[ "$ex_path" == "$TRANSFER_ROOT"/* ]]; then
             new_path="${ex_path:${#TRANSFER_ROOT}}"
             arr+=(--exclude="$new_path")
+            info "Excludes: $new_path"
         fi
     done
 
@@ -106,32 +112,35 @@ rsync_args() {
     rsync_args_result=("${args[@]}")
 }
 
-run_operation() {
-    OPERATION="$1"
-    local -n PATHS=$2
+run() {
+    operation="$1"
+    path="$2"
 
-    for path in "${PATHS[@]}"; do
-        backup_dir="$BACKUP_ROOT/$(realpath "$path")"
-        mkdir_backup "$backup_dir"
-        info "$OPERATION: $path"
+    if ! echo "$operation" | grep -P "^($(echo "${VALID_OPERATIONS[@]}" | tr ' ' '|'))$" > /dev/null 2>&1; then
+        error "Operation '$operation' is not valid"
+        return
+    fi
+    validate_required_parameters
 
-        rsync_args "$OPERATION" "$path" "$backup_dir"
-        rsync "${rsync_args_result[@]}"
-    done
+    backup_dir="$BACKUP_ROOT/$(realpath "$path")"
+    mkdir_backup "$backup_dir"
+    info "Profile: $profile"
+    info "$operation: $path"
+
+    rsync_args "$operation" "$path" "$backup_dir"
+    rsync "${rsync_args_result[@]}"
 }
 
-OPERATIONS=(
-    PULL
-    PULL_MIRROR
-    PUSH
-    PUSH_MIRROR
-    PUSH_MIRROR_OVERWRITE
-)
+info "Started at $(date)"
 
-for OP in "${OPERATIONS[@]}"; do
-    run_operation "$OP" "${OP}_PATHS"
-done
+profile="${1:-default}"
+info "Selected profile: $profile"
 
-info "Cleaning empty directories..."
-find "$BACKUP_ROOT" -type d -empty -delete
-ssh "$HOST" find "$BACKUP_ROOT" -type d -empty -delete
+profile_file="$CONFIG_ROOT_PATH/profiles/$profile"
+assert_file "$profile_file"
+
+info "Loading profile at '$profile_file'"
+export -f run
+source "$profile_file"
+
+clean_empty_directories
