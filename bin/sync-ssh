@@ -65,7 +65,7 @@ generate_exclude_opts() {
     done
 
     arr=()
-    for ex_path in ${EXCLUDES[@]}; do
+    for ex_path in "${EXCLUDES[@]}"; do
         if [[ "$ex_path" == "$TRANSFER_ROOT"/* ]]; then
             new_path="${ex_path:${#TRANSFER_ROOT}}"
             arr+=(--exclude="$new_path")
