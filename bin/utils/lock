@@ -4,25 +4,57 @@
 
 source "$DOTFILES_HOME/bin/utils/log"
 
+verbose=false
+if [ "$1" = '--verbose' ]; then
+    verbose=true
+fi
+
+export HAS_LOCK=false
+export LOCK_ID="$(uuidgen)"
+
 acquire_lock() {
     LOCK_FILE="$1"
-    if [ -f "$LOCK_FILE" ]; then
-        warning "Cannot acquire lock at '$LOCK_FILE'"
-        return 1
-    else
-        info "Acquired lock at '$LOCK_FILE'"
-        touch "$LOCK_FILE"
+
+    if [[ "$HAS_LOCK" != 'false' ]]; then
+        [ "$verbose" = 'true' ] && info "You already own this lock '$LOCK_FILE'"
+        return 0
     fi
+
+    if [ -f "$LOCK_FILE" ]; then
+        [ "$verbose" = 'true' ] && warning "Cannot acquire lock at '$LOCK_FILE'"
+        return 1
+    fi
+
+    [ "$verbose" = 'true' ] && info "Acquiring lock at '$LOCK_FILE'"
+    echo "$LOCK_ID" >> "$LOCK_FILE"
+
+    winner_id="$(head -1 "$LOCK_FILE")"
+    if [[ "$LOCK_ID" != "$winner_id" ]]; then
+        [ "$verbose" = 'true' ] && warning "Lost in race condition on '$LOCK_FILE'"
+        return 1
+    fi
+
+    HAS_LOCK=true
+    [ "$verbose" = 'true' ] && info "Acquired lock at '$LOCK_FILE'"
     return 0
 }
 
 release_lock() {
     LOCK_FILE="$1"
-    info "Realeasing lock at '$LOCK_FILE'"
-    if [ -f "$LOCK_FILE" ]; then
-        info "$(rm -vf "$LOCK_FILE")"
-        info "Realeased lock at '$LOCK_FILE'"
-    else
-        warning "Lock at '$LOCK_FILE' is already released"
+
+    if [[ "$HAS_LOCK" != 'true' ]]; then
+        [ "$verbose" = 'true' ] && warning "Not released. You do not own this lock '$LOCK_FILE'"
+        return 1
     fi
+
+    if ! [ -f "$LOCK_FILE" ]; then
+        [ "$verbose" = 'true' ] && warning "Lock at '$LOCK_FILE' is already released"
+        return 1
+    fi
+
+    [ "$verbose" = 'true' ] && info "Realeasing lock at '$LOCK_FILE'"
+    out="$(rm -vf "$LOCK_FILE")"
+    [ "$verbose" = 'true' ] && info "$out"
+    [ "$verbose" = 'true' ] && info "Realeased lock at '$LOCK_FILE'"
+    return 0
 }
