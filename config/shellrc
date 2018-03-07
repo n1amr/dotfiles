@@ -62,22 +62,28 @@ elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
 fi
 
+run_custom_hook() {
+    HOOK="$1"
+    DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
+    if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
+        source "$DOTFILES_CUSTOM_HOOK_FILE"
+    fi
+}
+
 ################################################################################
 ###########################  Environment variables  ############################
 
-export NAME='Amr Alaa'
-export EMAIL='n1amr1@gmail.com'
-export DDNS='n1amr.ddns.net'
-export SSH_KEY_PATH=~/.ssh/id_rsa
+run_custom_hook 'pre-environment-config'
 
-API_KEYS_FILE="$DOTFILES_HOME/custom/keys/api_keys"
-[ -f "$API_KEYS_FILE" ] && source "$API_KEYS_FILE"
+export NAME="${NAME:-Amr Alaa}"
+export EMAIL="${EMAIL:-n1amr1@gmail.com}"
+export DDNS="${DDNS:-n1amr.ddns.net}"
+export SSH_KEY_FILE="${SSH_KEY_FILE:-$HOME/.ssh/id_rsa}"
 
-export D='/mnt/Storage'
-export GDRIVE="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"
+export STORAGE="${STORAGE:-/mnt/Storage}"
 
-export EDITOR='vim'
-export VISUAL="$EDITOR"
+export EDITOR="${EDITOR:-vim}"
+export VISUAL="${VISUAL:-$EDITOR}"
 
 export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
 
@@ -198,7 +204,7 @@ man() {
 }
 
 pipe_to_editor() {
-    remove_color_codes | vim -
+    remove_color_codes | "$EDITOR" -
 }
 
 print_pdf_counts () {
@@ -271,14 +277,6 @@ reset_keybindings () {
     elif [ "$SHELLNAME" = bash ]; then
         [ "$1" = 'vi' ] && set -o vi
         source "$DOTFILES_HOME/config/keybindings.bash"
-    fi
-}
-
-run_custom_hook() {
-    HOOK="$1"
-    DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
-    if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
-        source "$DOTFILES_CUSTOM_HOOK_FILE"
     fi
 }
 
@@ -370,8 +368,8 @@ alias tmain='tmuxsession main'
 alias tsn='tmuxsession'
 alias tssh='tmuxsession ssh'
 alias u='up'
-alias v='vim'
-alias vi='vim'
+alias v='"$EDITOR"'
+alias vi='"$EDITOR"'
 alias vibindkey='reset_keybindings vi'
 alias vimrc='"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
 alias vs='vim-server'
