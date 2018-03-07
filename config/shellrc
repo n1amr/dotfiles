@@ -82,8 +82,8 @@ export SSH_KEY_FILE="${SSH_KEY_FILE:-$HOME/.ssh/id_rsa}"
 
 export STORAGE="${STORAGE:-/mnt/Storage}"
 
-export EDITOR="${EDITOR:-vim}"
-export VISUAL="${VISUAL:-$EDITOR}"
+export VISUAL="${VISUAL:-vim}"
+export EDITOR="${EDITOR:-$VISUAL}"
 
 export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
 
@@ -200,11 +200,15 @@ linerange () {
 }
 
 man() {
-    command man "$@" | pipe_to_editor
+    command man "$@" | pipe_to_visual
 }
 
 pipe_to_editor() {
     remove_color_codes | "$EDITOR" -
+}
+
+pipe_to_visual() {
+    remove_color_codes | "$VISUAL" -
 }
 
 print_pdf_counts () {
@@ -307,7 +311,7 @@ up () {
 }
 
 vdiff () {
-    diff -u "$@" | pipe_to_editor
+    diff -u "$@" | pipe_to_visual
 }
 
 ################################################################################
@@ -368,8 +372,8 @@ alias tmain='tmuxsession main'
 alias tsn='tmuxsession'
 alias tssh='tmuxsession ssh'
 alias u='up'
-alias v='"$EDITOR"'
-alias vi='"$EDITOR"'
+alias v='"$VISUAL"'
+alias vi='"$VISUAL"'
 alias vibindkey='reset_keybindings vi'
 alias vimrc='"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
 alias vs='vim-server'
@@ -380,9 +384,10 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g 'CP=| xsel -ib'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
-    alias -g "V=| pipe_to_editor"
+    alias -g "E=| pipe_to_editor"
+    alias -g "V=| pipe_to_visual"
     alias -g "VS=| remove_color_codes | vim-server"
-    alias -g "HLP= --help 2>&1 | pipe_to_editor"
+    alias -g "HLP= --help 2>&1 | pipe_to_visual"
 fi
 
 ################################################################################
