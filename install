@@ -116,6 +116,7 @@ if [ -x "$custom_install" ]; then
 fi
 
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
+safe_link "$DST_HOME/.config/nvim/init.vim" "$DOTFILES_HOME/config/nvim.vim"
 safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/custom/config/ranger"
 safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.conf"
 safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
