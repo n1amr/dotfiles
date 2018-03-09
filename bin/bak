@@ -1,6 +1,14 @@
 #!/bin/bash
 
-while [ $# != 0 ]; do
-    cp -ir "$1" "$1.bak.$(date +%s)"
+if [ "$1" = '--move' ]; then
     shift
-done
+    while [ $# != 0 ]; do
+        mv -i "$1" "$1.bak.$(date +%s)"
+        shift
+    done
+else
+    while [ $# != 0 ]; do
+        cp -ir "$1" "$1.bak.$(date +%s)"
+        shift
+    done
+fi
