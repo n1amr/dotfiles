@@ -10,7 +10,7 @@ if [ "$1" = '--verbose' ]; then
 fi
 
 export HAS_LOCK=false
-export LOCK_ID="$(uuidgen)"
+export LOCK_TOKEN="$(uuidgen)"
 
 acquire_lock() {
     LOCK_FILE="$1"
@@ -26,10 +26,10 @@ acquire_lock() {
     fi
 
     [ "$verbose" = 'true' ] && info "Acquiring lock at '$LOCK_FILE'"
-    echo "$LOCK_ID" >> "$LOCK_FILE"
+    echo "$LOCK_TOKEN $$ $BASHPID" >> "$LOCK_FILE"
 
-    winner_id="$(head -1 "$LOCK_FILE")"
-    if [[ "$LOCK_ID" != "$winner_id" ]]; then
+    winner_token="$(head -1 "$LOCK_FILE" | cut -d ' ' -f 1)"
+    if [[ "$LOCK_TOKEN" != "$winner_token" ]]; then
         [ "$verbose" = 'true' ] && warning "Lost in race condition on '$LOCK_FILE'"
         return 1
     fi
