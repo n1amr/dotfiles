@@ -18,8 +18,13 @@ terminal_window_id () {
 }
 
 if [ -z "$(terminal_window_id)" ]; then
-    "$TERMINAL_PRG" -e "zsh -c '. ~/.zshrc; tmux attach'"
+    "$TERMINAL_PRG" -- zsh -c '. ~/.zshrc; tmux attach'
 fi
 
-tmux new-window "$@"
+if [[ -z "$@" ]]; then
+    tmux attach
+else
+    tmux new-window "$@"
+fi
+
 wmctrl -i -a "$(terminal_window_id)"
