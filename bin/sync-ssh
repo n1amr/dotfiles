@@ -101,6 +101,8 @@ rsync_args() {
     generate_exclude_opts "$path"
     args+=("${generate_exclude_opts_result[@]}")
 
+    args+=("${RSYNC_EXTRA_ARGS[@]}")
+
     if [[ "$OPERATION" = PULL* ]]; then
         args+=("${HOST}:$path")
         args+=("$path")
