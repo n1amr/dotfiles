@@ -315,7 +315,7 @@ vdiff () {
 
 alias apt='sudo apt'
 alias bakmv='bak --move'
-alias beep='paplay "$DOTFILES_HOME/resources/Schedule.ogg"'
+alias beep='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/Schedule.ogg"'
 alias clock='tty-clock -scn -C 2'
 alias cp='cp -i'
 alias display-restore='export DISPLAY=:0 && tmux setenv DISPLAY :0'
