@@ -6,6 +6,6 @@ setxkbmap -option caps:escape
 setxkbmap -option grp:alt_shift_toggle
 setxkbmap -option shift:both_capslock
 
-numlockx on
+type numlockx > /dev/null 2>&1 && numlockx on
 
-~/.xinitrc
+[ -x ~/.xinitrc ] && ~/.xinitrc
