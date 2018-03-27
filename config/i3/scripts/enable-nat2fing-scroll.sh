@@ -1,15 +1,16 @@
 #!/bin/bash
 
-touchpad_id=$(xinput --list | grep Touchpad -i | cut -d = -f 2 | awk {'print $1'})
+touchpad_id="$(xinput --list | grep 'Touchpad' -i | head -1 | cut -d = -f 2 | awk '{print $1}')"
 echo "Touchpad ID: $touchpad_id"
 
-distance=$(xinput --list-props $touchpad_id | grep "Synaptics Scrolling Distance" | cut -d , -f 2 | awk {'print $1'})
-echo "Distance: $distance"
+prop_name='libinput Natural Scrolling Enabled'
 
-if [[ $distance -gt 0 ]]; then
-  echo "Distance not negative => NEGATING!!"
-  xinput --set-prop $touchpad_id "Synaptics Scrolling Distance" -$distance, -$distance
-fi
+# distance="$(xinput --list-props "$touchpad_id" | grep "$prop_name" | cut -d , -f 2 | awk '{print $1}')"
+# echo "Distance: $distance"
+# if [[ $distance -gt 0 ]]; then
+#   echo "Distance not negative => NEGATING!!"
+#   xinput --set-prop "$touchpad_id" "$prop_name" -$distance, -$distance
+# fi
 
 echo "Setting 2 finger scrolling"
-xinput --set-prop $touchpad_id "Synaptics Two-Finger Scrolling" 1, 1
+xinput --set-prop "$touchpad_id" "$prop_name" 1

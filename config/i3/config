@@ -14,7 +14,7 @@ set $I3_HOME ~/.config/i3
 # Mod1 = Alt, Mod4 = Win
 set $mod Mod4
 
-# Keys
+# Key Alias
 set $K_Alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -37,7 +37,7 @@ font pango:DejaVu Sans Mono 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+# bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -98,6 +98,9 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
+bindsym $K_Alt+Tab       workspace next
+bindsym $K_Alt+Shift+Tab workspace prev
+
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -172,10 +175,9 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext  exec playerctl next
 bindsym XF86AudioPrev  exec playerctl previous
 
-# TODO
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec $I3_HOME/scripts/toggle-touchpad.sh
@@ -185,9 +187,7 @@ exec --no-startup-id $I3_HOME/scripts/enable-nat2fing-scroll.sh
 bindsym --release Print exec gnome-screenshot
 bindsym --release Shift+Print exec gnome-screenshot -a
 
-# TODO
-# KB latyout switch
-# bindsym Control+$K_Alt+t exec --no-startup-id $I3_HOME/scripts/toggle-lang.sh
+# KB layout switch
 exec_always $I3_HOME/scripts/keyboard-config.sh
 
 # Keyboard Shortcuts
@@ -198,6 +198,10 @@ bindsym Control+$K_Alt+i exec xcalib -i -a
 bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
 bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
 bindsym Control+$K_Alt+slash exec zsh -c '. ~/.zshrc && tmux-open vim-server'
+bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
+
+exec --no-startup-id $I3_HOME/scripts/screen-mode.sh
+exec --no-startup-id ~/.xinitrc
 
 # Startup Applications
 exec zsh -c '. ~/.zshrc && tmux-open'
