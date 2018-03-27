@@ -10,6 +10,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $I3_HOME ~/.config/i3
+set $I3BLOCKS_CONFIG_FILE ~/.config/i3/i3blocks.conf
 set $DOTFILES_HOME ~/.dotfiles
 
 # Mod1 = Alt, Mod4 = Win
@@ -21,7 +22,8 @@ set $K_Alt Mod1
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # font pango:monospace 8
-font pango:DejaVu Sans Mono 10
+# font pango:DejaVu Sans Mono 10
+font pango:System San Francisco 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -82,9 +84,11 @@ bindsym $mod+p          split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s                layout stacking
+bindsym $mod+w                layout tabbed
+bindsym $mod+e                layout toggle split
+bindsym $mod+Shift+apostrophe layout splith
+bindsym $mod+Shift+p          layout splitv
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -96,20 +100,20 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-# bindsym $mod+d focus child
+bindsym $mod+Shift+a focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: "
 set $ws2 "2: "
-set $ws3 "3: "
-set $ws4 "4"
+set $ws3 "3: "
+set $ws4 "4: "
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $wslast "99: "
+set $wslast "99: "
 
 # switch to workspace
 bindsym $K_Alt+Tab       workspace next
@@ -185,7 +189,7 @@ set $I3_INPUT pango:DejaVu Sans Mono 12
 bindsym $mod+comma exec i3-input -f '$I3_INPUT' -F 'rename workspace to "%s"' -P 'New name: '
 bindsym $mod+slash exec i3-input -f '$I3_INPUT' -F '%s' -P 'Command: '
 
-workspace_auto_back_and_forth yes
+# workspace_auto_back_and_forth yes
 focus_follows_mouse off
 
 # determines in which mode new containers on workspace level will start.
@@ -195,40 +199,66 @@ workspace_layout tabbed
 # hide_edge_borders none|vertical|horizontal|both|smart
 hide_edge_borders both
 
+# Style
+set $bg-color          #2F343F
+set $fg-color          #F3F4F5
+
+set $focused-bg-color  #3F51B5
+set $focused-fg-color  #FFFFFF
+set $inactive-bg-color #333333
+set $inactive-fg-color #AAAAAA
+set $urgent-bg-color   #BC1525
+set $urgent-fg-color   #FFFFFF
+
+set $indicator-color   #0000FF
+
+set $separator-color   #757575
+set $status-bg-color   #000000
+set $status-fg-color   #FFFFFF
+
+# window colors
+#                        border              background         text               indicator
+client.focused           $focused-bg-color   $focused-bg-color  $focused-fg-color  $indicator-color
+client.focused_inactive  $inactive-bg-color  $inactive-bg-color $inactive-fg-color $indicator-color
+client.unfocused         $inactive-bg-color  $inactive-bg-color $inactive-fg-color $indicator-color
+client.urgent            $urgent-bg-color    $urgent-bg-color   $urgent-fg-color   $indicator-color
+
+for_window [class=".*"] title_format "<span>  %title</span>"
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status
+    # status_command i3status
     # status_command i3status --config ~/.i3status.conf
+    status_command i3blocks -c $I3BLOCKS_CONFIG_FILE
 
     # mode hide
     # hidden_state hide
     # modifier $mod
-
     mode dock
+
+    strip_workspace_numbers yes
+
     position top
     tray_output primary
-
     font pango:DejaVu Sans Mono 11
-    # strip_workspace_numbers yes
 
     colors {
-        background #000000
-        statusline #ffffff
-        separator #666666
+        statusline $status-fg-color
+        background $status-bg-color
+        separator  $separator-color
 
-        # <colorclass>     <border>   <background> <text>
-        focused_workspace  #4c7899    #285577      #ffffff
-        active_workspace   #333333    #5f676a      #ffffff
-        inactive_workspace #333333    #222222      #888888
-        urgent_workspace   #2f343a    #900000      #ffffff
-        binding_mode       #2f343a    #900000      #ffffff
+        #                  border             background         text
+        focused_workspace  $focused-bg-color  $focused-bg-color  $focused-fg-color
+        active_workspace   $inactive-bg-color $inactive-bg-color $inactive-fg-color
+        inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-fg-color
+        urgent_workspace   $urgent-bg-color   $urgent-bg-color   $urgent-fg-color
     }
 }
 
 # $ sudo vim /etc/systemd/logind.conf && sudo systemctl restart systemd-logind
 # HandlePowerKey=ignore
-set $LOCKER i3lock && sleep 1
+set $LOCKER i3lock --color=#000000 && sleep 1
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (R) reboot, (S) shutdown
 mode "$mode_system" {
@@ -261,8 +291,8 @@ bindsym XF86AudioNext  exec playerctl next
 bindsym XF86AudioPrev  exec playerctl previous
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec $I3_HOME/scripts/toggle-touchpad.sh
@@ -272,7 +302,7 @@ bindsym --release Print       exec gnome-screenshot
 bindsym --release Shift+Print exec gnome-screenshot -a
 
 # Keyboard Shortcuts
-bindsym Control+$K_Alt+l exec i3lock
+bindsym Control+$K_Alt+l exec i3lock --color=#000000
 bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
 bindsym Control+$K_Alt+i exec xcalib -i -a
 
@@ -281,15 +311,21 @@ bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
 bindsym Control+$K_Alt+slash exec zsh -c '. ~/.zshrc && tmux-open vim-server'
 bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
 
-assign [class="(?i)gnome-terminal"] $ws1
+exec i3-msg 'workspace $ws1; layout stacking'
+assign [class="(?i)tmux"] $ws1
 
+exec i3-msg 'workspace $ws2; layout stacking'
 assign     [class="(?i)firefox"] $ws2
-for_window [class="(?i)firefox"] layout stacking
+# for_window [class="(?i)firefox"] layout stacking
 
-assign [class="(?i)vlc"]   $ws3
+# exec i3-msg 'workspace $ws3; layout tabbed'
+# assign [class="."] $ws3
 
+exec i3-msg 'workspace $wslast; layout tabbed'
 assign [class="(?i)keepass"]   $wslast
 assign [class="(?i)rhythmbox"] $wslast
+
+exec i3-msg 'workspace $ws1'
 
 # Initialize IO Devices
 exec_always $I3_HOME/scripts/init-display.sh
@@ -302,3 +338,5 @@ exec_always $I3_HOME/scripts/set-background.sh
 exec zsh -c '. ~/.zshrc && tmux-open'
 exec firefox
 exec keepass2
+
+exec i3-msg 'workspace $ws1'
