@@ -2,5 +2,4 @@
 
 set -e
 
-cd "${1:-/mnt/Storage/Lab/MATLAB/}"
-nice "/mnt/Storage/ubuntu/usr/local/matlab/R2015a/bin/matlab"
+nice "/mnt/Storage/ubuntu/usr/local/matlab/R2015a/bin/matlab" "$@"
