@@ -312,18 +312,18 @@ bindsym Control+$K_Alt+slash exec zsh -c '. ~/.zshrc && tmux-open vim-server'
 bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
 
 exec i3-msg 'workspace $ws1; layout stacking'
-assign [class="(?i)tmux"] $ws1
+# assign [class="(?i)tmux"] $ws1
 
 exec i3-msg 'workspace $ws2; layout stacking'
-assign     [class="(?i)firefox"] $ws2
+# assign     [class="(?i)firefox"] $ws2
 # for_window [class="(?i)firefox"] layout stacking
 
 # exec i3-msg 'workspace $ws3; layout tabbed'
 # assign [class="."] $ws3
 
 exec i3-msg 'workspace $wslast; layout tabbed'
-assign [class="(?i)keepass"]   $wslast
-assign [class="(?i)rhythmbox"] $wslast
+# assign [class="(?i)keepass"]   $wslast
+# assign [class="(?i)rhythmbox"] $wslast
 
 exec i3-msg 'workspace $ws1'
 
@@ -335,8 +335,11 @@ exec_always $I3_HOME/scripts/init-touchpad.sh
 exec_always $I3_HOME/scripts/set-background.sh
 
 # Startup Applications
-exec zsh -c '. ~/.zshrc && tmux-open'
-exec firefox
-exec keepass2
+exec i3-msg 'workspace $ws1;    exec zsh -c ". ~/.zshrc && tmux-open"'
+exec i3-msg 'workspace $ws2;    exec firefox'
+exec i3-msg 'workspace $wslast; exec keepass2'
+# exec zsh -c '. ~/.zshrc && tmux-open'
+# exec firefox
+# exec keepass2
 
 exec i3-msg 'workspace $ws1'
