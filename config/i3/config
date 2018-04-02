@@ -334,6 +334,9 @@ exec_always $I3_HOME/scripts/init-touchpad.sh
 
 exec_always $I3_HOME/scripts/set-background.sh
 
+# Startup Background Applications
+exec --no-startup-id nm-applet --sm-disable
+
 # Startup Applications
 exec i3-msg 'workspace $ws1;    exec zsh -c ". ~/.zshrc && tmux-open"'
 exec i3-msg 'workspace $ws2;    exec firefox'
