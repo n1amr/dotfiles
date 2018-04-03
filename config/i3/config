@@ -306,6 +306,7 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 bindsym Control+$K_Alt+l exec i3lock --color=#000000
 bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
 bindsym Control+$K_Alt+i exec xcalib -i -a
+bindsym Control+$K_Alt+t exec gnome-terminal
 
 bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
 bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
