@@ -1,9 +1,14 @@
 #!/bin/bash
 
-setxkbmap -layout us,ar
+# to see all options: cat /usr/share/X11/xkb/rules/base.lst
+
+# setxkbmap -layout us,ar
+# setxkbmap -option grp:alt_shift_toggle
+# setxkbmap -option grp:win_space_toggle
+
+setxkbmap -layout us
 setxkbmap -option ""
 setxkbmap -option caps:escape
-setxkbmap -option grp:alt_shift_toggle
 setxkbmap -option shift:both_capslock
 
 type numlockx > /dev/null 2>&1 && numlockx on

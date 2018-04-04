@@ -298,9 +298,14 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 # Touchpad controls
 bindsym XF86TouchpadToggle exec $I3_HOME/scripts/toggle-touchpad.sh
 
-# Print Screnn
+# Print Screen
 bindsym --release Print       exec gnome-screenshot
 bindsym --release Shift+Print exec gnome-screenshot -a
+
+# Keyboard layouts
+bindsym Control+$K_Alt+0 exec exec $I3_HOME/scripts/toggle-lang.sh
+bindsym Control+$K_Alt+1 exec setxkbmap -layout us
+bindsym Control+$K_Alt+2 exec setxkbmap -layout ar
 
 # Keyboard Shortcuts
 bindsym Control+$K_Alt+l exec i3lock --color=#000000
