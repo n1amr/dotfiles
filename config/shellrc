@@ -336,6 +336,7 @@ alias h='history'
 alias hbackup='yes | cp ~/.${SHELLNAME}_history ~/.${SHELLNAME}_history.bak;'
 alias hgp="fc -El 0 | grep"
 alias hrestore='yes | cp ~/.${SHELLNAME}_history.bak ~/.${SHELLNAME}_history; for i in {0..10000}; do echo; done; /usr/bin/clear; cd ~; exec ${SHELLNAME}'
+alias i3config='"$EDITOR" "$DOTFILES_HOME/config/i3/config"'
 alias ipy="ipython"
 alias ipython="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias j='jump'
