@@ -1,14 +1,18 @@
 # See /etc/i3blocks.conf
 
 # Global properties
-command=~/.config/i3/scripts/i3blocks/$BLOCK_NAME.sh
+command=~/.config/i3/i3blocks/widgets/$BLOCK_NAME.sh
 separator_block_width=15
 markup=none
+
+################################################################################
 
 [mediaplayer-control-widget]
 label=:
 instance=status
 interval=1
+
+################################################################################
 
 [mediaplayer-control-widget]
 instance=button-prev
@@ -24,6 +28,8 @@ separator=false
 instance=button-next
 interval=1
 
+################################################################################
+
 # Volume indicator
 [volume]
 # label=
@@ -33,12 +39,16 @@ instance=Master
 interval=1
 signal=10
 
+################################################################################
+
 # Network interface monitoring
 [wifi]
 label= 
 instance=wlp2s0
 interval=5
 #separator=false
+
+################################################################################
 
 # Battery indicator
 [battery-icon]
@@ -50,9 +60,13 @@ markup=pango
 #instance=1
 interval=30
 
+################################################################################
+
 # Keyboard Layout
 [keyboard-layout]
 interval=1
+
+################################################################################
 
 # Date Time
 [time]
