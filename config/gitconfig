@@ -7,6 +7,7 @@
     df = diff
     l = log --graph --pretty='%C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an> %C(dim white)%d%C(reset)' --abbrev-commit
     st = status
+    rb = rebase -i
     rbb = "!f() { git rebase -i HEAD~$1; }; f"
     go = "!f() { git-browse $*; }; f"
     create-github = "!f() { git-create-github $*; }; f"
