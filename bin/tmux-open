@@ -22,8 +22,11 @@ if [ -z "$(terminal_window_id)" ]; then
 fi
 
 if [[ -z "$@" ]]; then
-    tmux attach
+    true # tmux attach
 else
+    if ! tmux list-sessions; then
+        tmux start-server
+    fi
     tmux new-window "$@"
 fi
 
