@@ -2,6 +2,8 @@
 
 set -e
 
+source ~/.dotfiles_config
+
 TOKEN_FILE="$DOTFILES_HOME/custom/keys/github_token"
 
 if [[ -x "$TOKEN_FILE" ]]; then
