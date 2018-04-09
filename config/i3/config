@@ -265,6 +265,10 @@ bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
 ################################################################################
 ###################################  Styles  ###################################
 
+# Colors
+set $indigo            #3F51B5
+set $red               #B71C1C
+
 # Style
 set $bg-color          #2F343F
 set $fg-color          #F3F4F5
@@ -273,7 +277,7 @@ set $focused-bg-color  #3F51B5
 set $focused-fg-color  #FFFFFF
 set $inactive-bg-color #333333
 set $inactive-fg-color #AAAAAA
-set $urgent-bg-color   #BC1525
+set $urgent-bg-color   #B71C1C
 set $urgent-fg-color   #FFFFFF
 
 set $indicator-color   #0000FF
