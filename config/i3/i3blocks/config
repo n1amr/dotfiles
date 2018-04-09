@@ -31,11 +31,11 @@ interval=1
 ################################################################################
 
 # Volume indicator
-[volume]
+[volume-wrapper]
 # label=
 label=♪
-instance=Master
-#instance=PCM
+#instance=Master
+##instance=PCM
 interval=1
 signal=10
 
