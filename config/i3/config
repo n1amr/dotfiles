@@ -218,8 +218,9 @@ bindsym Control+$K_Alt+Delete mode "$mode_system"
 
 set $I3_INPUT pango:DejaVu Sans Mono 12
 # bindsym $mod+comma          exec i3-input -f '$I3_INPUT' -P 'Rename: ' -F 'rename workspace to "%s"'
-bindsym $mod+slash          exec i3-input -f '$I3_INPUT' -P 'Move to workspace: ' -F 'move container to workspace "%s"'
-bindsym $mod+Shift+question exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
+bindsym $mod+slash          exec i3-input -f '$I3_INPUT' -P 'Open workspace: ' -F 'workspace "%s"'
+bindsym $mod+Shift+question exec i3-input -f '$I3_INPUT' -P 'Move to workspace: ' -F 'move container to workspace "%s"'
+bindsym $mod+c              exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
 
 # Volume controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
