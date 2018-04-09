@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source ~/.dotfiles_config
+
+BACKGROUND_COLOR='#000000'
+
+BACKGROUND="$DOTFILES_HOME/resources/images/Black Wallpapers Widescreen 13.jpg"
+LOCK_IMAGE="${BACKGROUND%.*}.png"
+[[ ! -f "$LOCK_IMAGE" ]] && convert -scale 1366x768 "$BACKGROUND" "$LOCK_IMAGE"
+
+i3lock -t --color="$BACKGROUND_COLOR" -f -i "$LOCK_IMAGE"
+
+## Blurred screenshot
+# LOCK_IMAGE="/tmp/i3lock.png"
+# [[ -f "$IMAGE" ]] && rm "$IMAGE"
+# scrot "$LOCK_IMAGE"
+# convert -blur 3x3 "$LOCK_IMAGE" "$LOCK_IMAGE"
+# i3lock -t --color="$BACKGROUND_COLOR" -f -i "$LOCK_IMAGE"
+# rm "$LOCK_IMAGE"
