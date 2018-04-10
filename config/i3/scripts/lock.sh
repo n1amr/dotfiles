@@ -4,7 +4,7 @@ source ~/.dotfiles_config
 
 BACKGROUND_COLOR='#000000'
 
-BACKGROUND="$DOTFILES_HOME/resources/images/Black Wallpapers Widescreen 13.jpg"
+BACKGROUND="$DOTFILES_HOME/resources/images/lock-wallpaper.jpg"
 LOCK_IMAGE="${BACKGROUND%.*}.png"
 [[ ! -f "$LOCK_IMAGE" ]] && convert -scale 1366x768 "$BACKGROUND" "$LOCK_IMAGE"
 
