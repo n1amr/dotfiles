@@ -6,18 +6,16 @@ ICON_NEXT=''
 ICON_PREV=''
 ICON_STOP=''
 
-BLOCK_INSTANCE="${BLOCK_INSTANCE:-status}"
-
-playerctl status > /dev/null 2>&1 \
-    && ! playerctl status | grep 'Stopped' > /dev/null \
-    && is_running='true' || is_running='false'
-if [[ "$is_running" == 'false' ]]; then
+MEDIA_CONTROLLER="$(dirname "${BASH_SOURCE[0]}")/../../scripts/media-control.sh"
+if [[ "$("$MEDIA_CONTROLLER" is-running)" != 'true' ]]; then
     exit
 fi
 
-handle_next() { playerctl next; }
-handle_prev() { playerctl previous; }
-handle_toggle() { playerctl play-pause; }
+BLOCK_INSTANCE="${BLOCK_INSTANCE:-status}"
+
+handle_next()   { "$MEDIA_CONTROLLER" next; }
+handle_prev()   { "$MEDIA_CONTROLLER" prev; }
+handle_toggle() { "$MEDIA_CONTROLLER" play-pause; }
 
 handle_click() {
     case "$BLOCK_INSTANCE" in
@@ -30,7 +28,7 @@ handle_click() {
 render_prev_button() { echo "$ICON_PREV"; }
 render_next_button() { echo "$ICON_NEXT"; }
 render_toggle_button() {
-    if playerctl status | grep 'Playing' > /dev/null; then
+    if [[ "$("$MEDIA_CONTROLLER" is-playing)" == 'true' ]]; then
         echo "$ICON_PAUSE"
     else
         echo "$ICON_PLAY"
@@ -47,13 +45,7 @@ render_button() {
 }
 
 render_status() {
-    artist="$(playerctl metadata artist)"
-    title="$(playerctl metadata title)"
-    output="$title - $artist"
-    if [[ "$output" == ' - ' ]]; then
-        output=''
-    fi
-    echo "$output"
+    "$MEDIA_CONTROLLER" track-info
 }
 
 case "$BLOCK_BUTTON" in
@@ -61,7 +53,7 @@ case "$BLOCK_BUTTON" in
 esac
 
 case "$BLOCK_INSTANCE" in
-    status)   render_status ;;
+    status)   render_status                   ;;
     button-*) render_button "$BLOCK_INSTANCE" ;;
-    *)        echo 'INVALID BLOCK_INSTANCE' ;;
+    *)        echo 'INVALID BLOCK_INSTANCE'   ;;
 esac
