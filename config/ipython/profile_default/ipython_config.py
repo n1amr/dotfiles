@@ -3,7 +3,8 @@
 c = get_config()
 
 c.AliasManager.user_aliases = [
- ('la', 'ls -al')
+    ('l', 'ls -lgohN --time-style=posix-long-iso'),
+    ('la', 'ls -lgohN --time-style=posix-long-iso -A'),
 ]
 
 c.InteractiveShell.autocall = 1
@@ -21,9 +22,11 @@ c.TerminalInteractiveShell.true_color = True
 
 c.TerminalIPythonApp.display_banner = False
 
-# c.InteractiveShellApp.extensions = [
-#     'powerline.bindings.ipython.post_0_11'
-# ]
+# # Enable Powerline prompt
+# from powerline.bindings.ipython.since_5 import PowerlinePrompts
+#
+# c.TerminalInteractiveShell.simple_prompt = False
+# c.TerminalInteractiveShell.prompts_class = PowerlinePrompts
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
