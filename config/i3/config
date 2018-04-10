@@ -257,6 +257,8 @@ bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
 ###################################  Styles  ###################################
 
 # Colors
+set $dark_gray         #44414D
+set $gray              #514F56
 set $indigo            #3F51B5
 set $red               #B71C1C
 
@@ -264,25 +266,30 @@ set $red               #B71C1C
 set $bg-color          #2F343F
 set $fg-color          #F3F4F5
 
+set $focused-bd-color  #3F51B5
 set $focused-bg-color  #3F51B5
 set $focused-fg-color  #FFFFFF
-set $inactive-bg-color #333333
-set $inactive-fg-color #AAAAAA
+
+set $inactive-bd-color #514F56
+set $inactive-bg-color #44414D
+set $inactive-fg-color #DDDDDD
+
+set $urgent-bd-color   #B71C1C
 set $urgent-bg-color   #B71C1C
 set $urgent-fg-color   #FFFFFF
 
 set $indicator-color   #0000FF
 
 set $separator-color   #757575
-set $status-bg-color   #000000
+set $status-bg-color   #44414D
 set $status-fg-color   #FFFFFF
 
 # window colors
 #                        border              background         text               indicator
-client.focused           $focused-bg-color   $focused-bg-color  $focused-fg-color  $indicator-color
-client.focused_inactive  $inactive-bg-color  $inactive-bg-color $inactive-fg-color $indicator-color
-client.unfocused         $inactive-bg-color  $inactive-bg-color $inactive-fg-color $indicator-color
-client.urgent            $urgent-bg-color    $urgent-bg-color   $urgent-fg-color   $indicator-color
+client.focused           $focused-bd-color   $focused-bg-color  $focused-fg-color  $indicator-color
+client.focused_inactive  $inactive-bd-color  $inactive-bg-color $inactive-fg-color $indicator-color
+client.unfocused         $inactive-bd-color  $inactive-bg-color $inactive-fg-color $indicator-color
+client.urgent            $urgent-bd-color    $urgent-bg-color   $urgent-fg-color   $indicator-color
 
 for_window [class=".*"] title_format "<span>  %title</span>"
 
@@ -327,10 +334,10 @@ bar {
         separator  $separator-color
 
         #                  border             background         text
-        focused_workspace  $focused-bg-color  $focused-bg-color  $focused-fg-color
-        active_workspace   $inactive-bg-color $inactive-bg-color $inactive-fg-color
-        inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-fg-color
-        urgent_workspace   $urgent-bg-color   $urgent-bg-color   $urgent-fg-color
+        focused_workspace  $focused-bd-color  $focused-bg-color  $focused-fg-color
+        active_workspace   $inactive-bd-color $inactive-bg-color $inactive-fg-color
+        inactive_workspace $inactive-bd-color $inactive-bg-color $inactive-fg-color
+        urgent_workspace   $urgent-bd-color   $urgent-bg-color   $urgent-fg-color
     }
 }
 
