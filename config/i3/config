@@ -114,15 +114,11 @@ bindsym $mod+Shift+colon move container to workspace back_and_forth
 bindsym $K_Alt+Tab       workspace next
 bindsym $K_Alt+Shift+Tab workspace prev
 
-bindsym $mod+$K_Alt+l  workspace next
-bindsym $mod+$K_Alt+h  workspace prev
 bindsym $mod+period    workspace next
 bindsym $mod+comma     workspace prev
 bindsym $mod+o         workspace next
 bindsym $mod+i         workspace prev
 
-bindsym $mod+$K_Alt+Shift+l move container to workspace next, workspace next
-bindsym $mod+$K_Alt+Shift+h move container to workspace prev, workspace prev
 bindsym $mod+Shift+greater  move container to workspace next, workspace next
 bindsym $mod+Shift+less     move container to workspace prev, workspace prev
 bindsym $mod+Shift+o        move container to workspace next, workspace next
@@ -213,10 +209,10 @@ bindsym $mod+slash          exec i3-input -f '$I3_INPUT' -P 'Open workspace: ' -
 bindsym $mod+Shift+question exec i3-input -f '$I3_INPUT' -P 'Move to workspace: ' -F 'move container to workspace "%s"'
 bindsym $mod+c              exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
 
-# Volume controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
-bindsym XF86AudioLowerVolume exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
-bindsym XF86AudioMute        exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
+# Volume Control
+bindsym XF86AudioRaiseVolume  exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
+bindsym XF86AudioLowerVolume  exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
+bindsym XF86AudioMute         exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
 
 # Media Control
 bindsym XF86AudioPlay         exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
@@ -224,17 +220,27 @@ bindsym XF86AudioPause        exec --no-startup-id $I3_HOME/scripts/media-contro
 bindsym XF86AudioNext         exec --no-startup-id $I3_HOME/scripts/media-control.sh next
 bindsym XF86AudioPrev         exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
 
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+# Sreen Brightness Control
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 
-# Touchpad controls
-bindsym XF86TouchpadToggle exec $I3_HOME/scripts/toggle-touchpad-enabled.sh
+# Touchpad Control
+bindsym XF86TouchpadToggle    exec --no-startup-id $I3_HOME/scripts/toggle-touchpad-enabled.sh
 
 # Print Screen
 bindsym --release Print       exec $cmd_screenshot       && screenshots-organize
 bindsym --release Shift+Print exec $cmd_screenshot_area  && screenshots-organize
 bindsym --release Ctrl+Print  exec $cmd_screenshot_delay && screenshots-organize
+
+# Easier Media Control
+bindsym $mod+$K_Alt+k      exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
+bindsym $mod+$K_Alt+l      exec --no-startup-id $I3_HOME/scripts/media-control.sh next
+bindsym $mod+$K_Alt+j      exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
+bindsym $mod+$K_Alt+p      exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
+bindsym $mod+$K_Alt+n      exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
+bindsym $mod+$K_Alt+m      exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
+bindsym $mod+$K_Alt+period exec --no-startup-id xbacklight -inc 5
+bindsym $mod+$K_Alt+comma  exec --no-startup-id xbacklight -dec 5
 
 # Keyboard layouts
 bindsym Control+$K_Alt+0 exec exec $I3_HOME/scripts/toggle-input-language.sh
