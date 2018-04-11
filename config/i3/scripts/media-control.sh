@@ -19,14 +19,15 @@ last_accessed_player() {
 
 mark_accessed_player() {
     player="$1"
-    echo "$player" > "$LAST_ACCESSED_PLAYER_FILE"
+    [[ -n "$player" ]] && echo "$player" > "$LAST_ACCESSED_PLAYER_FILE"
 }
 
 is_player_running() {
     player="$1"
-    playerctl -p "$player" status > /dev/null 2>&1 \
-        && ! playerctl -p "$player" status | grep 'Stopped' > /dev/null \
-        && return 0
+
+    if playerctl -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
+        return 0
+    fi
     return 1
 }
 
@@ -65,6 +66,12 @@ playing_players() {
 
 player_track_info() {
     player="$1"
+
+    if ! is_player_running "$player"; then
+        echo ''
+        return
+    fi
+
     artist="$(playerctl -p "$player" metadata artist)"
     title="$(playerctl -p "$player" metadata title)"
     output="$title - $artist"
@@ -76,20 +83,24 @@ player_track_info() {
 
 selected_player=''
 select_player() {
-    # First non ignored player in Playing state
     playing_players
-    for p in "${playing_players_result[@]}"; do
-        selected_player="$p"
-        break
-    done
+
+    if [[ "${#playing_players_result[@]}" == 1 ]]; then
+        selected_player="${playing_players_result[0]}"
+        mark_accessed_player "$selected_player"
+    fi
+
+    [[ -n "$selected_player" ]] && return
 
     # Last accessed player
-    if [[ -z "$selected_player" ]]; then
-        last_player="$(last_accessed_player)"
-        if ! is_ignored "$last_player"; then
-            selected_player="$last_player"
-        fi
+    last_player="$(last_accessed_player)"
+    if is_player_running "$last_player"; then
+        selected_player="$last_player"
     fi
+
+    [[ -n "$selected_player" ]] && return
+
+    selected_player="${non_ignored_running_players[0]}"
 }
 
 control_player() {
@@ -101,18 +112,16 @@ control_player() {
 
 is_playing() {
     for player in "${playing_players_result[@]}"; do
-        echo 'true'
-        return
+        echo true && return 0
     done
-    echo 'false'
+    echo false && return 1
 }
 
 is_running() {
     for player in "${non_ignored_running_players[@]}"; do
-        echo 'true'
-        return
+        echo true && return 0
     done
-    echo 'false'
+    echo false && return 1
 }
 
 select_player
