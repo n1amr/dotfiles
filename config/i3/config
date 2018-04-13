@@ -29,6 +29,11 @@ set $ws8 "8"
 set $ws9 "9"
 set $wslast "99: "
 
+set $DISLAY_WIDTH 1366
+set $DISLAY_HEIGHT 768
+set $HALF_DISLAY_WIDTH 683
+set $HALF_DISLAY_HEIGHT 384
+
 ################################################################################
 ################################  Key Bindings  ################################
 
@@ -170,7 +175,7 @@ mode "$mode_resize" {
 }
 bindsym $mod+r mode "$mode_resize"
 
-set $mode_launcher Launch: [f]irefox [k]eepass [v]lc [s]potify
+set $mode_launcher -- LAUNCH -- [f]irefox [k]eepass [v]lc [s]potify
 mode "$mode_launcher" {
     bindsym f exec firefox , mode "default"
     bindsym k exec keepass2, mode "default"
@@ -182,7 +187,7 @@ mode "$mode_launcher" {
 }
 bindsym $mod+x mode "$mode_launcher"
 
-set $mode_system System: (l) Lock, (e) Logout, (s) Suspend, (h) Hibernate, (R) Reboot, (S) Shutdown
+set $mode_system -- SYSTEM -- (l) Lock, (e) Logout, (s) Suspend, (h) Hibernate, (R) Reboot, (S) Shutdown
 mode "$mode_system" {
     bindsym Shift+r exec --no-startup-id systemctl reboot             , mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i        , mode "default"
@@ -198,6 +203,55 @@ mode "$mode_system" {
 # $ sudo vim /etc/systemd/logind.conf && sudo systemctl restart systemd-logind
 bindsym XF86PowerOff          mode "$mode_system"
 bindsym Control+$K_Alt+Delete mode "$mode_system"
+
+set $mode_mouse -- MOUSE -- HJKL: Movement, Shift+<k>: Slow movement, f: left click, d: right click
+mode "$mode_mouse" {
+    bindsym o  exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
+
+    # Display Edges
+    bindsym q  exec xdotool mousemove --sync 0 0
+    bindsym r  exec xdotool mousemove --sync $DISLAY_WIDTH 0
+    bindsym z  exec xdotool mousemove --sync 0 $DISLAY_WIDTH
+    bindsym v  exec xdotool mousemove --sync $DISLAY_WIDTH $DISLAY_WIDTH
+
+    # Mouse Click
+    bindsym f  exec xdotool click 1 # left
+    bindsym d  exec xdotool click 3 # right
+    bindsym x  exec xdotool click 2 # middle
+    bindsym a  exec xdotool click 4 # wheel up
+    bindsym s  exec xdotool click 5 # wheel down
+
+    set $STEP 25
+    set $SLOW_STEP 2
+
+    # Horizontal/Vertical
+    bindsym h      exec xdotool mousemove_relative --sync -- -$STEP 0
+    bindsym j      exec xdotool mousemove_relative --sync -- 0 +$STEP
+    bindsym k      exec xdotool mousemove_relative --sync -- 0 -$STEP
+    bindsym l      exec xdotool mousemove_relative --sync -- +$STEP 0
+
+    # Diagonal
+    bindsym u      exec xdotool mousemove_relative --sync -- -$STEP -$STEP
+    bindsym p      exec xdotool mousemove_relative --sync -- +$STEP -$STEP
+    bindsym n      exec xdotool mousemove_relative --sync -- -$STEP +$STEP
+    bindsym slash  exec xdotool mousemove_relative --sync -- +$STEP +$STEP
+
+    # Slow Horizontal/Vertical
+    bindsym Shift+h      exec xdotool mousemove_relative --sync -- -$SLOW_STEP 0
+    bindsym Shift+j      exec xdotool mousemove_relative --sync -- 0 +$SLOW_STEP
+    bindsym Shift+k      exec xdotool mousemove_relative --sync -- 0 -$SLOW_STEP
+    bindsym Shift+l      exec xdotool mousemove_relative --sync -- +$SLOW_STEP 0
+
+    # Slow Diagonal
+    bindsym Shift+u      exec xdotool mousemove_relative --sync -- -$SLOW_STEP -$SLOW_STEP
+    bindsym Shift+p      exec xdotool mousemove_relative --sync -- +$SLOW_STEP -$SLOW_STEP
+    bindsym Shift+n      exec xdotool mousemove_relative --sync -- -$SLOW_STEP +$SLOW_STEP
+    bindsym Shift+slash  exec xdotool mousemove_relative --sync -- +$SLOW_STEP +$SLOW_STEP
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+u           mode "$mode_mouse"
 
 set $I3_INPUT pango:DejaVu Sans Mono 12
 # bindsym $mod+comma          exec i3-input -f '$I3_INPUT' -P 'Rename: ' -F 'rename workspace to "%s"'
@@ -245,8 +299,8 @@ bindsym Control+$K_Alt+2 exec setxkbmap -layout ar
 
 # Applications Keyboard Shortcuts
 bindsym Control+$K_Alt+l exec $I3_HOME/scripts/lock.sh
-bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
-bindsym $mod+o           exec xdotool mousemove --sync 683 384
+bindsym Control+$K_Alt+k exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
+bindsym $mod+o           exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
 bindsym Control+$K_Alt+i exec xcalib -i -a
 bindsym $mod+i           exec xcalib -i -a
 bindsym Control+$K_Alt+t exec gnome-terminal
