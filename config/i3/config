@@ -116,13 +116,9 @@ bindsym $K_Alt+Shift+Tab workspace prev
 
 bindsym $mod+period    workspace next
 bindsym $mod+comma     workspace prev
-bindsym $mod+o         workspace next
-bindsym $mod+i         workspace prev
 
 bindsym $mod+Shift+greater  move container to workspace next, workspace next
 bindsym $mod+Shift+less     move container to workspace prev, workspace prev
-bindsym $mod+Shift+o        move container to workspace next, workspace next
-bindsym $mod+Shift+i        move container to workspace prev, workspace prev
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -250,7 +246,9 @@ bindsym Control+$K_Alt+2 exec setxkbmap -layout ar
 # Applications Keyboard Shortcuts
 bindsym Control+$K_Alt+l exec $I3_HOME/scripts/lock.sh
 bindsym Control+$K_Alt+k exec xdotool mousemove --sync 683 384
+bindsym $mod+o           exec xdotool mousemove --sync 683 384
 bindsym Control+$K_Alt+i exec xcalib -i -a
+bindsym $mod+i           exec xcalib -i -a
 bindsym Control+$K_Alt+t exec gnome-terminal
 
 bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
