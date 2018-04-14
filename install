@@ -115,6 +115,8 @@ if [ -x "$custom_install" ]; then
     "$custom_install"
 fi
 
+safe_link "$DST_HOME/.config/cmus" "$DOTFILES_HOME/custom/config/cmus"
+safe_link "$DST_HOME/.config/cmus/rc" "$DOTFILES_HOME/config/cmus/rc"
 safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
 safe_link "$DST_HOME/.config/nvim/init.vim" "$DOTFILES_HOME/config/nvim.vim"
 safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/custom/config/ranger"
