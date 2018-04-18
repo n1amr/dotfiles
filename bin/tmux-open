@@ -28,9 +28,8 @@ terminal_window_id () {
 any_terminal_window_id () {
     workspace="$(current_workspace)"
     terminal_id="$(terminal_window_id "$workspace")"
-    if [[ -z "$terminal_id" ]]; then
-        terminal_id="$(terminal_window_id)"
-    fi
+    [[ -z "$terminal_id" ]] && terminal_id="$(terminal_window_id 0)"
+    [[ -z "$terminal_id" ]] && terminal_id="$(terminal_window_id)"
     echo "$terminal_id"
 }
 
