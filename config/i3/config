@@ -333,10 +333,11 @@ bindsym Control+$K_Alt+i exec xcalib -i -a
 bindsym $mod+i           exec xcalib -i -a
 bindsym Control+$K_Alt+t exec gnome-terminal
 
-bindsym Control+$K_Alt+j     exec zsh -c '. ~/.zshrc && tmux-open'
-bindsym Control+$K_Alt+p     exec zsh -c '. ~/.zshrc && tmux-open ipython'
-bindsym Control+$K_Alt+slash exec zsh -c '. ~/.zshrc && tmux-open vim-server'
-bindsym $mod+Return          exec zsh -c '. ~/.zshrc && tmux-open zsh'
+bindsym $mod+Return             exec zsh -c '. ~/.zshrc && tmux-open zsh'
+bindsym Control+$K_Alt+Shift+j  exec gnome-terminal -- tmux attach
+bindsym Control+$K_Alt+j        exec zsh -c '. ~/.zshrc && tmux-open'
+bindsym Control+$K_Alt+p        exec zsh -c '. ~/.zshrc && tmux-open ipython'
+bindsym Control+$K_Alt+slash    exec zsh -c '. ~/.zshrc && tmux-open vim-server'
 
 ################################################################################
 ###################################  Styles  ###################################
