@@ -109,11 +109,9 @@ bindsym $mod+Shift+a focus child
 
 # switch to workspace
 bindsym $mod+Tab       workspace back_and_forth
-bindsym $mod+m         workspace back_and_forth
 bindsym $mod+semicolon workspace back_and_forth
 
 bindsym $mod+Shift+Tab   move container to workspace back_and_forth
-bindsym $mod+Shift+m     move container to workspace back_and_forth
 bindsym $mod+Shift+colon move container to workspace back_and_forth
 
 bindsym $K_Alt+Tab       workspace next
@@ -176,10 +174,34 @@ mode "$mode_resize" {
     bindsym Up    resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
     bindsym Right resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
 
+    bindsym m mode "$mode_move"
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "$mode_resize"
+
+set $mode_move -- MOVE --
+mode "$mode_move" {
+    set $MOVE_STEP 15
+    set $SLOW_MOVE_STEP 1
+
+    bindsym h move left  $MOVE_STEP px
+    bindsym j move down  $MOVE_STEP px
+    bindsym k move up    $MOVE_STEP px
+    bindsym l move right $MOVE_STEP px
+
+    bindsym Shift+h move left  $SLOW_MOVE_STEP px
+    bindsym Shift+j move down  $SLOW_MOVE_STEP px
+    bindsym Shift+k move up    $SLOW_MOVE_STEP px
+    bindsym Shift+l move right $SLOW_MOVE_STEP px
+
+    bindsym r mode "$mode_resize"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+m mode "$mode_move"
 
 set $mode_launcher -- LAUNCH -- [f]irefox [k]eepass [v]lc [s]potify
 mode "$mode_launcher" {
