@@ -158,17 +158,23 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 set $mode_resize -- RESIZE --
 mode "$mode_resize" {
-    set $RESIZE_DELTA 1
+    set $RESIZE_STEP 15
+    set $SLOW_RESIZE_STEP 1
 
-    bindsym h resize shrink width  $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym j resize grow   height $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym k resize shrink height $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym l resize grow   width  $RESIZE_DELTA px or $RESIZE_DELTA ppt
+    bindsym h resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym j resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym k resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym l resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
 
-    bindsym Left  resize shrink width  $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym Down  resize grow   height $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym Up    resize shrink height $RESIZE_DELTA px or $RESIZE_DELTA ppt
-    bindsym Right resize grow   width  $RESIZE_DELTA px or $RESIZE_DELTA ppt
+    bindsym Shift+h resize shrink width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindsym Shift+j resize grow   height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindsym Shift+k resize shrink height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindsym Shift+l resize grow   width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+
+    bindsym Left  resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym Down  resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym Up    resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym Right resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
