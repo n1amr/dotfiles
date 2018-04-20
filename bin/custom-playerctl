@@ -1,0 +1,109 @@
+#!/bin/bash
+
+cmus_is_running() {
+    if cmus-remote -Q > /dev/null 2>&1; then
+        return 0
+    fi
+    return 1
+}
+
+cmus_status() {
+    if ! cmus_is_running; then
+        echo "Not available"
+        return 1
+    fi
+    status="$(cmus-remote -Q | grep '^status' | cut -d ' ' -f 2)"
+    status="$(tr '[:lower:]' '[:upper:]' <<< ${status:0:1})${status:1}"
+    echo "$status"
+}
+
+cmus_perform_action() {
+    action="$1"
+    case "$action" in
+        play)      cmus-remote -p ;;
+        pause)     cmus-remote -u ;;
+        stop)      cmus-remote -s ;;
+        next)      cmus-remote -n ;;
+        previous)  cmus-remote -r ;;
+        status)  
+            cmus_status || exit 1
+        ;;
+        play-pause)  
+            if [[ "$(cmus_status)" != 'Playing' ]]; then
+                cmus-remote -p
+            else
+                cmus-remote -u
+            fi
+        ;;
+    esac
+}
+
+cmus_metadata() {
+    tag="$1"
+
+    if [[ -z "$tag" ]]; then
+        echo -n "$(cmus_metadata title) - $(cmus_metadata artist)"
+    else
+        result="$(cmus-remote -Q | grep "^tag $tag" | sed "s/^tag $tag //")"
+        echo -n "$result"
+    fi
+}
+
+playerctl_with_player() {
+    if [[ -z "$player" ]]; then
+        playerctl "$@"
+    else
+        playerctl -p "$player" "$@"
+    fi
+}
+
+list_players() {
+    if cmus_is_running; then
+        echo 'cmus'
+    fi
+    playerctl_with_player -l 2>/dev/null
+}
+
+show_metadata() {
+    args="${@}"
+    if [[ "$player" == 'cmus' ]]; then
+        cmus_metadata "$@"
+    else
+        playerctl_with_player metadata "$@"
+    fi
+}
+
+perform_action() {
+    action="$1"
+    if [[ "$player" == 'cmus' ]]; then
+        cmus_perform_action "$action"
+    else
+        playerctl_with_player "$action"
+    fi
+}
+
+player=''
+
+while [[ $# != 0 ]]; do
+    case "$1" in
+        -p|--player)
+            player="$2"
+            shift
+        ;;
+        -l|--list-all)
+            list_players
+        ;;
+        play|pause|play-pause|stop|next|previous|status)
+            perform_action "$1"
+        ;;
+        metadata)
+            show_metadata "${@:2}"
+            while [[ $# != 0 ]]; do shift; done
+        ;;
+        *)
+            echo "Error: Unknown argument \"$1\""
+            exit 1
+        ;;
+    esac
+    shift
+done

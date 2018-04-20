@@ -7,7 +7,7 @@ ICON_PREV=''
 ICON_STOP=''
 
 MEDIA_CONTROLLER="$(dirname "${BASH_SOURCE[0]}")/../../scripts/media-control.sh"
-if [[ "$("$MEDIA_CONTROLLER" is-running)" != 'true' ]]; then
+if ! "$MEDIA_CONTROLLER" is-running > /dev/null 2>&1; then
     exit
 fi
 
@@ -28,7 +28,7 @@ handle_click() {
 render_prev_button() { echo "$ICON_PREV"; }
 render_next_button() { echo "$ICON_NEXT"; }
 render_toggle_button() {
-    if [[ "$("$MEDIA_CONTROLLER" is-playing)" == 'true' ]]; then
+    if "$MEDIA_CONTROLLER" is-playing > /dev/null 2>&1; then
         echo "$ICON_PAUSE"
     else
         echo "$ICON_PLAY"

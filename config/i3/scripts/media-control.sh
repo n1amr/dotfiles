@@ -3,6 +3,10 @@
 # Depends on playerctl
 # https://github.com/acrisci/playerctl/releases
 
+source ~/.dotfiles_config
+CUSTOM_PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
+[[ ! -x "$CUSTOM_PLAYERCTL" ]] && CUSTOM_PLAYERCTL='playerctl'
+
 playectl_command="$1"
 
 LAST_ACCESSED_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.last-accessed-player"
@@ -25,7 +29,7 @@ mark_accessed_player() {
 is_player_running() {
     player="$1"
 
-    if playerctl -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
+    if "$CUSTOM_PLAYERCTL" -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
         return 0
     fi
     return 1
@@ -46,7 +50,7 @@ playing_players() {
     playing_players_result=()
 
     # Paused or Playing (excludes Stopped)
-    running_players=( $(playerctl -l) )
+    running_players=( $("$CUSTOM_PLAYERCTL" -l) )
 
     for p in "${running_players[@]}"; do
         # Skip ignored players
@@ -57,7 +61,7 @@ playing_players() {
 
         non_ignored_running_players+=("$p")
         if is_player_running "$p"; then
-            if [[ "$(playerctl -p "$p" status)" == 'Playing' ]]; then
+            if [[ "$("$CUSTOM_PLAYERCTL" -p "$p" status)" == 'Playing' ]]; then
                 playing_players_result+=("$p")
             fi
         fi
@@ -72,8 +76,8 @@ player_track_info() {
         return
     fi
 
-    artist="$(playerctl -p "$player" metadata artist)"
-    title="$(playerctl -p "$player" metadata title)"
+    artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
+    title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
     output="$title - $artist"
     if [[ "$output" == ' - ' ]]; then
         output=''
@@ -107,7 +111,7 @@ control_player() {
     player="$1"
     action="$2"
     mark_accessed_player "$player"
-    playerctl -p "$player" "$action"
+    "$CUSTOM_PLAYERCTL" -p "$player" "$action"
 }
 
 is_playing() {
@@ -126,7 +130,8 @@ is_running() {
 
 select_player
 if [[ -z "$selected_player" ]]; then
-    exit
+    echo "There is no running player"
+    exit 1
 fi
 
 case "$playectl_command" in
