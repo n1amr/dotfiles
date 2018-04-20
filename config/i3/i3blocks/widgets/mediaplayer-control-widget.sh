@@ -45,7 +45,9 @@ render_button() {
 }
 
 render_status() {
-    "$MEDIA_CONTROLLER" track-info
+    output="$("$MEDIA_CONTROLLER" track-info)"
+    [[ -z "$output" ]] && output="[$("$MEDIA_CONTROLLER" active-player)]"
+    echo "$output"
 }
 
 case "$BLOCK_BUTTON" in
