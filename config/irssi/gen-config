@@ -1,6 +1,13 @@
 #!/bin/bash
 
-password="$(cat password)"
+password_file="$(dirname "$0")/password"
+
+if [[ ! -f "$password_file" ]]; then
+    echo "Add password to '$password_file' file"
+    exit 1
+fi
+
+password="$(cat "$password_file")"
 if [ -f config.template ]; then
   cat config.template | sed "s/PASSWORD/${password}/g" > config
 else
