@@ -79,8 +79,9 @@ generate_exclude_opts() {
 rsync_args_result=()
 rsync_args() {
     OPERATION="$1"
-    path="$2"
-    backup_dir="$3"
+    local_path="$2"
+    remote_path="$3"
+    backup_dir="$4"
 
     rsync_args_result=()
 
@@ -98,17 +99,21 @@ rsync_args() {
         args+=(--delete)
     fi
 
-    generate_exclude_opts "$path"
+    if [[ "$OPERATION" = PULL* ]]; then
+        generate_exclude_opts "$remote_path"
+    elif [[ "$OPERATION" = PUSH* ]]; then
+        generate_exclude_opts "$local_path"
+    fi
     args+=("${generate_exclude_opts_result[@]}")
 
     args+=("${RSYNC_EXTRA_ARGS[@]}")
 
     if [[ "$OPERATION" = PULL* ]]; then
-        args+=("${HOST}:$path")
-        args+=("$path")
+        args+=("${HOST}:$remote_path")
+        args+=("$local_path")
     elif [[ "$OPERATION" = PUSH* ]]; then
-        args+=("$path")
-        args+=("${HOST}:$path")
+        args+=("$local_path")
+        args+=("${HOST}:$remote_path")
     fi
 
     rsync_args_result=("${args[@]}")
@@ -116,7 +121,8 @@ rsync_args() {
 
 run() {
     operation="$1"
-    path="$2"
+    local_path="$2"
+    remote_path="${3:-$2}"
 
     if ! echo "$operation" | grep -P "^($(echo "${VALID_OPERATIONS[@]}" | tr ' ' '|'))$" > /dev/null 2>&1; then
         error "Operation '$operation' is not valid"
@@ -124,12 +130,12 @@ run() {
     fi
     validate_required_parameters
 
-    backup_dir="$BACKUP_ROOT/$(realpath "$path")"
+    backup_dir="$BACKUP_ROOT/$(realpath "$remote_path")"
     mkdir_backup "$backup_dir"
     info "Profile: $profile"
-    info "$operation: $path"
+    info "$operation: $local_path (remote: $remote_path)"
 
-    rsync_args "$operation" "$path" "$backup_dir"
+    rsync_args "$operation" "$local_path" "$remote_path" "$backup_dir"
     rsync "${rsync_args_result[@]}"
 }
 
