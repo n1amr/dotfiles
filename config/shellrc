@@ -195,6 +195,10 @@ linerange () {
     head -"$2" | tail -n +"$1"
 }
 
+
+if [ "$SHELLNAME" = zsh ]; then
+    unalias man
+fi
 man() {
     command man "$@" | pipe_to_visual
 }
