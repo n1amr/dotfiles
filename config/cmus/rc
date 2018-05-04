@@ -197,6 +197,7 @@ set wrap_search=true
 factivate
 
 # Settings
+set follow=true
 set mouse=true
 set play_sorted=true
 set repeat=true
