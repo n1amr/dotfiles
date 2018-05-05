@@ -10,6 +10,10 @@
     path = notes
     url = http://gitlab.com/n1amr/notes-and-instructions.git
     branch = master
+[submodule "thirdparty/dunst"]
+    path = thirdparty/dunst
+    url = http://github.com/dunst-project/dunst
+    branch = master
 [submodule "thirdparty/fzf"]
     path = thirdparty/fzf
     url = http://github.com/junegunn/fzf.git
