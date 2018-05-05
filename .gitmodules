@@ -30,6 +30,10 @@
     path = thirdparty/oh-my-zsh
     url = http://github.com/robbyrussell/oh-my-zsh.git
     branch = master
+[submodule "thirdparty/playerctl"]
+    path = thirdparty/playerctl
+    url = http://github.com/acrisci/playerctl
+    branch = master
 [submodule "thirdparty/tmux-plugins/tmux-yank"]
     path = thirdparty/tmux-plugins/tmux-yank
     url = http://github.com/tmux-plugins/tmux-yank
