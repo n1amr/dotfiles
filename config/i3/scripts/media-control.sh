@@ -152,6 +152,11 @@ is_playing() {
     local player="$1"
     if [[ -z "$player" ]]; then
         player="$selected_player"
+    elif [[ "$player" = '<ANY>' ]]; then
+        for player in "${playing_players_result[@]}"; do
+            echo true && return 0
+        done
+        echo false && return 1
     fi
 
     if is_player_playing "$player"; then
@@ -178,9 +183,13 @@ is_running() {
 focus_player() {
     local player="$1"
     if is_player_running "$player"; then
-        selected_player="$player"
-        mark_active_player "$selected_player"
-        mark_focused_control_player "$selected_player"
+        mark_focused_player "$player"
+        if is_player_playing "$player"; then
+            mark_active_player "$player"
+        fi
+        if ! is_playing '<ANY>'; then
+            mark_active_player "$player"
+        fi
     fi
 }
 
