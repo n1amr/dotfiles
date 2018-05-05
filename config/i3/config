@@ -315,6 +315,7 @@ bindsym $mod+$K_Alt+k      exec --no-startup-id $I3_HOME/scripts/media-control.s
 bindsym $mod+$K_Alt+l      exec --no-startup-id $I3_HOME/scripts/media-control.sh next
 bindsym $mod+$K_Alt+j      exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
 bindsym $mod+$K_Alt+u      exec --no-startup-id $I3_HOME/scripts/focus-player.sh
+bindsym $mod+$K_Alt+slash  exec --no-startup-id $I3_HOME/scripts/focus-window.sh
 bindsym $mod+$K_Alt+p      exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
 bindsym $mod+$K_Alt+n      exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
 bindsym $mod+$K_Alt+m      exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
