@@ -9,46 +9,49 @@ CUSTOM_PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
 
 playectl_command="$1"
 
-LAST_ACCESSED_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.last-accessed-player.tmp"
-SOON_TO_CONTROL_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.soon-to-control.tmp"
+LAST_ACTIVE_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.last-active-player.tmp"
+FOCUSED_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.focused-player.tmp"
 
 ignored_players=(
     # vlc
 )
 
-[[ ! -f "$LAST_ACCESSED_PLAYER_FILE" ]] && touch "$LAST_ACCESSED_PLAYER_FILE"
+[[ ! -f "$LAST_ACTIVE_PLAYER_FILE" ]] && touch "$LAST_ACTIVE_PLAYER_FILE"
 
-clean_soon_to_control_file() {
-    # Remove if older than 5 seconds
-    if [[ -f "$SOON_TO_CONTROL_PLAYER_FILE" ]]; then
-        if [ "$(( $(date +"%s") - $(stat -c "%Y" "$SOON_TO_CONTROL_PLAYER_FILE") ))" -gt "5" ]; then
-            rm -f "$SOON_TO_CONTROL_PLAYER_FILE"
+clean_focuded_player_file_if_old() {
+    if [[ -f "$FOCUSED_PLAYER_FILE" ]]; then
+        if [ "$(( $(date +"%s") - $(stat -c "%Y" "$FOCUSED_PLAYER_FILE") ))" -gt "5" ]; then
+            rm -f "$FOCUSED_PLAYER_FILE"
         fi
     fi
 }
 
-clean_soon_to_control_file
+clean_focuded_player_file_if_old
 
-last_accessed_player() {
-    cat "$LAST_ACCESSED_PLAYER_FILE"
+last_active_player() {
+    if [[ -f "$LAST_ACTIVE_PLAYER_FILE" ]]; then
+        cat "$LAST_ACTIVE_PLAYER_FILE"
+    fi
 }
 
-soon_to_control_player() {
-    cat "$SOON_TO_CONTROL_PLAYER_FILE"
+focused_player() {
+    if [[ -f "$FOCUSED_PLAYER_FILE" ]]; then
+        cat "$FOCUSED_PLAYER_FILE"
+    fi
 }
 
-mark_accessed_player() {
-    player="$1"
-    [[ -n "$player" ]] && echo "$player" > "$LAST_ACCESSED_PLAYER_FILE"
+mark_active_player() {
+    local player="$1"
+    [[ -n "$player" ]] && echo "$player" > "$LAST_ACTIVE_PLAYER_FILE"
 }
 
-mark_soon_to_control_player() {
-    player="$1"
-    [[ -n "$player" ]] && echo "$player" > "$SOON_TO_CONTROL_PLAYER_FILE"
+mark_focused_player() {
+    local player="$1"
+    [[ -n "$player" ]] && echo "$player" > "$FOCUSED_PLAYER_FILE"
 }
 
 is_player_running() {
-    player="$1"
+    local player="$1"
     if "$CUSTOM_PLAYERCTL" -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
         return 0
     fi
@@ -56,7 +59,7 @@ is_player_running() {
 }
 
 is_player_playing() {
-    player="$1"
+    local player="$1"
 
     if "$CUSTOM_PLAYERCTL" -p "$player" status | grep -P 'Playing' > /dev/null; then
         return 0
@@ -65,9 +68,10 @@ is_player_playing() {
 }
 
 is_ignored() {
-    item="$1"
-    for x in "${ignored_players[@]}"; do
-        [[ "$item" == "$x" ]] && return 0
+    local item="$1"
+    local p
+    for p in "${ignored_players[@]}"; do
+        [[ "$item" == "$p" ]] && return 0
     done
     return 1
 }
@@ -79,11 +83,12 @@ playing_players() {
     playing_players_result=()
 
     # Paused or Playing (excludes Stopped)
-    running_players=( $("$CUSTOM_PLAYERCTL" -l) )
+    local running_players=( $("$CUSTOM_PLAYERCTL" -l) )
 
+    local p
     for p in "${running_players[@]}"; do
         # Skip ignored players
-        is_item_in_array_input=("${ignored_players[@]}")
+        local is_item_in_array_input=("${ignored_players[@]}")
         if is_ignored "$p"; then
             continue
         fi
@@ -98,16 +103,16 @@ playing_players() {
 }
 
 player_track_info() {
-    player="$1"
+    local player="$1"
 
     if ! is_player_running "$player"; then
         echo ''
         return
     fi
 
-    artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
-    title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
-    output="$title - $artist"
+    local artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
+    local title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
+    local output="$title - $artist"
     if [[ "$output" == ' - ' ]]; then
         output=''
     fi
@@ -120,13 +125,13 @@ select_player() {
 
     if [[ "${#playing_players_result[@]}" == 1 ]]; then
         selected_player="${playing_players_result[0]}"
-        mark_accessed_player "$selected_player"
+        mark_active_player "$selected_player"
     fi
 
     [[ -n "$selected_player" ]] && return
 
-    # Last accessed player
-    last_player="$(last_accessed_player)"
+    # Last active player
+    local last_player="$(last_active_player)"
     if is_player_running "$last_player"; then
         selected_player="$last_player"
     fi
@@ -137,17 +142,18 @@ select_player() {
 }
 
 control_player() {
-    player="$1"
-    action="$2"
-    mark_accessed_player "$player"
+    local player="$1"
+    local action="$2"
+    mark_active_player "$player"
     "$CUSTOM_PLAYERCTL" -p "$player" "$action"
 }
 
 is_playing() {
-    player="$1"
+    local player="$1"
     if [[ -z "$player" ]]; then
         player="$selected_player"
     fi
+
     if is_player_playing "$player"; then
         echo 'true' && return 0
     fi
@@ -155,7 +161,7 @@ is_playing() {
 }
 
 is_running() {
-    player="$1"
+    local player="$1"
     if [[ -z "$player" ]]; then
         for player in "${non_ignored_running_players[@]}"; do
             echo true && return 0
@@ -170,29 +176,31 @@ is_running() {
 }
 
 focus_player() {
-    player="$1"
+    local player="$1"
     if is_player_running "$player"; then
         selected_player="$player"
-        mark_accessed_player "$selected_player"
-        mark_soon_to_control_player "$selected_player"
+        mark_active_player "$selected_player"
+        mark_focused_control_player "$selected_player"
     fi
 }
 
 list_playing_players() {
+    local player
     for player in "${playing_players_result[@]}"; do
         echo "$player"
     done
 }
 
 list_running_players() {
+    local player
     for player in "${non_ignored_running_players[@]}"; do
         echo "$player"
     done
 }
 
 select_player
-if [[ -f "$SOON_TO_CONTROL_PLAYER_FILE" ]]; then
-    selected_player="$(soon_to_control_player)"
+if [[ -n "$(focused_player)" ]]; then
+    selected_player="$(focused_player)"
 fi
 if [[ -z "$selected_player" ]]; then
     echo "There is no running player"
