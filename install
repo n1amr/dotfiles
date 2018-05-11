@@ -2,6 +2,21 @@
 
 set -e
 
+# define an alternative to realpath if command does not exist
+command -v realpath || realpath() {
+    for p in "$@"; do
+        if [ -d "$p" ]; then
+            echo "$(cd "$p" && pwd -P)"
+        elif [ -f "$p" ]; then
+            if [ -L "$p" ]; then
+                ls -l "$p" | grep -Po '(?<=\-\>\s)(.*)'
+            else
+                echo "$(cd "$(dirname "$p")" && pwd -P)/$(basename "$p")"
+            fi
+        fi
+    done
+}
+
 DOTFILES_HOME="$(realpath "$(dirname "$0")")"
 DST_HOME="$HOME"
 interactive=true
