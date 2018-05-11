@@ -1,0 +1,92 @@
+unset SHELLNAME
+set SHELLNAME=tcsh
+
+set DOTFILES_HOME="$HOME/.dotfiles"
+
+alias b 'setenv SHELL /bin/bash && exec "$SHELL"'
+
+alias apt 'sudo apt'
+alias bakmv 'bak --move'
+alias bell 'DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/bell.ogg"'
+alias clock 'tty-clock -scn -C 2'
+alias cp 'cp -i'
+alias display-restore 'export DISPLAY=:0 && tmux setenv DISPLAY :0'
+alias dl 'trash'
+alias emacs 'DISPLAY= emacs'
+alias fgrep 'grep -F'
+alias g 'grep'
+alias ga 'git add'
+alias gc 'git commit -v'
+alias gcl 'git clone --recursive'
+alias gd 'git diff'
+alias gdca 'git diff --cached'
+alias gdplshared 'drive pull -ignore-name-clashes --ignore-conflict'
+alias gist 'gistey -sf'
+alias gp 'grep -P --color=auto'
+alias gst 'git status'
+alias h 'history'
+alias hbackup 'yes | cp ~/.${SHELLNAME}_history ~/.${SHELLNAME}_history.bak;'
+alias hgp "fc -El 0 | grep"
+alias hrestore 'yes | cp ~/.${SHELLNAME}_history.bak ~/.${SHELLNAME}_history; for i in {0..10000}; do echo; done; /usr/bin/clear; cd ~; exec ${SHELLNAME}'
+alias i3config '"$EDITOR" "$DOTFILES_HOME/config/i3/config"'
+alias ipy "ipython"
+alias ipython "python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
+alias j 'jump'
+alias k 'cdtree'
+alias l 'ls -lgoh'
+alias la 'ls -lAFh'
+alias ll 'ls -l'
+alias ls 'ls --color=yes'
+alias matlab-cli 'DISPLAY= matlab'
+alias md 'mkdir -pv'
+alias mkdir 'mkdir -pv'
+alias mv 'mv -i'
+alias myip 'dig +short myip.opendns.com @resolver1.opendns.com'
+alias myips 'ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)'\'' | awk '\''{ sub(/inet6? (addr:)? ?/, ""); print }'\'''
+alias nmcli 'nmcli -a'
+alias o 'gui-open'
+alias p 'ipython'
+alias psg 'psgrep'
+alias pss 'ps -e lx'
+alias py 'python -c'
+alias r 'ranger'
+alias rb 'ruby -e'
+alias ring 'DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/ring.ogg"'
+alias rm 'rm -i'
+alias s 'subl -a'
+alias shellrc '"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
+alias sync 'sudo "$(which syncf)"'
+alias t-display-restore 'tmux setenv -g DISPLAY :0'
+alias t 'tmux'
+alias tf 'tail -f'
+alias tmain 'tmuxsession main'
+alias tsn 'tmuxsession'
+alias tssh 'tmuxsession ssh'
+alias u 'up'
+alias v '"$VISUAL"'
+alias vi '"$VISUAL"'
+alias vibindkey 'reset_keybindings vi'
+alias vimrc '"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
+alias vs 'vim-server'
+alias wget 'wget -c'
+
+set    gray = "%{\033[1;30m%}"
+set     red = "%{\033[1;31m%}"
+set   green = "%{\033[0;32m%}"
+set  yellow = "%{\033[1;33m%}"
+set    blue = "%{\033[1;34m%}"
+set magenta = "%{\033[1;35m%}"
+set    cyan = "%{\033[1;36m%}"
+set   white = "%{\033[0;37m%}"
+set   reset = "%{\033[0m%}"
+set      ds = '$'
+
+set prompt = "${red}%n@%m${reset}:${blue}%~ ${gray}(SHELL=tcsh)${reset} \n ${green}${ds}${reset} "
+
+unset red green yellow blue magenta cyan yellow white reset ds
+
+# # Exec bash if using an interactive shell.
+# if ($?prompt) then
+#     setenv SHELL /bin/bash
+#     exec $SHELL
+# endif

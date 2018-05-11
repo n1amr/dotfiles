@@ -93,6 +93,7 @@ config_files="
     irbrc
     profile
     sqliterc
+    tcshrc
     tmux.conf
     vim
     wgetrc
