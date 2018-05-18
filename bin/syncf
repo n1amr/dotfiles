@@ -8,7 +8,7 @@ source "$DOTFILES_HOME/bin/utils/assert_file"
 
 info "Started at $(date)"
 
-SYNCF_RC="$DOTFILES_HOME/custom/config/dotfiles/sync.rc"
+SYNCF_RC="$DOTFILES_HOME/custom/config/dotfiles/syncf"
 
 profile="${1:-default}"
 info "Selected profile: $profile"
