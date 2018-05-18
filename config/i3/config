@@ -56,7 +56,9 @@ bindsym $mod+Shift+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec i3-dmenu-desktop
+# bindsym $mod+d exec i3-dmenu-desktop
+
+bindsym $mod+d exec $I3_HOME/scripts/j4-dmenu-desktop.sh
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
