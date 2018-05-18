@@ -203,6 +203,10 @@ man() {
     command man "$@" | pipe_to_visual
 }
 
+mkcd() {
+    mkdir -pv "$@" && cd "$1"
+}
+
 pipe_to_editor() {
     remove_color_codes | "$EDITOR" -
 }
@@ -290,7 +294,11 @@ sum_videos_duration () {
 }
 
 targz() {
-    tar -zcvf "$1.tar.gz" "$@"
+    if [[ "$2" = '--' ]]; then
+        tar -zcvf "$1.tar.gz" "${@:3}"
+    else
+        tar -zcvf "$1.tar.gz" "$@"
+    fi
 }
 
 terminal_resize () {
