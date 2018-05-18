@@ -289,6 +289,10 @@ sum_videos_duration () {
     print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
+targz() {
+    tar -zcvf "$1.tar.gz" "$@"
+}
+
 terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
 }
