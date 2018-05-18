@@ -307,7 +307,7 @@ terminal_resize () {
 
 tmuxsession () {
     session="$1"
-    if ! tmux has-session -t "$session"; then
+    if ! tmux has-session -t="$session"; then
         tmux new-session -d -s "$session"
     fi
     if [[ -z "$TMUX" ]]; then
