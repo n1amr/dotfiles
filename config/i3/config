@@ -231,8 +231,8 @@ mode "$mode_system" {
 }
 # To use XF86PowerOff you must set HandlePowerKey=ignore
 # $ sudo vim /etc/systemd/logind.conf && sudo systemctl restart systemd-logind
-bindsym XF86PowerOff          mode "$mode_system"
 bindsym Control+$K_Alt+Delete mode "$mode_system"
+bindsym XF86PowerOff          exec --no-startup-id $I3_HOME/scripts/suspend.sh
 
 set $mode_mouse -- MOUSE -- HJKL: Movement, Shift+<k>: Slow movement, f: left click, d: right click
 mode "$mode_mouse" {
