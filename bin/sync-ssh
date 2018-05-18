@@ -17,7 +17,6 @@ VALID_OPERATIONS=(
 )
 
 REQUIRED_PARAMETERS=(
-    BACKUP_ROOT
     HOST
 )
 
@@ -41,13 +40,17 @@ validate_required_parameters() {
 mkdir_backup() {
     backup_dir="$1"
     mkdir -p "$backup_dir"
-    rsync -a -s --rsh='ssh -p 4965 -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
+    rsync -a -s --rsh='ssh -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
 }
 
 clean_empty_directories() {
+    if [[ -z "$BACKUP_ROOT" ]]; then
+        error "Cannot clean backup. BACKUP_ROOT is not set"
+        exit 1
+    fi
     info "Cleaning empty directories..."
     find "$BACKUP_ROOT" -type d -empty -delete
-    ssh "$HOST" find "$BACKUP_ROOT" -type d -empty -delete
+    ssh "$HOST" -- find "$BACKUP_ROOT" -type d -empty -delete
 }
 
 generate_exclude_opts_result=()
@@ -93,7 +96,9 @@ rsync_args() {
         args+=(-u)
     fi
 
-    args+=(-b --backup-dir="$backup_dir")
+    if [[ -n "$backup_dir" ]]; then
+        args+=(-b --backup-dir="$backup_dir")
+    fi
 
     if [[ "$OPERATION" = *_MIRROR* ]]; then
         args+=(--delete)
@@ -130,8 +135,12 @@ run() {
     fi
     validate_required_parameters
 
-    backup_dir="$BACKUP_ROOT/$(realpath "$remote_path")"
-    mkdir_backup "$backup_dir"
+    if [[ -n "$BACKUP_ROOT" ]]; then
+        backup_dir="$BACKUP_ROOT/$(realpath "$remote_path")"
+        mkdir_backup "$backup_dir"
+    else
+        warning "No BACKUP_ROOT is set"
+    fi
     info "Profile: $profile"
     info "$operation: $local_path (remote: $remote_path)"
 
@@ -151,4 +160,6 @@ info "Loading profile at '$profile_file'"
 export -f run
 source "$profile_file"
 
-clean_empty_directories
+if [[ -n "$BACKUP_ROOT" ]]; then
+    clean_empty_directories
+fi
