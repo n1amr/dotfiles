@@ -76,6 +76,11 @@ generate_exclude_opts() {
         fi
     done
 
+    for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+        arr+=(--exclude="$pattern")
+        info "Excludes: $pattern"
+    done
+
     generate_exclude_opts_result=("${arr[@]}")
 }
 
