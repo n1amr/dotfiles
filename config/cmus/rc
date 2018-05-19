@@ -219,6 +219,7 @@ bind -f playlist ^O push load -p ~/.config/cmus/playlists/
 bind -f playlist ^S push save -p ~/.config/cmus/playlists/
 
 # Formats
+set format_current=>> %n. %t - %a%=[%y - %l] 
 set format_statusline= %{?status=">"? >?||} | %{?show_playback_position?%{position} %{?duration?/ %{duration} }?%{?duration?%{duration} }}| Total: %{total} %{?volume>=0?| Vol: %{?lvolume!=rvolume?%{lvolume},%{rvolume} ?%{volume} }}%{?stream?buf: %{buffer} }%{?show_current_bitrate & bitrate>=0? %{bitrate} kbps }%=%{?repeat_current?repeat current?%{?play_library?%{playlist_mode} from %{?play_sorted?sorted }library?playlist}} | %1{continue}%1{follow}%1{repeat}%1{shuffle} 
 
 # Coloescheme (Night)
