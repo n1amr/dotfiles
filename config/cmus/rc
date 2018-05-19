@@ -204,6 +204,7 @@ set repeat=true
 set resume=true
 set scroll_offset=0
 set shuffle=true
+set status_display_program=~/.config/cmus/scripts/notify-send.sh
 
 # Keybindings
 unbind -f common a
