@@ -38,12 +38,19 @@ validate_required_parameters() {
     done
 }
 
+single_quote() {
+    echo "'${1//\'/\'\\\'\'}'"
+}
+
 mkdir_backup() {
     backup_dir="$1"
+
     info "Creating local backup directory: $backup_dir"
     mkdir -p "$backup_dir"
-    info "Creating remote backup directory: $HOST:$backup_dir"
-    rsync -a -s --rsh='ssh -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
+
+    info "Creating remote backup directory: $backup_dir"
+    ssh "$HOST" -- "mkdir -p $(single_quote "$backup_dir")"
+    # rsync -a -s --rsh='ssh -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
 }
 
 clean_empty_backup_directories() {
@@ -144,7 +151,7 @@ run() {
     validate_required_parameters
 
     if [[ -n "$BACKUP_ROOT" ]]; then
-        backup_dir="$BACKUP_ROOT/$(realpath "$remote_path")"
+        backup_dir="$BACKUP_ROOT/$(realpath "$local_path")"
         mkdir_backup "$backup_dir"
     else
         warning "No BACKUP_ROOT is set"
