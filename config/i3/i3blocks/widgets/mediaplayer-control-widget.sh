@@ -22,6 +22,8 @@ handle_click() {
         button-toggle) handle_toggle ;;
         button-prev)   handle_prev ;;
         button-next)   handle_next ;;
+        button-next)   handle_next ;;
+        status)        handle_status_click ;;
     esac
 }
 
@@ -44,10 +46,35 @@ render_button() {
     esac
 }
 
+MAX_STATUS_LENGTH=20
 render_status() {
-    output="$("$MEDIA_CONTROLLER" track-info)"
-    [[ -z "$output" ]] && output="[$("$MEDIA_CONTROLLER" active-player)]"
-    echo "$output"
+    title="$("$MEDIA_CONTROLLER" track-info title)"
+    artist="$("$MEDIA_CONTROLLER" track-info artist)"
+
+    full_status="$title - $artist"
+
+    if [[ "${#title}" -gt "$MAX_STATUS_LENGTH" ]]; then
+        title="${title:0:$MAX_STATUS_LENGTH - 3}..."
+    fi
+    if [[ "${#artist}" -gt "$MAX_STATUS_LENGTH" ]]; then
+        title="${artist:0:$MAX_STATUS_LENGTH - 3}..."
+    fi
+
+    short_status="$title - $artist"
+
+    [[ "$full_status" = ' - ' ]] && full_status="[$("$MEDIA_CONTROLLER" active-player)]"
+    [[ "$short_status" = ' - ' ]] && short_status="[$("$MEDIA_CONTROLLER" active-player)]"
+    echo "$full_status"
+    echo "$short_status"
+}
+
+handle_status_click() {
+    app="$("$MEDIA_CONTROLLER" active-player)"
+    title="$("$MEDIA_CONTROLLER" track-info title)"
+    artist="$("$MEDIA_CONTROLLER" track-info artist)"
+    [[ -z "$title" ]] && title='Unknown'
+    [[ -z "$artist" ]] && artist='Unknown'
+    notify-send -t 2000 -a "$app" "$title" "by $artist"
 }
 
 case "$BLOCK_BUTTON" in
