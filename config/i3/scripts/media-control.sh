@@ -104,19 +104,24 @@ playing_players() {
 
 player_track_info() {
     local player="$1"
+    local tag="$2"
 
     if ! is_player_running "$player"; then
         echo ''
         return
     fi
 
-    local artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
-    local title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
-    local output="$title - $artist"
-    if [[ "$output" == ' - ' ]]; then
-        output=''
+    if [[ -z "$tag" ]]; then
+        local artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
+        local title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
+        local output="$title - $artist"
+        if [[ "$output" == ' - ' ]]; then
+            output=''
+        fi
+        echo "$output"
+    else
+        echo "$("$CUSTOM_PLAYERCTL" -p "$player" metadata "$tag")"
     fi
-    echo "$output"
 }
 
 selected_player=''
@@ -217,17 +222,17 @@ if [[ -z "$selected_player" ]]; then
 fi
 
 case "$playectl_command" in
-    active-player)   echo "$selected_player"                      ;;
-    is-running)      shift; is_running "$@"                       ;;
-    is-playing)      shift; is_playing "$@"                       ;;
-    focus-player)    shift; focus_player "$@"                     ;;
-    playing-players) list_playing_players                         ;;
-    running-players) list_running_players                         ;;
-    track-info)      player_track_info "$selected_player"         ;;
-    play-pause)      control_player "$selected_player" play-pause ;;
-    next)            control_player "$selected_player" next       ;;
-    prev)            control_player "$selected_player" previous   ;;
-    play)            control_player "$selected_player" play       ;;
-    pause)           control_player "$selected_player" pause      ;;
-    *)               echo "Unrecognized command '$1'"             ;;
+    active-player)   echo "$selected_player"                          ;;
+    is-running)      shift; is_running "$@"                           ;;
+    is-playing)      shift; is_playing "$@"                           ;;
+    focus-player)    shift; focus_player "$@"                         ;;
+    playing-players) list_playing_players                             ;;
+    running-players) list_running_players                             ;;
+    track-info)      shift; player_track_info "$selected_player" "$@" ;;
+    play-pause)      control_player "$selected_player" play-pause     ;;
+    next)            control_player "$selected_player" next           ;;
+    prev)            control_player "$selected_player" previous       ;;
+    play)            control_player "$selected_player" play           ;;
+    pause)           control_player "$selected_player" pause          ;;
+    *)               echo "Unrecognized command '$1'"                 ;;
 esac
