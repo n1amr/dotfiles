@@ -1,7 +1,6 @@
 #!/bin/bash
 
-exec > >(tee -a ~/log)
-exec 2>&1
+set -e
 
 artist=''
 status=''

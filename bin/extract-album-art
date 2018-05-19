@@ -3,7 +3,7 @@
 set -e
 
 file="$1"
-size="${2:-64x64}"
+size="${2:-48x48}"
 
 if [[ ! -f "$file" ]]; then
     echo "Cannot find file: $file" >&2
@@ -12,7 +12,7 @@ fi
 
 temp_album_art_dir='/tmp/album-arts/'
 [[ ! -d "$temp_album_art_dir" ]] && mkdir -p "$temp_album_art_dir"
-temp_album_art="$(mktemp "$temp_album_art_dir/${file##*/}XXXXXX.png")"
+temp_album_art="$(mktemp "$temp_album_art_dir/XXXXXX.png")"
 ffmpeg -y -i "$file" -s "$size" "$temp_album_art" > /dev/null 2>&1
 
 file_hash="$(md5sum "$temp_album_art" | cut -d ' ' -f 1)"

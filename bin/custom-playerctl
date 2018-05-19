@@ -69,11 +69,22 @@ list_players() {
 }
 
 show_metadata() {
-    args="${@}"
+    tag="$1"
+
     if [[ "$player" == 'cmus' ]]; then
-        cmus_metadata "$@"
-    else
-        playerctl_with_player metadata "$@"
+        cmus_metadata "$tag"
+    else # end of unsupported players
+        if [[ "$tag" = 'file' ]]; then
+            url="$(playerctl_with_player metadata xesam:url)"
+            file="$(urlencode -d "${url#file://}")"
+            echo -n "$file"
+        else # end of unsupported options
+            if [[ -z "$tag" ]]; then
+                playerctl_with_player metadata
+            else
+                playerctl_with_player metadata "$tag"
+            fi
+        fi
     fi
 }
 
@@ -86,7 +97,7 @@ perform_action() {
     fi
 }
 
-player=''
+player="$(list_players | head -1)"
 
 while [[ $# != 0 ]]; do
     case "$1" in

@@ -25,7 +25,7 @@
     icon_path = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
     icon_folders = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
     icon_position = right
-    max_icon_size = 32
+    max_icon_size = 48
 
     # Sort messages by urgency
     sort = yes
