@@ -1,6 +1,7 @@
 #!/bin/bash
 
 charging_icon=''
+non_charging_icon=''
 battery_icons=(
     
     
@@ -29,30 +30,40 @@ battery_icon="${battery_icons[$battery_level]}"
 
 charging_icon_color="$color_default"
 battery_icon_color="$color_default"
-show_charging_icon="false"
 if [[ "$charging" == 'true' ]]; then
+    charging_status_icon="$charging_icon"
     charging_icon_color="$color_success"
     if [[ "$battery_level" = '4' ]]; then
         battery_icon_color="$color_success"
     fi
-    show_charging_icon="true"
 else
+    charging_status_icon="$non_charging_icon"
     if [[ "$battery_level" -ge '2' ]]; then
         charging_icon_color="$color_default"
         battery_icon_color="$color_default"
     elif [[ "$battery_level" -ge '1' ]]; then
         charging_icon_color="$color_warning"
         battery_icon_color="$color_warning"
-        show_charging_icon="true"
     else
         charging_icon_color="$color_danger"
         battery_icon_color="$color_danger"
-        show_charging_icon="true"
     fi
 fi
 
-html=''
-[[ "$show_charging_icon" == "true" ]] && html+="<span foreground='$charging_icon_color'>${charging_icon}</span> "
-html+="<span foreground='$battery_icon_color'>${battery_icon}</span>" 
+render() {
+    html=''
+    html+="<span foreground='$charging_icon_color'>${charging_status_icon}</span> "
+    html+="<span foreground='$battery_icon_color'>${battery_icon}</span> "
+    html+="<span>${battery_percentage}%</span>"
 
-echo "<span>${html}</span>" 
+    echo "<span>${html}</span>"
+}
+
+handle_click() {
+    "$(dirname "$0")/battery.sh"
+}
+
+case "$BLOCK_BUTTON" in
+    1) handle_click ;;
+    *) render       ;;
+esac

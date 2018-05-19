@@ -31,9 +31,7 @@ interval=1
 ################################################################################
 
 # Volume indicator
-[volume-wrapper]
-# label=
-label=♪
+[custom-volume]
 #instance=Master
 ##instance=PCM
 interval=1
@@ -42,23 +40,15 @@ signal=10
 ################################################################################
 
 # Network interface monitoring
-[wifi]
-label= 
-instance=wlp2s0
-interval=5
-#separator=false
+[custom-wifi]
+interval=1
 
 ################################################################################
 
 # Battery indicator
 [battery-icon]
 interval=1
-separator=false
 markup=pango
-
-[battery]
-#instance=1
-interval=30
 
 ################################################################################
 
@@ -70,7 +60,7 @@ interval=1
 
 # Date
 [date]
-command=date '+%Y-%m-%d'
+command=date '+%a %Y-%m-%d'
 label=
 interval=1
 
@@ -78,5 +68,5 @@ interval=1
 
 # Time
 [time]
-command=date '+%H:%M:%S'
+command=date '+%r'
 interval=1

@@ -3,6 +3,9 @@
 source ~/.dotfiles_config
 I3_HOME="$DOTFILES_HOME/config/i3"
 
+SOUND_ICON=''
+NO_SOUND_ICON=''
+
 dir="$(dirname "${BASH_SOURCE[@]}")"
 
 [[ -n "$BLOCK_BUTTON" ]] && (
@@ -15,4 +18,10 @@ dir="$(dirname "${BASH_SOURCE[@]}")"
     esac
 )
 
-BLOCK_BUTTON='' "$dir/volume.sh" "${1:-5}" "${2:-pulse}"
+percentage="$(BLOCK_BUTTON='' "$dir/volume.sh" "${1:-5}" "${2:-pulse}")"
+
+if [[ "$percentage" != 'MUTE' ]]; then
+    echo "$SOUND_ICON $percentage"
+else
+    echo "$NO_SOUND_ICON"
+fi
