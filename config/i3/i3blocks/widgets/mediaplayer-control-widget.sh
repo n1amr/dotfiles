@@ -74,7 +74,11 @@ handle_status_click() {
     artist="$("$MEDIA_CONTROLLER" track-info artist)"
     [[ -z "$title" ]] && title='Unknown'
     [[ -z "$artist" ]] && artist='Unknown'
-    notify-send -t 2000 -a "$app" "$title" "by $artist"
+
+    file="$("$MEDIA_CONTROLLER" track-info file)"
+    icon_file="$(extract-album-art "$file")"
+
+    notify-send -t 5000 -a "$app" "$title" "by $artist" -i "$icon_file"
 }
 
 case "$BLOCK_BUTTON" in

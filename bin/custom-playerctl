@@ -41,12 +41,16 @@ cmus_perform_action() {
 cmus_metadata() {
     tag="$1"
 
+    result=''
     if [[ -z "$tag" ]]; then
-        echo -n "$(cmus_metadata title) - $(cmus_metadata artist)"
+        result="$(cmus_metadata title) - $(cmus_metadata artist)"
+    elif [[ "$tag" = "file" ]]; then
+        result="$(cmus-remote -Q | grep "^file " | sed "s/^file //")"
     else
         result="$(cmus-remote -Q | grep "^tag $tag" | sed "s/^tag $tag //")"
-        echo -n "$result"
     fi
+
+    echo -n "$result"
 }
 
 playerctl_with_player() {
