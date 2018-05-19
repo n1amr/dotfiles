@@ -7,8 +7,6 @@ source ~/.dotfiles_config
 CUSTOM_PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
 [[ ! -x "$CUSTOM_PLAYERCTL" ]] && CUSTOM_PLAYERCTL='playerctl'
 
-playectl_command="$1"
-
 LAST_ACTIVE_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.last-active-player.tmp"
 FOCUSED_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.focused-player.tmp"
 
@@ -221,18 +219,20 @@ if [[ -z "$selected_player" ]]; then
     exit 1
 fi
 
+playectl_command="$1"
+shift
 case "$playectl_command" in
-    active-player)   echo "$selected_player"                          ;;
-    is-running)      shift; is_running "$@"                           ;;
-    is-playing)      shift; is_playing "$@"                           ;;
-    focus-player)    shift; focus_player "$@"                         ;;
-    playing-players) list_playing_players                             ;;
-    running-players) list_running_players                             ;;
-    track-info)      shift; player_track_info "$selected_player" "$@" ;;
-    play-pause)      control_player "$selected_player" play-pause     ;;
-    next)            control_player "$selected_player" next           ;;
-    prev)            control_player "$selected_player" previous       ;;
-    play)            control_player "$selected_player" play           ;;
-    pause)           control_player "$selected_player" pause          ;;
-    *)               echo "Unrecognized command '$1'"                 ;;
+    active-player)   echo "$selected_player"                         ;;
+    is-running)      is_running "$@"                                 ;;
+    is-playing)      is_playing "$@"                                 ;;
+    focus-player)    focus_player "$@"                               ;;
+    playing-players) list_playing_players                            ;;
+    running-players) list_running_players                            ;;
+    track-info)      player_track_info "$selected_player" "$@"       ;;
+    play-pause)      control_player "$selected_player" play-pause    ;;
+    next)            control_player "$selected_player" next          ;;
+    prev)            control_player "$selected_player" previous      ;;
+    play)            control_player "$selected_player" play          ;;
+    pause)           control_player "$selected_player" pause         ;;
+    *)               echo "Unrecognized command '$playectl_command'" ;;
 esac
