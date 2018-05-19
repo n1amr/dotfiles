@@ -11,6 +11,7 @@ CONFIG_ROOT_PATH="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh"
 VALID_OPERATIONS=(
     PULL
     PULL_MIRROR
+    PULL_MIRROR_OVERWRITE
     PUSH
     PUSH_MIRROR
     PUSH_MIRROR_OVERWRITE
@@ -39,11 +40,13 @@ validate_required_parameters() {
 
 mkdir_backup() {
     backup_dir="$1"
+    info "Creating local backup directory: $backup_dir"
     mkdir -p "$backup_dir"
+    info "Creating remote backup directory: $HOST:$backup_dir"
     rsync -a -s --rsh='ssh -T -o Compression=no -x' -f"+ */" -f"- *" "$BACKUP_ROOT/" "${HOST}:$BACKUP_ROOT/" > /dev/null
 }
 
-clean_empty_directories() {
+clean_empty_backup_directories() {
     if [[ -z "$BACKUP_ROOT" ]]; then
         error "Cannot clean backup. BACKUP_ROOT is not set"
         exit 1
@@ -146,8 +149,18 @@ run() {
     else
         warning "No BACKUP_ROOT is set"
     fi
+
     info "Profile: $profile"
-    info "$operation: $local_path (remote: $remote_path)"
+    info "Host: $HOST"
+    if [[ "$local_path" == "$remote_path" ]]; then
+        info "$operation: $local_path"
+    else
+        if [[ "$operation" = PULL* ]]; then
+            info "$operation: $HOST:$remote_path => $local_path"
+        elif [[ "$operation" = PUSH* ]]; then
+            info "$operation: $local_path => $HOST:$remote_path"
+        fi
+    fi
 
     rsync_args "$operation" "$local_path" "$remote_path" "$backup_dir"
     rsync "${rsync_args_result[@]}"
@@ -163,8 +176,12 @@ assert_file "$profile_file"
 
 info "Loading profile at '$profile_file'"
 export -f run
+export HOST=''
+export BACKUP_ROOT=''
+export EXCLUDES=()
+export EXCLUDE_PATTERNS=()
 source "$profile_file"
 
 if [[ -n "$BACKUP_ROOT" ]]; then
-    clean_empty_directories
+    clean_empty_backup_directories
 fi
