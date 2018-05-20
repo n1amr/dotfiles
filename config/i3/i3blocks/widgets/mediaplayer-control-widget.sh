@@ -75,8 +75,7 @@ handle_status_click() {
     [[ -z "$title" ]] && title='Unknown'
     [[ -z "$artist" ]] && artist='Unknown'
 
-    file="$("$MEDIA_CONTROLLER" track-info file)"
-    icon_file="$(extract-album-art "$file")"
+    icon_file="$("$MEDIA_CONTROLLER" track-info artFile)"
 
     notify-send -t 5000 -a "$app" "$title" "by $artist" -i "$icon_file"
 }

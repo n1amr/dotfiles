@@ -68,21 +68,46 @@ list_players() {
     playerctl_with_player -l 2>/dev/null
 }
 
+get_art_file() {
+    temp_dir='/tmp/album-arts'
+    [[ ! -d "$temp_dir" ]] && mkdir -p "$temp_dir"
+
+    if [[ "$player" == 'spotify' ]]; then
+        url="$(playerctl_with_player metadata mpris:artUrl)"
+        temp_file="$(mktemp "$temp_dir/XXXXXX")"
+        # TODO: download delay
+        wget "$url" -O "$temp_file" > /dev/null 2>&1
+    else
+        track_file="$(cmus_metadata file)"
+        temp_file="$(mktemp "$temp_dir/XXXXXX.png")"
+        ffmpeg -y -i "$track_file" -s 48x48 "${temp_file}" > /dev/null 2>&1
+    fi
+
+    file_hash="$(md5sum "$temp_file" | cut -d ' ' -f 1)"
+    new_name="$temp_dir/${file_hash}"
+    mv "$temp_file" "$new_name"
+    echo "$new_name"
+}
+
 show_metadata() {
     tag="$1"
 
-    if [[ "$player" == 'cmus' ]]; then
-        cmus_metadata "$tag"
-    else # end of unsupported players
-        if [[ "$tag" = 'file' ]]; then
-            url="$(playerctl_with_player metadata xesam:url)"
-            file="$(urlencode -d "${url#file://}")"
-            echo -n "$file"
-        else # end of unsupported options
-            if [[ -z "$tag" ]]; then
-                playerctl_with_player metadata
-            else
-                playerctl_with_player metadata "$tag"
+    if [[ "$tag" = 'artFile' ]]; then
+        echo -n "$(get_art_file)"
+    else
+        if [[ "$player" == 'cmus' ]]; then
+            cmus_metadata "$tag"
+        else # end of unsupported players
+            if [[ "$tag" = 'file' ]]; then
+                url="$(playerctl_with_player metadata xesam:url)"
+                file="$(urlencode -d "${url#file://}")"
+                echo -n "$file"
+            else # end of unsupported options
+                if [[ -z "$tag" ]]; then
+                    playerctl_with_player metadata
+                else
+                    playerctl_with_player metadata "$tag"
+                fi
             fi
         fi
     fi
