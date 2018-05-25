@@ -58,6 +58,7 @@ if [ "$SHELLNAME" = zsh ]; then
         rsync
         z
     )
+    export ZSH_DISABLE_COMPFIX=true
     source "$ZSH/oh-my-zsh.sh"
 elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
