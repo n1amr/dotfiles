@@ -4,6 +4,7 @@ set SHELLNAME=tcsh
 set DOTFILES_HOME="$HOME/.dotfiles"
 
 alias b 'setenv SHELL /bin/bash && exec "$SHELL"'
+alias z 'setenv SHELL "$HOME/.local/bin/zsh" && exec "$SHELL"'
 
 alias apt 'sudo apt'
 alias bakmv 'bak --move'

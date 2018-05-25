@@ -97,13 +97,21 @@ fi
 ################################################################################
 ####################################  PATH  ####################################
 
+export CPPFLAGS="-I/home/$DOTFILES_USER/.local/include"
+export LDFLAGS="-L/home/$DOTFILES_USER/.local/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$DOTFILES_USER/.local/lib"
+export PATH="/home/$DOTFILES_USER/.local/bin:$PATH"
+
 export PATH="$NDENV_ROOT/bin:$PATH"
+eval "$( type ndenv > /dev/null 2>&1 && ndenv init -)"
+
 export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
+
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
-eval "$( type ndenv > /dev/null 2>&1 && ndenv init -)"
-eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
 eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
+
 export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
