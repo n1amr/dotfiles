@@ -74,19 +74,27 @@ get_art_file() {
 
     if [[ "$player" == 'spotify' ]]; then
         url="$(playerctl_with_player metadata mpris:artUrl)"
-        temp_file="$(mktemp "$temp_dir/XXXXXX")"
-        # TODO: download delay
-        wget "$url" -O "$temp_file" > /dev/null 2>&1
+        image_id="$(echo "$url" | sed 's#.*/image/##')"
+        url="https://i.scdn.co/image/$image_id"
+        art_file="$temp_dir/spotify-$image_id"
+
+        if [[ ! -f "$art_file" ]]; then
+            temp_file="$(mktemp "$temp_dir/XXXXXX")"
+            wget "$url" -O "$temp_file" > /dev/null 2>&1
+            mv "$temp_file" "$art_file"
+        fi
     else
-        track_file="$(cmus_metadata file)"
-        temp_file="$(mktemp "$temp_dir/XXXXXX.png")"
-        ffmpeg -y -i "$track_file" -s 48x48 "${temp_file}" > /dev/null 2>&1
+        track_file="$(show_metadata file)"
+        art_file="$temp_dir/$(echo "$track_file" | sed 's#/#%#g').png"
+
+        if [[ ! -f "$art_file" ]]; then
+            temp_file="$(mktemp "$temp_dir/XXXXXX.png")"
+            ffmpeg -y -i "$track_file" -s 48x48 "${temp_file}" > /dev/null 2>&1
+            mv "$temp_file" "$art_file"
+        fi
     fi
 
-    file_hash="$(md5sum "$temp_file" | cut -d ' ' -f 1)"
-    new_name="$temp_dir/${file_hash}"
-    mv "$temp_file" "$new_name"
-    echo "$new_name"
+    echo "$art_file"
 }
 
 show_metadata() {
