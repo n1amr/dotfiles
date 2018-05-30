@@ -43,9 +43,8 @@ PLAYLIST_URL="https://youtube.com/playlist?list=$PLAYLIST_ID"
 COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
 LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"; export LOCK_FILE
 ARCHIVE_FILE="$TARGET_DIR/.download_archive"
-OUTPUT_TEMPLATE='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
-COMMON_ARGS='-f 18 --sub-lang en,ar --write-auto-sub --convert-subs srt
---continue --mark-watched --ignore-errors'
+DEFAULT_OUTPUT_TEMPLATE='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
+OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE:-$DEFAULT_OUTPUT_TEMPLATE}"
 
 cd "$YOUTUBE_HOME"
 if [ ! -d .youtube-dl ]; then
@@ -57,13 +56,19 @@ if [ ! -f "$COOKIE_FILE" ]; then
     exit 1
 fi
 
-cd "$TARGET_DIR"
+ARGS=()
+ARGS+=(-f 18)
+ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
+ARGS+=(--continue --ignore-errors)
+ARGS+=(--mark-watched)
+ARGS+=(--cookie "$COOKIE_FILE")
+ARGS+=(--download-archive "$ARCHIVE_FILE")
+ARGS+=(-o "$OUTPUT_TEMPLATE")
+ARGS+=("$PLAYLIST_URL")
+
 echo "Target directory: $TARGET_DIR"
 echo "Playlist url: $PLAYLIST_URL"
+echo "Command: $YOUTUBE_DOWNLADER ${ARGS[@]}"
 
-# shellcheck disable=SC2086
-"$YOUTUBE_DOWNLADER" $COMMON_ARGS \
-    --cookie "$COOKIE_FILE" \
-    --download-archive "$ARCHIVE_FILE" \
-    -o "$OUTPUT_TEMPLATE" \
-    "$PLAYLIST_URL"
+cd "$TARGET_DIR"
+"$YOUTUBE_DOWNLADER" "${ARGS[@]}"

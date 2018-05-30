@@ -24,6 +24,7 @@ fi
 
 COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
 ARCHIVE_FILE="$YOUTUBE_HOME/.youtube-dl/archive"
+OUTPUT_TEMPLATE='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 
 if [ ! -f "$COOKIE_FILE" ]; then
     echo "Please copy cookies.txt into '$COOKIE_FILE'"
@@ -48,7 +49,7 @@ ARGS+=(--continue --ignore-errors)
 ARGS+=(--mark-watched)
 ARGS+=(--cookie "$COOKIE_FILE")
 ARGS+=(--download-archive "$ARCHIVE_FILE")
-ARGS+=(-o '%(title)s - (@%(uploader)s - %(id)s).%(ext)s')
+ARGS+=(-o "$OUTPUT_TEMPLATE")
 ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date +%s). $f"; done')
 ARGS+=("$URL")
 
