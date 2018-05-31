@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.dotfiles_config
+
 cmus_is_running() {
     if cmus-remote -Q > /dev/null 2>&1; then
         return 0
@@ -68,51 +70,11 @@ list_players() {
     playerctl_with_player -l 2>/dev/null
 }
 
-fetch_local_album_art() {
-    local track_file="$1"
-    local output_file="$2"
-    ffmpeg -y -i "$track_file" -s 48x48 "$output_file" > /dev/null 2>&1
-}
-
-fetch_spotify_album_art() {
-    local url="$1"
-    local output_file="$2"
-    wget "$url" -O "$output_file" > /dev/null 2>&1
-}
-
 get_art_file() {
-    temp_dir='/tmp/album-arts'
-    [[ ! -d "$temp_dir" ]] && mkdir -p "$temp_dir"
-
-    successful='false'
     if [[ "$player" == 'spotify' ]]; then
-        url="$(playerctl_with_player metadata mpris:artUrl)"
-        image_id="$(echo "$url" | sed 's#.*/image/##')"
-        url="https://i.scdn.co/image/$image_id"
-        art_file="$temp_dir/spotify-$image_id"
-
-        if [[ ! -s "$art_file" ]]; then
-            temp_file="$(mktemp "$temp_dir/XXXXXX")"
-            fetch_spotify_album_art "$url" "$temp_file" && successful='true'
-        fi
+        "$DOTFILES_HOME/bin/extract-album-art-spotify" "$(playerctl_with_player metadata mpris:artUrl)"
     else
-        track_file="$(show_metadata file)"
-        art_file="$temp_dir/$(echo "$track_file" | sed 's#/#%#g').png"
-
-        if [[ ! -s "$art_file" ]]; then
-            temp_file="$(mktemp "$temp_dir/XXXXXX.png")"
-            fetch_local_album_art "$track_file" "$temp_file" && successful='true'
-        fi
-    fi
-
-    if [[ "$successful" = 'true' ]]; then
-        mv "$temp_file" "$art_file"
-    fi
-
-    if [[ -s "$art_file" ]]; then
-        echo "$art_file"
-    else
-        rm -rf "$art_file" "$temp_file"
+        "$DOTFILES_HOME/bin/extract-album-art" "$(show_metadata file)"
     fi
 }
 
@@ -157,7 +119,6 @@ display_notification() {
     )
 
     [[ -s "$icon_file" ]] && args+=(-i "$icon_file")
-    echo notify-send "${args[@]}" >> ~/log
     notify-send "${args[@]}"
 }
 

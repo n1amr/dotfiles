@@ -5,14 +5,14 @@ set -e
 TEMP_DIR='/tmp/album-arts'
 [[ ! -d "$TEMP_DIR" ]] && mkdir -p "$TEMP_DIR"
 
-DEFAULT_SIZE='300x300'
-track_file="$1"
-size="${2:-$DEFAULT_SIZE}"
+image_url="$1"
+image_id="$(echo "$image_url" | sed 's#.*/image/##')"
+url="https://i.scdn.co/image/$image_id"
 
-output_file="$TEMP_DIR/$(echo -n "$track_file" | tr ',' '-' | sed 's#/#_#g')-$(echo "$track_file" | md5sum | cut -d ' ' -f 1).png"
+output_file="$TEMP_DIR/spotify-$image_id.jpg"
 if [[ ! -s "$output_file" ]]; then
     temp_file="$(mktemp "$TEMP_DIR/XXXXXX.png")"
-    ffmpeg -y -i "$track_file" -s "$size" "$temp_file" > /dev/null 2>&1 &&
+    wget "$url" -O "$temp_file" > /dev/null 2>&1 &&
         mv "$temp_file" "$output_file"
 fi
 
