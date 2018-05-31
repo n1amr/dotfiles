@@ -96,6 +96,7 @@
     # should a notification popped up from history be sticky or
     # timeout as if it would normally do.
     sticky_history = yes
+    history_length = 100000
 
     # Display indicators for URLs (U) and actions (A)
     show_indicators = no
