@@ -24,10 +24,10 @@
 
     max_icon_size = 48
     icon_position = right
-    icon_path = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
+    icon_path = /home/n1amr/.local/share/icons/:/home/n1amr/.local/share/icons/hicolor/32x32/apps/:/home/n1amr/.local/share/icons/hicolor/48x48/apps/:/home/n1amr/.local/share/icons/hicolor/128x128/apps/:/home/n1amr/.local/share/icons/hicolor/256x256/apps/:/home/n1amr/.local/share/icons/hicolor/16x16/apps/:/usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/hicolor/32x32/status/:/usr/share/icons/hicolor/32x32/actions/:/usr/share/icons/hicolor/32x32/mimetypes/:/usr/share/icons/locolor/32x32/apps/:/usr/share/icons/locolor/32x32/mimetypes/:/usr/share/icons/gnome/32x32/apps/:/usr/share/icons/gnome/32x32/actions/:/usr/share/icons/gnome/32x32/categories/:/usr/share/icons/gnome/32x32/devices/:/usr/share/icons/gnome/32x32/emblems/:/usr/share/icons/gnome/32x32/mimetypes/:/usr/share/icons/gnome/32x32/places/:/usr/share/icons/gnome/32x32/status/
 
     # deprecated
-    icon_folders = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
+    icon_folders = /home/n1amr/.local/share/icons/:/home/n1amr/.local/share/icons/hicolor/32x32/apps/:/home/n1amr/.local/share/icons/hicolor/48x48/apps/:/home/n1amr/.local/share/icons/hicolor/128x128/apps/:/home/n1amr/.local/share/icons/hicolor/256x256/apps/:/home/n1amr/.local/share/icons/hicolor/16x16/apps/:/usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/hicolor/32x32/status/:/usr/share/icons/hicolor/32x32/actions/:/usr/share/icons/hicolor/32x32/mimetypes/:/usr/share/icons/locolor/32x32/apps/:/usr/share/icons/locolor/32x32/mimetypes/:/usr/share/icons/gnome/32x32/apps/:/usr/share/icons/gnome/32x32/actions/:/usr/share/icons/gnome/32x32/categories/:/usr/share/icons/gnome/32x32/devices/:/usr/share/icons/gnome/32x32/emblems/:/usr/share/icons/gnome/32x32/mimetypes/:/usr/share/icons/gnome/32x32/places/:/usr/share/icons/gnome/32x32/status/
 
     # Sort messages by urgency
     sort = yes
