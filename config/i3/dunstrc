@@ -22,10 +22,12 @@
     # Markup is allowed
     format = "<span size='small'>%a</span> %p\n<b>%s</b>\n%b"
 
-    icon_path = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-    icon_folders = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-    icon_position = right
     max_icon_size = 48
+    icon_position = right
+    icon_path = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
+
+    # deprecated
+    icon_folders = /usr/share/icons/hicolor/32x32/apps/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
 
     # Sort messages by urgency
     sort = yes
@@ -165,16 +167,19 @@
     timeout = 5
     background = "#514F56"
     foreground = "#FFFFFF"
+    icon =
 
 [urgency_normal]
     timeout = 10
     background = "#514F56"
     foreground = "#FFFFFF"
+    icon = messagebox_info
 
 [urgency_critical]
     timeout = 120
     background = "#B71C1C"
     foreground = "#FFFFFF"
+    icon = messagebox_warning
 
 # Every section that isn't one of the above is interpreted as a rules
 # to override settings for certain messages.
