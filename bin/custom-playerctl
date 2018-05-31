@@ -68,33 +68,52 @@ list_players() {
     playerctl_with_player -l 2>/dev/null
 }
 
+fetch_local_album_art() {
+    local track_file="$1"
+    local output_file="$2"
+    ffmpeg -y -i "$track_file" -s 48x48 "$output_file" > /dev/null 2>&1
+}
+
+fetch_spotify_album_art() {
+    local url="$1"
+    local output_file="$2"
+    wget "$url" -O "$output_file" > /dev/null 2>&1
+}
+
 get_art_file() {
     temp_dir='/tmp/album-arts'
     [[ ! -d "$temp_dir" ]] && mkdir -p "$temp_dir"
 
+    successful='false'
     if [[ "$player" == 'spotify' ]]; then
         url="$(playerctl_with_player metadata mpris:artUrl)"
         image_id="$(echo "$url" | sed 's#.*/image/##')"
         url="https://i.scdn.co/image/$image_id"
         art_file="$temp_dir/spotify-$image_id"
 
-        if [[ ! -f "$art_file" ]]; then
+        if [[ ! -s "$art_file" ]]; then
             temp_file="$(mktemp "$temp_dir/XXXXXX")"
-            wget "$url" -O "$temp_file" > /dev/null 2>&1
-            mv "$temp_file" "$art_file"
+            fetch_spotify_album_art "$url" "$temp_file" && successful='true'
         fi
     else
         track_file="$(show_metadata file)"
         art_file="$temp_dir/$(echo "$track_file" | sed 's#/#%#g').png"
 
-        if [[ ! -f "$art_file" ]]; then
+        if [[ ! -s "$art_file" ]]; then
             temp_file="$(mktemp "$temp_dir/XXXXXX.png")"
-            ffmpeg -y -i "$track_file" -s 48x48 "${temp_file}" > /dev/null 2>&1
-            mv "$temp_file" "$art_file"
+            fetch_local_album_art "$track_file" "$temp_file" && successful='true'
         fi
     fi
 
-    echo "$art_file"
+    if [[ "$successful" = 'true' ]]; then
+        mv "$temp_file" "$art_file"
+    fi
+
+    if [[ -s "$art_file" ]]; then
+        echo "$art_file"
+    else
+        rm -rf "$art_file" "$temp_file"
+    fi
 }
 
 show_metadata() {
@@ -119,6 +138,27 @@ show_metadata() {
             fi
         fi
     fi
+}
+
+display_notification() {
+    app="$player"
+    title="$(show_metadata title)"
+    title="${title:-Unknown}"
+    artist="$(show_metadata artist)"
+    artist="${artist:-Unknown}"
+
+    icon_file="$(show_metadata artFile)"
+
+    args=(
+        -t 5000
+        -a "$app"
+        "$title"
+        "by $artist"
+    )
+
+    [[ -s "$icon_file" ]] && args+=(-i "$icon_file")
+    echo notify-send "${args[@]}" >> ~/log
+    notify-send "${args[@]}"
 }
 
 perform_action() {
@@ -147,6 +187,9 @@ while [[ $# != 0 ]]; do
         metadata)
             show_metadata "${@:2}"
             while [[ $# != 0 ]]; do shift; done
+        ;;
+        notification)
+            display_notification
         ;;
         *)
             echo "Error: Unknown argument \"$1\""

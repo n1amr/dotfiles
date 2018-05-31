@@ -69,15 +69,7 @@ render_status() {
 }
 
 handle_status_click() {
-    app="$("$MEDIA_CONTROLLER" active-player)"
-    title="$("$MEDIA_CONTROLLER" track-info title)"
-    artist="$("$MEDIA_CONTROLLER" track-info artist)"
-    [[ -z "$title" ]] && title='Unknown'
-    [[ -z "$artist" ]] && artist='Unknown'
-
-    icon_file="$("$MEDIA_CONTROLLER" track-info artFile)"
-
-    notify-send -t 5000 -a "$app" "$title" "by $artist" -i "$icon_file"
+    "$MEDIA_CONTROLLER" notification
 }
 
 case "$BLOCK_BUTTON" in

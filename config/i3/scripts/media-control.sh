@@ -210,6 +210,10 @@ list_running_players() {
     done
 }
 
+display_notification() {
+    "$CUSTOM_PLAYERCTL" -p "$selected_player" notification
+}
+
 select_player
 if [[ -n "$(focused_player)" ]]; then
     selected_player="$(focused_player)"
@@ -234,5 +238,6 @@ case "$playectl_command" in
     prev)            control_player "$selected_player" previous      ;;
     play)            control_player "$selected_player" play          ;;
     pause)           control_player "$selected_player" pause         ;;
+    notification)    display_notification                            ;;
     *)               echo "Unrecognized command '$playectl_command'" ;;
 esac
