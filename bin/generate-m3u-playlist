@@ -1,9 +1,19 @@
 #!/bin/bash
 
+urlencode_all() {
+    echo "$@" | xxd -plain | tr -d '\n' | sed 's/\(..\)/%\1/g'
+}
+
+perl_file_uri() {
+    echo "$@" | perl -MURI::file -e 'print URI::file->new(<STDIN>)'
+}
+
 echo '#EXTM3U'
 for f in "$@"; do
-    path="$(realpath "$f")"
-    title="$(basename "$path" | tr -- '-,' '_')"
+    file_path="$(realpath "$f")"
+    title="$(basename "$file_path" | tr -- '-,' '_')"
     echo "#EXTINF:,$title"
-    echo "file://$(urlencode "$path")"
+    # echo "file://$(urlencode "$file_path")" # bad arabic encoding i.e. all characters map to %FF%FF
+    # echo "file://$(urlencode_all "$file_path")"
+    echo "$(perl_file_uri "$file_path")"
 done
