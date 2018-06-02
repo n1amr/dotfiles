@@ -116,14 +116,6 @@ eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
 export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
-# Remove duplicates
-if [ "$SHELLNAME" = zsh ]; then
-    export -U PATH
-elif [ "$SHELLNAME" = bash ]; then
-    PATH="$(echo -n "${PATH}:" | awk -v RS=':' -v ORS=":" '!a[$1]++')"
-    export PATH="${PATH%?}"
-fi
-
 ################################################################################
 #################################  Functions  ##################################
 
@@ -324,6 +316,10 @@ tmuxsession () {
     else
         tmux switch-client -t "$session"
     fi
+}
+
+unique_paths() {
+    echo -n "$1:" | awk -v RS=':' -v ORS=":" '!a[$1]++' | sed 's/:\+/:/g; s/^:\|:$//g'
 }
 
 up () {
@@ -542,3 +538,12 @@ reset_keybindings vi
 block_caret
 
 run_custom_hook 'post-shellrc'
+
+# Remove PATH duplicates
+if [ "$SHELLNAME" = zsh ]; then
+    export -U PATH
+elif [ "$SHELLNAME" = bash ]; then
+    export PATH="$(unique_paths "$PATH")"
+fi
+
+export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"
