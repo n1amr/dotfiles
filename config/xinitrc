@@ -1,1 +1,3 @@
-xset r rate 286 40
+xset r rate 286 40 & # increase typing speed
+# xset s off & # disable screensaver
+xset s 0 0 & # disable screensaver
