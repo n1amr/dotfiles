@@ -5,6 +5,8 @@ ICON_PAUSE=''
 ICON_NEXT=''
 ICON_PREV=''
 ICON_STOP=''
+ICON_MUSIC=''
+ICON_PLAYER=''
 
 MEDIA_CONTROLLER="$(dirname "${BASH_SOURCE[0]}")/../../scripts/media-control.sh"
 BLOCK_INSTANCE="${BLOCK_INSTANCE:-status}"
@@ -43,24 +45,44 @@ render_button() {
     esac
 }
 
-MAX_STATUS_LENGTH=20
+escape_html() {
+    sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g'
+}
+
+generate_status_markup() {
+    title="$(echo "$1" | escape_html)"
+    artist="$(echo "$2" | escape_html)"
+    placeholder="$(echo "$3" | escape_html)"
+    if [[ -z "$title" ]] && [[ -z "$artist" ]]; then
+        echo "<span color='#BDBDBD'><b>$ICON_PLAYER</b> <i>$placeholder</i></span>"
+    else
+        title="${title:-Unknown}"
+        echo -n "<span color='#FFD54F'><b>$ICON_MUSIC $title</b></span>"
+        if [[ -n "$artist" ]]; then
+            echo -n " <small>|</small> <span color='#00ff00'><b>$ICON_MUSIC $artist</b></span>"
+        fi
+        echo
+    fi
+}
+
+MAX_STATUS_LENGTH=10
 render_status() {
     title="$("$MEDIA_CONTROLLER" track-info title)"
     artist="$("$MEDIA_CONTROLLER" track-info artist)"
 
-    full_status="$title - $artist"
+    placeholder="$("$MEDIA_CONTROLLER" active-player)"
+
+    full_status="$(generate_status_markup "$title" "$artist" "$placeholder")"
 
     if [[ "${#title}" -gt "$MAX_STATUS_LENGTH" ]]; then
         title="${title:0:$MAX_STATUS_LENGTH - 3}..."
     fi
     if [[ "${#artist}" -gt "$MAX_STATUS_LENGTH" ]]; then
-        title="${artist:0:$MAX_STATUS_LENGTH - 3}..."
+        artist="${artist:0:$MAX_STATUS_LENGTH - 3}..."
     fi
 
-    short_status="$title - $artist"
+    short_status="$(generate_status_markup "$title" "$artist" "$placeholder")"
 
-    [[ "$full_status" = ' - ' ]] && full_status="[$("$MEDIA_CONTROLLER" active-player)]"
-    [[ "$short_status" = ' - ' ]] && short_status="[$("$MEDIA_CONTROLLER" active-player)]"
     echo "$full_status"
     echo "$short_status"
 }

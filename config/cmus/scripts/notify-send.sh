@@ -18,6 +18,9 @@ while [[ $# > 0 ]]; do
     shift
 done
 
+artist="${artist:-Unknown}"
+title="${title:-Unknown}"
+
 if [[ "$status" = 'playing' ]]; then
     notify-send -t 5000 -a 'cmus' "$title" "by $artist" -i "$(extract-album-art "$file")"
 fi

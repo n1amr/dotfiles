@@ -24,4 +24,6 @@ if [[ "$percentage" != 'MUTE' ]]; then
     echo "$SOUND_ICON $percentage"
 else
     echo "$NO_SOUND_ICON"
+    echo "$NO_SOUND_ICON"
+    echo '#FF0000'
 fi
