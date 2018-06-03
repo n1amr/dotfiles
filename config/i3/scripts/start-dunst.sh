@@ -12,6 +12,7 @@ fi
 
 DUNST_CONFIG_FILE="$DOTFILES_HOME/config/i3/dunstrc"
 DUNST_BIN="$DOTFILES_HOME/config/i3/bin/dunst"
+DUNST_HISTORY="$DOTFILES_HOME/config/i3/tmp/dunst.history"
 
 if pgrep -x dunst > /dev/null; then
     echo "Another instance of dunst is running. Kill it first"
@@ -30,6 +31,6 @@ while true; do
         sleep 1
         notify-send -t 5000 -a 'dunst' "Dunst Started" "$msg"
     ) &
-    "$DUNST_BIN" -config "$DUNST_CONFIG_FILE"
+    "$DUNST_BIN" -config "$DUNST_CONFIG_FILE" -print >> "$DUNST_HISTORY" 2>&1
     sleep 0.5
 done
