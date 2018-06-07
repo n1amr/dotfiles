@@ -54,6 +54,7 @@ if [ "$SHELLNAME" = zsh ]; then
         git
         history
         jump
+        mvn
         pip
         rsync
         z

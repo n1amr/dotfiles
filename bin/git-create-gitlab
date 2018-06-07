@@ -5,23 +5,33 @@ set -e
 source ~/.dotfiles_config
 
 repo_name="$1"
-TOKEN_FILE="$DOTFILES_HOME/custom/keys/gitlab_token"
+branch="${2:-master}"
 
-if [[ -x "$TOKEN_FILE" ]]; then
-    source "$TOKEN_FILE"
-else
-    echo "Please enter a new private token. From https://gitlab.com/profile/account"
-    echo -n ">>> "
-    read -r GITLAB_PRIVATE_TOKEN
-    echo "export GITLAB_PRIVATE_TOKEN = ${GITLAB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
-    chmod +x "$TOKEN_FILE"
-fi
-
-private_token="$GITLAB_PRIVATE_TOKEN"
-url="https://gitlab.com/api/v3/projects?private_token=$private_token"
+# TOKEN_FILE="$DOTFILES_HOME/custom/keys/gitlab_token"
+# 
+# if [[ -x "$TOKEN_FILE" ]]; then
+#     source "$TOKEN_FILE"
+# else
+#     echo "Please enter a new private token. From https://gitlab.com/profile/account"
+#     echo -n ">>> "
+#     read -r GITLAB_PRIVATE_TOKEN
+#     echo "export GITLAB_PRIVATE_TOKEN = ${GITLAB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
+#     chmod +x "$TOKEN_FILE"
+# fi
+# 
+# private_token="$GITLAB_PRIVATE_TOKEN"
+# url="https://gitlab.com/api/v3/projects?private_token=$private_token"
 
 if ! git status > /dev/null && [[ ! -d .git ]]; then
+    echo "Creating local repository..."
+    echo ">> git init"
     git init
+fi
+
+if ! git checkout "$branch" > /dev/null 2>&1; then
+    echo "Creating initial coomit..."
+    echo ">> git checkout -b \"$branch\" && git add . && git commit -m 'initial coomit'"
+    git checkout -b "$branch" && git add . && git commit -m 'initial coomit'
 fi
 
 if [[ -z "$repo_name" ]]; then
@@ -29,14 +39,22 @@ if [[ -z "$repo_name" ]]; then
 fi
 repo_name="$(echo -n "$repo_name" | tr -c '[:alnum:] -_' '_')"
 
-temp_file="$(mktemp .gitlab-create-response-XXXXX.tmp.html)"
-trap 'rm "$temp_file"' EXIT
+# temp_file="$(mktemp .gitlab-create-response-XXXXX.tmp.html)"
+# trap 'rm "$temp_file"' EXIT
+# 
+# echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
+# wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
+# r=$?
+# repo_path="$(grep -Po '(?<=path_with_namespace":")(.*?)(?=")' "$temp_file")"
+# repo_link="git@gitlab.com:$repo_path"
 
-echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
-wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
+user="$USER"
+repo_link="git@gitlab.com:$user/${repo_name}.git"
+
+echo "Creating remote repository..."
+echo ">> git push --set-upstream \"$repo_link\" \"$branch\""
+git push --set-upstream "$repo_link" "$branch"
 r=$?
-repo_path="$(grep -Po '(?<=path_with_namespace":")(.*?)(?=")' "$temp_file")"
-repo_link="git@gitlab.com:$repo_path"
 
 if [[ $r == 0 ]] && [[ -n "$repo_link" ]]; then
     echo "Created repo successfully [$repo_link]"
@@ -46,7 +64,7 @@ else
 fi
 
 remote_name='origin'
-if git remote -v | grep -P '^origin' > /dev/null; then
+if git remote -v | grep -P '^origin' > /dev/null 2>&1; then
     remote_name='gitlab'
     git remote -v
     echo "Remote name 'origin' is already used."
@@ -59,3 +77,7 @@ echo "Remote name is $remote_name"
 git remote add "$remote_name" "$repo_link"
 echo "Added remote name is $remote_name"
 git remote -v
+
+echo "Pusing to remote..."
+echo ">> git push -u \"$remote_name\" \"$branch\""
+git push -u "$remote_name" "$branch"
