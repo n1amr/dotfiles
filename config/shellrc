@@ -381,6 +381,7 @@ alias myips='ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-
 alias nmcli='nmcli -a'
 alias o='gui-open'
 alias p='ipython'
+alias pdfjoin='pdfjoin --paper a4paper --rotateoversize false'
 alias psg='psgrep'
 alias pss='ps -e lx'
 alias py='python -c'

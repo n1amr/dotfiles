@@ -9,20 +9,19 @@ if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     exit 1
 fi
 
+YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
+LOG_FILE="$YOUTUBE_HOME/.youtube-dl/log"
+exec > >(tee -a "$DOTFILES_LOG_FILE") 2>&1
+
 if ! ok-to-download; then
     info "Aborted! Current connection is not allowed to download"
     exit 1
 fi
 
-YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-LOG_FILE="$YOUTUBE_HOME/.youtube-dl/log"
-
-exec >> "$LOG_FILE" 2>&1  # redirect output and error to log file
-
 [ ! -d "$YOUTUBE_HOME/.youtube-dl" ] && mkdir -pv "$YOUTUBE_HOME/.youtube-dl"
 
 echo -e "\n====================\n"
-date
+date -Isec
 echo -e "====================\n\n"
 
 youtube-dl-watch-later

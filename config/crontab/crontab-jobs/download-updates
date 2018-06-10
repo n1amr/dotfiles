@@ -9,10 +9,10 @@ if ! ok-to-download; then
     exit 1
 fi
 
-exec >> "$DOTFILES_LOG_FILE" 2>&1
+exec > >(tee -a "$DOTFILES_LOG_FILE") 2>&1
 
 echo
-date
+date -Isec
 echo "================================================================================"
 
 sudo apt-get update
