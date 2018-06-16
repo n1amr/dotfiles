@@ -325,9 +325,11 @@ bindsym $mod+$K_Alt+period exec --no-startup-id xbacklight -inc 5
 bindsym $mod+$K_Alt+comma  exec --no-startup-id xbacklight -dec 5
 
 # Keyboard layouts
-bindsym Control+$K_Alt+0 exec exec $I3_HOME/scripts/toggle-input-language.sh
-bindsym Control+$K_Alt+1 exec setxkbmap -layout us
-bindsym Control+$K_Alt+2 exec setxkbmap -layout ar
+set $bracketleft 34
+bindcode $mod+$bracketleft exec exec $I3_HOME/scripts/toggle-input-language.sh
+bindsym  Control+$K_Alt+0  exec exec $I3_HOME/scripts/toggle-input-language.sh
+bindsym  Control+$K_Alt+2  exec setxkbmap -layout ar
+bindsym  Control+$K_Alt+1  exec setxkbmap -layout us
 
 # Applications Keyboard Shortcuts
 bindsym Control+$K_Alt+l exec $I3_HOME/scripts/lock.sh
