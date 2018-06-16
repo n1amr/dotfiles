@@ -472,6 +472,7 @@ exec i3-msg 'workspace $ws1'
 exec_always $I3_HOME/scripts/init-display.sh
 exec_always $I3_HOME/scripts/init-keyboard.sh
 exec_always $I3_HOME/scripts/init-touchpad.sh
+exec_always $DOTFILES_HOME/config/xinitrc
 
 exec_always $I3_HOME/scripts/set-background.sh
 exec_always $I3_HOME/scripts/start-dunst.sh
