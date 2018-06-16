@@ -9,7 +9,55 @@ set $DOTFILES_HOME ~/.dotfiles
 set $mod Mod4
 
 # Key Alias
-set $K_Alt Mod1
+set $Alt   Mod1
+set $Control Control
+set $Delete Delete
+set $Down Down
+set $Escape Escape
+set $Left Left
+set $Return Return
+set $Right Right
+set $Shift Shift
+set $Tab Tab
+set $Up Up
+set $space space
+
+# Key Codes
+set $apostrophe 48
+set $colon 47
+set $comma 59
+set $greater 60
+set $less 59
+set $period 60
+set $question 61
+set $quotedbl 48
+set $semicolon 47
+set $slash 61
+
+set $a 38
+set $c 54
+set $d 40
+set $e 26
+set $f 41
+set $h 43
+set $i 31
+set $j 44
+set $k 45
+set $l 46
+set $m 58
+set $n 57
+set $o 32
+set $p 33
+set $q 24
+set $r 27
+set $s 39
+set $t 28
+set $u 30
+set $v 55
+set $w 25
+set $x 53
+set $y 29
+set $z 52
 
 # System Commands
 set $cmd_screenshot       gnome-screenshot
@@ -48,112 +96,112 @@ floating_modifier $mod
 # bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindcode $mod+$Shift+$q  kill
 
 # start dmenu (a program launcher)
-bindsym $mod+Shift+d exec dmenu_run
+bindcode $mod+$Shift+$d  exec dmenu_run
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec i3-dmenu-desktop
 
-bindsym $mod+d exec $I3_HOME/scripts/j4-dmenu-desktop.sh
+bindcode $mod+$d  exec $I3_HOME/scripts/j4-dmenu-desktop.sh
 
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindcode $mod+$h  focus left
+bindcode $mod+$j  focus down
+bindcode $mod+$k  focus up
+bindcode $mod+$l  focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left  focus left
-bindsym $mod+Down  focus down
-bindsym $mod+Up    focus up
-bindsym $mod+Right focus right
+bindsym $mod+$Left   focus left
+bindsym $mod+$Down   focus down
+bindsym $mod+$Up     focus up
+bindsym $mod+$Right  focus right
 
-bindsym $K_Alt+Tab       focus right
-bindsym $K_Alt+Shift+Tab focus left
+bindsym $Alt+$Tab         focus right
+bindsym $Alt+$Shift+$Tab  focus left
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindcode $mod+$Shift+$h  move left
+bindcode $mod+$Shift+$j  move down
+bindcode $mod+$Shift+$k  move up
+bindcode $mod+$Shift+$l  move right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left  move left
-bindsym $mod+Shift+Down  move down
-bindsym $mod+Shift+Up    move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+$Shift+$Left   move left
+bindsym $mod+$Shift+$Down   move down
+bindsym $mod+$Shift+$Up     move up
+bindsym $mod+$Shift+$Right  move right
 
 # split in horizontal/vertical orientation
-bindsym $mod+apostrophe split h
-bindsym $mod+p          split v
+bindcode $mod+$apostrophe  split h
+bindcode $mod+$p           split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindcode $mod+$f  fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s              layout stacking
-bindsym $mod+w              layout tabbed
-bindsym $mod+e              layout toggle split
-bindsym $mod+Shift+quotedbl layout splith
-bindsym $mod+Shift+p        layout splitv
+bindcode $mod+$s                layout stacking
+bindcode $mod+$w                layout tabbed
+bindcode $mod+$e                layout toggle split
+bindcode $mod+$Shift+$quotedbl  layout splith
+bindcode $mod+$Shift+$p         layout splitv
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+$Shift+$space  floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+$space  focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindcode $mod+$a  focus parent
 
 # focus the child container
-bindsym $mod+Shift+a focus child
+bindcode $mod+$Shift+$a  focus child
 
 # switch to workspace
-bindsym $mod+Tab        workspace next
-bindsym $mod+Shift+Tab  workspace prev
+bindsym $mod+$Tab         workspace next
+bindsym $mod+$Shift+$Tab  workspace prev
 
-bindsym $mod+semicolon   workspace back_and_forth
-bindsym $mod+Shift+colon move container to workspace back_and_forth
+bindcode $mod+$semicolon     workspace back_and_forth
+bindcode $mod+$Shift+$colon  move container to workspace back_and_forth
 
-bindsym $mod+period    workspace next
-bindsym $mod+comma     workspace prev
+bindcode $mod+$period  workspace next
+bindcode $mod+$comma   workspace prev
 
-bindsym $mod+Shift+greater  move container to workspace next, workspace next
-bindsym $mod+Shift+less     move container to workspace prev, workspace prev
+bindcode $mod+$Shift+$greater  move container to workspace next, workspace next
+bindcode $mod+$Shift+$less     move container to workspace prev, workspace prev
 
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $wslast
+bindsym $mod+1  workspace $ws1
+bindsym $mod+2  workspace $ws2
+bindsym $mod+3  workspace $ws3
+bindsym $mod+4  workspace $ws4
+bindsym $mod+5  workspace $ws5
+bindsym $mod+6  workspace $ws6
+bindsym $mod+7  workspace $ws7
+bindsym $mod+8  workspace $ws8
+bindsym $mod+9  workspace $ws9
+bindsym $mod+0  workspace $wslast
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1   , workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2   , workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3   , workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4   , workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5   , workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6   , workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7   , workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8   , workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9   , workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $wslast, workspace $wslast
+bindsym $mod+$Shift+1  move container to workspace $ws1   , workspace $ws1
+bindsym $mod+$Shift+2  move container to workspace $ws2   , workspace $ws2
+bindsym $mod+$Shift+3  move container to workspace $ws3   , workspace $ws3
+bindsym $mod+$Shift+4  move container to workspace $ws4   , workspace $ws4
+bindsym $mod+$Shift+5  move container to workspace $ws5   , workspace $ws5
+bindsym $mod+$Shift+6  move container to workspace $ws6   , workspace $ws6
+bindsym $mod+$Shift+7  move container to workspace $ws7   , workspace $ws7
+bindsym $mod+$Shift+8  move container to workspace $ws8   , workspace $ws8
+bindsym $mod+$Shift+9  move container to workspace $ws9   , workspace $ws9
+bindsym $mod+$Shift+0  move container to workspace $wslast, workspace $wslast
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindcode $mod+$Shift+$c  reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindcode $mod+$Shift+$r  restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindcode $mod+$Shift+$e  exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 set $mode_resize -- RESIZE --
@@ -161,189 +209,193 @@ mode "$mode_resize" {
     set $RESIZE_STEP 15
     set $SLOW_RESIZE_STEP 1
 
-    bindsym h resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym j resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym k resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym l resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindcode $h  resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindcode $j  resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindcode $k  resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindcode $l  resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
 
-    bindsym Shift+h resize shrink width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
-    bindsym Shift+j resize grow   height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
-    bindsym Shift+k resize shrink height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
-    bindsym Shift+l resize grow   width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindcode $Shift+$h resize shrink width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindcode $Shift+$j resize grow   height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindcode $Shift+$k resize shrink height $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
+    bindcode $Shift+$l resize grow   width  $SLOW_RESIZE_STEP px or $SLOW_RESIZE_STEP ppt
 
-    bindsym Left  resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym Down  resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym Up    resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
-    bindsym Right resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym $Left   resize shrink width  $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym $Down   resize grow   height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym $Up     resize shrink height $RESIZE_STEP px or $RESIZE_STEP ppt
+    bindsym $Right  resize grow   width  $RESIZE_STEP px or $RESIZE_STEP ppt
 
-    bindsym m mode "$mode_move"
+    bindcode $m  mode "$mode_move"
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym $Return  mode "default"
+    bindsym $Escape  mode "default"
 }
-bindsym $mod+r mode "$mode_resize"
+bindcode $mod+$r  mode "$mode_resize"
 
 set $mode_move -- MOVE --
 mode "$mode_move" {
     set $MOVE_STEP 15
     set $SLOW_MOVE_STEP 1
 
-    bindsym h move left  $MOVE_STEP px
-    bindsym j move down  $MOVE_STEP px
-    bindsym k move up    $MOVE_STEP px
-    bindsym l move right $MOVE_STEP px
+    bindcode $h  move left  $MOVE_STEP px
+    bindcode $j  move down  $MOVE_STEP px
+    bindcode $k  move up    $MOVE_STEP px
+    bindcode $l  move right $MOVE_STEP px
 
-    bindsym Shift+h move left  $SLOW_MOVE_STEP px
-    bindsym Shift+j move down  $SLOW_MOVE_STEP px
-    bindsym Shift+k move up    $SLOW_MOVE_STEP px
-    bindsym Shift+l move right $SLOW_MOVE_STEP px
+    bindcode $Shift+$h  move left  $SLOW_MOVE_STEP px
+    bindcode $Shift+$j  move down  $SLOW_MOVE_STEP px
+    bindcode $Shift+$k  move up    $SLOW_MOVE_STEP px
+    bindcode $Shift+$l  move right $SLOW_MOVE_STEP px
 
-    bindsym r mode "$mode_resize"
+    bindcode $r  mode "$mode_resize"
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym $Return  mode "default"
+    bindsym $Escape  mode "default"
 }
-bindsym $mod+m mode "$mode_move"
+bindcode $mod+$m  mode "$mode_move"
 
 set $mode_launcher -- LAUNCH -- [f]irefox [k]eepass [v]lc [s]potify
 mode "$mode_launcher" {
-    bindsym f exec firefox , mode "default"
-    bindsym k exec keepass2, mode "default"
-    bindsym s exec spotify , mode "default"
-    bindsym v exec vlc     , mode "default"
+    bindcode $f  exec firefox , mode "default"
+    bindcode $k  exec keepass2, mode "default"
+    bindcode $s  exec spotify , mode "default"
+    bindcode $v  exec vlc     , mode "default"
 
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
+    bindsym $Escape  mode "default"
+    bindsym $Return  mode "default"
 }
-bindsym $mod+x mode "$mode_launcher"
+bindcode $mod+$x  mode "$mode_launcher"
 
 set $mode_system -- SYSTEM -- (l) Lock, (e) Logout, (s) Suspend, (h) Hibernate, (R) Reboot, (S) Shutdown
 mode "$mode_system" {
-    bindsym Shift+r exec --no-startup-id systemctl reboot             , mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i        , mode "default"
-    bindsym e       exec --no-startup-id i3-msg exit                  , mode "default"
-    bindsym h       exec --no-startup-id $I3_HOME/scripts/hibernate.sh, mode "default"
-    bindsym l       exec --no-startup-id $I3_HOME/scripts/lock.sh     , mode "default"
-    bindsym s       exec --no-startup-id $I3_HOME/scripts/suspend.sh  , mode "default"
+    bindcode $Shift+$r  exec --no-startup-id systemctl reboot             , mode "default"
+    bindcode $Shift+$s  exec --no-startup-id systemctl poweroff -i        , mode "default"
+    bindcode $e         exec --no-startup-id i3-msg exit                  , mode "default"
+    bindcode $h         exec --no-startup-id $I3_HOME/scripts/hibernate.sh, mode "default"
+    bindcode $l         exec --no-startup-id $I3_HOME/scripts/lock.sh     , mode "default"
+    bindcode $s         exec --no-startup-id $I3_HOME/scripts/suspend.sh  , mode "default"
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym $Return  mode "default"
+    bindsym $Escape  mode "default"
 }
 # To use XF86PowerOff you must set HandlePowerKey=ignore
 # $ sudo vim /etc/systemd/logind.conf && sudo systemctl restart systemd-logind
-bindsym Control+$K_Alt+Delete mode "$mode_system"
-bindsym XF86PowerOff          exec --no-startup-id $I3_HOME/scripts/suspend.sh
+bindsym $Control+$Alt+$Delete  mode "$mode_system"
+bindsym XF86PowerOff           exec --no-startup-id $I3_HOME/scripts/suspend.sh
 
 set $mode_mouse -- MOUSE -- HJKL: Movement, Shift+<k>: Slow movement, f: left click, d: right click
 mode "$mode_mouse" {
-    bindsym o  exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
+    bindcode $o  exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
 
     # Display Edges
-    bindsym q  exec xdotool mousemove --sync 0 0
-    bindsym r  exec xdotool mousemove --sync $DISLAY_WIDTH 0
-    bindsym z  exec xdotool mousemove --sync 0 $DISLAY_WIDTH
-    bindsym v  exec xdotool mousemove --sync $DISLAY_WIDTH $DISLAY_WIDTH
+    bindcode $q  exec xdotool mousemove --sync 0 0
+    bindcode $r  exec xdotool mousemove --sync $DISLAY_WIDTH 0
+    bindcode $z  exec xdotool mousemove --sync 0 $DISLAY_WIDTH
+    bindcode $v  exec xdotool mousemove --sync $DISLAY_WIDTH $DISLAY_WIDTH
 
     # Mouse Click
-    bindsym f  exec xdotool click 1 # left
-    bindsym d  exec xdotool click 3 # right
-    bindsym x  exec xdotool click 2 # middle
-    bindsym a  exec xdotool click 4 # wheel up
-    bindsym s  exec xdotool click 5 # wheel down
+    bindcode $f  exec xdotool click 1 # left
+    bindcode $d  exec xdotool click 3 # right
+    bindcode $x  exec xdotool click 2 # middle
+    bindcode $a  exec xdotool click 4 # wheel up
+    bindcode $s  exec xdotool click 5 # wheel down
 
     set $STEP 25
     set $SLOW_STEP 2
 
     # Horizontal/Vertical
-    bindsym h      exec xdotool mousemove_relative --sync -- -$STEP 0
-    bindsym j      exec xdotool mousemove_relative --sync -- 0 +$STEP
-    bindsym k      exec xdotool mousemove_relative --sync -- 0 -$STEP
-    bindsym l      exec xdotool mousemove_relative --sync -- +$STEP 0
+    bindcode $h      exec xdotool mousemove_relative --sync -- -$STEP 0
+    bindcode $j      exec xdotool mousemove_relative --sync -- 0 +$STEP
+    bindcode $k      exec xdotool mousemove_relative --sync -- 0 -$STEP
+    bindcode $l      exec xdotool mousemove_relative --sync -- +$STEP 0
 
     # Diagonal
-    bindsym u      exec xdotool mousemove_relative --sync -- -$STEP -$STEP
-    bindsym p      exec xdotool mousemove_relative --sync -- +$STEP -$STEP
-    bindsym n      exec xdotool mousemove_relative --sync -- -$STEP +$STEP
-    bindsym slash  exec xdotool mousemove_relative --sync -- +$STEP +$STEP
+    bindcode $y      exec xdotool mousemove_relative --sync -- -$STEP -$STEP
+    bindcode $u      exec xdotool mousemove_relative --sync -- -$STEP -$STEP
+    bindcode $p      exec xdotool mousemove_relative --sync -- +$STEP -$STEP
+    bindcode $m      exec xdotool mousemove_relative --sync -- -$STEP +$STEP
+    bindcode $n      exec xdotool mousemove_relative --sync -- -$STEP +$STEP
+    bindcode $slash  exec xdotool mousemove_relative --sync -- +$STEP +$STEP
 
     # Slow Horizontal/Vertical
-    bindsym Shift+h      exec xdotool mousemove_relative --sync -- -$SLOW_STEP 0
-    bindsym Shift+j      exec xdotool mousemove_relative --sync -- 0 +$SLOW_STEP
-    bindsym Shift+k      exec xdotool mousemove_relative --sync -- 0 -$SLOW_STEP
-    bindsym Shift+l      exec xdotool mousemove_relative --sync -- +$SLOW_STEP 0
+    bindcode $Shift+$h      exec xdotool mousemove_relative --sync -- -$SLOW_STEP 0
+    bindcode $Shift+$j      exec xdotool mousemove_relative --sync -- 0 +$SLOW_STEP
+    bindcode $Shift+$k      exec xdotool mousemove_relative --sync -- 0 -$SLOW_STEP
+    bindcode $Shift+$l      exec xdotool mousemove_relative --sync -- +$SLOW_STEP 0
 
     # Slow Diagonal
-    bindsym Shift+u      exec xdotool mousemove_relative --sync -- -$SLOW_STEP -$SLOW_STEP
-    bindsym Shift+p      exec xdotool mousemove_relative --sync -- +$SLOW_STEP -$SLOW_STEP
-    bindsym Shift+n      exec xdotool mousemove_relative --sync -- -$SLOW_STEP +$SLOW_STEP
-    bindsym Shift+slash  exec xdotool mousemove_relative --sync -- +$SLOW_STEP +$SLOW_STEP
+    bindcode $Shift+$y      exec xdotool mousemove_relative --sync -- -$SLOW_STEP -$SLOW_STEP
+    bindcode $Shift+$u      exec xdotool mousemove_relative --sync -- -$SLOW_STEP -$SLOW_STEP
+    bindcode $Shift+$p      exec xdotool mousemove_relative --sync -- +$SLOW_STEP -$SLOW_STEP
+    bindcode $Shift+$m      exec xdotool mousemove_relative --sync -- -$SLOW_STEP +$SLOW_STEP
+    bindcode $Shift+$n      exec xdotool mousemove_relative --sync -- -$SLOW_STEP +$SLOW_STEP
+    bindcode $Shift+$slash  exec xdotool mousemove_relative --sync -- +$SLOW_STEP +$SLOW_STEP
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym $Return  mode "default"
+    bindsym $Escape  mode "default"
 }
-bindsym $mod+u           mode "$mode_mouse"
+bindcode $mod+$u  mode "$mode_mouse"
 
 set $I3_INPUT pango:DejaVu Sans Mono 12
-# bindsym $mod+comma          exec i3-input -f '$I3_INPUT' -P 'Rename: ' -F 'rename workspace to "%s"'
-bindsym $mod+slash          exec i3-input -f '$I3_INPUT' -P 'Open workspace: ' -F 'workspace "%s"'
-bindsym $mod+Shift+question exec i3-input -f '$I3_INPUT' -P 'Move to workspace: ' -F 'move container to workspace "%s"'
-bindsym $mod+c              exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
+# bindcode $mod+$comma            exec i3-input -f '$I3_INPUT' -P 'Rename: ' -F 'rename workspace to "%s"'
+bindcode $mod+$slash            exec i3-input -f '$I3_INPUT' -P 'Open workspace: ' -F 'workspace "%s"'
+bindcode $mod+$Shift+$question  exec i3-input -f '$I3_INPUT' -P 'Move to workspace: ' -F 'move container to workspace "%s"'
+bindcode $mod+$c                exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
 
 # Volume Control
-bindsym XF86AudioRaiseVolume  exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
-bindsym XF86AudioLowerVolume  exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
-bindsym XF86AudioMute         exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
+bindsym XF86AudioRaiseVolume   exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
+bindsym XF86AudioLowerVolume   exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
+bindsym XF86AudioMute          exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
 
 # Media Control
-bindsym XF86AudioPlay         exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
-bindsym XF86AudioPause        exec --no-startup-id $I3_HOME/scripts/media-control.sh pause
-bindsym XF86AudioNext         exec --no-startup-id $I3_HOME/scripts/media-control.sh next
-bindsym XF86AudioPrev         exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
+bindsym XF86AudioPlay          exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
+bindsym XF86AudioPause         exec --no-startup-id $I3_HOME/scripts/media-control.sh pause
+bindsym XF86AudioNext          exec --no-startup-id $I3_HOME/scripts/media-control.sh next
+bindsym XF86AudioPrev          exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
 
 # Sreen Brightness Control
-bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
+bindsym XF86MonBrightnessUp    exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown  exec --no-startup-id xbacklight -dec 5
 
 # Touchpad Control
-bindsym XF86TouchpadToggle    exec --no-startup-id $I3_HOME/scripts/toggle-touchpad-enabled.sh
+bindsym XF86TouchpadToggle     exec --no-startup-id $I3_HOME/scripts/toggle-touchpad-enabled.sh
 
 # Print Screen
-bindsym --release Print       exec $cmd_screenshot       && screenshots-organize
-bindsym --release Shift+Print exec $cmd_screenshot_area  && screenshots-organize
-bindsym --release Ctrl+Print  exec $cmd_screenshot_delay && screenshots-organize
+bindsym --release Print        exec $cmd_screenshot       && screenshots-organize
+bindsym --release Shift+Print  exec $cmd_screenshot_area  && screenshots-organize
+bindsym --release Ctrl+Print   exec $cmd_screenshot_delay && screenshots-organize
 
 # Easier Media Control
-bindsym $mod+$K_Alt+k      exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
-bindsym $mod+$K_Alt+l      exec --no-startup-id $I3_HOME/scripts/media-control.sh next
-bindsym $mod+$K_Alt+j      exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
-bindsym $mod+$K_Alt+u      exec --no-startup-id $I3_HOME/scripts/focus-player.sh
-bindsym $mod+$K_Alt+slash  exec --no-startup-id $I3_HOME/scripts/focus-window.sh
-bindsym $mod+$K_Alt+p      exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
-bindsym $mod+$K_Alt+n      exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
-bindsym $mod+$K_Alt+m      exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
-bindsym $mod+$K_Alt+period exec --no-startup-id xbacklight -inc 5
-bindsym $mod+$K_Alt+comma  exec --no-startup-id xbacklight -dec 5
+bindcode $mod+$Alt+$k       exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
+bindcode $mod+$Alt+$l       exec --no-startup-id $I3_HOME/scripts/media-control.sh next
+bindcode $mod+$Alt+$j       exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
+bindcode $mod+$Alt+$u       exec --no-startup-id $I3_HOME/scripts/focus-player.sh
+bindcode $mod+$Alt+$slash   exec --no-startup-id $I3_HOME/scripts/focus-window.sh
+bindcode $mod+$Alt+$p       exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
+bindcode $mod+$Alt+$n       exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
+bindcode $mod+$Alt+$m       exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
+bindcode $mod+$Alt+$period  exec --no-startup-id xbacklight -inc 5
+bindcode $mod+$Alt+$comma   exec --no-startup-id xbacklight -dec 5
 
 # Keyboard layouts
 set $bracketleft 34
-bindcode $mod+$bracketleft exec exec $I3_HOME/scripts/toggle-input-language.sh
-bindsym  Control+$K_Alt+0  exec exec $I3_HOME/scripts/toggle-input-language.sh
-bindsym  Control+$K_Alt+2  exec setxkbmap -layout ar
-bindsym  Control+$K_Alt+1  exec setxkbmap -layout us
+bindcode $mod+$bracketleft  exec exec $I3_HOME/scripts/toggle-input-language.sh
+bindsym  $Control+$Alt+0    exec exec $I3_HOME/scripts/toggle-input-language.sh
+bindsym  $Control+$Alt+2    exec setxkbmap -layout ar
+bindsym  $Control+$Alt+1    exec setxkbmap -layout us
 
 # Applications Keyboard Shortcuts
-bindsym Control+$K_Alt+l exec $I3_HOME/scripts/lock.sh
-bindsym Control+$K_Alt+k exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
-bindsym $mod+o           exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
-bindsym Control+$K_Alt+i exec xcalib -i -a
-bindsym $mod+i           exec xcalib -i -a
-bindsym Control+$K_Alt+t exec gnome-terminal
+bindcode $Control+$Alt+$l  exec $I3_HOME/scripts/lock.sh
+bindcode $Control+$Alt+$k  exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
+bindcode $mod+$o           exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
+bindcode $Control+$Alt+$i  exec xcalib -i -a
+bindcode $mod+$i           exec xcalib -i -a
+bindcode $Control+$Alt+$t  exec gnome-terminal
 
-bindsym $mod+Return             exec zsh -c '. ~/.zshrc && tmux-open zsh'
-bindsym Control+$K_Alt+Shift+j  exec gnome-terminal -- tmux attach
-bindsym Control+$K_Alt+j        exec zsh -c '. ~/.zshrc && tmux-open'
-bindsym Control+$K_Alt+p        exec zsh -c '. ~/.zshrc && tmux-open ipython'
-bindsym Control+$K_Alt+slash    exec zsh -c '. ~/.zshrc && tmux-open vim-server'
+bindsym  $mod+$Return             exec zsh -c '. ~/.zshrc && tmux-open zsh'
+bindcode $Control+$Alt+$Shift+$j  exec gnome-terminal -- tmux attach
+bindcode $Control+$Alt+$j         exec zsh -c '. ~/.zshrc && tmux-open'
+bindcode $Control+$Alt+$p         exec zsh -c '. ~/.zshrc && tmux-open ipython'
+bindcode $Control+$Alt+$slash     exec zsh -c '. ~/.zshrc && tmux-open vim-server'
 
 ################################################################################
 ###################################  Styles  ###################################
