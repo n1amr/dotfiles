@@ -479,7 +479,8 @@ __ps1_warnings () {
     [ "$DISPLAY" != ':0' ] && msgs+=("DISPLAY=$DISPLAY")
     [ "$USER" = 'root' ] && msgs+=("ROOT")
     [ "$SHELLNAME" != 'zsh' ] && msgs+=("SHELL=$SHELLNAME")
-    msg="${msgs// / | }"
+    msg="${msgs[@]}"
+    msg="${msg// / | }"
     [ -n "$msg" ] && echo " ($msg)"
 }
 
