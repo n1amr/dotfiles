@@ -1,32 +1,47 @@
 #!/bin/bash
 
-if [ ! -z "$SSH_AUTH_SOCK" ] && nc -z -U "$SSH_AUTH_SOCK" > /dev/null 2>&1; then
-    # Agent socket is already running
-    if ! echo "$SSH_AUTH_SOCK" | grep /keyring/ > /dev/null; then
-        return
+check_socket_running() {
+    SOCK="$1"
+    if supports_z_option; then
+        nc -z -U "$SOCK" > /dev/null 2>&1
+    else
+        timeout 0.25 nc -U "$SOCK" > /dev/null 2>&1
+        exit_code="$?"
+        [[ "$exit_code" = '124' ]] && return 0 || return "$exit_code"
     fi
-fi
+}
 
-if [ ! -d "$HOME/.ssh/" ]; then
-    mkdir "$HOME/.ssh/"
-    chmod 700 "$HOME/.ssh/"
-fi
-
-SSH_ENV="$HOME/.ssh/environment"
-
-[ "$1" = "--add" ] && add=true
+supports_z_option() {
+    ! ( nc -z 2>&1 | grep -i 'invalid option' ) > /dev/null 2>&1
+}
 
 start_new_agent() {
     ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
     chmod 600 "$SSH_ENV"
-    . "$SSH_ENV" > /dev/null
-    [ "$add" = 'true' ] && ssh-add
+    source "$SSH_ENV" > /dev/null 2>&1
+    [ "$OPT_ADD" = 'true' ] && ssh-add
 }
 
-if [ -f "$SSH_ENV" ]; then
-    . "$SSH_ENV" > /dev/null
+[ "$1" = "--add" ] && OPT_ADD=true
+
+SSH_HOME="$HOME/.ssh"
+SSH_ENV="$SSH_HOME/environment"
+if [[ ! -d "$SSH_HOME/" ]]; then
+    mkdir "$SSH_HOME/"
+    chmod 700 "$SSH_HOME/"
 fi
 
-if [ -z "$SSH_AUTH_SOCK" ] || ! nc -z -U "$SSH_AUTH_SOCK" > /dev/null 2>&1; then
+if [[ -n "$SSH_AUTH_SOCK" ]] &&
+        check_socket_running "$SSH_AUTH_SOCK" &&
+        ! echo "$SSH_AUTH_SOCK" | grep /keyring/ > /dev/null; then
+    # Agent socket is already running
+    return
+fi
+
+if [[ -f "$SSH_ENV" ]]; then
+    source "$SSH_ENV" > /dev/null 2>&1
+fi
+
+if [[ -z "$SSH_AUTH_SOCK" ]] || ! check_socket_running "$SSH_AUTH_SOCK"; then
     start_new_agent
 fi
