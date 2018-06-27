@@ -123,8 +123,16 @@ set prompt = "${red}%n@%m${reset}:${blue}%~ ${gray}(SHELL=tcsh)${reset} \n ${gre
 
 unset red green yellow blue magenta cyan yellow white reset ds
 
-# # Exec bash if using an interactive shell.
-# if ($?prompt) then
-#     setenv SHELL /bin/bash
-#     exec $SHELL
-# endif
+if ( ! $?OVERRIDE_CSH ) then
+    setenv OVERRIDE_CSH false
+endif
+
+# Exec zsh or bash if using an interactive shell.
+if (($?prompt) && ("${OVERRIDE_CSH}" == 'true')) then
+    setenv NEW_SHELL ''
+    test -z "${NEW_SHELL}" && test -n "${ZSH_BIN}"    && setenv NEW_SHELL "${ZSH_BIN}"
+    test -z "${NEW_SHELL}" && test -n "${BASH_BIN}"   && setenv NEW_SHELL "${BASH_BIN}"
+    test -z "${NEW_SHELL}"                            && setenv NEW_SHELL '/bin/bash'
+
+    test -n "${NEW_SHELL}" && setenv SHELL "${NEW_SHELL}" && exec "${SHELL}"
+endif
