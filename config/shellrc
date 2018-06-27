@@ -99,10 +99,11 @@ fi
 ################################################################################
 ####################################  PATH  ####################################
 
-export CPPFLAGS="-I/home/$DOTFILES_USER/.local/include"
-export LDFLAGS="-L/home/$DOTFILES_USER/.local/lib"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$DOTFILES_USER/.local/lib"
-export PATH="/home/$DOTFILES_USER/.local/bin:$PATH"
+export BUILD_PREFIX="/home/$DOTFILES_USER/.local"
+export CPPFLAGS="-I$BUILD_PREFIX/include $CPPFLAGS"
+export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
+export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
+export PATH="$BUILD_PREFIX/bin:$PATH"
 
 export PATH="$NDENV_ROOT/bin:$PATH"
 eval "$( type ndenv > /dev/null 2>&1 && ndenv init -)"
@@ -549,4 +550,6 @@ elif [ "$SHELLNAME" = bash ]; then
     export PATH="$(unique_paths "$PATH")"
 fi
 
+export CPPFLAGS="$(unique_paths "$(echo "$CPPFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
+export LDFLAGS="$(unique_paths "$(echo "$LDFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
 export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"

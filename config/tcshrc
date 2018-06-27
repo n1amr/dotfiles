@@ -1,10 +1,36 @@
 unset SHELLNAME
 set SHELLNAME=tcsh
 
-set DOTFILES_HOME="$HOME/.dotfiles"
+setenv DOTFILES_HOME "${HOME}/.dotfiles"
 
-alias b 'setenv SHELL /bin/bash && exec "$SHELL"'
-alias z 'setenv SHELL "$HOME/.local/bin/zsh" && exec "$SHELL"'
+setenv TERM xterm-256color
+
+set DQ='"'
+set DS='$'
+
+if ( ! $?LD_LIBRARY_PATH ) then
+    setenv LD_LIBRARY_PATH  ""
+else
+    setenv LD_LIBRARY_PATH  ":${LD_LIBRARY_PATH}"
+endif
+
+setenv BUILD_PREFIX     "${HOME}/.local"
+setenv CPPFLAGS         "-I${BUILD_PREFIX}/include"
+setenv LDFLAGS          "-L${BUILD_PREFIX}/lib"
+setenv LD_LIBRARY_PATH  "${BUILD_PREFIX}/lib${LD_LIBRARY_PATH}"
+setenv PATH             "${BUILD_PREFIX}/bin:${PATH}"
+
+# Deduplicate paths
+setenv LDFLAGS          "`echo -n ${LDFLAGS}:  | tr ' ' ':' | awk -v RS=':' -v ORS=':' '\\!a[${DS}1]++' | sed 's/:\+/:/g; s/^:\|:${DS}//g' | tr ':' ' '`"
+setenv CPPFLAGS         "`echo -n ${CPPFLAGS}: | tr ' ' ':' | awk -v RS=':' -v ORS=':' '\\!a[${DS}1]++' | sed 's/:\+/:/g; s/^:\|:${DS}//g' | tr ':' ' '`"
+setenv LD_LIBRARY_PATH  "`echo -n ${LD_LIBRARY_PATH}:       | awk -v RS=':' -v ORS=':' '\\!a[${DS}1]++' | sed 's/:\+/:/g; s/^:\|:${DS}//g'`"
+setenv PATH             "`echo -n ${PATH}:                  | awk -v RS=':' -v ORS=':' '\\!a[${DS}1]++' | sed 's/:\+/:/g; s/^:\|:${DS}//g'`"
+
+setenv BASH_BIN  "`which bash`" && alias b "setenv SHELL ${DQ}${BASH_BIN}${DQ} && exec ${DQ}${DS}SHELL${DQ}"
+setenv ZSH_BIN   "`which zsh`"  && alias z "setenv SHELL ${DQ}${ZSH_BIN}${DQ} && exec ${DQ}${DS}SHELL${DQ}"
+
+setenv VISUAL vim
+setenv EDITOR vim
 
 alias apt 'sudo apt'
 alias bakmv 'bak --move'
