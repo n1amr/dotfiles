@@ -3,12 +3,17 @@
 # Depends on playerctl
 # https://github.com/acrisci/playerctl/releases
 
+dir="$(realpath "$(dirname "$0")")"
+
 source ~/.dotfiles_config
 CUSTOM_PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
 [[ ! -x "$CUSTOM_PLAYERCTL" ]] && CUSTOM_PLAYERCTL='playerctl'
 
-LAST_ACTIVE_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.last-active-player.tmp"
-FOCUSED_PLAYER_FILE="$(dirname "${BASH_SOURCE[0]}")/.media-control.focused-player.tmp"
+tmp_dir="$dir/../tmp"
+[[ ! -d "$tmp_dir" ]] && mkdir -p "$tmp_dir"
+
+LAST_ACTIVE_PLAYER_FILE="$tmp_dir/media-control-last-active-player"
+FOCUSED_PLAYER_FILE="$tmp_dir/media-control-focused-player"
 
 ignored_players=(
     # vlc
