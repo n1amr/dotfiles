@@ -117,8 +117,8 @@ calc () {
     fi
 }
 
-can_execute() {
-    type "$@" > /dev/null 2>&1
+can_execute () {
+    which "$@" > /dev/null 2>&1
 }
 
 cdf () {
@@ -128,6 +128,18 @@ cdf () {
 cdtree () {
     cd "${@:-.}" || return
     tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
+}
+
+deduplicate_env_paths () {
+    if [ "$SHELLNAME" = zsh ]; then
+        export -U PATH
+    else
+        export PATH="$(unique_paths "$PATH")"
+    fi
+
+    export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"
+    export CPPFLAGS="$(unique_paths "$(echo "$CPPFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
+    export LDFLAGS="$(unique_paths "$(echo "$LDFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
 }
 
 findword () {
@@ -180,23 +192,20 @@ linerange () {
     head -"$2" | tail -n +"$1"
 }
 
-
-if [ "$SHELLNAME" = zsh ]; then
-    unalias man
-fi
-man() {
+[ "$SHELLNAME" = zsh ] && unalias man
+man () {
     command man "$@" | pipe_to_visual
 }
 
-mkcd() {
+mkcd () {
     mkdir -pv "$@" && cd "$1"
 }
 
-pipe_to_editor() {
+pipe_to_editor () {
     remove_color_codes | "$EDITOR" -
 }
 
-pipe_to_visual() {
+pipe_to_visual () {
     remove_color_codes | "$VISUAL" -
 }
 
@@ -253,10 +262,10 @@ psgrep () {
     ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
 }
 
-# shellcheck disable=SC2164
-ranger () {
-    command ranger --choosedir="$HOME/.rangerdir" "$@"
-    cd "$(cat "$HOME/.rangerdir")"
+ranger() {
+    local RANGER_DIR_FILE="$HOME/.rangerdir"
+    command ranger --choosedir="$RANGER_DIR_FILE" "$@"
+    cd "$(cat "$RANGER_DIR_FILE")"
 }
 
 remove_color_codes () {
@@ -278,7 +287,7 @@ sum_videos_duration () {
     print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
-targz() {
+targz () {
     if [[ "$2" = '--' ]]; then
         tar -zcvf "$1.tar.gz" "${@:3}"
     else
@@ -302,7 +311,7 @@ tmuxsession () {
     fi
 }
 
-unique_paths() {
+unique_paths () {
     echo -n "$1:" | awk -v RS=':' -v ORS=":" '!a[$1]++' | sed 's/:\+/:/g; s/^:\|:$//g'
 }
 
@@ -547,13 +556,4 @@ block_caret
 
 run_custom_hook 'post-shellrc'
 
-# Remove PATH duplicates
-if [ "$SHELLNAME" = zsh ]; then
-    export -U PATH
-elif [ "$SHELLNAME" = bash ]; then
-    export PATH="$(unique_paths "$PATH")"
-fi
-
-export CPPFLAGS="$(unique_paths "$(echo "$CPPFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
-export LDFLAGS="$(unique_paths "$(echo "$LDFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
-export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"
+deduplicate_env_paths
