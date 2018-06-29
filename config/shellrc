@@ -97,32 +97,6 @@ else
 fi
 
 ################################################################################
-####################################  PATH  ####################################
-
-export BUILD_PREFIX="/home/$DOTFILES_USER/.local"
-export CPPFLAGS="-I$BUILD_PREFIX/include $CPPFLAGS"
-export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
-export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
-export PATH="$BUILD_PREFIX/bin:$PATH"
-
-can_execute() {
-    type "$@" > /dev/null 2>&1
-}
-
-export PATH="$NDENV_ROOT/bin:$PATH"
-can_execute ndenv && eval "$(ndenv init -)"
-
-export PATH="$PYENV_ROOT/bin:$PATH"
-can_execute pyenv && eval "$(pyenv init -)"
-
-export PATH="$RBENV_ROOT/bin:$PATH"
-export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
-can_execute rbenv && eval "$(rbenv init -)"
-
-export PATH="$DOTFILES_HOME/bin:$PATH"
-export PATH="$DOTFILES_HOME/custom/bin:$PATH"
-
-################################################################################
 #################################  Functions  ##################################
 
 block_caret () {
@@ -141,6 +115,10 @@ calc () {
         query="$1"
         python -c 'import math; print('"$query"')'
     fi
+}
+
+can_execute() {
+    type "$@" > /dev/null 2>&1
 }
 
 cdf () {
@@ -336,6 +314,28 @@ up () {
 vdiff () {
     diff -u "$@" | pipe_to_visual
 }
+
+################################################################################
+####################################  PATH  ####################################
+
+export BUILD_PREFIX="/home/$DOTFILES_USER/.local"
+export CPPFLAGS="-I$BUILD_PREFIX/include $CPPFLAGS"
+export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
+export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
+export PATH="$BUILD_PREFIX/bin:$PATH"
+
+export PATH="$NDENV_ROOT/bin:$PATH"
+can_execute ndenv && eval "$(ndenv init -)"
+
+export PATH="$PYENV_ROOT/bin:$PATH"
+can_execute pyenv && eval "$(pyenv init -)"
+
+export PATH="$RBENV_ROOT/bin:$PATH"
+export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
+can_execute rbenv && eval "$(rbenv init -)"
+
+export PATH="$DOTFILES_HOME/bin:$PATH"
+export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
 ################################################################################
 ##################################  Aliases  ###################################
