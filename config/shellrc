@@ -504,7 +504,7 @@ __ps1_warnings () {
 
 # PS1 extention
 __ps1_command_eval() {
-    can_execute ps1_command && echo -e " {{ $(ps1_command) }}"
+    can_execute ps1_command && echo -e " [ $(ps1_command) ]"
 }
 
 ps1_command_reset() {
@@ -512,7 +512,7 @@ ps1_command_reset() {
 }
 
 ps1_time() {
-    ps1_command() { date +%T; }
+    ps1_command() { date -Isec; }
 }
 
 ps1_words() {
