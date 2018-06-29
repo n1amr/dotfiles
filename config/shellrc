@@ -105,15 +105,19 @@ export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
 export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
 export PATH="$BUILD_PREFIX/bin:$PATH"
 
+can_execute() {
+    type "$@" > /dev/null 2>&1
+}
+
 export PATH="$NDENV_ROOT/bin:$PATH"
-eval "$( type ndenv > /dev/null 2>&1 && ndenv init -)"
+can_execute ndenv && eval "$(ndenv init -)"
 
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
+can_execute pyenv && eval "$(pyenv init -)"
 
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
-eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
+can_execute rbenv && eval "$(rbenv init -)"
 
 export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/custom/bin:$PATH"
@@ -487,11 +491,11 @@ __ps1_warnings () {
 
 # PS1 extention
 __ps1_command_eval() {
-    type ps1_command > /dev/null 2>&1 && echo -e " {{ $(ps1_command) }}"
+    can_execute ps1_command && echo -e " {{ $(ps1_command) }}"
 }
 
 ps1_command_reset() {
-    type ps1_command > /dev/null 2>&1 && unset -f ps1_command
+    can_execute ps1_command && unset -f ps1_command
 }
 
 ps1_time() {
