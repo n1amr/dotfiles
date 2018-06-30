@@ -43,10 +43,8 @@ run_custom_hook() {
 }
 
 # Initialize shell
-export HISTFILE=~/.shell_history
-export HISTSIZE=10000000
-export SAVEHIST=$HISTSIZE
 export HISTCONTROL='ignoreboth'
+export HISTFILE=~/.shell_history
 
 if [ "$SHELLNAME" = zsh ]; then
     export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"
@@ -55,6 +53,7 @@ if [ "$SHELLNAME" = zsh ]; then
     export ENABLE_CORRECTION="true"
     export DISABLE_UNTRACKED_FILES_DIRTY="true"
     export ZSH_DISABLE_COMPFIX=true
+    export HIST_STAMPS="dd/mm/yyyy"
 
     export plugins=(
         command-not-found
@@ -73,7 +72,23 @@ if [ "$SHELLNAME" = zsh ]; then
 
     run_custom_hook 'pre-on-my-zsh'
     source "$ZSH/oh-my-zsh.sh"
+
+    export HISTSIZE=1000000000
+    export SAVEHIST="$HISTSIZE"
+    export HISTFILESIZE="$HISTFILE"
+
+    setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+    setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+    setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+    setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+    setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+    setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+
 elif [ "$SHELLNAME" = bash ]; then
+    export HISTSIZE=-1
+    export HISTFILESIZE="$HISTFILE"
+    export SAVEHIST="$HISTSIZE"
+
     source "$DOTFILES_HOME/config/bash-init.sh"
 fi
 
