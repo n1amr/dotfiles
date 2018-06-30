@@ -151,14 +151,6 @@ safe_link "$DST_HOME/.shell_history" "$DOTFILES_CUSTOM_DIR/history/shell_history
 safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
 
-# oh-my-zsh custom config
-safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
-( cd "$DOTFILES_HOME/thirdparty/zsh-plugins"
-    for plugin in *; do
-        safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/plugins/$plugin" "../../../../thirdparty/zsh-plugins/$plugin"
-    done
-)
-
 DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$DST_HOME}"
 DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 DOTFILES_CONFIG_FILE="${DOTFILES_CONFIG_FILE:-$DOTFILES_ENV_HOME/.dotfiles_config}"

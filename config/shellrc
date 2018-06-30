@@ -58,7 +58,7 @@ export HISTFILE="$DOTFILES_HOME/custom/history/shell_history"
 
 if [ "$SHELLNAME" = zsh ]; then
     export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"
-    # export ZSH_CUSTOM="$DOTFILES_HOME/config/oh-my-zsh/custom"
+    export ZSH_CUSTOM="$DOTFILES_HOME/config/oh-my-zsh/custom"
 
     export ZSH_THEME="n1amr"
     export ENABLE_CORRECTION="true"
