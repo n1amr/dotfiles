@@ -14,6 +14,9 @@
     create-gitlab = "!f() { git-create-gitlab $*; }; f"
     next = "!f() { git checkout \"$(git log --reverse --ancestry-path HEAD..master --oneline | head -1 | awk '{print $1}')\"; }; f"
     prev = checkout HEAD~
+    recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
+    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
+    author-date = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f"
 
 [core]
     editor = vim
