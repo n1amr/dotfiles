@@ -1,5 +1,19 @@
 #!/bin/bash
 
+verbose=''
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -v) verbose='true' ;;
+        --) shift ; break ;;
+        *)  break ;;
+    esac
+    shift
+done
+
+if [[ -z "$verbose" ]]; then
+    exec > /dev/null 2>&1
+fi
+
 for file in "$@"; do
-    xdg-open "$file" > /dev/null 2>&1
+    xdg-open "$file" &
 done
