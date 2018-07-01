@@ -1,3 +1,5 @@
+# vim: filetype=sh
+
 ################################################################################
 ###############################  Initialization  ###############################
 # shellcheck disable=SC2148
@@ -41,7 +43,7 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
 fi
 source "$DOTFILES_CONFIG_FILE"
 
-run_custom_hook() {
+run_custom_hook () {
     HOOK="$1"
     DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
     if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
@@ -294,13 +296,13 @@ psgrep () {
     ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
 }
 
-ranger() {
+ranger () {
     local RANGER_DIR_FILE="$HOME/.rangerdir"
     command ranger --choosedir="$RANGER_DIR_FILE" "$@"
     cd "$(cat "$RANGER_DIR_FILE")"
 }
 
-can_execute realpath || realpath() {
+can_execute realpath || realpath () {
     for p in "$@"; do
         if [ -d "$p" ]; then
             echo "$(cd "$p" && pwd -P)"
@@ -488,7 +490,7 @@ fi
 #################################  PS1 create  #################################
 
 # shellcheck disable=SC2025,SC2026,SC2154
-reset_ps1() {
+reset_ps1 () {
     if [ "$SHELLNAME" = zsh ]; then
         PS1=\
 $'%{\e[0m%}'\
@@ -546,28 +548,28 @@ __ps1_warnings () {
 }
 
 # PS1 extention
-__ps1_command_eval() {
+__ps1_command_eval () {
     can_execute ps1_command && echo -e " [ $(ps1_command) ]"
 }
 
-ps1_command_reset() {
+ps1_command_reset () {
     can_execute ps1_command && unset -f ps1_command
 }
 
-ps1_time() {
-    ps1_command() { date -Isec; }
+ps1_time () {
+    ps1_command () { date -Isec; }
 }
 
-ps1_words() {
-    ps1_command() { shuf '/mnt/Storage/Documents/Reader/Languages/English/English Words/all-words.txt' | head -1; }
+ps1_words () {
+    ps1_command () { shuf '/mnt/Storage/Documents/Reader/Languages/English/English Words/all-words.txt' | head -1; }
 }
 
-ps1_all_words() {
-    ps1_command() { shuf /usr/share/dict/words | head -1; }
+ps1_all_words () {
+    ps1_command () { shuf /usr/share/dict/words | head -1; }
 }
 
-ps1_memory() {
-    ps1_command() { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
+ps1_memory () {
+    ps1_command () { free -m | head -2 | tail -1 | awk '{printf "%d/%d\n", $3, $2}'; }
 }
 
 ################################################################################
