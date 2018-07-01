@@ -13,23 +13,33 @@ else
     return
 fi
 
-DOTFILES_HOME="$HOME/.dotfiles"
+export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
+export DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
+export DOTFILES_HOME="${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}"
+export DOTFILES_CONFIG_FILE="${DOTFILES_CONFIG_FILE:-$DOTFILES_ENV_HOME/.dotfiles_config}"
 
 # Load config file
-DOTFILES_CONFIG_FILE=~/.dotfiles_config
-if [ -f "$DOTFILES_CONFIG_FILE" ]; then
-    source "$DOTFILES_CONFIG_FILE"
-else
-    echo "Note: Creating new config file."
+if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
+    touch "$DOTFILES_CONFIG_FILE"
+    chmod +x "$DOTFILES_CONFIG_FILE"
+
+    echo "Note: Creating new config file at $DOTFILES_CONFIG_FILE:"
+    echo "# ===== Start ====="
     (
         echo '#!/bin/bash'
         echo
-        echo "export DOTFILES_HOME='$DOTFILES_HOME'"
-        echo "export NDENV_ROOT='$HOME/.ndenv'"
-        echo "export PYENV_ROOT='$HOME/.pyenv'"
-        echo "export RBENV_ROOT='$HOME/.rbenv'"
-    ) >> "$DOTFILES_CONFIG_FILE"
+        echo "export DOTFILES_ENV_HOME='$HOME'"
+        echo "export DOTFILES_ENV_USER='$USER'"
+        echo
+        echo "export DOTFILES_HOME=\"\$DOTFILES_ENV_HOME/.dotfiles\""
+        echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
+        echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
+        echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
+        echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
+    ) | tee -a "$DOTFILES_CONFIG_FILE"
+    echo "# ===== End ====="
 fi
+source "$DOTFILES_CONFIG_FILE"
 
 run_custom_hook() {
     HOOK="$1"
@@ -44,10 +54,11 @@ run_custom_hook() {
 
 # Initialize shell
 export HISTCONTROL='ignoreboth'
-export HISTFILE=~/.shell_history
+export HISTFILE="$DOTFILES_HOME/custom/history/shell_history"
 
 if [ "$SHELLNAME" = zsh ]; then
     export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"
+    # export ZSH_CUSTOM="$DOTFILES_HOME/config/oh-my-zsh/custom"
 
     export ZSH_THEME="n1amr"
     export ENABLE_CORRECTION="true"
@@ -114,6 +125,8 @@ if [ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ]; then
 else
   export IS_TTY=0
 fi
+
+export LANG="${LANG:-en_US.UTF-8}"
 
 ################################################################################
 #################################  Functions  ##################################
@@ -287,6 +300,20 @@ ranger() {
     cd "$(cat "$RANGER_DIR_FILE")"
 }
 
+can_execute realpath || realpath() {
+    for p in "$@"; do
+        if [ -d "$p" ]; then
+            echo "$(cd "$p" && pwd -P)"
+        elif [ -f "$p" ]; then
+            if [ -L "$p" ]; then
+                ls -l "$p" | grep -Po '(?<=\-\>\s)(.*)'
+            else
+                echo "$(cd "$(dirname "$p")" && pwd -P)/$(basename "$p")"
+            fi
+        fi
+    done
+}
+
 remove_color_codes () {
     sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]|\x0D//g"
 }
@@ -346,7 +373,7 @@ vdiff () {
 ################################################################################
 ####################################  PATH  ####################################
 
-export BUILD_PREFIX="/home/$DOTFILES_USER/.local"
+export BUILD_PREFIX="${BUILD_PREFIX:-$DOTFILES_ENV_HOME/.local}"
 export CPPFLAGS="-I$BUILD_PREFIX/include $CPPFLAGS"
 export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
 export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"

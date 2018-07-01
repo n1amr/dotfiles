@@ -3,7 +3,7 @@
 set -e
 
 # define an alternative to realpath if command does not exist
-command -v realpath || realpath() {
+which realpath > /dev/null 2>&1 || realpath () {
     for p in "$@"; do
         if [ -d "$p" ]; then
             echo "$(cd "$p" && pwd -P)"
@@ -17,15 +17,18 @@ command -v realpath || realpath() {
     done
 }
 
-DOTFILES_HOME="$(realpath "$(dirname "$0")")"
+dir="$(realpath "$(dirname "$0")")"
+
+DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
+
 interactive=true
 
 while [ $# != 0 ]; do
     case "$1" in
         --user-home)      DST_HOME="$2";      shift ;;
         --dotfiles-path)  DOTFILES_HOME="$2"; shift ;;
-        --no-interactive) interactive=false ;;
+        --no-interactive|-f) interactive=false ;;
         *)
             echo 'Invalid Syntax'
             exit 1
@@ -34,8 +37,8 @@ while [ $# != 0 ]; do
     shift
 done
 
-if [ -f "~/.dotfiles_config" ]; then
-    . "~/.dotfiles_config"
+if [ -f "$HOME/.dotfiles_config" ]; then
+    . "$HOME/.dotfiles_config"
 fi
 
 if [ "$interactive" = 'true' ]; then
@@ -55,23 +58,25 @@ if [ "$interactive" = 'true' ]; then
 fi
 
 DOTFILES_DIR="$DST_HOME/.dotfiles"
-if [ ! -d "$DOTFILES_DIR" ]; then
+if [ ! "$DOTFILES_DIR" -ef "$DOTFILES_HOME" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
         mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
     fi
     ln -sf "$DOTFILES_HOME" "$DOTFILES_DIR"
-    DOTFILES_HOME="$DOTFILES_DIR"
+    # DOTFILES_HOME="$DOTFILES_DIR"
 fi
 
 DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
 mkdir -pv "$DOTFILES_CUSTOM_DIR"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/bin"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/config/dotfiles"
-touch "$DOTFILES_CUSTOM_DIR/shell_history"
+mkdir -pv "$DOTFILES_CUSTOM_DIR/history"
+touch "$DOTFILES_CUSTOM_DIR/history/shell_history"
+touch "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 
 DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
 
-safe_link() {
+safe_link () {
     from="$1"
     to="$2"
 
@@ -142,38 +147,48 @@ safe_link "$DST_HOME/.config/vlc" "$DOTFILES_HOME/config/vlc"
 safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
 safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
 safe_link "$DST_HOME/.irssi" "$DOTFILES_HOME/config/irssi"
-safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/shell_history"
+safe_link "$DST_HOME/.shell_history" "$DOTFILES_CUSTOM_DIR/history/shell_history"
+safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
 
 # oh-my-zsh custom config
 safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/themes/n1amr.zsh-theme" ../../../../config/n1amr.zsh-theme
-cd "$DOTFILES_HOME/thirdparty/zsh-plugins"
-for plugin in *; do
-    safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/plugins/$plugin" "../../../../thirdparty/zsh-plugins/$plugin"
-done
-cd -
+( cd "$DOTFILES_HOME/thirdparty/zsh-plugins"
+    for plugin in *; do
+        safe_link "$DOTFILES_HOME/thirdparty/oh-my-zsh/custom/plugins/$plugin" "../../../../thirdparty/zsh-plugins/$plugin"
+    done
+)
 
-cat >> "$DOTFILES_CONFIG_FILE" <<EOF
-#!/bin/bash
+DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$DST_HOME}"
+DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
+DOTFILES_CONFIG_FILE="${DOTFILES_CONFIG_FILE:-$DOTFILES_ENV_HOME/.dotfiles_config}"
+if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
+    touch "$DOTFILES_CONFIG_FILE"
+    chmod +x "$DOTFILES_CONFIG_FILE"
 
-export DOTFILES_HOME='$DOTFILES_HOME'
-export PYENV_ROOT='$DST_HOME/.pyenv'
-export RBENV_ROOT='$DST_HOME/.rbenv'
-EOF
-
-chmod +x "$DOTFILES_CONFIG_FILE"
-
-echo "Contents of config file at $DOTFILES_CONFIG_FILE:"
-echo "===== Start ====="
-cat "$DOTFILES_CONFIG_FILE"
-echo "===== End ====="
-
-# fzf install
-if [ "$interactive" = 'true' ]; then
-    "$DOTFILES_HOME/thirdparty/fzf/install"
-else
-    "$DOTFILES_HOME/thirdparty/fzf/install" --all
+    echo "Note: Creating new config file at $DOTFILES_CONFIG_FILE:"
+    echo "# ===== Start ====="
+    (
+        echo '#!/bin/bash'
+        echo
+        echo "export DOTFILES_ENV_HOME='$HOME'"
+        echo "export DOTFILES_ENV_USER='$USER'"
+        echo
+        echo "export DOTFILES_HOME=\"\$DOTFILES_ENV_HOME/.dotfiles\""
+        echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
+        echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
+        echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
+        echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
+    ) | tee -a "$DOTFILES_CONFIG_FILE"
+    echo "# ===== End ====="
 fi
+
+# # fzf install
+# if [ "$interactive" = 'true' ]; then
+#     "$DOTFILES_HOME/thirdparty/fzf/install"
+# else
+#     "$DOTFILES_HOME/thirdparty/fzf/install" --all
+# fi
 
 echo "Successful!"
 if [ "$interactive" = 'true' ]; then
