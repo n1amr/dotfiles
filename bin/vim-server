@@ -4,7 +4,7 @@ set -e
 
 export DISPLAY="${DISPLAY:-:0}"
 
-if [[ "$TMUX" == "" ]]; then
+if [[ -z "$TMUX" ]]; then
     echo "Not in tmux"
     exit 1
 fi
@@ -17,21 +17,17 @@ tmux_windows () {
 }
 
 switch_pane () {
-    window_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_WINDOW_ID=)(.*)')"
-    tmux select-window -t "$window_id"
+    eval "$(tmux showenv VIM_SERVER_WINDOW_ID)"
+    eval "$(tmux showenv VIM_SERVER_PANE_ID)"
 
-    pane_id="$(tmux showenv | grep -Po '(?<=VIM_SERVER_PANE_ID=)(.*)')"
-    tmux select-pane -t "$pane_id"
+    tmux select-window -t "$VIM_SERVER_WINDOW_ID"
+    tmux select-pane -t "$VIM_SERVER_PANE_ID"
 }
 
 save_vim_pane_info () {
-    tmux setenv VIM_SERVER_NAME "$servername"
-
-    window_id="$(tmux_windows | grep '^1' | grep -Po '@\d+')"
-    tmux setenv VIM_SERVER_WINDOW_ID "$window_id"
-
-    pane_id="$(tmux_windows | grep '^1' | grep -Po '%\d+')"
-    tmux setenv VIM_SERVER_PANE_ID "$pane_id"
+    tmux setenv VIM_SERVER_NAME      "$servername"
+    tmux setenv VIM_SERVER_WINDOW_ID "$(tmux_windows | grep '^1' | grep -Po '@\d+')"
+    tmux setenv VIM_SERVER_PANE_ID   "$(tmux_windows | grep '^1' | grep -Po '%\d+')"
 }
 
 is_server_running () {
@@ -42,8 +38,10 @@ is_server_running () {
 
 # Retrieve old server name or create a random one if empty or not running
 set +e
-servername="$(tmux showenv | grep -Po '(?<=VIM_SERVER_NAME=)(.*)')"
-if [ -z "$servername" ] || ! is_server_running "$servername"; then
+eval "$(tmux showenv VIM_SERVER_NAME)"
+if [[ -n "$VIM_SERVER_NAME" ]] && is_server_running "$VIM_SERVER_NAME"; then
+    servername="$VIM_SERVER_NAME"
+else
     random_id="$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 6)"
     servername="$SERVERNAME_PREFIX-$random_id"
 fi
@@ -51,30 +49,28 @@ set -e
 
 if test -t 0; then
     # stdin is a terminal.
-    if is_server_running "$servername"; then
-        if [[ $# -gt 0 ]]; then
-            vim --servername "$servername" --remote "$@"
-            switch_pane
-        else
-            echo "Another instance is running in current session"
-            switch_pane
-            exit 1
-        fi
-    else
+    if ! is_server_running "$servername"; then
         save_vim_pane_info
-        vim --servername "$servername" "$@"
+        exec vim --servername "$servername" "$@"
+    elif [[ $# -gt 0 ]]; then
+        vim --servername "$servername" --remote "$@"
+        switch_pane
+    else
+        echo "Another instance is running in current session"
+        switch_pane
+        exit 1
     fi
 else
     # If piped write to a temp file
     TMPDIR="${TMPDIR:-/tmp}" # default to /tmp if TMPDIR isn't set
     tmpfile="$(mktemp "$TMPDIR/vim-XXXXXXXX")"
 
-    if is_server_running "$servername"; then
+    if ! is_server_running "$servername"; then
+        save_vim_pane_info
+        exec vim --servername "$servername" "$@" -c "silent! w! $tmpfile" -
+    else
         cat > "$tmpfile"
         vim --servername "$servername" "$@" --remote "$tmpfile"
         switch_pane
-    else
-        save_vim_pane_info
-        vim --servername "$servername" "$@" -c "silent! w! $tmpfile" -
     fi
 fi
