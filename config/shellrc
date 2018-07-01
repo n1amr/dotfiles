@@ -133,6 +133,19 @@ export LANG="${LANG:-en_US.UTF-8}"
 ################################################################################
 #################################  Functions  ##################################
 
+__dotfiles_ps () {
+    local args=()
+    local cols='pid,cmd'
+    for arg in "$@"; do
+        case "$arg" in
+            -l) cols='pid,ppid,user,rss:10,size:10,vsz:10,pcpu,pmem,start,stat,cmd' ;;
+            *) args+=("$arg") ;;
+        esac
+    done
+    args+=(-o "$cols")
+    command ps "${args[@]}"
+}
+
 block_caret () {
     if [[ "$(tty)" == */tty* ]]; then
         tput cnorm '\e[?8c'
@@ -210,6 +223,12 @@ init_powerline () {
     fi
 }
 
+join () {
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+
 json () {
     if [ -t 0 ]; then # argument
          python -m json.tool "$*" | pygmentize -l json;
@@ -281,19 +300,37 @@ print_videos_duration () {
 }
 
 psgkill () {
-    serach_result="$(psgrep "$@")"
-    echo "$serach_result" | less -SFRX
-    echo -ne "\nAre you sure? [y/n] "
+    local SIG=-9
+    if [[ "$1" =~ ^-[0-9]+$ ]]; then
+        SIG="$1"
+        shift
+    fi
+
+    local pids=($(pgrep -f "$@"))
+    [ "${#pids[@]}" -gt 0 ] || return 2
+
+    __dotfiles_ps -l -p "$(join ',' "${pids[@]}")" | sed 's/^/ # /' | less -FRX
+    echo -e "\n $ kill $SIG ${pids[@]}"
+    echo -n "Are you sure? [y/n] "
     read -r response
     if [[ "$response" = 'y' ]]; then
-        PIDS=($(echo "$serach_result" | remove_color_codes | tail +2 | awk '{print $2}' | tr '\n' ' '))
-        kill -9 "${PIDS[@]}"
+        kill "$SIG" "${pids[@]}"
     fi
+    return 1
 }
 
 psgrep () {
-    # shellcheck disable=SC2009
-    ps aux | grep -v grep | grep -i --color=always -e VSZ -e "$@"
+    local args=()
+    [[ "$1" = '-l' ]] && { args+=(-l); shift; }
+
+    if [ "$#" -gt 0 ]; then
+        local pids=($(pgrep -f "$@"))
+        [ "${#pids[@]}" -gt 0 ] || return 2
+        args+=(-p "$(join ',' "${pids[@]}")")
+    else
+        args+=(-ax)
+    fi
+    __dotfiles_ps "${args[@]}"
 }
 
 ranger () {
@@ -445,8 +482,10 @@ alias nmcli='nmcli -a'
 alias o='gui-open'
 alias p='ipython'
 alias pdfjoin='pdfjoin --paper a4paper --rotateoversize false'
+alias ps='__dotfiles_ps'
 alias psg='psgrep'
-alias pss='ps -e lx'
+alias psgl='psgrep -l'
+alias psl='__dotfiles_ps -l'
 alias py='python -c'
 alias r='ranger'
 alias rb='ruby -e'
