@@ -50,7 +50,7 @@ ARGS+=(--mark-watched)
 ARGS+=(--cookie "$COOKIE_FILE")
 ARGS+=(--download-archive "$ARCHIVE_FILE")
 ARGS+=(-o "$OUTPUT_TEMPLATE")
-ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date +%s). $f"; done')
+ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date --utc +"%Y%m%d%H%M%S"). $f"; done')
 ARGS+=("$URL")
 
 cd "$YOUTUBE_HOME"

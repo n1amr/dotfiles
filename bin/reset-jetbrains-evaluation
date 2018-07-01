@@ -3,7 +3,7 @@
 set -e
 
 if [ -e ~/.java/.userPrefs/jetbrains ]; then
-    mv -vf ~/.java/.userPrefs/jetbrains ~/"jetbrains.$(date +%s)"
+    mv -vf ~/.java/.userPrefs/jetbrains ~/"jetbrains.$(date --utc +"%Y%m%d%H%M%S")"
 fi
 
 # find ~/.java/.userPrefs/jetbrains -name 'evlsprt*' -exec rm -vrf {} +

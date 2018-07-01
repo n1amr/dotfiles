@@ -60,7 +60,7 @@ fi
 DOTFILES_DIR="$DST_HOME/.dotfiles"
 if [ ! "$DOTFILES_DIR" -ef "$DOTFILES_HOME" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
-        mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date +%s)"
+        mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date --utc +"%Y%m%d%H%M%S")"
     fi
     ln -sf "$DOTFILES_HOME" "$DOTFILES_DIR"
     # DOTFILES_HOME="$DOTFILES_DIR"
@@ -89,8 +89,8 @@ safe_link () {
 
     if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
-            echo mv "$from" "${from}.bak.$(date +%s)"
-            mv "$from" "${from}.bak.$(date +%s)"
+            echo mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+            mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
         fi
 
         dir="$(dirname "$from")"

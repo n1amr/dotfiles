@@ -12,9 +12,9 @@ safe_link() {
 
     if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
-            info "Moving \"$from\" to \"${from}.bak.$(date +%s)\""
-            echo mv "$from" "${from}.bak.$(date +%s)"
-            mv "$from" "${from}.bak.$(date +%s)"
+            info "Moving \"$from\" to \"${from}.bak.$(date --utc +"%Y%m%d%H%M%S")\""
+            echo mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+            mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
         fi
 
         dir="$(dirname "$from")"

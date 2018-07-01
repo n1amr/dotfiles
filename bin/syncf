@@ -45,7 +45,7 @@ BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_RC/default-backup-clean-files}"
 assert_file "$BACKUP_CLEAN_FILE"
 
 BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$DESTINATION_DIR.backups}"
-timestamp="$(date +%F-%H-%M-%S)"
+timestamp="$(dotfiles-timestamp)"
 backup_dir="$BACKUP_ROOT_DIR/backup-${timestamp}"
 log_file="$BACKUP_ROOT_DIR/logs/backup-${timestamp}.log"
 assert_file "$log_file"

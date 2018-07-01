@@ -3,12 +3,12 @@
 if [ "$1" = '--move' ]; then
     shift
     while [ $# != 0 ]; do
-        mv -i "$1" "$1.bak.$(date +%s)"
+        mv -i "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
         shift
     done
 else
     while [ $# != 0 ]; do
-        cp -ir "$1" "$1.bak.$(date +%s)"
+        cp -ir "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
         shift
     done
 fi

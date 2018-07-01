@@ -81,7 +81,7 @@ fi
 # Update history
 if [ ! -d backup ]; then mkdir backup; fi
 if [ -f "$credentials_filename" ]; then
-    mv "$credentials_filename" "backup/$(date +'%F-%H-%M-%S')"
+    mv "$credentials_filename" "backup/$(dotfiles-timestamp)"
 fi
 mv credentials.tmp "$credentials_filename"
 echo "Saved to $(realpath \"$credentials_filename\")"
