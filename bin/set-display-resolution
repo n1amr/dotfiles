@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+# use arandr to generate mode
+
+CONNECTED_OUTPUTS=($(xrandr | grep -P '\bconnected\b' | cut -d ' ' -f 1))
+[[ "${#CONNECTED_OUTPUTS[@]}" -gt 0 ]] || { echo "No outputs are connected" >&2; exit 1; }
+
+DIMENSIONS=("${1:-1366}" "${2:-768}" "${3:-60.00}" )
+OUTPUT="${4:-${CONNECTED_OUTPUTS[0]}}"
+
+# MODELINE_GENERATOR='gtf'
+MODELINE_GENERATOR='cvt'
+
+MODELINE="$("$MODELINE_GENERATOR" "${DIMENSIONS[@]}" | grep 'Modeline' | sed 's/^\s*Modeline//' | sed 's/^\s\+//')"
+echo "Modeline = $MODELINE"
+
+MODE="$(echo "$MODELINE" | cut -d ' ' -f 1 | sed 's/"//g')"
+echo "Mode = $MODE"
+
+MODE_OPTIONS=($(echo "$MODELINE" | cut -d ' ' --complement -f 1 | sed 's/"//g'))
+echo "Mode options = ${MODE_OPTIONS[@]}"
+
+remove_mode () {
+    local mode="$1"
+    local output
+    for output in "${CONNECTED_OUTPUTS[@]}"; do
+        xrandr --delmode "$output" "$mode"
+    done
+    xrandr --rmmode "$mode"
+}
+
+set +e
+remove_mode "$MODE" > /dev/null 2>&1
+set -e
+
+xrandr --newmode "$MODE" "${MODE_OPTIONS[@]}"
+xrandr --addmode "$OUTPUT" "$MODE"
+xrandr --output "$OUTPUT" --mode "$MODE"
+
+echo "Mode $MODE is applied to output $OUTPUT"

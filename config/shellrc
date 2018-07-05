@@ -429,6 +429,7 @@ export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
 can_execute rbenv && eval "$(rbenv init -)"
 
 export PATH="$DOTFILES_HOME/bin:$PATH"
+export PATH="$DOTFILES_HOME/config/i3/bin:$PATH"
 export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 
 ################################################################################

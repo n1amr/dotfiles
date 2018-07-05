@@ -8,7 +8,8 @@ ICON_STOP=''
 ICON_MUSIC=''
 ICON_PLAYER=''
 
-MEDIA_CONTROLLER="$(dirname "${BASH_SOURCE[0]}")/../../scripts/media-control.sh"
+source ~/.dotfiles_config
+MEDIA_CONTROLLER="$DOTFILES_HOME/config/i3/bin/mediactl"
 BLOCK_INSTANCE="${BLOCK_INSTANCE:-status}"
 
 handle_next()   { "$MEDIA_CONTROLLER" next; }

@@ -1,0 +1,76 @@
+#!/bin/bash
+
+source ~/.dotfiles_config
+
+DELTA='5'
+DEFAULT_LEVEL='50'
+
+tmp_dir="$dir/../tmp"
+[[ ! -d "$tmp_dir" ]] && mkdir -p "$tmp_dir"
+
+BRIGHTNESS_LEVEL_FILE="$tmp_dir/backlightctl-level"
+[[ ! -f "$BRIGHTNESS_LEVEL_FILE" ]] && touch "$BRIGHTNESS_LEVEL_FILE"
+
+retrieve_level () {
+    local level="$(cat "$BRIGHTNESS_LEVEL_FILE")"
+    [[ -n "$level" ]] && echo "$level" || echo "$DEFAULT_LEVEL"
+}
+
+store_level () {
+    local level="$1"
+    echo "$level" > "$BRIGHTNESS_LEVEL_FILE"
+}
+
+notify () {
+    notify-send -a backlightctl -t 500 -i display-brightness "Brightness: $(print_level)"
+}
+
+get_level () {
+    xbacklight -get "$@" | sed 's/\..*//g'
+}
+
+print_level () {
+    echo "%$(get_level)"
+}
+
+backlight_set () {
+    xbacklight -set "$@"
+}
+
+backlight_up () {
+    xbacklight -inc "${1:-$DELTA}"
+}
+
+backlight_down () {
+    xbacklight -dec "${1:-$DELTA}"
+}
+
+backlight_toggle () {
+    local level="$(get_level | sed 's/\..*//')"
+    if [[ "$level" -gt 0 ]]; then
+        backlight_off
+    else
+        backlight_on
+    fi
+}
+
+backlight_on () {
+    backlight_set "$(retrieve_level)"
+}
+
+backlight_off () {
+    store_level "$(get_level)"
+    backlight_set 0
+}
+
+case "$1" in
+    set)       shift && backlight_set "$@"  && notify ;;
+    up|inc)    shift && backlight_up "$@"   && notify ;;
+    down|dec)  shift && backlight_down "$@" && notify ;;
+    toggle)    backlight_toggle             && notify ;;
+    on)        backlight_on                 && notify ;;
+    off)       backlight_off                && notify ;;
+    get)       print_level                            ;;
+    notify)    print_level && notify                  ;;
+    *)         echo "Error in arguments: $@"          ;;
+esac

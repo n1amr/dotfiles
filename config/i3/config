@@ -59,11 +59,6 @@ set $x 53
 set $y 29
 set $z 52
 
-# System Commands
-set $cmd_screenshot       gnome-screenshot
-set $cmd_screenshot_area  gnome-screenshot -a
-set $cmd_screenshot_delay gnome-screenshot -d 5
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: "
@@ -106,7 +101,7 @@ bindcode $mod+$Shift+$d  exec dmenu_run
 # installed.
 # bindsym $mod+d exec i3-dmenu-desktop
 
-bindcode $mod+$d  exec $I3_HOME/scripts/j4-dmenu-desktop.sh
+bindcode $mod+$d  exec $I3_HOME/bin/dmenu-desktop
 
 bindcode $mod+$h  focus left
 bindcode $mod+$j  focus down
@@ -267,12 +262,12 @@ bindcode $mod+$x  mode "$mode_launcher"
 
 set $mode_system -- SYSTEM -- (l) Lock, (e) Logout, (s) Suspend, (h) Hibernate, (R) Reboot, (S) Shutdown
 mode "$mode_system" {
-    bindcode $Shift+$r  exec --no-startup-id systemctl reboot             , mode "default"
-    bindcode $Shift+$s  exec --no-startup-id systemctl poweroff -i        , mode "default"
-    bindcode $e         exec --no-startup-id i3-msg exit                  , mode "default"
-    bindcode $h         exec --no-startup-id $I3_HOME/scripts/hibernate.sh, mode "default"
-    bindcode $l         exec --no-startup-id $I3_HOME/scripts/lock.sh     , mode "default"
-    bindcode $s         exec --no-startup-id $I3_HOME/scripts/suspend.sh  , mode "default"
+    bindcode $Shift+$r  exec --no-startup-id systemctl reboot           , mode "default"
+    bindcode $Shift+$s  exec --no-startup-id systemctl poweroff -i      , mode "default"
+    bindcode $e         exec --no-startup-id i3-msg exit                , mode "default"
+    bindcode $h         exec --no-startup-id $I3_HOME/bin/i3-hibernate  , mode "default"
+    bindcode $l         exec --no-startup-id $I3_HOME/bin/i3-lock       , mode "default"
+    bindcode $s         exec --no-startup-id $I3_HOME/bin/i3-suspend    , mode "default"
 
     bindsym $Return  mode "default"
     bindsym $Escape  mode "default"
@@ -280,7 +275,7 @@ mode "$mode_system" {
 # To use XF86PowerOff you must set HandlePowerKey=ignore
 # $ sudo vim /etc/systemd/logind.conf && sudo systemctl restart systemd-logind
 bindsym $Control+$Alt+$Delete  mode "$mode_system"
-bindsym XF86PowerOff           exec --no-startup-id $I3_HOME/scripts/suspend.sh
+bindsym XF86PowerOff           exec --no-startup-id $I3_HOME/bin/i3-suspend
 
 set $mode_mouse -- MOUSE -- HJKL: Movement, Shift+<k>: Slow movement, f: left click, d: right click
 mode "$mode_mouse" {
@@ -342,49 +337,49 @@ bindcode $mod+$Shift+$question  exec i3-input -f '$I3_INPUT' -P 'Move to workspa
 bindcode $mod+$c                exec i3-input -f '$I3_INPUT' -P 'Command: ' -F '%s'
 
 # Volume Control
-bindsym XF86AudioRaiseVolume   exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
-bindsym XF86AudioLowerVolume   exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
-bindsym XF86AudioMute          exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
+bindsym XF86AudioRaiseVolume   exec --no-startup-id $I3_HOME/bin/volumectl up
+bindsym XF86AudioLowerVolume   exec --no-startup-id $I3_HOME/bin/volumectl down
+bindsym XF86AudioMute          exec --no-startup-id $I3_HOME/bin/volumectl mute-toggle
 
 # Media Control
-bindsym XF86AudioPlay          exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
-bindsym XF86AudioPause         exec --no-startup-id $I3_HOME/scripts/media-control.sh pause
-bindsym XF86AudioNext          exec --no-startup-id $I3_HOME/scripts/media-control.sh next
-bindsym XF86AudioPrev          exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
+bindsym XF86AudioPause         exec --no-startup-id $I3_HOME/bin/mediactl pause
+bindsym XF86AudioPlay          exec --no-startup-id $I3_HOME/bin/mediactl play-pause
+bindsym XF86AudioNext          exec --no-startup-id $I3_HOME/bin/mediactl next
+bindsym XF86AudioPrev          exec --no-startup-id $I3_HOME/bin/mediactl prev
 
 # Sreen Brightness Control
-bindsym XF86MonBrightnessUp    exec --no-startup-id xbacklight -inc 5
-bindsym XF86MonBrightnessDown  exec --no-startup-id xbacklight -dec 5
+bindsym XF86MonBrightnessUp    exec --no-startup-id $I3_HOME/bin/backlightctl inc
+bindsym XF86MonBrightnessDown  exec --no-startup-id $I3_HOME/bin/backlightctl dec
 
 # Touchpad Control
-bindsym XF86TouchpadToggle     exec --no-startup-id $I3_HOME/scripts/toggle-touchpad-enabled.sh
+bindsym XF86TouchpadToggle     exec --no-startup-id $I3_HOME/bin/toggle-touchpad
 
 # Print Screen
-bindsym --release Print        exec $cmd_screenshot       && screenshots-organize
-bindsym --release Shift+Print  exec $cmd_screenshot_area  && screenshots-organize
-bindsym --release Ctrl+Print   exec $cmd_screenshot_delay && screenshots-organize
+bindsym --release Print        exec $I3_HOME/bin/screenshot
+bindsym --release Shift+Print  exec $I3_HOME/bin/screenshot -a
+bindsym --release Ctrl+Print   exec $I3_HOME/bin/screenshot -d 5
 
 # Easier Media Control
-bindcode $mod+$Alt+$k       exec --no-startup-id $I3_HOME/scripts/media-control.sh play-pause
-bindcode $mod+$Alt+$l       exec --no-startup-id $I3_HOME/scripts/media-control.sh next
-bindcode $mod+$Alt+$j       exec --no-startup-id $I3_HOME/scripts/media-control.sh prev
-bindcode $mod+$Alt+$u       exec --no-startup-id $I3_HOME/scripts/focus-player.sh
-bindcode $mod+$Alt+$slash   exec --no-startup-id $I3_HOME/scripts/focus-window.sh
-bindcode $mod+$Alt+$p       exec --no-startup-id $I3_HOME/scripts/volume-control.sh up
-bindcode $mod+$Alt+$n       exec --no-startup-id $I3_HOME/scripts/volume-control.sh down
-bindcode $mod+$Alt+$m       exec --no-startup-id $I3_HOME/scripts/volume-control.sh mute-toggle
-bindcode $mod+$Alt+$period  exec --no-startup-id xbacklight -inc 5
-bindcode $mod+$Alt+$comma   exec --no-startup-id xbacklight -dec 5
+bindcode $mod+$Alt+$k       exec --no-startup-id $I3_HOME/bin/mediactl play-pause
+bindcode $mod+$Alt+$l       exec --no-startup-id $I3_HOME/bin/mediactl next
+bindcode $mod+$Alt+$j       exec --no-startup-id $I3_HOME/bin/mediactl prev
+bindcode $mod+$Alt+$u       exec --no-startup-id $I3_HOME/bin/i3-focus-player
+bindcode $mod+$Alt+$slash   exec --no-startup-id $I3_HOME/bin/i3-focus-window
+bindcode $mod+$Alt+$p       exec --no-startup-id $I3_HOME/bin/volumectl up
+bindcode $mod+$Alt+$n       exec --no-startup-id $I3_HOME/bin/volumectl down
+bindcode $mod+$Alt+$m       exec --no-startup-id $I3_HOME/bin/volumectl mute-toggle
+bindcode $mod+$Alt+$period  exec --no-startup-id $I3_HOME/bin/backlightctl inc
+bindcode $mod+$Alt+$comma   exec --no-startup-id $I3_HOME/bin/backlightctl dec
 
 # Keyboard layouts
 set $bracketleft 34
-bindcode $mod+$bracketleft  exec exec $I3_HOME/scripts/toggle-input-language.sh
-bindsym  $Control+$Alt+0    exec exec $I3_HOME/scripts/toggle-input-language.sh
-bindsym  $Control+$Alt+2    exec setxkbmap -layout ar
+bindcode $mod+$bracketleft  exec $I3_HOME/bin/toggle-language
+bindsym  $Control+$Alt+0    exec $I3_HOME/bin/toggle-language
 bindsym  $Control+$Alt+1    exec setxkbmap -layout us
+bindsym  $Control+$Alt+2    exec setxkbmap -layout ar
 
 # Applications Keyboard Shortcuts
-bindcode $Control+$Alt+$l  exec $I3_HOME/scripts/lock.sh
+bindcode $Control+$Alt+$l  exec $I3_HOME/bin/i3-lock
 bindcode $Control+$Alt+$k  exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
 bindcode $mod+$o           exec xdotool mousemove --sync $HALF_DISLAY_WIDTH $HALF_DISLAY_HEIGHT
 bindcode $Control+$Alt+$i  exec xcalib -i -a
@@ -523,10 +518,9 @@ exec i3-msg 'workspace $ws1'
 #########################  Initialization (on reload)  #########################
 
 # Initialize IO Devices
-exec_always $I3_HOME/scripts/init-display.sh
-exec_always $I3_HOME/scripts/init-keyboard.sh
-exec_always $I3_HOME/scripts/init-touchpad.sh
-exec_always $DOTFILES_HOME/config/xinitrc
+exec_always $I3_HOME/bin/i3-init-display
+exec_always $I3_HOME/bin/i3-init-keyboard
+exec_always $I3_HOME/bin/i3-init-touchpad
 
-exec_always $I3_HOME/scripts/set-background.sh
-exec_always $I3_HOME/scripts/start-dunst.sh
+exec_always $I3_HOME/bin/i3-set-background
+exec_always $I3_HOME/bin/dunst-service

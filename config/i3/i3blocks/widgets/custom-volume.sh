@@ -7,14 +7,15 @@ SOUND_ICON=''
 NO_SOUND_ICON=''
 
 dir="$(dirname "${BASH_SOURCE[@]}")"
+VOLUMECTL="$I3_HOME/bin/volumectl"
 
 [[ -n "$BLOCK_BUTTON" ]] && (
     exec > /dev/null 2>&1
 
     case $BLOCK_BUTTON in
-      1) "$I3_HOME/scripts/volume-control.sh" mute-toggle ;;  # click, mute/unmute
-      4) "$I3_HOME/scripts/volume-control.sh" up          ;;  # scroll up
-      5) "$I3_HOME/scripts/volume-control.sh" down        ;;  # scroll down
+      1) "$VOLUMECTL" mute-toggle ;;  # click, mute/unmute
+      4) "$VOLUMECTL" up          ;;  # scroll up
+      5) "$VOLUMECTL" down        ;;  # scroll down
     esac
 )
 

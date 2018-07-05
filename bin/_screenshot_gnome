@@ -1,0 +1,38 @@
+#!/bin/bash
+
+source ~/.dotfiles_config
+DEFAULT_SCREENSHOTS_PATH="$HOME/screenshots"
+SCREENSHOTS_PATH="${DOTFILES_CONFIG_SCREENSHOTS_HOME:-$DEFAULT_SCREENSHOTS_PATH}"
+[[ -d "$SCREENSHOTS_PATH" ]] || mkdir -pv "$SCREENSHOTS_PATH"
+
+notify () {
+    file="$1"
+    paplay "$DOTFILES_HOME/resources/sounds/screenshot.ogg" &
+    args=(-a 'screenshot')
+    args=(-t 2000)
+    [[ -f "$file" ]] && args+=(-i "$file")
+    notify-send "${args[@]}" 'Screenshot' "saved to $file"
+}
+
+had_delay=''
+args=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -a|--area)  args+=(-a)                                  ;;
+        -d|--delay) args+=(-d "$2") ; shift ; has_delay='true'  ;;
+        *)          echo "Invalid argument $1"; exit 1          ;;
+    esac
+    shift
+done
+
+file="$SCREENSHOTS_PATH/screenshot-$(date --utc +'%Y%m%d%H%M%S').png"
+args+=(-f "$file")
+
+gnome-screenshot "${args[@]}" || exit 1
+
+if [[ -n "$has_delay" ]]; then
+    new_file="$SCREENSHOTS_PATH/screenshot-$(date --utc +'%Y%m%d%H%M%S').png"
+    mv "$file" "$new_file"
+fi
+
+notify "$new_file"

@@ -6,14 +6,14 @@
 dir="$(realpath "$(dirname "$0")")"
 
 source ~/.dotfiles_config
-CUSTOM_PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
-[[ ! -x "$CUSTOM_PLAYERCTL" ]] && CUSTOM_PLAYERCTL='playerctl'
+PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
+[[ ! -x "$PLAYERCTL" ]] && PLAYERCTL='playerctl'
 
 tmp_dir="$dir/../tmp"
 [[ ! -d "$tmp_dir" ]] && mkdir -p "$tmp_dir"
 
-LAST_ACTIVE_PLAYER_FILE="$tmp_dir/media-control-last-active-player"
-FOCUSED_PLAYER_FILE="$tmp_dir/media-control-focused-player"
+LAST_ACTIVE_PLAYER_FILE="$tmp_dir/mediactl-last-active-player"
+FOCUSED_PLAYER_FILE="$tmp_dir/mediactl-focused-player"
 
 ignored_players=(
     # vlc
@@ -55,7 +55,7 @@ mark_focused_player() {
 
 is_player_running() {
     local player="$1"
-    if "$CUSTOM_PLAYERCTL" -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
+    if "$PLAYERCTL" -p "$player" status | grep -P 'Playing|Paused' > /dev/null; then
         return 0
     fi
     return 1
@@ -64,7 +64,7 @@ is_player_running() {
 is_player_playing() {
     local player="$1"
 
-    if "$CUSTOM_PLAYERCTL" -p "$player" status | grep -P 'Playing' > /dev/null; then
+    if "$PLAYERCTL" -p "$player" status | grep -P 'Playing' > /dev/null; then
         return 0
     fi
     return 1
@@ -86,7 +86,7 @@ playing_players() {
     playing_players_result=()
 
     # Paused or Playing (excludes Stopped)
-    local running_players=( $("$CUSTOM_PLAYERCTL" -l) )
+    local running_players=( $("$PLAYERCTL" -l) )
 
     local p
     for p in "${running_players[@]}"; do
@@ -98,7 +98,7 @@ playing_players() {
 
         non_ignored_running_players+=("$p")
         if is_player_running "$p"; then
-            if [[ "$("$CUSTOM_PLAYERCTL" -p "$p" status)" == 'Playing' ]]; then
+            if [[ "$("$PLAYERCTL" -p "$p" status)" == 'Playing' ]]; then
                 playing_players_result+=("$p")
             fi
         fi
@@ -115,15 +115,15 @@ player_track_info() {
     fi
 
     if [[ -z "$tag" ]]; then
-        local artist="$("$CUSTOM_PLAYERCTL" -p "$player" metadata artist)"
-        local title="$("$CUSTOM_PLAYERCTL" -p "$player" metadata title)"
+        local artist="$("$PLAYERCTL" -p "$player" metadata artist)"
+        local title="$("$PLAYERCTL" -p "$player" metadata title)"
         local output="$title - $artist"
         if [[ "$output" == ' - ' ]]; then
             output=''
         fi
         echo "$output"
     else
-        echo "$("$CUSTOM_PLAYERCTL" -p "$player" metadata "$tag")"
+        echo "$("$PLAYERCTL" -p "$player" metadata "$tag")"
     fi
 }
 
@@ -153,7 +153,7 @@ control_player() {
     local player="$1"
     local action="$2"
     mark_active_player "$player"
-    "$CUSTOM_PLAYERCTL" -p "$player" "$action"
+    "$PLAYERCTL" -p "$player" "$action"
 }
 
 is_playing() {
@@ -195,7 +195,7 @@ focus_player() {
         if is_player_playing "$player"; then
             mark_active_player "$player"
         fi
-        if ! is_playing '<ANY>'; then
+        if ! is_playing '<ANY>' > /dev/null; then
             mark_active_player "$player"
         fi
     fi
@@ -216,7 +216,7 @@ list_running_players() {
 }
 
 display_notification() {
-    "$CUSTOM_PLAYERCTL" -p "$selected_player" notification
+    "$PLAYERCTL" -p "$selected_player" notification
 }
 
 select_player

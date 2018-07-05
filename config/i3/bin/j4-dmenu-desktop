@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+J4_DMENU_DESKTOP="$(which -a j4-dmenu-desktop | grep -v "$(realpath "$0")" | head -1)"
+[[ -z "$J4_DMENU_DESKTOP" ]] && { echo "playerctl wrapper: Cannot find j4-dmenu-desktop" >&2; exit 1; }
+[[ "$J4_DMENU_DESKTOP" -ef "$(realpath "$0")" ]] && { echo "j4-dmenu-desktop wrapper: Wrapper would call itself recursively. Exit" >&2; exit 2; }
+[[ "$CUSTOM_J4_DMENU_DESKTOP_IN_CALL_STACK" = 'true' ]] && { echo "j4-dmenu-desktop wrapper: Wrapper called itself. Exit" >&2; exit 2; }
+export CUSTOM_J4_DMENU_DESKTOP_IN_CALL_STACK='true'
+
+tmp_dir="$(dirname "$0")/../tmp"
+[[ ! -d "$tmp_dir" ]] && mkdir -p "$tmp_dir"
+
+usage_log_file="$(realpath "$tmp_dir/j4-dmenu-desktop-usage-log")"
+"$J4_DMENU_DESKTOP" --usage-log="$usage_log_file" --display-binary                               130 ↵

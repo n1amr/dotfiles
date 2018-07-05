@@ -11,8 +11,7 @@ Renames screenshots format to a Windows compatible one.\n
 "
 dry="false"
 
-for file in "$@"
-do
+for file in "$@"; do
     if [ "$file" == "-n" ]; then
         dry="true"
         continue
