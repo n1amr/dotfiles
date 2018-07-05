@@ -1,5 +1,78 @@
-#!/bin/zsh
+#!/bin/bash
 
-PLUGIN_SCRIPT="$(dirname "$0")/../thirdparty/oh-my-zsh/plugins/extract/extract.plugin.zsh"
-source "$PLUGIN_SCRIPT"
-extract $*
+if [[ "$#" -eq 0 ]]; then
+    cat >&2 <<EOF
+Usage: extract [-option] [file ...]
+
+Options:
+-r, --remove    Remove archive after unpacking.
+EOF
+fi
+
+remove_archive=1
+if [[ "$1" == "-r" ]] || [[ "$1" == "--remove" ]]; then
+    remove_archive=0
+    shift
+fi
+
+has_pigz () {
+    which pigz > /dev/null 2>&1
+}
+
+tar_supports () {
+    ext="$1"
+    tar "--$ext" --help &> /dev/null
+}
+
+while [[ "$#" -gt 0 ]]; do
+    if [[ ! -f "$1" ]]; then
+        echo "extract: '$1' is not a valid file" >&2
+        shift
+        continue
+    fi
+
+    success=0
+    extract_dir="${1%.*}"
+    case "$1" in
+        *.tar.gz|*.tgz)         has_pigz && { pigz -dc "$1" | tar xv; } || tar zxvf "$1" ;;
+        *.tar.bz2|*.tbz|*.tbz2) tar xvjf "$1" ;;
+        *.tar.xz|*.txz)         tar_supports xz   && tar --xz   -xvf "$1" || xzcat "$1" | tar xvf - ;;
+        *.tar.zma|*.tlz)        tar_supports lzma && tar --lzma -xvf "$1" || lzcat "$1" | tar xvf - ;;
+        *.tar)                  tar xvf "$1" ;;
+
+        *.gz)   has_pigz && pigz -d "$1" || gunzip     "$1" ;;
+        *.bz2)  bunzip2    "$1" ;;
+        *.xz)   unxz       "$1" ;;
+        *.lzma) unlzma     "$1" ;;
+        *.Z)    uncompress "$1" ;;
+
+        *.rar) unrar x -ad "$1" ;;
+        *.7z)  7za x "$1" ;;
+
+        *.zip|*.war|*.jar|*.sublime-package|*.ipsw|*.xpi|*.apk)
+            unzip "$1" -d "$extract_dir"
+        ;;
+
+        *.deb)
+            mkdir -p "$extract_dir/control"
+            mkdir -p "$extract_dir/data"
+            ( cd "$extract_dir"
+                ar vx "../$1" > /dev/null
+                ( cd control; tar xzvf ../control.tar.gz )
+                ( cd data; extract ../data.tar.* )
+                rm *.tar.* debian-binary
+            )
+        ;;
+        *) success=1  ;;
+    esac
+    last_code="$?"
+
+    [[ "$success" = '0' ]] && success="$last_code"
+
+    if [[ "$success" = '0' ]]; then
+        [[ "$remove_archive" = '0' ]] && echo rm -iv "$1"
+    else
+        echo "extract: '$1' cannot be extracted" >&2
+    fi
+    shift
+done

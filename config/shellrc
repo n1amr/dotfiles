@@ -74,7 +74,6 @@ if [ "$SHELLNAME" = zsh ]; then
         dircycle
         dirhistory
         dirpersist
-        extract
         git
         history
         jump
@@ -516,6 +515,7 @@ alias vibindkey='reset_keybindings vi'
 alias vimrc='"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
 alias vs='vim-server'
 alias wget='wget -c'
+alias x='extract'
 alias zshrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 
 if [ "$SHELLNAME" = zsh ]; then
