@@ -6,7 +6,7 @@
 dir="$(realpath "$(dirname "$0")")"
 
 source ~/.dotfiles_config
-PLAYERCTL="$DOTFILES_HOME/bin/custom-playerctl"
+PLAYERCTL="$DOTFILES_HOME/bin/playerctl"
 [[ ! -x "$PLAYERCTL" ]] && PLAYERCTL='playerctl'
 
 tmp_dir="$dir/../tmp"

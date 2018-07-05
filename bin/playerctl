@@ -2,6 +2,12 @@
 
 source ~/.dotfiles_config
 
+PLAYERCTL="$(which -a playerctl | grep -v "$(realpath "$0")" | head -1)"
+[[ -z "$PLAYERCTL" ]] && { echo "playerctl wrapper: Cannot find playerctl" >&2; exit 1; }
+[[ "$PLAYERCTL" -ef "$(realpath "$0")" ]] && { echo "playerctl wrapper: Wrapper would call itself recursively. Exit" >&2; exit 2; }
+[[ "$CUSTOM_PLAYERCTL_IN_CALL_STACK" = 'true' ]] && { echo "playerctl wrapper: Wrapper called itself. Exit" >&2; exit 2; }
+export CUSTOM_PLAYERCTL_IN_CALL_STACK='true'
+
 cmus_is_running() {
     if cmus-remote -Q > /dev/null 2>&1; then
         return 0
@@ -57,9 +63,9 @@ cmus_metadata() {
 
 playerctl_with_player() {
     if [[ -z "$player" ]]; then
-        playerctl "$@"
+        "$PLAYERCTL" "$@"
     else
-        playerctl -p "$player" "$@"
+        "$PLAYERCTL" -p "$player" "$@"
     fi
 }
 
