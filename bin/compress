@@ -1,24 +1,52 @@
 #!/bin/bash
 
-infiles=("$@")
+set -e
 
-curdirpath="$(pwd)"
-curdirname="$(basename "$curdirpath")"
-filename="$curdirname"
+source ~/.dotfiles_config
+source "$DOTFILES_HOME/bin/utils/lca"
 
-if [ -f "$filename.tar.gz" ]; then
-    i=1
-    while [ -f "${filename}_$i.tar.gz" ]; do
-        i=$((i + 1))
-    done
-    filename="${filename}_$i.tar.gz"
-else
-    filename="$filename.tar.gz"
-fi
+[[ "$#" = '0' ]] && { echo 'No files are passed' 2>&1; exit 1; }
+
+[[ "$#" -gt 1 ]] && lca_path="$(realpath "$(pwd)")" || lca_path="$(realpath "$1")"
 
 files=()
-for f in "${infiles[@]}"; do
-    files+=("../$curdirname/${f/$curdirpath\//}")
+for f in "$@"; do
+    f="$(realpath "$f")"
+    files+=("$f")
+    lca_path="$(lca "$lca_path" "$f")"
+done
+lca_path="${lca_path%/}"
+
+archive_path_prefix="$lca_path"
+if [ ! -f "${archive_path_prefix}.tar.gz" ]; then
+    archive_path="${archive_path_prefix}.tar.gz"
+else
+    i=1
+    while [ -f "${archive_path_prefix}_$i.tar.gz" ]; do
+        i=$((i + 1))
+    done
+    archive_path="${archive_path_prefix}_$i.tar.gz"
+fi
+
+archive_dir="$(dirname "$archive_path")"
+archive_name="$(basename "$archive_path")"
+
+if [[ "$#" -gt 1 ]]; then
+    prefix="$(basename "$lca_path")/"
+    trim="$lca_path"
+else
+    prefix=''
+    trim="$archive_dir"
+fi
+
+arg_files=()
+for f in "${files[@]}"; do
+    arg_files+=("${prefix}${f#$trim/*}")
 done
 
-tar -zcvf "$filename" "${files[@]}"
+echo "Creating archive: $(realpath "$archive_dir/$archive_name")"
+( cd "$archive_dir"
+    tar -zcvf "$archive_name" "${arg_files[@]}"
+)
+
+echo "Archive is saved to: $(realpath --relative-to="$(pwd)" "$archive_path")"
