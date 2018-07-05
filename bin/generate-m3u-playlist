@@ -15,5 +15,5 @@ for f in "$@"; do
     echo "#EXTINF:,$title"
     # echo "file://$(urlencode "$file_path")" # bad arabic encoding i.e. all characters map to %FF%FF
     # echo "file://$(urlencode_all "$file_path")"
-    echo "$(perl_file_uri "$file_path")"
+    echo "$(pathtouri "$file_path")"
 done

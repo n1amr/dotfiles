@@ -1,0 +1,10 @@
+#!/bin/bash
+
+perl_file_uri() {
+    echo "$@" | perl -MURI::file -e 'print URI::file->new(<STDIN>)'
+}
+
+for f in "$@"; do
+    file_path="$(realpath "$f")"
+    echo "$(perl_file_uri "$file_path")"
+done
