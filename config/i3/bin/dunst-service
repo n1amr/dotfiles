@@ -3,7 +3,7 @@
 # depends on: apt install libxdg-basedir1
 
 source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/flock"
+source "$DOTFILES_HOME/bin/lib/flock"
 
 if ! exlock_now; then
     echo "Error: Could not get lock $LOCKFILE"

@@ -2,7 +2,7 @@
 
 [ -n "$DOTFILES_HELPERS" ] && return || export DOTFILES_HELPERS=true
 
-source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/lib/log"
 
 safe_link() {
     from="$1"

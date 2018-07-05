@@ -3,7 +3,7 @@
 set -e
 
 source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/lock" --verbose
+source "$DOTFILES_HOME/bin/lib/lock" --verbose
 
 if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo -n 'Enter Google Drive home directory path: '

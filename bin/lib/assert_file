@@ -2,7 +2,7 @@
 
 [ -n "$DOTFILES_ASSERT_FILE" ] && return || export DOTFILES_ASSERT_FILE=true
 
-source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/lib/log"
 
 assert_dir () {
     dir="$1"

@@ -3,8 +3,8 @@
 set -e
 
 source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/log"
-source "$DOTFILES_HOME/bin/utils/assert_file"
+source "$DOTFILES_HOME/bin/lib/log"
+source "$DOTFILES_HOME/bin/lib/assert_file"
 
 CONFIG_ROOT_PATH="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh"
 

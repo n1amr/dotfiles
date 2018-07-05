@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/log"
+source "$DOTFILES_HOME/bin/lib/log"
 PATH="$DOTFILES_HOME/bin:$PATH"
 
 if ! ok-to-download; then

@@ -3,8 +3,8 @@
 set -e
 
 source ~/.dotfiles_config
-source "$DOTFILES_HOME/bin/utils/log"
-source "$DOTFILES_HOME/bin/utils/lock" --verbose
+source "$DOTFILES_HOME/bin/lib/log"
+source "$DOTFILES_HOME/bin/lib/lock" --verbose
 
 if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo -n 'Enter youtube home directory: '
