@@ -1,0 +1,35 @@
+#!/bin/bash
+
+__lca_normalize_path () {
+    echo "$(echo "$1" | sed 's/\/\+/\//g' | sed 's/\/$//')/"
+}
+
+__lca_lca_2 () {
+    local p1
+    local p2
+    IFS='/' read -ra p1 <<< "$1"
+    IFS='/' read -ra p2 <<< "$2"
+
+    local p=()
+    local i=0
+    while [[ "$i" -lt "${#p1[@]}" ]] && [[ "$i" -lt "${#p2[@]}" ]] && [[ "${p1[$i]}" = "${p2[$i]}" ]]; do
+        p+=("${p1[$i]}")
+        i="$(( $i + 1 ))"
+    done
+    __lca_normalize_path "/$(__lca_join '/' "${p[@]}")/"
+}
+
+__lca_join () {
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+
+lca () {
+    local path
+    local result="$(__lca_normalize_path "$1")"
+    for path in "$@"; do
+        result="$(__lca_lca_2 "$result" "$(__lca_normalize_path "$path")")"
+    done
+    echo "$result"
+}
