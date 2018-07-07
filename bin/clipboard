@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if which xsel > /dev/null 2>&1; then
+    copy () {
+        xsel -ib
+    }
+
+    paste () {
+        xsel -ob
+    }
+else
+    CLIPBOARD_FILE="/tmp/clipboard"
+    copy () {
+        cat > "$CLIPBOARD_FILE"
+    }
+
+    paste () {
+        cat "$CLIPBOARD_FILE"
+    }
+fi
+
+[[ ! -t 0 ]] && pipe_input='true'
+[[ ! -t 1 ]] && pipe_output='true'
+
+[[ -n "$pipe_input" ]] && copy
+paste | cat

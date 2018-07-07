@@ -442,6 +442,7 @@ alias alert='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/alert.ogg"'
 alias apt='sudo apt'
 alias bakmv='bak --move'
 alias beep='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/bell.ogg"'
+alias c='clipboard'
 alias clock='tty-clock -scn -C 2'
 alias cp='cp -i'
 alias diff='diff -u'
@@ -524,7 +525,7 @@ alias zshrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 
 if [ "$SHELLNAME" = zsh ]; then
     alias -g 'A=2>&1'
-    alias -g 'CP=| xsel -ib'
+    alias -g 'C=| clipboard'
     alias -g 'G=| grep -P'
     alias -g 'S=| subl'
     alias -g "E=| pipe_to_editor"
