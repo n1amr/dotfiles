@@ -153,14 +153,18 @@ block_caret () {
 }
 
 calc () {
-    if [[ "$1" == '-s' ]]; then
+    setup=''
+    if [[ "$#" = '0' ]]; then
+        read query
+    elif [[ "$1" == '-s' ]]; then
         setup="$2"
         query="$3"
-        python -c 'import math; '"$setup"'; print('"$query"')'
     else
         query="$1"
-        python -c 'import math; print('"$query"')'
     fi
+
+    [[ -n "$setup" ]] && setup="$setup; "
+    python -c 'import math; '"$setup"'print('"$query"')'
 }
 
 can_execute () {
