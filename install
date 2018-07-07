@@ -175,7 +175,8 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
     echo "# ===== End ====="
 fi
 
-# # fzf install
+# fzf install
+"$DOTFILES_HOME/thirdparty/fzf/install" --bin
 # if [ "$interactive" = 'true' ]; then
 #     "$DOTFILES_HOME/thirdparty/fzf/install"
 # else

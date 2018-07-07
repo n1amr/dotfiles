@@ -201,11 +201,9 @@ hcd () {
 }
 
 init_fzf () {
-    if [ "$SHELLNAME" = zsh ]; then
-        [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-    elif [ "$SHELLNAME" = bash ]; then
-        [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-    fi
+    export PATH="$DOTFILES_HOME/thirdparty/fzf/bin:$PATH"
+    [[ $- == *i* ]] && source "$DOTFILES_HOME/thirdparty/fzf/shell/completion.$SHELLNAME" 2> /dev/null
+    source "$DOTFILES_HOME/thirdparty/fzf/shell/key-bindings.$SHELLNAME"
 }
 
 init_powerline () {
@@ -652,5 +650,4 @@ reset_keybindings vi
 block_caret
 
 run_custom_hook 'post-shellrc'
-
 deduplicate_env_paths
