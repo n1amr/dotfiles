@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+BROWSER='firefox'
+
+extract_url () {
+    filename="$1"
+    id="$(echo "$filename" | grep -Po '\(@.*? - .{11}\)\..*$' | grep -Po '.{11}(?=\)\.)')"
+    [[ -z "$id" ]] && return 1
+    url="https://youtube.com/watch?v=$id"
+    echo "$url"
+}
+
+for file in "$@"; do
+    url="$(extract_url "$file" || echo '')"
+    if [[ -n "$url" ]]; then
+        echo "Opening $file in $BROWSER: $url"
+        "$BROWSER" "$url"
+    else
+        echo >&2 "Cannot find url of $file"
+    fi
+done
