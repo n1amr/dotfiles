@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+ENV="/tmp/cron-$LOGNAME.env"
+ENV_SCRIPT="/tmp/cron-$LOGNAME.env.bash"
+
+(
+    echo "#!/bin/bash"
+    echo
+    cat "$ENV" | sed "s/'/'\\\\\\\\''/g; s/=\(.*\)/='\1'/; s/^/export /"
+) > "$ENV_SCRIPT"
+
+for var in $(env | cut -d '=' -f 1); do
+    unset "$var"
+done
+
+source "$ENV_SCRIPT"
+
+exec "$@"
