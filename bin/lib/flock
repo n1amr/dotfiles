@@ -1,20 +1,34 @@
 #!/bin/bash
 
 # IMPORTANT: caller scripts must not use `exec`
+# IMPORTANT: if calling script defines an EXIT trap, this new trap should call flock_exit_trap() for proper unlocking.
 [ -n "$DOTFILES_FLOCK" ] && return || export DOTFILES_FLOCK=true
 
 CALLER="$(realpath "$(caller | cut -d ' ' -f 1 --complement)")"
 DEFAULT_LOCKFILE="/tmp/lock-$(echo "$CALLER" | sed 's#/#%#g')"
-LOCKFILE="${1:-$DEFAULT_LOCKFILE}"
+FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$1}"
+FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$DEFAULT_LOCKFILE}"
+
 LOCKFD=99
 
-_lock()             { flock "-$1" $LOCKFD; }
-_no_more_locking()  { _lock u; _lock xn && rm -f "$LOCKFILE"; }
-_prepare_locking()  { eval "exec $LOCKFD>\"$LOCKFILE\""; trap _no_more_locking EXIT; }
+__flock_lock () {
+    flock "-$1" $LOCKFD
+}
 
-exlock_now()        { _lock xn; }  # obtain an exclusive lock immediately or fail
-exlock()            { _lock x; }   # obtain an exclusive lock
-shlock()            { _lock s; }   # obtain a shared lock
-unlock()            { _lock u; }   # drop a lock
+__flock_no_more_locking () {
+    __flock_lock u
+    __flock_lock xn && rm -f "$FLOCK_LOCK_FILE"
+}
 
-_prepare_locking
+__flock_prepare_locking () {
+    eval "exec $LOCKFD>\"$FLOCK_LOCK_FILE\""
+    trap __flock_no_more_locking EXIT
+}
+
+flock_exlock_now()  { __flock_lock xn; }  # obtain an exclusive lock immediately or fail
+flock_exlock()      { __flock_lock x;  }  # obtain an exclusive lock
+flock_shlock()      { __flock_lock s;  }  # obtain a shared lock
+flock_unlock()      { __flock_lock u;  }  # drop a lock
+flock_exit_trap()   { __flock_no_more_locking; }
+
+__flock_prepare_locking

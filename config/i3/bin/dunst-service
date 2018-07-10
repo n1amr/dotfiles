@@ -3,10 +3,12 @@
 # depends on: apt install libxdg-basedir1
 
 source ~/.dotfiles_config
+
+FLOCK_LOCK_FILE="$DOTFILES_HOME/config/i3/tmp/dunst-service.lock"
 source "$DOTFILES_HOME/bin/lib/flock"
 
-if ! exlock_now; then
-    echo "Error: Could not get lock $LOCKFILE"
+if ! flock_exlock_now; then
+    echo "Error: Could not get lock $FLOCK_LOCK_FILE"
     exit 1
 fi
 
@@ -21,6 +23,7 @@ fi
 
 exit_trap() {
     killall -15 dunst
+    flock_exit_trap
 }
 trap exit_trap EXIT
 
