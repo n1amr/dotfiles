@@ -263,13 +263,6 @@ pipe_to_visual () {
     remove_color_codes | "$VISUAL" -
 }
 
-print_pdf_counts () {
-    DELIM=';.;.;'
-    # shellcheck disable=SC2016,SC2048,SC2086
-    [ $# -ne 0 ] && exiftool -n -q -p '${PageCount}'"$DELIM"'${PageCount;our $sum; $_=($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
-    | awk -F "$DELIM" '{sum=$2;$2=":"; print $0} END{print "===============\nTotal: ", sum}'
-}
-
 print_title_comment () {
     LENGTH=80
     if [ ${#1} -ge $LENGTH ]; then
@@ -291,13 +284,6 @@ print_welcome () {
 \e[1;31m |_| |_||_| \__,_||_| |_| |_||_|   (_) (   / \e[1;34m   \_/\_/   \___||_| \___| \___/ |_| |_| |_| \___|(_) \e[m\n\
 \e[1;31m                                        |_|  \e[1;34m                                                      \e[m\
 """
-}
-
-print_videos_duration () {
-    DELIM=';.;.;'
-    # shellcheck disable=SC2016,SC2048,SC2086
-    [ $# -ne 0 ] && exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' $* 2> /dev/null \
-    | awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{print "===============\nTotal: ", sum}'
 }
 
 psgkill () {
@@ -366,11 +352,6 @@ reset_keybindings () {
         [ "$1" = 'vi' ] && set -o vi
         source "$DOTFILES_HOME/config/keybindings.bash"
     fi
-}
-
-sum_videos_duration () {
-    # shellcheck disable=SC2068
-    print_videos_duration $@ | tail -1 | awk '{print $2}'
 }
 
 targz () {
