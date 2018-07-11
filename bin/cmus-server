@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+source ~/.dotfiles_config
+
+find_ip () {
+    ip addr |
+        grep -Po 'inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)' |
+        awk '{ sub(/inet6? (addr:)? ?/, ""); print }' |
+        grep -P '^192\.168\.1\.'
+}
+
+IP="$(find_ip)"
+PORT="${CMUS_PORT:-$DOTFILES_CMUS_PORT}"
+PORT="${PORT:-3121}"
+
+args=()
+[[ -n "$IP" ]] && [[ -n "$PORT" ]] &&
+    args+=(--listen "$IP:$PORT")
+echo >&2 "Starting cmus server on $IP:$PORT..."
+exec cmus "${args[@]}"
