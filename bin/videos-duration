@@ -2,8 +2,14 @@
 
 set -e
 
-DELIM=';.;.;'
+DELIM=' ::-__:DELIMITER:__-:: ' 
+[[ "$1" = '-s' ]] && { sort='true'; shift; } || sort=''
 [ "$#" -ne 0 ] || exit
 
-exiftool -n -q -p '${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "$@" 2> /dev/null |
-    awk -F "$DELIM" '{sum=$2;$2=""; print $0} END{printf "===============\n%s  Total\n", sum}'
+output="$(exiftool -n -q -p '${Duration}'"$DELIM"'${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "$@" 2> /dev/null)"
+sum="$(echo "$output" | awk -F "$DELIM" '{sum=$3} END{print sum}')"
+[[ -n "$sort" ]] && output="$(echo "$output" | sort -n)"
+
+echo "$output" | awk -F "$DELIM" '{sum=$3; $1=$3=""; print $0}' | sed 's/^\s\+//'
+echo "==============="
+echo "$sum  Total"
