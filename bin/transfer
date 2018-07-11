@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+BASE_URL='https://transfer.sh'
+
+valid_args='true'
+if tty -s; then
+    input_file="$1"
+    file_name="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
+    [[ "$#" = '1' ]] || valid_args=''
+else
+    input_file='-'
+    file_name="${1:-file}"
+fi
+
+if [[ -z "$valid_args" ]]; then
+    echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+    exit 1
+fi
+
+args=()
+args+=(--fail)
+# args+=(--progress-bar)
+args+=(--upload-file "$input_file")
+args+=("$BASE_URL/$file_name")
+url="$(curl "${args[@]}")"
+
+echo "$url"
