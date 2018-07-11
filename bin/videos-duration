@@ -2,11 +2,55 @@
 
 set -e
 
+EXTENSIONS=(
+    mp4 mkv 3gp avi mpg mpeg webm flv mov ogv wmv
+    3g2 amv asf drc f4a f4p f4v m2v m4p m4v mng mp2 mpe mpv mxf nsv ogg qt rm rmvb roq svi vob yuv
+)
+
+PATTERN="\.($(echo "${EXTENSIONS[@]}" | tr ' ' '|'))\$"
+
+supported_extension() {
+    echo "$1" | grep -Pi "$PATTERN"
+}
+
+list_files_recursively() {
+    for p in "$@"; do
+        find "$p" -type f | sort
+    done
+}
+
+calculate_duration() {
+    PATHS=("$@")
+    [[ -z "${PATHS[@]}" ]] && PATHS=(.)
+
+    files=()
+    while IFS='' read -r f; do
+        if [[ -f "$f" ]] && supported_extension "$f"; then
+            _files+=("$f")
+        fi
+    done < <(list_files_recursively "${PATHS[@]}")
+
+    # Remove duplicates
+    while IFS='' read -r f; do
+        files+=("$f")
+    done < <(
+        for f in "${_files[@]}"; do echo "$f"; done | awk '!cnt[$0]++'
+    )
+
+    if [[ -z "${files[@]}" ]]; then
+        echo >&2 "No videos are found"
+        exit 1
+    fi
+
+    output="$(exiftool -n -q -p '${Duration}'"$DELIM"'${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "${files[@]}" 2> /dev/null)"
+    echo "$output"
+}
+
 DELIM=' ::-__:DELIMITER:__-:: ' 
 [[ "$1" = '-s' ]] && { sort='true'; shift; } || sort=''
-[ "$#" -ne 0 ] || exit
 
-output="$(exiftool -n -q -p '${Duration}'"$DELIM"'${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "$@" 2> /dev/null)"
+output="$(calculate_duration "$@")"
+
 sum="$(echo "$output" | awk -F "$DELIM" '{sum=$3} END{print sum}')"
 [[ -n "$sort" ]] && output="$(echo "$output" | sort -n)"
 
