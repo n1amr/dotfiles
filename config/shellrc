@@ -25,6 +25,7 @@ else
         echo '#!/bin/bash'
         echo
         echo "export DOTFILES_HOME='$DOTFILES_HOME'"
+        echo "export NDENV_ROOT='$HOME/.ndenv'"
         echo "export PYENV_ROOT='$HOME/.pyenv'"
         echo "export RBENV_ROOT='$HOME/.rbenv'"
     ) >> "$DOTFILES_CONFIG_FILE"
@@ -96,9 +97,11 @@ fi
 ################################################################################
 ####################################  PATH  ####################################
 
+export PATH="$NDENV_ROOT/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
+eval "$( type ndenv > /dev/null 2>&1 && ndenv init -)"
 eval "$( type pyenv > /dev/null 2>&1 && pyenv init -)"
 eval "$( type rbenv > /dev/null 2>&1 && rbenv init -)"
 export PATH="$DOTFILES_HOME/bin:$PATH"
