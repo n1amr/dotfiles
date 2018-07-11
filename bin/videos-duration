@@ -10,7 +10,7 @@ EXTENSIONS=(
 PATTERN="\.($(echo "${EXTENSIONS[@]}" | tr ' ' '|'))\$"
 
 supported_extension() {
-    echo "$1" | grep -Pi "$PATTERN"
+    echo "$1" | grep -Pi "$PATTERN" > /dev/null 2>&1
 }
 
 list_files_recursively() {
@@ -42,11 +42,12 @@ calculate_duration() {
         exit 1
     fi
 
-    output="$(exiftool -n -q -p '${Duration}'"$DELIM"'${Duration; $_=ConvertDuration($_)}'"$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "${files[@]}" 2> /dev/null)"
+    output="$(exiftool -n -q -p '${Duration}'"$DELIM"'${Duration; $_=ConvertDuration($_)}'"$DELIM2""$DELIM"'${Duration;our $sum;$_=ConvertDuration($sum+=$_)}'"$DELIM"'${FileName}' "${files[@]}" 2> /dev/null)"
     echo "$output"
 }
 
 DELIM=' ::-__:DELIMITER:__-:: ' 
+DELIM2='$'
 [[ "$1" = '-s' ]] && { sort='true'; shift; } || sort=''
 
 output="$(calculate_duration "$@")"
@@ -54,6 +55,11 @@ output="$(calculate_duration "$@")"
 sum="$(echo "$output" | awk -F "$DELIM" '{sum=$3} END{print sum}')"
 [[ -n "$sort" ]] && output="$(echo "$output" | sort -n)"
 
-echo "$output" | awk -F "$DELIM" '{sum=$3; $1=$3=""; print $0}' | sed 's/^\s\+//'
+echo "$output" |
+    awk -F "$DELIM" '{$1=$3=""; print $0}' |
+    sed 's/^\s\+//' |
+    awk -F "$DELIM2" 'BEGIN{OFS = "/"} {print $1, $2}' |
+    sed 's/\/\s\+/\//' |
+    column -t -s '/'
 echo "==============="
 echo "$sum  Total"
