@@ -4,15 +4,15 @@
 # IMPORTANT: if calling script defines an EXIT trap, this new trap should call flock_exit_trap() for proper unlocking.
 [ -n "$DOTFILES_FLOCK" ] && return || export DOTFILES_FLOCK=true
 
-CALLER="$(realpath "$(caller | cut -d ' ' -f 1 --complement)")"
-DEFAULT_LOCKFILE="/tmp/lock-$(echo "$CALLER" | sed 's#/#%#g')"
+__FLOCK_CALLER="$(realpath "$(caller | cut -d ' ' -f 1 --complement)")"
+__FLOCK_DEFAULT_LOCKFILE="/tmp/lock-$(echo "$__FLOCK_CALLER" | sed 's#/#%#g')"
 FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$1}"
-FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$DEFAULT_LOCKFILE}"
+FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$__FLOCK_DEFAULT_LOCKFILE}"
 
-LOCKFD=99
+__FLOCK_LOCKFD=99
 
 __flock_lock () {
-    flock "-$1" $LOCKFD
+    flock "-$1" $__FLOCK_LOCKFD
 }
 
 __flock_no_more_locking () {
@@ -21,7 +21,7 @@ __flock_no_more_locking () {
 }
 
 __flock_prepare_locking () {
-    eval "exec $LOCKFD>\"$FLOCK_LOCK_FILE\""
+    eval "exec $__FLOCK_LOCKFD>\"$FLOCK_LOCK_FILE\""
     trap __flock_no_more_locking EXIT
 }
 

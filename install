@@ -4,6 +4,7 @@ set -e
 
 # define an alternative to realpath if command does not exist
 which realpath > /dev/null 2>&1 || realpath () {
+    local p
     for p in "$@"; do
         if [ -d "$p" ]; then
             echo "$(cd "$p" && pwd -P)"
@@ -76,10 +77,11 @@ touch "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 
 DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
 
-safe_link () {
-    from="$1"
-    to="$2"
+safe_link() {
+    local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
+    local to="$2"
 
+    local response
     if [ "$interactive" = 'true' ]; then
         printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
         read -r response
@@ -89,16 +91,15 @@ safe_link () {
 
     if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
-            echo mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
-            mv "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+            mv -v "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
         fi
 
-        dir="$(dirname "$from")"
+        local dir="$(dirname "$from")"
         if [ ! -d "$dir" ]; then
             mkdir -pv "$dir"
         fi
 
-        ln -sf "$to" "$from"
+        ln -sfv "$to" "$from"
     fi
 }
 

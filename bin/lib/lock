@@ -4,9 +4,9 @@
 
 source "$DOTFILES_HOME/bin/lib/log"
 
-verbose=false
+__lock_verbose=false
 if [ "$1" = '--verbose' ]; then
-    verbose=true
+    __lock_verbose=true
 fi
 
 export HAS_LOCK=false
@@ -16,26 +16,26 @@ acquire_lock() {
     LOCK_FILE="$1"
 
     if [[ "$HAS_LOCK" != 'false' ]]; then
-        [ "$verbose" = 'true' ] && info "You already own this lock '$LOCK_FILE'"
+        [ "$__lock_verbose" = 'true' ] && info "You already own this lock '$LOCK_FILE'"
         return 0
     fi
 
     if [ -f "$LOCK_FILE" ]; then
-        [ "$verbose" = 'true' ] && warning "Cannot acquire lock at '$LOCK_FILE'"
+        [ "$__lock_verbose" = 'true' ] && warning "Cannot acquire lock at '$LOCK_FILE'"
         return 1
     fi
 
-    [ "$verbose" = 'true' ] && info "Acquiring lock at '$LOCK_FILE'"
+    [ "$__lock_verbose" = 'true' ] && info "Acquiring lock at '$LOCK_FILE'"
     echo "$LOCK_TOKEN $$ $BASHPID" >> "$LOCK_FILE"
 
-    winner_token="$(head -1 "$LOCK_FILE" | cut -d ' ' -f 1)"
+    local winner_token="$(head -1 "$LOCK_FILE" | cut -d ' ' -f 1)"
     if [[ "$LOCK_TOKEN" != "$winner_token" ]]; then
-        [ "$verbose" = 'true' ] && warning "Lost in race condition on '$LOCK_FILE'"
+        [ "$__lock_verbose" = 'true' ] && warning "Lost in race condition on '$LOCK_FILE'"
         return 1
     fi
 
     HAS_LOCK=true
-    [ "$verbose" = 'true' ] && info "Acquired lock at '$LOCK_FILE'"
+    [ "$__lock_verbose" = 'true' ] && info "Acquired lock at '$LOCK_FILE'"
     return 0
 }
 
@@ -43,18 +43,18 @@ release_lock() {
     LOCK_FILE="$1"
 
     if [[ "$HAS_LOCK" != 'true' ]]; then
-        [ "$verbose" = 'true' ] && warning "Not released. You do not own this lock '$LOCK_FILE'"
+        [ "$__lock_verbose" = 'true' ] && warning "Not released. You do not own this lock '$LOCK_FILE'"
         return 1
     fi
 
     if ! [ -f "$LOCK_FILE" ]; then
-        [ "$verbose" = 'true' ] && warning "Lock at '$LOCK_FILE' is already released"
+        [ "$__lock_verbose" = 'true' ] && warning "Lock at '$LOCK_FILE' is already released"
         return 1
     fi
 
-    [ "$verbose" = 'true' ] && info "Realeasing lock at '$LOCK_FILE'"
-    out="$(rm -vf "$LOCK_FILE")"
-    [ "$verbose" = 'true' ] && info "$out"
-    [ "$verbose" = 'true' ] && info "Realeased lock at '$LOCK_FILE'"
+    [ "$__lock_verbose" = 'true' ] && info "Realeasing lock at '$LOCK_FILE'"
+    local out="$(rm -vf "$LOCK_FILE")"
+    [ "$__lock_verbose" = 'true' ] && info "$out"
+    [ "$__lock_verbose" = 'true' ] && info "Realeased lock at '$LOCK_FILE'"
     return 0
 }

@@ -327,6 +327,7 @@ ranger () {
 }
 
 can_execute realpath || realpath () {
+    local p
     for p in "$@"; do
         if [ -d "$p" ]; then
             echo "$(cd "$p" && pwd -P)"
