@@ -129,6 +129,11 @@ for cf in bashrc zshrc; do
     safe_link "$DST_HOME/.$cf" "$DOTFILES_HOME/config/shellrc"
 done
 
+# Custom config directories
+mkdir -pv "$DOTFILES_HOME/custom/config/mutt/"
+mkdir -pv "$DOTFILES_HOME/custom/config/ranger/"
+mkdir -pv "$DOTFILES_HOME/custom/history/"
+
 custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
 if [ -x "$custom_install" ]; then
     export interactive
@@ -137,17 +142,19 @@ if [ -x "$custom_install" ]; then
     "$custom_install"
 fi
 
-safe_link "$DST_HOME/.config/cmus" "$DOTFILES_HOME/config/cmus"
-safe_link "$DST_HOME/.config/i3" "$DOTFILES_HOME/config/i3"
+safe_link "$DST_HOME/.config/cmus/" "$DOTFILES_HOME/config/cmus/"
+safe_link "$DST_HOME/.config/i3/" "$DOTFILES_HOME/config/i3/"
 safe_link "$DST_HOME/.config/nvim/init.vim" "$DOTFILES_HOME/config/nvim.vim"
-safe_link "$DST_HOME/.config/ranger" "$DOTFILES_HOME/custom/config/ranger"
+safe_link "$DST_HOME/.config/ranger/" "$DOTFILES_HOME/custom/config/ranger/"
+safe_link "$DST_HOME/.config/ranger/commands.py" "$DOTFILES_HOME/config/ranger/commands.py"
 safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.conf"
 safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
-safe_link "$DST_HOME/.config/vlc" "$DOTFILES_HOME/config/vlc"
+safe_link "$DST_HOME/.config/ranger/scope.sh" "$DOTFILES_HOME/config/ranger/scope.sh"
+safe_link "$DST_HOME/.config/vlc/" "$DOTFILES_HOME/config/vlc/"
 safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
-safe_link "$DST_HOME/.ipython/profile_default" "$DOTFILES_HOME/config/ipython/profile_default"
-safe_link "$DST_HOME/.irssi" "$DOTFILES_HOME/config/irssi"
-safe_link "$DST_HOME/.mutt" "$DOTFILES_HOME/config/mutt"
+safe_link "$DST_HOME/.ipython/profile_default/" "$DOTFILES_HOME/config/ipython/profile_default/"
+safe_link "$DST_HOME/.irssi/" "$DOTFILES_HOME/config/irssi/"
+safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
 safe_link "$DST_HOME/.shell_history" "$DOTFILES_CUSTOM_DIR/history/shell_history"
 safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
