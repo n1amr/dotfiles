@@ -30,8 +30,8 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
     (
         echo '#!/bin/bash'
         echo
-        echo "export DOTFILES_ENV_HOME='$HOME'"
-        echo "export DOTFILES_ENV_USER='$USER'"
+        echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
+        echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
         echo
         echo "export DOTFILES_HOME=\"\$DOTFILES_ENV_HOME/.dotfiles\""
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""

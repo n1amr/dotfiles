@@ -2,8 +2,12 @@
 
 set -e
 
+can_execute () {
+    which "$@" > /dev/null 2>&1
+}
+
 # define an alternative to realpath if command does not exist
-which realpath > /dev/null 2>&1 || realpath () {
+can_execute realpath || realpath () {
     local p
     for p in "$@"; do
         if [ -d "$p" ]; then
@@ -37,10 +41,6 @@ while [ $# != 0 ]; do
     esac
     shift
 done
-
-if [ -f "$HOME/.dotfiles_config" ]; then
-    . "$HOME/.dotfiles_config"
-fi
 
 if [ "$interactive" = 'true' ]; then
     # Set DST_HOME
@@ -172,8 +172,8 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
     (
         echo '#!/bin/bash'
         echo
-        echo "export DOTFILES_ENV_HOME='$HOME'"
-        echo "export DOTFILES_ENV_USER='$USER'"
+        echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
+        echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
         echo
         echo "export DOTFILES_HOME=\"\$DOTFILES_ENV_HOME/.dotfiles\""
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
@@ -186,11 +186,6 @@ fi
 
 # fzf install
 "$DOTFILES_HOME/thirdparty/fzf/install" --bin
-# if [ "$interactive" = 'true' ]; then
-#     "$DOTFILES_HOME/thirdparty/fzf/install"
-# else
-#     "$DOTFILES_HOME/thirdparty/fzf/install" --all
-# fi
 
 echo "Successful!"
 if [ "$interactive" = 'true' ]; then
