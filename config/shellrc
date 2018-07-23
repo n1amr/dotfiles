@@ -15,21 +15,22 @@ else
     return
 fi
 
+export DOTFILES_ENV="${DOTFILES_ENV:-default}"
 export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
 export DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 export DOTFILES_HOME="${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}"
-export DOTFILES_CONFIG_FILE="${DOTFILES_CONFIG_FILE:-$DOTFILES_ENV_HOME/.dotfiles_config}"
 
-# Load config file
-if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
-    touch "$DOTFILES_CONFIG_FILE"
-    chmod +x "$DOTFILES_CONFIG_FILE"
+generate_global_dotfiles_config () {
+    local config_file="$1"
+    touch "$config_file"
+    chmod +x "$config_file"
 
-    echo "Note: Creating new config file at $DOTFILES_CONFIG_FILE:"
+    echo "Note: Creating new config file at $config_file:"
     echo "# ===== Start ====="
     (
-        echo '#!/bin/bash'
+        echo '#!/bin/sh'
         echo
+        echo "export DOTFILES_ENV='$DOTFILES_ENV'"
         echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
         echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
         echo
@@ -38,8 +39,14 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
-    ) | tee -a "$DOTFILES_CONFIG_FILE"
+    ) | tee -a "$config_file"
     echo "# ===== End ====="
+}
+
+# Load config file
+export DOTFILES_CONFIG_FILE="$DOTFILES_ENV_HOME/.dotfiles_config"
+if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
+    generate_global_dotfiles_config "$DOTFILES_CONFIG_FILE"
 fi
 source "$DOTFILES_CONFIG_FILE"
 
@@ -49,8 +56,9 @@ run_custom_hook () {
     if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
         source "$DOTFILES_CUSTOM_HOOK_FILE"
     else
-        echo "cannot find $DOTFILES_CUSTOM_HOOK_FILE"
-        touch "$DOTFILES_CUSTOM_HOOK_FILE"
+        echo >&2 "Creating $DOTFILES_CUSTOM_HOOK_FILE"
+        mkdir -p "$(dirname "$DOTFILES_CUSTOM_HOOK_FILE")"
+        echo "#!/bin/bash" >> "$DOTFILES_CUSTOM_HOOK_FILE"
     fi
 }
 

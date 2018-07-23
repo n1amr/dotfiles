@@ -24,6 +24,7 @@ can_execute realpath || realpath () {
 
 dir="$(realpath "$(dirname "$0")")"
 
+DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
 
@@ -43,6 +44,13 @@ while [ $# != 0 ]; do
 done
 
 if [ "$interactive" = 'true' ]; then
+    # Set DOTFILES_ENV
+    printf "Enter your environment name [%s]: " "$DOTFILES_ENV"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DOTFILES_ENV="$response"
+    fi
+
     # Set DST_HOME
     printf "Enter your home directory [%s]: " "$DST_HOME"
     read -r response
@@ -51,7 +59,7 @@ if [ "$interactive" = 'true' ]; then
     fi
 
     # Set DOTFILES_HOME
-    printf "Enter dofiles directory [%s]: " "$DOTFILES_HOME"
+    printf "Enter dotfiles directory [%s]: " "$DOTFILES_HOME"
     read -r response
     if [ ! -z "$response" ]; then
         DOTFILES_HOME="$(realpath "$response")"
@@ -74,8 +82,6 @@ mkdir -pv "$DOTFILES_CUSTOM_DIR/config/dotfiles"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/history"
 touch "$DOTFILES_CUSTOM_DIR/history/shell_history"
 touch "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
-
-DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
 
 safe_link() {
     local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
@@ -152,7 +158,6 @@ safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.co
 safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
 safe_link "$DST_HOME/.config/ranger/scope.sh" "$DOTFILES_HOME/config/ranger/scope.sh"
 safe_link "$DST_HOME/.config/vlc/" "$DOTFILES_HOME/config/vlc/"
-safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_CONFIG_FILE"
 safe_link "$DST_HOME/.ipython/profile_default/" "$DOTFILES_HOME/config/ipython/profile_default/"
 safe_link "$DST_HOME/.irssi/" "$DOTFILES_HOME/config/irssi/"
 safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
@@ -160,18 +165,21 @@ safe_link "$DST_HOME/.shell_history" "$DOTFILES_CUSTOM_DIR/history/shell_history
 safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
 
-DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$DST_HOME}"
+DOTFILES_ENV="${DOTFILES_ENV:-default}"
+DOTFILES_ENV_HOME="$DST_HOME"
 DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
-DOTFILES_CONFIG_FILE="${DOTFILES_CONFIG_FILE:-$DOTFILES_ENV_HOME/.dotfiles_config}"
-if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
-    touch "$DOTFILES_CONFIG_FILE"
-    chmod +x "$DOTFILES_CONFIG_FILE"
 
-    echo "Note: Creating new config file at $DOTFILES_CONFIG_FILE:"
+generate_global_dotfiles_config () {
+    local config_file="$1"
+    touch "$config_file"
+    chmod +x "$config_file"
+
+    echo "Note: Creating new config file at $config_file:"
     echo "# ===== Start ====="
     (
         echo '#!/bin/bash'
         echo
+        echo "export DOTFILES_ENV='$DOTFILES_ENV'"
         echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
         echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
         echo
@@ -180,9 +188,32 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
-    ) | tee -a "$DOTFILES_CONFIG_FILE"
+    ) | tee -a "$config_file"
     echo "# ===== End ====="
+}
+
+DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
+if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
+    generate_global_dotfiles_config "$DOTFILES_CONFIG_FILE"
 fi
+
+if [ "$DOTFILES_ENV" = 'default' ]; then
+    DOTFILES_LOCAL_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
+else
+    DOTFILES_LOCAL_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config.${DOTFILES_ENV}"
+    if [ ! -f "$DOTFILES_LOCAL_CONFIG_FILE" ]; then
+        {
+            echo "#!/bin/sh"
+            echo
+            echo "export DOTFILES_ENV='$DOTFILES_ENV'"
+            echo ". '$(realpath "$DOTFILES_CONFIG_FILE")'"
+            echo "export DOTFILES_ENV='$DOTFILES_ENV'"
+            echo
+            echo "# Add environent dependent config in this file"
+        } > "$DOTFILES_LOCAL_CONFIG_FILE"
+    fi
+fi
+safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_LOCAL_CONFIG_FILE"
 
 # fzf install
 "$DOTFILES_HOME/thirdparty/fzf/install" --bin
