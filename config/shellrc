@@ -176,7 +176,7 @@ calc () {
 }
 
 can_execute () {
-    which "$@" > /dev/null 2>&1
+    { which "$@" || type "$@"; } > /dev/null 2>&1
 }
 
 cdf () {

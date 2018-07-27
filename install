@@ -3,7 +3,7 @@
 set -e
 
 can_execute () {
-    which "$@" > /dev/null 2>&1
+    { which "$@" || type "$@"; } > /dev/null 2>&1
 }
 
 # define an alternative to realpath if command does not exist
