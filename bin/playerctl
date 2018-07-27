@@ -8,60 +8,79 @@ PLAYERCTL="$(which -a playerctl | grep -v "$(realpath "$0")" | head -1)"
 [[ "$CUSTOM_PLAYERCTL_IN_CALL_STACK" = 'true' ]] && { echo "playerctl wrapper: Wrapper called itself. Exit" >&2; exit 2; }
 export CUSTOM_PLAYERCTL_IN_CALL_STACK='true'
 
+cmus_remote_w () {
+    local server="$1"
+    shift
+
+    local address="${server%%/*}"
+    local password="${server##*/}"
+    local args=()
+    [[ -n "$address" ]] && args+=(--server "$address")
+    [[ -n "$password" ]] && args+=(--passwd "$password")
+    cmus-remote "${args[@]}" "$@"
+}
+
 cmus_is_running() {
-    if cmus-remote -Q > /dev/null 2>&1; then
+    local server="$1"
+    if cmus_remote_w "$server" -Q > /dev/null 2>&1; then
         return 0
     fi
     return 1
 }
 
 cmus_status() {
-    if ! cmus_is_running; then
+    local server="$1"
+    if ! cmus_is_running "$server"; then
         echo "Not available"
         return 1
     fi
-    status="$(cmus-remote -Q | grep '^status' | cut -d ' ' -f 2)"
+    local status="$(cmus_remote_w "$server" -Q | grep '^status' | cut -d ' ' -f 2)"
     status="$(tr '[:lower:]' '[:upper:]' <<< ${status:0:1})${status:1}"
     echo "$status"
 }
 
 cmus_perform_action() {
-    action="$1"
+    local server="$1"
+    local action="$2"
+
     case "$action" in
-        play)      cmus-remote -p ;;
-        pause)     cmus-remote -u ;;
-        stop)      cmus-remote -s ;;
-        next)      cmus-remote -n ;;
-        previous)  cmus-remote -r ;;
+        play)      cmus_remote_w "$server" -p ;;
+        pause)     cmus_remote_w "$server" -u ;;
+        stop)      cmus_remote_w "$server" -s ;;
+        next)      cmus_remote_w "$server" -n ;;
+        previous)  cmus_remote_w "$server" -r ;;
         status)  
-            cmus_status || exit 1
+            cmus_status "$server" || exit 1
         ;;
         play-pause)  
-            if [[ "$(cmus_status)" != 'Playing' ]]; then
-                cmus-remote -p
+            if [[ "$(cmus_status "$server")" != 'Playing' ]]; then
+                cmus_remote_w "$server" -p
             else
-                cmus-remote -u
+                cmus_remote_w "$server" -u
             fi
         ;;
     esac
 }
 
 cmus_metadata() {
-    tag="$1"
+    local server="$1"
+    local tag="$2"
 
-    result=''
+    local result=''
     if [[ -z "$tag" ]]; then
-        result="$(cmus_metadata title) - $(cmus_metadata artist)"
+        result="$(cmus_metadata "$server" title) - $(cmus_metadata "$server" artist)"
     elif [[ "$tag" = "file" ]]; then
-        result="$(cmus-remote -Q | grep "^file " | sed "s/^file //")"
+        result="$(cmus_remote_w "$server" -Q | grep "^file " | sed "s/^file //")"
     else
-        result="$(cmus-remote -Q | grep "^tag $tag" | sed "s/^tag $tag //")"
+        result="$(cmus_remote_w "$server" -Q | grep "^tag $tag" | sed "s/^tag $tag //")"
     fi
 
     echo -n "$result"
 }
 
 playerctl_with_player() {
+    local player="$1"
+    shift
     if [[ -z "$player" ]]; then
         "$PLAYERCTL" "$@"
     else
@@ -70,38 +89,55 @@ playerctl_with_player() {
 }
 
 list_players() {
-    if cmus_is_running; then
+    if cmus_is_running ''; then
         echo 'cmus'
     fi
-    playerctl_with_player -l 2>/dev/null
+    local cmus_server
+    while IFS= read cmus_server; do
+        if cmus_is_running "$cmus_server"; then
+            echo "cmus-server-$cmus_server"
+        fi
+    done < <(echo "$DOTFILES_CONFIG_CMUS_SERVER_CREDENTIALS" | tr ';' '\n')
+    playerctl_with_player '' -l 2>/dev/null
 }
 
 get_art_file() {
+    local player="$1"
     if [[ "$player" == 'spotify' ]]; then
-        "$DOTFILES_HOME/bin/extract-album-art-spotify" "$(playerctl_with_player metadata mpris:artUrl)"
+        "$DOTFILES_HOME/bin/extract-album-art-spotify" "$(playerctl_with_player "$player" metadata mpris:artUrl)"
     else
-        "$DOTFILES_HOME/bin/extract-album-art" "$(show_metadata file)"
+        "$DOTFILES_HOME/bin/extract-album-art" "$(show_metadata "$player" file)"
+    fi
+}
+
+cmus_credentials () {
+    local player="$1"
+    if [[ "$player" = 'cmus' ]]; then
+        echo ''
+    elif [[ "$player" = 'cmus-server'-* ]]; then
+        echo "${player##cmus-server-}"
     fi
 }
 
 show_metadata() {
-    tag="$1"
+    local player="$1"
+    local tag="$2"
 
     if [[ "$tag" = 'artFile' ]]; then
-        echo -n "$(get_art_file)"
+        echo -n "$(get_art_file "$player")"
     else
-        if [[ "$player" == 'cmus' ]]; then
-            cmus_metadata "$tag"
+        if [[ "$player" = cmus* ]]; then
+            cmus_metadata "$(cmus_credentials "$player")" "$tag"
         else # end of unsupported players
             if [[ "$tag" = 'file' ]]; then
-                url="$(playerctl_with_player metadata xesam:url)"
-                file="$(urlencode -d "${url#file://}")"
+                local url="$(playerctl_with_player "$player" metadata xesam:url)"
+                local file="$(urlencode -d "${url#file://}")"
                 echo -n "$file"
             else # end of unsupported options
                 if [[ -z "$tag" ]]; then
-                    playerctl_with_player metadata
+                    playerctl_with_player "$player" metadata
                 else
-                    playerctl_with_player metadata "$tag"
+                    playerctl_with_player "$player" metadata "$tag"
                 fi
             fi
         fi
@@ -109,15 +145,17 @@ show_metadata() {
 }
 
 display_notification() {
-    app="$player"
-    title="$(show_metadata title)"
+    local player="$1"
+
+    local app="$player"
+    local title="$(show_metadata "$player" title)"
     title="${title:-Unknown}"
-    artist="$(show_metadata artist)"
+    local artist="$(show_metadata "$player" artist)"
     artist="${artist:-Unknown}"
 
-    icon_file="$(show_metadata artFile)"
+    local icon_file="$(show_metadata "$player" artFile)"
 
-    args=(
+    local args=(
         -t 5000
         -a "$app"
         "$title"
@@ -129,11 +167,13 @@ display_notification() {
 }
 
 perform_action() {
-    action="$1"
-    if [[ "$player" == 'cmus' ]]; then
-        cmus_perform_action "$action"
+    local player="$1"
+    local action="$2"
+
+    if [[ "$player" == cmus* ]]; then
+        cmus_perform_action "$(cmus_credentials "$player")" "$action"
     else
-        playerctl_with_player "$action"
+        playerctl_with_player "$player" "$action"
     fi
 }
 
@@ -149,14 +189,14 @@ while [[ $# != 0 ]]; do
             list_players
         ;;
         play|pause|play-pause|stop|next|previous|status)
-            perform_action "$1"
+            perform_action "$player" "$1"
         ;;
         metadata)
-            show_metadata "${@:2}"
+            show_metadata "$player" "${@:2}"
             while [[ $# != 0 ]]; do shift; done
         ;;
         notification)
-            display_notification
+            display_notification "$player"
         ;;
         *)
             echo "Error: Unknown argument \"$1\""
