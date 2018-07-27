@@ -2,4 +2,7 @@
 
 in="$1"
 out="$2"
+if [[ -z "$out" ]]; then
+    out="${in}.mp3"
+fi
 ffmpeg -i "$in" -vn -acodec libmp3lame -ac 2 -qscale:a 4 -ar 48000 "$out"
