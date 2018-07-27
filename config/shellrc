@@ -533,6 +533,7 @@ reset_ps1 () {
     if [ "$SHELLNAME" = zsh ]; then
         PS1=\
 $'%{\e[0m%}'\
+$'`__ps1_zsh_prompt_command`'\
 $'%{\e[1;31m%}%n@%m'\
 $'%{\e[0m%}:'\
 $'%{\e[1;34m%}%~'\
@@ -586,6 +587,10 @@ __ps1_warnings () {
     [ -n "$msg" ] && echo " ($msg)"
 }
 
+__ps1_zsh_prompt_command () {
+    [ -n "$ZSH_PROMPT_COMMAND" ] && { eval "$ZSH_PROMPT_COMMAND"; } > /dev/null 2>&1 &
+}
+
 # PS1 extention
 __ps1_command_eval () {
     can_execute ps1_command && echo -e " [ $(ps1_command) ]"
@@ -620,6 +625,13 @@ if [ "$SHELLNAME" = zsh ]; then
 elif [ "$SHELLNAME" = bash ]; then
     shopt -s autocd
     shopt -s globstar
+fi
+
+# Save and reload the history after each command finishes
+if [ "$SHELLNAME" = zsh ]; then
+    export ZSH_PROMPT_COMMAND="history -R; $ZSH_PROMPT_COMMAND"
+elif [ "$SHELLNAME" = bash ]; then
+    export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
 fi
 
 # only in interactive shell
