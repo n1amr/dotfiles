@@ -247,3 +247,4 @@ set color_win_title_fg=45
 
 # Custom Config
 source ~/.config/cmus/customrc
+source ~/.config/cmus/server-password
