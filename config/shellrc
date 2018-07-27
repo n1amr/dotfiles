@@ -622,15 +622,14 @@ ps1_memory () {
 # Options
 if [ "$SHELLNAME" = zsh ]; then
     unsetopt EXTENDED_HISTORY
+    setopt -o sharehistory
 elif [ "$SHELLNAME" = bash ]; then
     shopt -s autocd
     shopt -s globstar
 fi
 
 # Save and reload the history after each command finishes
-if [ "$SHELLNAME" = zsh ]; then
-    export ZSH_PROMPT_COMMAND="history -R; $ZSH_PROMPT_COMMAND"
-elif [ "$SHELLNAME" = bash ]; then
+if [ "$SHELLNAME" = bash ]; then
     export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
 fi
 
