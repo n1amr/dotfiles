@@ -104,12 +104,15 @@ if [ "$SHELLNAME" = zsh ]; then
     setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
     setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 
+    source "$DOTFILES_HOME/config/completions.zsh"
+
 elif [ "$SHELLNAME" = bash ]; then
     export HISTSIZE=-1
     export HISTFILESIZE="$HISTFILE"
     export SAVEHIST="$HISTSIZE"
 
     source "$DOTFILES_HOME/config/bash-init.sh"
+    source "$DOTFILES_HOME/config/completions.bash"
 fi
 
 ################################################################################
