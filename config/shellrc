@@ -378,18 +378,6 @@ terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
 }
 
-tmuxsession () {
-    session="$1"
-    if ! tmux has-session -t="$session"; then
-        tmux new-session -d -s "$session"
-    fi
-    if [[ -z "$TMUX" ]]; then
-        tmux attach -t "$session"
-    else
-        tmux switch-client -t "$session"
-    fi
-}
-
 unique_paths () {
     echo -n "$1:" | awk -v RS=':' -v ORS=":" '!a[$1]++' | sed 's/:\+/:/g; s/^:\|:$//g'
 }
@@ -504,9 +492,9 @@ alias sync='sudo "$(which syncf)"'
 alias t-display-restore='tmux setenv -g DISPLAY :0'
 alias t='tmux'
 alias tf='tail -F'
-alias tmain='tmuxsession main'
-alias tsn='tmuxsession'
-alias tssh='tmuxsession ssh'
+alias tmain='tmux-session main'
+alias tsn='tmux-session'
+alias tssh='tmux-session ssh'
 alias u='up'
 alias v='"$VISUAL"'
 alias vi='"$VISUAL"'

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+results=(pull push)
+
+echo "${results[@]}"

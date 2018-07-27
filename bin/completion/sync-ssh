@@ -1,0 +1,10 @@
+#!/bin/bash
+
+results=()
+
+PROFILES_DIR="$DOTFILES_HOME/custom/config/dotfiles/sync-ssh/profiles"
+for f in "$PROFILES_DIR"/*; do
+    results+=("$(basename "$f")")
+done
+
+echo "${results[@]}"
