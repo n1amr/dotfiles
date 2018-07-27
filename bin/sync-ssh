@@ -173,21 +173,37 @@ run() {
     rsync "${rsync_args_result[@]}"
 }
 
+run_profile () {
+    local profile="$1"
+    info "Selected profile: $profile"
+
+    local profile_file="$CONFIG_ROOT_PATH/profiles/$profile"
+    if [[ ! -f "$profile_file" ]]; then
+        error "Cannot find profile $profile at $profile_file"
+        return 1
+    fi
+
+    assert_file "$profile_file"
+    info "Loading profile at '$profile_file'"
+
+    export -f run
+    export HOST=''
+    export BACKUP_ROOT=''
+    export EXCLUDES=()
+    export EXCLUDE_PATTERNS=()
+    source "$profile_file"
+}
+
 info "Started at $(date)"
 
-profile="${1:-default}"
-info "Selected profile: $profile"
+profiles=("$@")
+if [[ "${#profiles}" = '0' ]]; then
+    profiles=(default)
+fi
 
-profile_file="$CONFIG_ROOT_PATH/profiles/$profile"
-assert_file "$profile_file"
-
-info "Loading profile at '$profile_file'"
-export -f run
-export HOST=''
-export BACKUP_ROOT=''
-export EXCLUDES=()
-export EXCLUDE_PATTERNS=()
-source "$profile_file"
+for profile in "${profiles[@]}"; do
+    run_profile "$profile" || continue
+done
 
 if [[ -n "$BACKUP_ROOT" ]]; then
     clean_empty_backup_directories
