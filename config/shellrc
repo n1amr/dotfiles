@@ -77,7 +77,6 @@ if [ "$SHELLNAME" = zsh ]; then
     export HIST_STAMPS="dd/mm/yyyy"
 
     export plugins=(
-        command-not-found
         common-aliases
         dircycle
         dirhistory
@@ -142,6 +141,16 @@ export LANG="${LANG:-en_US.UTF-8}"
 
 ################################################################################
 #################################  Functions  ##################################
+
+__dotfiles_command_not_found_handler () {
+    if [[ -x /usr/lib/command-not-found ]]; then
+        /usr/lib/command-not-found -- "$1"
+        return "$?"
+    else
+        echo "$1: command not found" >&2
+        return 127
+    fi
+}
 
 __dotfiles_ps () {
     local args=()
@@ -614,9 +623,11 @@ ps1_memory () {
 if [ "$SHELLNAME" = zsh ]; then
     unsetopt EXTENDED_HISTORY
     setopt -o sharehistory
+    command_not_found_handler () { __dotfiles_command_not_found_handler "$@"; }
 elif [ "$SHELLNAME" = bash ]; then
     shopt -s autocd
     shopt -s globstar
+    command_not_found_handle () { __dotfiles_command_not_found_handler "$@"; }
 fi
 
 # Save and reload the history after each command finishes
