@@ -17,7 +17,7 @@ cmus_remote_w () {
     local args=()
     [[ -n "$address" ]] && args+=(--server "$address")
     [[ -n "$password" ]] && args+=(--passwd "$password")
-    cmus-remote "${args[@]}" "$@"
+    timeout 1 cmus-remote "${args[@]}" "$@"
 }
 
 cmus_is_running() {
@@ -92,12 +92,14 @@ list_players() {
     if cmus_is_running ''; then
         echo 'cmus'
     fi
-    local cmus_server
-    while IFS= read cmus_server; do
-        if cmus_is_running "$cmus_server"; then
-            echo "cmus-server-$cmus_server"
-        fi
-    done < <(echo "$DOTFILES_CONFIG_CMUS_SERVER_CREDENTIALS" | tr ';' '\n')
+    if [[ "$PLAYERCTL_INCLUDE_REMOTE" == 'true' ]]; then
+        local cmus_server
+        while IFS= read cmus_server; do
+            if [[ -n "$cmus_server" ]] && cmus_is_running "$cmus_server"; then
+                echo "cmus-server-$cmus_server"
+            fi
+        done < <(echo "$DOTFILES_CONFIG_CMUS_SERVER_CREDENTIALS" | tr ';' '\n')
+    fi
     playerctl_with_player '' -l 2>/dev/null
 }
 
