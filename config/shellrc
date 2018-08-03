@@ -74,7 +74,7 @@ if [ "$SHELLNAME" = zsh ]; then
     export ENABLE_CORRECTION="true"
     export DISABLE_UNTRACKED_FILES_DIRTY="true"
     export ZSH_DISABLE_COMPFIX=true
-    export HIST_STAMPS="dd/mm/yyyy"
+    export HIST_STAMPS='' # "%Y-%m-%d %H:%M:%S"
 
     export plugins=(
         common-aliases
