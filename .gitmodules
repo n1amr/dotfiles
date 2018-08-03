@@ -1,48 +1,48 @@
 [submodule "config/sublime-text-3"]
     path = config/sublime-text-3
-    url = http://gitlab.com/n1amr/sublime-text-3-config.git
+    url = https://gitlab.com/n1amr/sublime-text-3-config.git
     branch = master
 [submodule "config/vim"]
     path = config/vim
-    url = http://gitlab.com/n1amr/vim-config
+    url = https://gitlab.com/n1amr/vim-config
     branch = master
 [submodule "notes"]
     path = notes
-    url = http://gitlab.com/n1amr/notes-and-instructions.git
+    url = https://gitlab.com/n1amr/notes-and-instructions.git
     branch = master
 [submodule "thirdparty/dunst"]
     path = thirdparty/dunst
-    url = http://github.com/dunst-project/dunst
+    url = https://github.com/dunst-project/dunst
     branch = master
 [submodule "thirdparty/fzf"]
     path = thirdparty/fzf
-    url = http://github.com/junegunn/fzf.git
+    url = https://github.com/junegunn/fzf.git
     branch = master
 [submodule "thirdparty/git-flow-completion"]
     path = thirdparty/git-flow-completion
-    url = http://github.com/petervanderdoes/git-flow-completion
+    url = https://github.com/petervanderdoes/git-flow-completion
     branch = master
 [submodule "thirdparty/gitflow-avh"]
     path = thirdparty/gitflow-avh
-    url = http://github.com/petervanderdoes/gitflow-avh
+    url = https://github.com/petervanderdoes/gitflow-avh
     branch = master
 [submodule "thirdparty/oh-my-zsh"]
     path = thirdparty/oh-my-zsh
-    url = http://github.com/robbyrussell/oh-my-zsh.git
+    url = https://github.com/robbyrussell/oh-my-zsh.git
     branch = master
 [submodule "thirdparty/playerctl"]
     path = thirdparty/playerctl
-    url = http://github.com/acrisci/playerctl
+    url = https://github.com/acrisci/playerctl
     branch = master
 [submodule "thirdparty/tmux-plugins/tmux-yank"]
     path = thirdparty/tmux-plugins/tmux-yank
-    url = http://github.com/tmux-plugins/tmux-yank
+    url = https://github.com/tmux-plugins/tmux-yank
     branch = master
 [submodule "thirdparty/vim-stream"]
     path = thirdparty/vim-stream
-    url = http://github.com/MilesCranmer/vim-stream.git
+    url = https://github.com/MilesCranmer/vim-stream.git
     branch = master
 [submodule "thirdparty/zsh-plugins/you-should-use"]
     path = thirdparty/zsh-plugins/you-should-use
-    url = http://github.com/MichaelAquilina/zsh-you-should-use
+    url = https://github.com/MichaelAquilina/zsh-you-should-use
     branch = master
