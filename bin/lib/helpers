@@ -8,6 +8,11 @@ safe_link() {
     local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
     local to="$2"
 
+    if [ -e "$from" ] && [ "$(readlink "$from")" = "$to" ]; then
+        echo "Up to date: $from -> $to"
+        return
+    fi
+
     local response
     if [ "$interactive" = 'true' ]; then
         printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
