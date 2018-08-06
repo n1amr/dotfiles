@@ -50,6 +50,8 @@ if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
 fi
 source "$DOTFILES_CONFIG_FILE"
 
+source "$DOTFILES_HOME/bin/lib/polyfills.sh"
+
 run_custom_hook () {
     HOOK="$1"
     DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
@@ -344,28 +346,6 @@ ranger () {
     local RANGER_DIR_FILE="$HOME/.rangerdir"
     command ranger --choosedir="$RANGER_DIR_FILE" "$@"
     cd "$(cat "$RANGER_DIR_FILE")"
-}
-
-can_execute realpath || realpath () {
-    local p
-    for p in "$@"; do
-        if [ -d "$p" ]; then
-            echo "$(cd "$p" && pwd -P)"
-        elif [ -f "$p" ]; then
-            if [ -L "$p" ]; then
-                readlink -f "$p"
-            else
-                echo "$(cd "$(dirname "$p")" && pwd -P)/$(basename "$p")"
-            fi
-        else
-            local parent="$(dirname "$p")"
-            if [ -d "$parent" ]; then
-                echo "$(cd "$parent" && pwd -P)/$(basename "$p")"
-            else
-                echo >&2 "$0: $p: No such file or directory"
-            fi
-        fi
-    done
 }
 
 remove_color_codes () {
