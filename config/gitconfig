@@ -58,13 +58,19 @@
     default = matching
 
 [url "git@github.com:"]
+    pushInsteadOf = "github:"
+
+[url "https://github.com/"]
     insteadOf = "github:"
+
+[url "git@gitlab.com:"]
+    pushInsteadOf = "gitlab:"
+
+[url "https://gitlab.com/"]
+    insteadOf = "gitlab:"
 
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
-
-[url "git@gitlab.com:"]
-    insteadOf = "gitlab:"
 
 [gitflow "branch"]
     master = master
