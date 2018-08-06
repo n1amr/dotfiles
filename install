@@ -16,7 +16,9 @@ while [ $# != 0 ]; do
     case "$1" in
         --user-home)      DST_HOME="$2";      shift ;;
         --dotfiles-path)  DOTFILES_HOME="$2"; shift ;;
+        --env|-e)         DOTFILES_ENV="$2";  shift ;;
         --no-interactive|-f) interactive='false' ;;
+        --interactive|-i)    interactive='true' ;;
         *)
             echo 'Invalid Syntax'
             exit 1
@@ -110,8 +112,9 @@ safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
 custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
 if [ -x "$custom_install" ]; then
     export interactive
-    export DST_HOME
+    export DOTFILES_ENV
     export DOTFILES_HOME
+    export DST_HOME
     "$custom_install"
 fi
 
