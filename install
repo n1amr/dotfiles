@@ -14,9 +14,16 @@ can_execute realpath || realpath () {
             echo "$(cd "$p" && pwd -P)"
         elif [ -f "$p" ]; then
             if [ -L "$p" ]; then
-                ls -l "$p" | grep -Po '(?<=\-\>\s)(.*)'
+                readlink -f "$p"
             else
                 echo "$(cd "$(dirname "$p")" && pwd -P)/$(basename "$p")"
+            fi
+        else
+            local parent="$(dirname "$p")"
+            if [ -d "$parent" ]; then
+                echo "$(cd "$parent" && pwd -P)/$(basename "$p")"
+            else
+                echo >&2 "$0: $p: No such file or directory"
             fi
         fi
     done
