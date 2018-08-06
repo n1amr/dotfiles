@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[ -n "$DOTFILES_HELPERS" ] && return || export DOTFILES_HELPERS=true
+
+source "$DOTFILES_HOME/bin/lib/log"

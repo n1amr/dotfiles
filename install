@@ -10,13 +10,13 @@ DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
 
-interactive=true
+interactive='true'
 
 while [ $# != 0 ]; do
     case "$1" in
         --user-home)      DST_HOME="$2";      shift ;;
         --dotfiles-path)  DOTFILES_HOME="$2"; shift ;;
-        --no-interactive|-f) interactive=false ;;
+        --no-interactive|-f) interactive='false' ;;
         *)
             echo 'Invalid Syntax'
             exit 1
@@ -48,6 +48,12 @@ if [ "$interactive" = 'true' ]; then
     fi
 fi
 
+if [ "$interactive" = 'true' ]; then
+    safe_link () { "$dir/bin/ln-safe" "$@"; }
+else
+    safe_link () { "$dir/bin/ln-safe" -f "$@"; }
+fi
+
 DOTFILES_DIR="$DST_HOME/.dotfiles"
 if [ ! "$DOTFILES_DIR" -ef "$DOTFILES_HOME" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
@@ -64,37 +70,6 @@ mkdir -pv "$DOTFILES_CUSTOM_DIR/config/dotfiles"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/history"
 touch "$DOTFILES_CUSTOM_DIR/history/shell_history"
 touch "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
-
-safe_link() {
-    local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
-    local to="$2"
-
-    if [ -e "$from" ] && [ "$(readlink "$from")" = "$to" ]; then
-        echo "Up to date: $from -> $to"
-        return
-    fi
-
-    local response
-    if [ "$interactive" = 'true' ]; then
-        printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
-        read -r response
-    else
-        response='y'
-    fi
-
-    if [ "$response" != 'n' ]; then
-        if [ -e "$from" ]; then
-            mv -v "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
-        fi
-
-        local dir="$(dirname "$from")"
-        if [ ! -d "$dir" ]; then
-            mkdir -pv "$dir"
-        fi
-
-        ln -sfv "$to" "$from"
-    fi
-}
 
 config_files="
     driverc

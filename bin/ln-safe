@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
-[ -n "$DOTFILES_HELPERS" ] && return || export DOTFILES_HELPERS=true
-
-source "$DOTFILES_HOME/bin/lib/log"
+set -e
 
 safe_link() {
+    local interactive='true'
+    if [ "$1" = '-f' ]; then
+        interactive='false'
+        shift
+    fi
+
     local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
     local to="$2"
 
@@ -34,3 +38,5 @@ safe_link() {
         ln -sfv "$to" "$from"
     fi
 }
+
+safe_link "$@"
