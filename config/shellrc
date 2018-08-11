@@ -309,6 +309,12 @@ print_welcome () {
 }
 
 psgkill () {
+    local force
+    if [[ "$1" == '-f' ]]; then
+        force='true'
+        shift
+    fi
+
     local SIG=-9
     if [[ "$1" =~ ^-[0-9]+$ ]]; then
         SIG="$1"
@@ -320,9 +326,11 @@ psgkill () {
 
     __dotfiles_ps -l -p "$(join ',' "${pids[@]}")" | sed 's/^/ # /' | less -FRX
     echo -e "\n $ kill $SIG ${pids[@]}"
-    echo -n "Are you sure? [y/n] "
-    read -r response
-    if [[ "$response" = 'y' ]]; then
+    if [[ "$force" != 'true' ]]; then
+        echo -n "Are you sure? [y/n] "
+        read -r response
+    fi
+    if [[ "$force" == 'true' ]] || [[ "$response" = 'y' ]]; then
         kill "$SIG" "${pids[@]}"
     fi
     return 1
