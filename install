@@ -138,7 +138,6 @@ DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 generate_global_dotfiles_config () {
     local config_file="$1"
     touch "$config_file"
-    chmod +x "$config_file"
 
     echo "Note: Creating new config file at $config_file:"
     echo "# ===== Start ====="
@@ -148,8 +147,8 @@ generate_global_dotfiles_config () {
         echo "export DOTFILES_ENV='$DOTFILES_ENV'"
         echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
         echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
+        echo "export DOTFILES_HOME=\"\${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}\""
         echo
-        echo "export DOTFILES_HOME=\"\$DOTFILES_ENV_HOME/.dotfiles\""
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
@@ -172,8 +171,10 @@ else
             echo "#!/bin/sh"
             echo
             echo "export DOTFILES_ENV='$DOTFILES_ENV'"
-            echo ". '$(realpath "$DOTFILES_CONFIG_FILE")'"
-            echo "export DOTFILES_ENV='$DOTFILES_ENV'"
+            echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
+            echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
+            echo "export DOTFILES_HOME='$DOTFILES_HOME'"
+            echo ". \"\$DOTFILES_HOME/custom/dotfiles_config\""
             echo
             echo "# Add environent dependent config in this file"
         } > "$DOTFILES_LOCAL_CONFIG_FILE"
