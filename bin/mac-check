@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 PATH="$DOTFILES_HOME/bin:$PATH"
 HOME_DIR="$DOTFILES_HOME/bin/macs"
 ALL_FILE="$HOME_DIR/all"

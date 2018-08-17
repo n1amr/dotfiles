@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 DEFAULT_SCREENSHOTS_PATH="$HOME/screenshots"
 SCREENSHOTS_PATH="${DOTFILES_CONFIG_SCREENSHOTS_HOME:-$DEFAULT_SCREENSHOTS_PATH}"
 [[ -d "$SCREENSHOTS_PATH" ]] || mkdir -pv "$SCREENSHOTS_PATH"

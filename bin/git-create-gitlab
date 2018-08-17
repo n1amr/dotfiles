@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 repo_name="$1"
 branch="${2:-master}"

@@ -20,11 +20,11 @@ export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
 export DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 export DOTFILES_HOME="${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}"
 
-generate_global_dotfiles_config () {
-    local config_file="$1"
-    touch "$config_file"
+generate_global_dotfiles_env () {
+    local env_file="$1"
+    touch "$env_file"
 
-    echo "Note: Creating new config file at $config_file:"
+    echo "Note: Creating new dotfiles.env file at $env_file:"
     echo "# ===== Start ====="
     (
         echo '#!/bin/sh'
@@ -38,16 +38,16 @@ generate_global_dotfiles_config () {
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
-    ) | tee -a "$config_file"
+    ) | tee -a "$env_file"
     echo "# ===== End ====="
 }
 
-# Load config file
-export DOTFILES_CONFIG_FILE="$DOTFILES_ENV_HOME/.dotfiles_config"
-if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
-    generate_global_dotfiles_config "$DOTFILES_CONFIG_FILE"
+# Load dotfiles.env file
+export DOTFILES_ENV_FILE="$DOTFILES_ENV_HOME/.dotfiles.env"
+if [ ! -f "$DOTFILES_ENV_FILE" ]; then
+    generate_global_dotfiles_env "$DOTFILES_ENV_FILE"
 fi
-source "$DOTFILES_CONFIG_FILE"
+source "$DOTFILES_ENV_FILE"
 
 source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
@@ -433,7 +433,7 @@ alias cp='cp -i'
 alias diff='diff -u'
 alias display-restore='export DISPLAY=:0 && tmux setenv DISPLAY "$DISPLAY"'
 alias dl='trash'
-alias dotrc='cd "$DOTFILES_HOME"; "$EDITOR" "$DOTFILES_ENV_HOME/.dotfiles_config" "$DOTFILES_HOME/custom/dotfiles_config" "$DOTFILES_HOME/config/shellrc" "$DOTFILES_HOME/config/vim/vimrc" "$DOTFILES_HOME/config/i3/config" "$DOTFILES_HOME/config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"'
+alias dotrc='cd "$DOTFILES_HOME"; "$EDITOR" "$DOTFILES_ENV_HOME/.dotfiles.env" "$DOTFILES_HOME/custom/dotfiles.env" "$DOTFILES_HOME/config/shellrc" "$DOTFILES_HOME/config/vim/vimrc" "$DOTFILES_HOME/config/i3/config" "$DOTFILES_HOME/config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"'
 alias dt='date +"%Y-%m-%d %H:%M:%S %Z %:::z %a %r"'
 alias dud='du -d 1 -h'
 alias emacs='DISPLAY= emacs'

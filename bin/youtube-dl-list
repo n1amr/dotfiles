@@ -2,11 +2,11 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo -n 'Enter youtube home directory: '
     read -r DOTFILES_CONFIG_YOUTUBE_HOME
-    echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles_config
+    echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles.env
 fi
 
 YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"

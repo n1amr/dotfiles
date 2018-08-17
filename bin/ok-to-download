@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/safe-download-connections"
 [ -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"

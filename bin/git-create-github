@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 TOKEN_FILE="$DOTFILES_HOME/custom/keys/github_token"
 

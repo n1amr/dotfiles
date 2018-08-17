@@ -5,17 +5,17 @@ set -e
 DOTFILES_HOME="$(realpath "$(dirname "$0")")"
 TMP_HOME="$DOTFILES_HOME/custom/tmp_home"
 
-RESTORE_DOTFILES_CONFIG=false
-DOTFILES_CONFIG_PATH="$DOTFILES_HOME/custom/dotfiles_config"
+RESTORE_DOTFILES_ENV=false
+DOTFILES_ENV_FILE="$DOTFILES_HOME/custom/dotfiles.env"
 
 clean () {
     rm -vrf "$TMP_HOME"
 }
 
 install () {
-    if [ -f "$DOTFILES_CONFIG_PATH" ]; then
-        cp "$DOTFILES_CONFIG_PATH" "${DOTFILES_CONFIG_PATH}.bak"
-        RESTORE_DOTFILES_CONFIG=true
+    if [ -f "$DOTFILES_ENV_FILE" ]; then
+        cp "$DOTFILES_ENV_FILE" "${DOTFILES_ENV_FILE}.bak"
+        RESTORE_DOTFILES_ENV=true
     fi
 
     mkdir -pv "$TMP_HOME"
@@ -50,6 +50,6 @@ set +e
 echo "You can try my dotfiles in this shell."
 start
 
-if [ "$RESTORE_DOTFILES_CONFIG" = 'true' ]; then
-    mv "${DOTFILES_CONFIG_PATH}.bak" "${DOTFILES_CONFIG_PATH}"
+if [ "$RESTORE_DOTFILES_ENV" = 'true' ]; then
+    mv "${DOTFILES_ENV_FILE}.bak" "${DOTFILES_ENV_FILE}"
 fi

@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 find_ip () {
     ip addr |

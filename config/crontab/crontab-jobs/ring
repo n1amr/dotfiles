@@ -1,5 +1,5 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 paplay "$DOTFILES_HOME/resources/Schedule.ogg"

@@ -2,11 +2,11 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 if [ -z "$DOTFILES_CONFIG_VPN_HOME" ]; then
     echo -n 'Enter vpn home directory: '
     read -r DOTFILES_CONFIG_VPN_HOME
-    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles_config
+    echo "export DOTFILES_CONFIG_VPN_HOME='$DOTFILES_CONFIG_VPN_HOME'" >> ~/.dotfiles.env
 fi
 
 VPN_HOME="$DOTFILES_CONFIG_VPN_HOME"

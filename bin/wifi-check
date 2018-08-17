@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/log"
 PATH="$DOTFILES_HOME/bin:$PATH"
 

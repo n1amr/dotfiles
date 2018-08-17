@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 mkdir -p /tmp/manpdf
 FILE=/tmp/manpdf/"$1.pdf"
 man -t "$1" | ps2pdf - "$FILE"

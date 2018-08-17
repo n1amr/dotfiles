@@ -2,7 +2,7 @@
 
 # depends on: apt install libxdg-basedir1
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 FLOCK_LOCK_FILE="$DOTFILES_HOME/config/i3/tmp/dunst-service.lock"
 source "$DOTFILES_HOME/bin/lib/flock"

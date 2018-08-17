@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 CONNECTED_ICON=''
 NOT_CONNECTED_ICON=''

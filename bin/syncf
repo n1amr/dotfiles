@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/log"
 source "$DOTFILES_HOME/bin/lib/assert_file"
 

@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/lca"
 
 [[ "$#" = '0' ]] && { echo 'No files are passed' 2>&1; exit 1; }

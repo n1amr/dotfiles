@@ -2,13 +2,13 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/lock" --verbose
 
 if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo -n 'Enter Google Drive home directory path: '
     read -r DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
-    echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
+    echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles.env
 fi
 
 UPDATEDRIVE_CONFIG_FILE="$DOTFILES_HOME/custom/config/dotfiles/updatedriverc"

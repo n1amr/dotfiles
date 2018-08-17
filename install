@@ -135,38 +135,38 @@ DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_ENV_HOME="$DST_HOME"
 DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 
-generate_global_dotfiles_config () {
-    local config_file="$1"
-    touch "$config_file"
+generate_global_dotfiles_env () {
+    local env_file="$1"
+    touch "$env_file"
 
-    echo "Note: Creating new config file at $config_file:"
+    echo "Note: Creating new dotfiles.env file at $env_file:"
     echo "# ===== Start ====="
     (
-        echo '#!/bin/bash'
+        echo '#!/bin/sh'
         echo
-        echo "export DOTFILES_ENV='$DOTFILES_ENV'"
-        echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
-        echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
+        echo "export DOTFILES_ENV=\"\${DOTFILES_ENV:-$DOTFILES_ENV}\""
+        echo "export DOTFILES_ENV_HOME=\"\${DOTFILES_ENV_HOME:-$DOTFILES_ENV_HOME}\""
+        echo "export DOTFILES_ENV_USER=\"\${DOTFILES_ENV_USER:-$DOTFILES_ENV_USER}\""
         echo "export DOTFILES_HOME=\"\${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}\""
         echo
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
-    ) | tee -a "$config_file"
+    ) | tee -a "$env_file"
     echo "# ===== End ====="
 }
 
-DOTFILES_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
-if [ ! -f "$DOTFILES_CONFIG_FILE" ]; then
-    generate_global_dotfiles_config "$DOTFILES_CONFIG_FILE"
+DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles.env"
+if [ ! -f "$DOTFILES_ENV_FILE" ]; then
+    generate_global_dotfiles_env "$DOTFILES_ENV_FILE"
 fi
 
 if [ "$DOTFILES_ENV" = 'default' ]; then
-    DOTFILES_LOCAL_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config"
+    LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles.env"
 else
-    DOTFILES_LOCAL_CONFIG_FILE="$DOTFILES_CUSTOM_DIR/dotfiles_config.${DOTFILES_ENV}"
-    if [ ! -f "$DOTFILES_LOCAL_CONFIG_FILE" ]; then
+    LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles-${DOTFILES_ENV}.env"
+    if [ ! -f "$LOCAL_DOTFILES_ENV_FILE" ]; then
         {
             echo "#!/bin/sh"
             echo
@@ -174,13 +174,13 @@ else
             echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
             echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
             echo "export DOTFILES_HOME='$DOTFILES_HOME'"
-            echo ". \"\$DOTFILES_HOME/custom/dotfiles_config\""
+            echo ". \"\$DOTFILES_HOME/custom/dotfiles.env\""
             echo
             echo "# Add environent dependent config in this file"
-        } > "$DOTFILES_LOCAL_CONFIG_FILE"
+        } > "$LOCAL_DOTFILES_ENV_FILE"
     fi
 fi
-safe_link "$DST_HOME/.dotfiles_config" "$DOTFILES_LOCAL_CONFIG_FILE"
+safe_link "$DST_HOME/.dotfiles.env" "$LOCAL_DOTFILES_ENV_FILE"
 
 # fzf install
 "$DOTFILES_HOME/thirdparty/fzf/install" --bin

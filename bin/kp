@@ -2,17 +2,17 @@
 
 set -e
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo -n 'Enter Google Drive home directory path: '
     read -r DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT
-    echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles_config
+    echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles.env
 fi
 
 if [ -z "$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH" ]; then
     echo -n 'Enter Keepass kdbx file path (relative to Google drive path): '
     read -r DOTFILES_CONFIG_KP_DATABASE_FILE_PATH
-    echo "export DOTFILES_CONFIG_KP_DATABASE_FILE_PATH='$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH'" >> ~/.dotfiles_config
+    echo "export DOTFILES_CONFIG_KP_DATABASE_FILE_PATH='$DOTFILES_CONFIG_KP_DATABASE_FILE_PATH'" >> ~/.dotfiles.env
 fi
 
 DRIVE_PATH="$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT"

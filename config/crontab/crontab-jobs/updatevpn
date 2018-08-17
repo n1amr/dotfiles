@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
 updatevpn --no-prompt

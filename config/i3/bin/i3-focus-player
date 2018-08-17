@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 MEDIA_CONTROLLER="$DOTFILES_HOME/config/i3/bin/mediactl"
 "$MEDIA_CONTROLLER" focus-player "$("$MEDIA_CONTROLLER" running-players | dmenu -i -p 'Focus player:')"

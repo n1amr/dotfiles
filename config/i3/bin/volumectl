@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 MIXER='pulse'
 DELTA="${2:-5}"

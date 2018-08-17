@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 DEFAULT_BACKGROUND_FILE="$DOTFILES_HOME/resources/images/wallpaper.jpg"
 BACKGROUND_FILE="${1:-$DEFAULT_BACKGROUND_FILE}"
 feh --bg-scale "$BACKGROUND_FILE"

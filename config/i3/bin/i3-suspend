@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 sudo -v && SUDO=sudo || SUDO=''
 "$DOTFILES_HOME/config/i3/bin/i3-lock" && sleep 1 && $SUDO systemctl suspend

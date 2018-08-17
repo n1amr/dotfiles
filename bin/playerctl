@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 
 PLAYERCTL="$(which -a playerctl | grep -v "$(realpath "$0")" | head -1)"
 [[ -z "$PLAYERCTL" ]] && { echo "playerctl wrapper: Cannot find playerctl" >&2; exit 1; }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.dotfiles_config
+source ~/.dotfiles.env
 if [[ "$DOTFILES_CONFIG_I3_DISABLE_VOLUME_WIDGET" == 'true' ]]; then
     echo >&2 'Widget is disabled by variable DOTFILES_CONFIG_I3_DISABLE_VOLUME_WIDGET'
     exit 0
