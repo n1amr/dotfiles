@@ -2,9 +2,57 @@
     path = config/sublime-text-3
     url = https://gitlab.com/n1amr/sublime-text-3-config.git
     branch = master
-[submodule "config/vim"]
-    path = config/vim
-    url = https://gitlab.com/n1amr/vim-config
+[submodule "config/vim/bundle/auto-pairs"]
+    path = config/vim/bundle/auto-pairs
+    url = https://github.com/jiangmiao/auto-pairs
+    branch = master
+[submodule "config/vim/bundle/ctrlp.vim"]
+    path = config/vim/bundle/ctrlp.vim
+    url = https://github.com/kien/ctrlp.vim
+    branch = master
+[submodule "config/vim/bundle/dracula"]
+    path = config/vim/bundle/dracula
+    url = https://github.com/dracula/vim
+    branch = master
+[submodule "config/vim/bundle/gruvbox"]
+    path = config/vim/bundle/gruvbox
+    url = https://github.com/morhetz/gruvbox
+    branch = master
+[submodule "config/vim/bundle/nerdtree.vim"]
+    path = config/vim/bundle/nerdtree.vim
+    url = https://github.com/scrooloose/nerdtree.git
+    branch = master
+[submodule "config/vim/bundle/papercolor-theme"]
+    path = config/vim/bundle/papercolor-theme
+    url = https://github.com/NLKNguyen/papercolor-theme
+    branch = master
+[submodule "config/vim/bundle/vim-airline.vim"]
+    path = config/vim/bundle/vim-airline.vim
+    url = https://github.com/vim-airline/vim-airline.git
+    branch = master
+[submodule "config/vim/bundle/vim-airline-themes.vim"]
+    path = config/vim/bundle/vim-airline-themes.vim
+    url = https://github.com/vim-airline/vim-airline-themes.git
+    branch = master
+[submodule "config/vim/bundle/vim-closetag"]
+    path = config/vim/bundle/vim-closetag
+    url = git@github.com:alvan/vim-closetag
+    branch = master
+[submodule "config/vim/bundle/vim-markdown"]
+    path = config/vim/bundle/vim-markdown
+    url = https://github.com/tpope/vim-markdown
+    branch = master
+[submodule "config/vim/bundle/vim-nerdtree-tabs"]
+    path = config/vim/bundle/vim-nerdtree-tabs
+    url = https://github.com/jistr/vim-nerdtree-tabs
+    branch = master
+[submodule "config/vim/bundle/vim-pathogen"]
+    path = config/vim/bundle/vim-pathogen
+    url = https://github.com/tpope/vim-pathogen
+    branch = master
+[submodule "config/vim/bundle/vim-theme-chroma"]
+    path = config/vim/bundle/vim-theme-chroma
+    url = https://github.com/crater2150/vim-theme-chroma
     branch = master
 [submodule "notes"]
     path = notes

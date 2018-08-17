@@ -1,0 +1,387 @@
+let mapleader = " "
+
+if len($VIM_CONFIG_DIR) == 0
+  let $VIM_CONFIG_DIR='~/.vim'
+  if has("win32")
+    let $VIM_CONFIG_DIR='~/vimfiles'
+  endif
+endif
+let $VIM_CONFIG_DIR=expand($VIM_CONFIG_DIR)
+
+let g:pathogen_disabled = [
+  \ 'dracula',
+  \ 'gruvbox',
+  \ 'vim-nerdtree-tabs',
+  \ ]
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
+syntax on
+
+" Defaults
+set backspace=indent,eol,start
+set display=truncate
+set fileencodings=ucs-bom,utf-8,default,latin1
+set helplang=en
+set langnoremap
+set nolangremap
+set nrformats=bin,hex
+set printoptions=paper:letter
+set ruler
+set scroll=0
+set scrolloff=0
+set showcmd
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set ttimeout
+set ttyfast
+set ttymouse=xterm
+
+" Ex-mode completion
+set wildmenu
+set wildignorecase
+set wildmode=longest,list:longest,list:full
+
+" Fold
+set foldmethod=indent
+set foldlevel=99
+set foldlevelstart=99
+
+" View
+set colorcolumn=81
+set cursorline
+set number
+set relativenumber
+if has("unix") && !has("nvim")
+  set term=screen-256color
+endif
+
+" Theme
+colorscheme ron " failback theme
+
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'override' : {
+  \         'color00' : ['#000000', ''],
+  \         'visual_bg' : ['#1565C0', ''],
+  \         'visual_fg' : ['#FFFFFF', ''],
+  \         'search_bg' : ['#FF6F00', ''],
+  \         'diffdelete_fg' : ['#FF5F5F', ''],
+  \       }
+  \     }
+  \   }
+  \ }
+set t_Co=256   " This is may or may not needed.
+set background=dark
+colorscheme PaperColor
+
+" Indentation
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+set smartindent
+set smarttab
+
+" Search
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+" Wrap
+set linebreak
+set nowrap
+
+if exists("&esckeys")
+  set esckeys
+endif
+set timeoutlen=1000
+set ttimeoutlen=10
+
+" Centralize swapfile, backups, and undo history
+let &backupdir=$VIM_CONFIG_DIR . '/tmp/backups//'
+let &directory=$VIM_CONFIG_DIR . '/tmp/swaps//'
+let &undodir=$VIM_CONFIG_DIR . '/tmp/undo//'
+set backup
+set undofile
+autocmd BufWritePre * let &bex = '.bak.' . strftime("%Y%m%d-%H%M%S")
+
+" Enable per-directory .vimrc files and disable unsafe commands in them
+set exrc
+set secure
+
+set mouse=a
+set nocompatible
+set pastetoggle=<F10>
+
+" Restore buffer, remember marks for 9999 files, remember registers up to 512Kb
+let viminfo_filename = "viminfo"
+if has("nvim")
+    let viminfo_filename = "nviminfo"
+end
+let &viminfo="%,'9999,s512,n" . $VIM_CONFIG_DIR . "/" . viminfo_filename
+set history=1000
+
+let g:buffersdir=$VIM_CONFIG_DIR . '/tmp/buffers/'
+let g:sessiondir=$VIM_CONFIG_DIR . '/tmp/sessions/'
+
+set encoding=utf8
+if exists("&cryptmethod")
+  set cryptmethod=blowfish2
+endif
+
+" =============================== Key bindings =================================
+
+noremap <c-k> :m-2<CR>
+noremap <c-j> :m+<CR>
+
+noremap <Leader> "+
+noremap <Leader><Leader> :let @+ = getreg('"')<CR>
+
+nnoremap Q gQ
+
+nnoremap <Leader>f :NERDTreeToggle<CR>
+nnoremap <Leader>r :execute b:run_expr<CR>
+nmap <F5> <Leader>r
+imap <F5> <ESC><Leader>r
+
+nnoremap <Leader>l :ls<CR>:b<Space>
+nnoremap <Leader>j :bp<CR>
+nnoremap <Leader>k :bn<CR>
+nnoremap <Leader>q :bd<CR>
+nnoremap <Leader>Q :bufdo bd<CR>
+nnoremap <Leader>( :call AutoPairsToggle()<CR>
+nnoremap <Leader>i :set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>
+
+nnoremap gk :call FloatUp()<CR>
+nnoremap gj :call FloatDown()<CR>
+
+nnoremap <silent> <ESC>/ :nohl<CR>
+
+inoremap <Tab> <C-N>
+inoremap <C-r><C-r> <C-o>:reg<CR><CR><C-r>
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \ let old_reg = getreg('"') <Bar> let old_regtype = getregtype('"')<CR>
+  \ gvy/<C-R><C-R>=substitute(escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')
+  \ <CR><CR> gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \ let old_reg = getreg('"') <Bar> let old_regtype = getregtype('"')<CR>
+  \ gvy?<C-R><C-R>=substitute(escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')
+  \ <CR><CR> gV:call setreg('"', old_reg, old_regtype)<CR>
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+" ============================= Helper functions ===============================
+
+function! BufferIsEmpty()
+  if line('$') == 1 && getline(1) == ''
+    return 1
+  else
+    return 0
+  endif
+endfunction
+
+function! ClearRegisters()
+  let regs = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+  for reg in regs
+    call setreg(reg, [])
+  endfor
+endfunction
+
+" Auto read/write buffers
+function! EnableAutoReadWrite()
+  set hidden
+  set autoread
+  set autowrite
+  set autowriteall
+
+  autocmd BufLeave * call WriteTempIfEmpty()
+  autocmd QuitPre * call WriteTempIfEmpty()
+  autocmd VimLeave * call WriteTempIfEmpty()
+
+  autocmd VimLeave * call SaveSession()
+endfunction
+
+function! EnableAutoReloadVimrc()
+  augroup autoreloadvimrc
+    autocmd!
+    autocmd BufWritePost .vimrc runtime vimrc
+  augroup END
+endfunction
+
+" j and k don't skip over wrapped lines, unless given a count
+function! EnableWrappedLineMovement()
+  nnoremap <expr> j v:count ? 'j' : 'gj'
+  nnoremap <expr> k v:count ? 'k' : 'gk'
+
+  vnoremap <expr> j v:count ? 'j' : 'gj'
+  vnoremap <expr> k v:count ? 'k' : 'gk'
+endfunction
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @" . nr2char(getchar())
+endfunction
+
+function! FloatUp()
+  while line(".") > 1 && (strlen(getline(".")) < col(".")
+      \ || getline(".")[col(".") - 1] =~ '\s')
+    norm k
+  endwhile
+endfunction
+
+function! FloatDown()
+  while line(".") < line("$") && (strlen(getline(".")) < col(".")
+      \ || getline(".")[col(".") - 1] =~ '\s')
+    norm j
+  endwhile
+endfunction
+
+function! IndentWidth(width)
+  let &shiftwidth=a:width
+  let &softtabstop=a:width
+  let &tabstop=a:width
+endfunction
+
+function! RestoreLastSession()
+  let l:file = g:sessiondir . '/' . systemlist('ls -1 ' . g:sessiondir)[-1]
+  execute 'source ' . escape(l:file, " \"'.")
+endfunction
+
+function! SaveSession()
+  let l:stamp = systemlist('date +"%Y-%m-%d_%H-%M-%S"')[0]
+  let l:session_file = g:sessiondir . '/sess-' . l:stamp . '.vim'
+  execute 'mksession!' escape(l:session_file, " \"'.")
+endfunction
+
+function! SingleQuote(s)
+  return "'" . substitute(a:s, "'", "'\\\\''", 'g') . "'"
+endfunction
+
+function! Trim()
+  normal m`
+  silent! %s/\s\+$//g
+  normal ``
+endfunction
+
+function! WriteTempIfEmpty()
+  if bufname("%") == '' && !BufferIsEmpty()
+    let l:maximum_length = 100 " 255 - 13 = 242
+    let l:title = substitute(getline(1), "[^-A-Za-z0-9_()\"'., ]", '_', 'g')
+    let l:title = title[:l:maximum_length - 1]
+    let l:epoch = systemlist('date +%s')[0]
+    let l:date = systemlist('date -Isec')[0]
+    let l:temp_path_prefix = g:buffersdir . '/' . l:epoch . "-XXXX"
+    let l:temp_path_suffix = '-' . l:date . ' ' . l:title
+    let l:temp_path = systemlist('mktemp ' . SingleQuote(l:temp_path_prefix) . ' --suffix=' . SingleQuote(l:temp_path_suffix))[0]
+    execute 'write!' escape(l:temp_path, " \"'.")
+  endif
+endfunction
+
+" ============================== Plugins config ================================
+
+" NERDTree
+autocmd StdinReadPre * let s:std_in = 1
+autocmd VimEnter *
+  \ if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") |
+  \   exe 'NERDTree' argv()[0] |
+  \   wincmd p | ene |
+  \ endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "powerlineish"
+let g:airline#extensions#tabline#enabled = 1
+set laststatus=2
+
+" ctrlp
+let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_follow_symlinks = 1
+
+" vim-markdown
+let g:markdown_fenced_languages = [
+  \ 'bash=sh',
+  \ 'c',
+  \ 'css',
+  \ 'html',
+  \ 'java',
+  \ 'javascript',
+  \ 'json',
+  \ 'python',
+  \ 'ruby',
+  \ ]
+
+" vim-closetag
+let g:closetag_filenames = '*.html,*.ejs,*.erb'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+" ============================== General config ================================
+
+" gvim config
+if has("gui_running")
+  if has("unix")
+    let &guifont='DejaVu Sans Mono for Powerline 12'
+  elseif has("win32")
+    set guifont=Consolas:h12
+  endif
+  set guioptions=agimLt
+  set lines=999 columns=999
+
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    if l:gf_size_whole >= 1
+      let l:gf_size_whole = l:gf_size_whole - 1
+    endif
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  nnoremap <C-F11> :call FontSizePlus()<CR>
+  nnoremap <S-F11> :call FontSizeMinus()<CR>
+
+  " Pass F11 press to system to enable fullscreen
+  noremap <silent> <F11> :call system(
+    \ "wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+endif
+
+if has("autocmd")
+  " Change cursor shape in different modes
+  autocmd VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+  autocmd InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' |
+    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+    \ endif
+  autocmd VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+  autocmd VimLeave * call system("clipboard", getreg('+')) " don't clear clipboard
+
+  " Define missing filetypes patterns
+  " autocmd BufNewFile,BufRead *.pl  set filetype=prolog
+  autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+  " if no filetype specified, set ft=text
+  autocmd BufEnter * if &filetype == "" | setlocal filetype=text | endif
+
+  " Run a file type based script
+  let types = systemlist('ls -1 ' . SingleQuote($VIM_CONFIG_DIR . '/scripts/filetype-config'))
+  for type in types
+    let type = substitute(type, '.vim$', '', '')
+    execute 'autocmd FileType ' . type . ' runtime scripts/filetype-config/' . type . '.vim'
+  endfor
+endif
+
+call EnableAutoReadWrite()
+call EnableWrappedLineMovement()
