@@ -6,6 +6,8 @@ source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/log"
 source "$DOTFILES_HOME/bin/lib/assert_file"
 
+PATH="$DOTFILES_HOME/bin/:$PATH"
+
 info "Started at $(date)"
 
 SYNCF_RC="$DOTFILES_HOME/custom/config/dotfiles/syncf"
@@ -55,6 +57,7 @@ info "Logging to $log_file"
 trap 'exit 2' INT
 
 RSYNC_ARGS=(-av --delete --relative --exclude-from="$EXCLUDES_FILE")
+# RSYNC_ARGS+=(--delete-excluded)
 RSYNC_ARGS+=(--log-file="$log_file")
 
 BACKUP_DISABLE="${BACKUP_DISABLE:-false}"
@@ -70,6 +73,7 @@ while IFS='' read -r line; do
         continue
     fi
     info "Syncing $line ..."
+    info rsync "${RSYNC_ARGS[@]}" "$line" "$DESTINATION_DIR"
     rsync "${RSYNC_ARGS[@]}" "$line" "$DESTINATION_DIR"
 done < "$INCLUDES_FILE"
 set -e
