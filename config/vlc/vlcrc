@@ -1,5 +1,5 @@
 ﻿###
-###  vlc 3.0.1
+###  vlc 3.0.3
 ###
 
 ###
@@ -2477,7 +2477,7 @@ glconv=any
 #sout-avi-subject=
 
 # Encoder (string)
-#sout-avi-encoder=VLC Media Player - 3.0.1 Vetinari
+#sout-avi-encoder=VLC Media Player - 3.0.3 Vetinari
 
 # Keywords (string)
 #sout-avi-keywords=
@@ -4049,7 +4049,7 @@ metadata-network-access=1
 #control=
 
 # Mouse wheel vertical axis control (integer)
-#hotkeys-y-wheel-mode=0
+hotkeys-y-wheel-mode=-1
 
 # Mouse wheel horizontal axis control (integer)
 #hotkeys-x-wheel-mode=2
