@@ -50,6 +50,10 @@ if [ "$interactive" = 'true' ]; then
     fi
 fi
 
+export DOTFILES_ENV
+export DOTFILES_HOME
+export PATH="$DOTFILES_HOME/bin:$PATH"
+
 if [ "$interactive" = 'true' ]; then
     safe_link () { "$dir/bin/ln-safe" "$@"; }
 else
@@ -162,10 +166,8 @@ if [ ! -f "$DOTFILES_ENV_FILE" ]; then
     generate_global_dotfiles_env "$DOTFILES_ENV_FILE"
 fi
 
-if [ "$DOTFILES_ENV" = 'default' ]; then
-    LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles.env"
-else
-    LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles-${DOTFILES_ENV}.env"
+LOCAL_DOTFILES_ENV_FILE="$(custom-env-resolve dotfiles.env)"
+if [ "$DOTFILES_ENV" != 'default' ]; then
     if [ ! -f "$LOCAL_DOTFILES_ENV_FILE" ]; then
         {
             echo "#!/bin/sh"

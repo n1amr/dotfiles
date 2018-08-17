@@ -1,2 +1,5 @@
 /cache
+
+# Linked to custom repo
+/credentials.mutt
 /passwords.mutt

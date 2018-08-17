@@ -5,8 +5,8 @@ set -e
 export DOTFILES_HOME="$(realpath "$(dirname "$0")")"
 export DOTFILES_ENV='demo'
 
-TMP_HOME="$DOTFILES_HOME/custom/tmp_home"
-DEMO_DOTFILES_ENV_FILE="$DOTFILES_HOME/custom/dotfiles-demo.env"
+TMP_HOME="$DOTFILES_HOME/custom/tmp/demo_home"
+DEMO_DOTFILES_ENV_FILE="$DOTFILES_HOME/custom/env/demo/dotfiles.env"
 
 clean () {
     rm -vrf "$TMP_HOME"

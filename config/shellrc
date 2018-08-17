@@ -49,11 +49,13 @@ if [ ! -f "$DOTFILES_ENV_FILE" ]; then
 fi
 source "$DOTFILES_ENV_FILE"
 
+export PATH="$DOTFILES_HOME/bin:$PATH"
+
 source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
 run_custom_hook () {
-    HOOK="$1"
-    DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
+    local HOOK="$1"
+    local DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
     if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
         source "$DOTFILES_CUSTOM_HOOK_FILE"
     else
@@ -65,7 +67,7 @@ run_custom_hook () {
 
 # Initialize shell
 export HISTCONTROL='ignoreboth'
-export HISTFILE="$DOTFILES_HOME/custom/history/shell_history"
+export HISTFILE="$(custom-env-resolve history/shell_history)"
 
 if [ "$SHELLNAME" = zsh ]; then
     export ZSH="$DOTFILES_HOME/thirdparty/oh-my-zsh"

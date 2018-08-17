@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ -z "$DOTFILES_ENV" ]]; then
+    source ~/.dotfiles.env
+fi
+
+link='false'
+
+DOTFILES_ENV="${DOTFILES_ENV:-default}"
+DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
+if [[ "$DOTFILES_ENV" == 'default' ]]; then
+    for p in "$@"; do
+        echo "$DOTFILES_CUSTOM_DIR/$p"
+    done
+else
+    for p in "$@"; do
+        pe="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/$p"
+
+        d="$(dirname "$pe")"
+        [[ ! -d "$d" ]] && mkdir -p "$d"
+
+        if [[ "$link" == 'true' ]]; then
+            l="$(echo "$p" | sed 's/\/\+/\//g; s/[^\/]//g; s/\//..\//g')../../$p"
+            [[ ! -f "$pe" ]] && ln -s "$l" "$pe"
+        fi
+
+        if [[ -e "$pe" ]]; then
+            echo "$pe"
+        else
+            echo "$DOTFILES_CUSTOM_DIR/$p"
+        fi
+    done
+fi
