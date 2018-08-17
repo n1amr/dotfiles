@@ -2,30 +2,33 @@
 
 set -e
 
-DOTFILES_HOME="$(realpath "$(dirname "$0")")"
-TMP_HOME="$DOTFILES_HOME/custom/tmp_home"
+export DOTFILES_HOME="$(realpath "$(dirname "$0")")"
+export DOTFILES_ENV='demo'
 
-RESTORE_DOTFILES_ENV=false
-DOTFILES_ENV_FILE="$DOTFILES_HOME/custom/dotfiles.env"
+TMP_HOME="$DOTFILES_HOME/custom/tmp_home"
+DEMO_DOTFILES_ENV_FILE="$DOTFILES_HOME/custom/dotfiles-demo.env"
 
 clean () {
     rm -vrf "$TMP_HOME"
 }
 
 install () {
-    if [ -f "$DOTFILES_ENV_FILE" ]; then
-        cp "$DOTFILES_ENV_FILE" "${DOTFILES_ENV_FILE}.bak"
-        RESTORE_DOTFILES_ENV=true
-    fi
-
     mkdir -pv "$TMP_HOME"
     cd "$TMP_HOME"
 
-    "$DOTFILES_HOME/install" --no-interactive --user-home "$TMP_HOME" --dotfiles-path "$DOTFILES_HOME"
+    [ -f "$DEMO_DOTFILES_ENV_FILE" ] && rm -f "$DEMO_DOTFILES_ENV_FILE"
+    "$DOTFILES_HOME/install" -f -e "$DOTFILES_ENV" --user-home "$TMP_HOME" --dotfiles-path "$DOTFILES_HOME"
 }
 
 start () {
-    HOME="$TMP_HOME" "$SHELL"
+    (
+        export DOTFILES_ENV="$DOTFILES_ENV"
+        export DOTFILES_ENV_HOME="$TMP_HOME"
+        export DOTFILES_ENV_USER="$USER"
+        export DOTFILES_HOME="$DOTFILES_HOME"
+        export HOME="$TMP_HOME"
+        exec "$SHELL"
+    )
 }
 
 if [ -e "$TMP_HOME" ]; then
@@ -49,7 +52,3 @@ set +e
 
 echo "You can try my dotfiles in this shell."
 start
-
-if [ "$RESTORE_DOTFILES_ENV" = 'true' ]; then
-    mv "${DOTFILES_ENV_FILE}.bak" "${DOTFILES_ENV_FILE}"
-fi
