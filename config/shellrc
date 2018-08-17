@@ -323,7 +323,8 @@ psgkill () {
     local pids=($(pgrep -f "$@"))
     [ "${#pids[@]}" -gt 0 ] || return 2
 
-    __dotfiles_ps -l -p "$(join ',' "${pids[@]}")" | sed 's/^/ # /' | less -FRX
+    __dotfiles_ps -l -p "$(join ',' "${pids[@]}")" | sed 's/^/ # /' |
+        ( [ "$force" = 'true' ] && cat || less -FRX )
     echo -e "\n $ kill $SIG ${pids[@]}"
     if [[ "$force" != 'true' ]]; then
         echo -n "Are you sure? [y/n] "
