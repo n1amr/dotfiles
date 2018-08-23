@@ -46,7 +46,7 @@ bind '"\e[15~" "\C-e\C-u\C-p\C-j\C-y"'
 bind '"\er" "\C-e\C-ur\n\C-y"'
 bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 
-bind '"\C-xr" "\C-e\C-uexec ${SHELLNAME:-$SHELL}\C-j\C-y"'
+bind '"\C-xr" "\C-e\C-uexec \"${SHELLNAME:-$SHELL}\"\C-j\C-y"'
 
 # git
 bind '"\C-gd" "\C-e\C-ugit diff\C-j\C-y"'

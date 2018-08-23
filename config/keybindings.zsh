@@ -51,7 +51,7 @@ bindkey -s "^[[15~" "^Q^P^J"
 bindkey -s "^[r" "^Qr^M"
 bindkey -s "^[u" "^Qcd ..^M"
 
-bindkey -s "^Xr" "^Qexec \${SHELLNAME:-\$SHELL}^M"
+bindkey -s "^Xr" "^Qexec \"\${SHELLNAME:-\$SHELL}\"^M"
 
 # git
 bindkey -s "^Gd" "^Qgit diff^M"
