@@ -1,22 +1,18 @@
 #!/bin/bash
 
-if which xsel > /dev/null 2>&1; then
-    copy () {
-        xsel -ib
-    }
+source ~/.dotfiles.env
 
-    paste () {
-        xsel -ob
-    }
-else
-    CLIPBOARD_FILE="/tmp/clipboard"
-    copy () {
-        cat > "$CLIPBOARD_FILE"
-    }
+CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-/tmp/clipboard}"
+copy  () { cat > "$CLIPBOARD_FILE"; }
+paste () { cat   "$CLIPBOARD_FILE"; }
 
-    paste () {
-        cat "$CLIPBOARD_FILE"
-    }
+FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
+
+if [[ "$FILE_ONLY_MODE" != 'true' ]]; then
+    if which xsel > /dev/null 2>&1; then
+        copy  () { xsel -ib; }
+        paste () { xsel -ob; }
+    fi
 fi
 
 [[ ! -t 0 ]] && pipe_input='true'
