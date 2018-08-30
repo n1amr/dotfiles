@@ -12,6 +12,7 @@ check_socket_running() {
 }
 
 supports_z_option() {
+    [ "$DOTFILES_CONFIG_LEGACY_SSH_AGENT" = 'true' ] && return 1
     ! ( nc -z 2>&1 | grep -i 'invalid option' ) > /dev/null 2>&1
 }
 
