@@ -55,7 +55,7 @@
     verbose = true
 
 [push]
-    default = matching
+    default = upstream
 
 [url "git@github.com:"]
     pushInsteadOf = "github:"
