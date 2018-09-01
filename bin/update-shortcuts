@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+source ~/.dotfiles.env
+
+# Config locations
+config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/shortcuts.tsv')"
+
+[[ ! -f "$config_file" ]] && {
+    echo >&2 "$0: Cannot find configuration file at $config_file"
+    exit 1
+}
+
+# Output locations
+shellrc_output="$HOME/.shortcuts.sh"
+ranger_output="$HOME/.ranger-shortcuts.conf"
+
+find_or_append () {
+    file="$1"
+    shift
+    line="$@"
+    if ! grep -q "$line" "$file" > /dev/null 2>&1; then
+        echo "$line" >> "$file"
+    fi
+}
+
+( sed '/^#/d; s/~/$HOME/' "$config_file" |
+    awk -F'\t' '{print "x"$1"=\""$2"\"\nalias o"$1"='\''cd \"$x"$1"\" && l'\''"}'
+) > "$shellrc_output"
+find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.shortcuts.sh'
+
+# TODO: support path with spaces
+# awk -F'\t' '{print "map g"$1" cd \""$2"\"\nmap t"$1" tab_new \""$2"\"\nmap M"$1" shell mv -v %s \""$2"\"\nmap Y"$1" shell cp -rv %s \""$2"\""}'
+( sed "/^#/d; s/~/${HOME//\//\\\/}/" "$config_file" |
+    awk -F'\t' '{print "map g"$1" cd "$2"\nmap t"$1" tab_new "$2"\nmap M"$1" shell mv -v %s "$2"\nmap Y"$1" shell cp -rv %s "$2}'
+) > "$ranger_output"
+find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-shortcuts.conf'

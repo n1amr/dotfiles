@@ -521,6 +521,11 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "HLP= --help 2>&1 | pipe_to_visual"
 fi
 
+if [[ ! -f ~/.shortcuts.sh ]] || [[ ! -f ~/.ranger-shortcuts.conf ]]; then
+    "$DOTFILES_HOME/bin/update-shortcuts"
+fi
+source ~/.shortcuts.sh
+
 ################################################################################
 #################################  PS1 create  #################################
 
