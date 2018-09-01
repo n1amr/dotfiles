@@ -123,6 +123,7 @@ if [ -x "$custom_install" ]; then
     "$custom_install"
 fi
 
+safe_link "$DST_HOME/.config/Code/User/" "$DOTFILES_HOME/config/vscode/User/"
 safe_link "$DST_HOME/.config/i3/" "$DOTFILES_HOME/config/i3/"
 safe_link "$DST_HOME/.config/nvim/init.vim" "$DOTFILES_HOME/config/nvim.vim"
 safe_link "$DST_HOME/.config/ranger/commands.py" "$DOTFILES_HOME/config/ranger/commands.py"

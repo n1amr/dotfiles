@@ -1,0 +1,36 @@
+{
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Visual Studio Dark",
+    "editor.tabSize": 2,
+    "editor.lineNumbers": "relative",
+    "editor.fontFamily": "Ubuntu Mono",
+    "editor.fontSize": 14,
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveDelay": 1000,
+    // vim extension
+    "vim.hlsearch": true,
+    "vim.useSystemClipboard": false,
+    "vim.leader": " ",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "leader"
+            ],
+            "after": [
+                "\"",
+                "+",
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "leader"
+            ],
+            "after": [
+                "\"",
+                "+",
+            ]
+        }
+    ],
+}
