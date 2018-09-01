@@ -15,6 +15,10 @@ else
     return
 fi
 
+[ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ] && IS_TTY='true' || IS_TTY='false'
+grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
+
+
 export DOTFILES_ENV="${DOTFILES_ENV:-default}"
 export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
 export DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
@@ -133,12 +137,6 @@ export VISUAL="${VISUAL:-vim}"
 export EDITOR="${EDITOR:-$VISUAL}"
 
 export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
-
-if [ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ]; then
-  export IS_TTY=1
-else
-  export IS_TTY=0
-fi
 
 export LANG="${LANG:-en_US.UTF-8}"
 
