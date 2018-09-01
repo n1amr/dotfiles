@@ -1,0 +1,8 @@
+grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
+export DOTFILES_CONFIG_IS_WSL="$IS_WSL"
+
+if [[ "$DOTFILES_CONFIG_IS_WSL" == 'true' ]]; then
+    # FIX: https://github.com/zplug/zplug/issues/398
+    # See https://github.com/Microsoft/BashOnWindows/issues/1887
+    unsetopt BG_NICE
+fi
