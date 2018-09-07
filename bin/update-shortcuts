@@ -32,6 +32,6 @@ find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.shortcuts.sh'
 # TODO: support path with spaces
 # awk -F'\t' '{print "map g"$1" cd \""$2"\"\nmap t"$1" tab_new \""$2"\"\nmap M"$1" shell mv -v %s \""$2"\"\nmap Y"$1" shell cp -rv %s \""$2"\""}'
 ( sed "/^#/d; s/~/${HOME//\//\\\/}/" "$config_file" |
-    awk -F'\t' '{print "map g"$1" cd "$2"\nmap t"$1" tab_new "$2"\nmap M"$1" shell mv -v %s "$2"\nmap Y"$1" shell cp -rv %s "$2}'
+    awk -F'\t' '{print "map gt"$1" cd "$2"\nmap gT"$1" tab_new "$2"\nmap Mt"$1" shell mv -v %s "$2"\nmap Yt"$1" shell cp -rv %s "$2}'
 ) > "$ranger_output"
 find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-shortcuts.conf'
