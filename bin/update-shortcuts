@@ -14,6 +14,7 @@ config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/shortcuts.tsv')"
 # Output locations
 shellrc_output="$HOME/.shortcuts.sh"
 ranger_output="$HOME/.ranger-shortcuts.conf"
+marks_update_output="$(mktemp '/tmp/marks-update-XXXXXX')"
 
 find_or_append () {
     file="$1"
@@ -24,14 +25,30 @@ find_or_append () {
     fi
 }
 
-( sed '/^#/d; s/~/$HOME/' "$config_file" |
-    awk -F'\t' '{print "x"$1"=\""$2"\"\nalias o"$1"='\''cd \"$x"$1"\" && l'\''"}'
-) > "$shellrc_output"
+( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
+    {printf "__DF_SHORTCUT_%s=\"%s\"\n", $1, $2}
+    {printf "X%s=\"$__DF_SHORTCUT_%s\"\n", $1, $1}
+    {printf "alias o%s='\''cd \"$__DF_SHORTCUT_%s\";'\''\n", $1, $1}
+    {printf "alias G%s='\''cd \"$__DF_SHORTCUT_%s\" && l'\''\n", $1, $1}
+    {printf "alias Y%s='\''cp -iv -t \"$__DF_SHORTCUT_%s\" -r '\''\n", $1, $1}
+    {printf "alias M%s='\''mv -iv -t \"$__DF_SHORTCUT_%s\"'\''\n", $1, $1}
+''') > "$shellrc_output"
 find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.shortcuts.sh'
 
-# TODO: support path with spaces
-# awk -F'\t' '{print "map g"$1" cd \""$2"\"\nmap t"$1" tab_new \""$2"\"\nmap M"$1" shell mv -v %s \""$2"\"\nmap Y"$1" shell cp -rv %s \""$2"\""}'
-( sed "/^#/d; s/~/${HOME//\//\\\/}/" "$config_file" |
-    awk -F'\t' '{print "map gt"$1" cd "$2"\nmap gT"$1" tab_new "$2"\nmap Mt"$1" shell mv -v %s "$2"\nmap Yt"$1" shell cp -rv %s "$2}'
-) > "$ranger_output"
+( sort -r "$config_file" | sed "/^#/d; s/~/${HOME//\//\\\/}/" | awk -F'\t' '''
+    {printf "# %s => %s\n", $1, $2}
+    {printf "map gt%s cd %s\n", $1, $2}
+    {printf "map gT%s chain tab_new; cd %s\n", $1, $2}
+    {printf "map Mt%s shell mv -v %%s \"%s\"\n", $1, $2}
+    {printf "map Yt%s shell cp -rv %%s \"%s\"\n", $1, $2}
+    {printf "\n"}
+''') > "$ranger_output"
 find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-shortcuts.conf'
+
+( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
+    BEGIN{printf "#!/bin/bash\n\n"}
+    BEGIN{printf "set -e\n\n"}
+    BEGIN{printf "MARKS_PATH=\"$HOME/.marks\"\n\n"}
+    {printf "test -e \"$MARKS_PATH/%s\" || ln -s \"%s\" \"$MARKS_PATH/%s\";\n", $1, $2, $1}
+''') > "$marks_update_output"
+bash "$marks_update_output"
