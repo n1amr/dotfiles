@@ -10,7 +10,13 @@ DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
 if [[ "$DOTFILES_ENV" == 'default' ]]; then
     for p in "$@"; do
-        echo "$DOTFILES_CUSTOM_DIR/$p"
+        if [[ -e "$DOTFILES_CUSTOM_DIR/$p" ]]; then
+            echo "$DOTFILES_CUSTOM_DIR/$p"
+        elif [[ -e "$DOTFILES_HOME/$p" ]]; then
+            echo "$DOTFILES_HOME/$p"
+        else
+            echo "$DOTFILES_CUSTOM_DIR/$p"
+        fi
     done
 else
     for p in "$@"; do
@@ -26,6 +32,10 @@ else
 
         if [[ -e "$pe" ]]; then
             echo "$pe"
+        elif [[ -e "$DOTFILES_CUSTOM_DIR/$p" ]]; then
+            echo "$DOTFILES_CUSTOM_DIR/$p"
+        elif [[ -e "$DOTFILES_HOME/$p" ]]; then
+            echo "$DOTFILES_HOME/$p"
         else
             echo "$DOTFILES_CUSTOM_DIR/$p"
         fi
