@@ -5,19 +5,26 @@
 *.gitignored.*
 *.iml
 *.jar
-*.pyc
+*.orig
 *.sw[klmnop]
 *~
 .fuse_hidden*
-.ipynb_checkpoints
-/build/
-/cmake-build-debug/
-/node_modules/
 /out/
+
+# Python
+*.pyc
+.ipynb_checkpoints
 __pycache__/
+
+# JavaScript
+/node_modules/
 
 # IntelliJ project
 *.iml
 *.ipr
 *.iws
 .idea/
+
+# CLion
+/build/
+/cmake-build-debug/
