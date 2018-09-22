@@ -2,9 +2,9 @@
 
 results=()
 
-shortcuts=($(shortcuts list -s))
-for shortcut in "${shortcuts[@]}"; do
-    results+=("$shortcut")
+marks=($(marks list -s))
+for mark in "${marks[@]}"; do
+    results+=("$mark")
 done
 
 echo "${results[@]}"

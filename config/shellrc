@@ -261,7 +261,7 @@ json () {
 
 jump () {
     cd -P "$DOTFILES_MARKS_PATH/$1" 2>/dev/null || {
-        echo "No such shortcut: $1"
+        echo "No such mark: $1"
         return 1
     }
 }
@@ -280,11 +280,7 @@ man () {
 }
 
 mark () {
-    shortcuts add "$@" && source ~/.shortcuts.sh
-}
-
-marks () {
-    shortcuts list
+    marks add "$@" && source ~/.marks.sh
 }
 
 mkcd () {
@@ -402,7 +398,7 @@ unique_paths () {
 }
 
 unmark () {
-    shortcuts remove "$@" && source ~/.shortcuts.sh
+    marks remove "$@" && source ~/.marks.sh
 }
 
 up () {
@@ -544,10 +540,10 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "HLP= --help 2>&1 | pipe_to_visual"
 fi
 
-if [[ ! -f ~/.shortcuts.sh ]] || [[ ! -f ~/.ranger-shortcuts.conf ]]; then
-    "$DOTFILES_HOME/bin/update-shortcuts"
+if [[ ! -f ~/.marks.sh ]] || [[ ! -f ~/.ranger-marks.conf ]]; then
+    "$DOTFILES_HOME/bin/update-marks"
 fi
-source ~/.shortcuts.sh
+source ~/.marks.sh
 
 ################################################################################
 #################################  PS1 create  #################################

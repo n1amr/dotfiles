@@ -4,7 +4,7 @@ set -e
 source ~/.dotfiles.env
 
 # Config locations
-config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/shortcuts.tsv')"
+config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/marks.tsv')"
 
 [[ ! -f "$config_file" ]] && {
     echo >&2 "$0: Cannot find configuration file at $config_file"
@@ -12,8 +12,8 @@ config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/shortcuts.tsv')"
 }
 
 # Output locations
-shellrc_output="$HOME/.shortcuts.sh"
-ranger_output="$HOME/.ranger-shortcuts.conf"
+shellrc_output="$HOME/.marks.sh"
+ranger_output="$HOME/.ranger-marks.conf"
 
 find_or_append () {
     file="$1"
@@ -25,14 +25,14 @@ find_or_append () {
 }
 
 ( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
-    {printf "__DF_SHORTCUT_%s=\"%s\"\n", $1, $2}
-    {printf "X%s=\"$__DF_SHORTCUT_%s\"\n", $1, $1}
-    {printf "alias o%s='\''cd \"$__DF_SHORTCUT_%s\"'\''\n", $1, $1}
-    {printf "alias G%s='\''cd \"$__DF_SHORTCUT_%s\" && l'\''\n", $1, $1}
-    {printf "alias Y%s='\''cp -iv -t \"$__DF_SHORTCUT_%s\" -r '\''\n", $1, $1}
-    {printf "alias M%s='\''mv -iv -t \"$__DF_SHORTCUT_%s\"'\''\n", $1, $1}
+    {printf "__DF_MARK_%s=\"%s\"\n", $1, $2}
+    {printf "X%s=\"$__DF_MARK_%s\"\n", $1, $1}
+    {printf "alias o%s='\''cd \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias G%s='\''cd \"$__DF_MARK_%s\" && l'\''\n", $1, $1}
+    {printf "alias Y%s='\''cp -iv -t \"$__DF_MARK_%s\" -r '\''\n", $1, $1}
+    {printf "alias M%s='\''mv -iv -t \"$__DF_MARK_%s\"'\''\n", $1, $1}
 ''') > "$shellrc_output"
-find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.shortcuts.sh'
+find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
 
 ( sort -r "$config_file" | sed "/^#/d; s/~/${HOME//\//\\\/}/" | awk -F'\t' '''
     {printf "# %s => %s\n", $1, $2}
@@ -42,7 +42,7 @@ find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.shortcuts.sh'
     {printf "map Yt%s shell cp -rv %%s \"%s\"\n", $1, $2}
     {printf "\n"}
 ''') > "$ranger_output"
-find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-shortcuts.conf'
+find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-marks.conf'
 
 DOTFILES_MARKS_PATH="${DOTFILES_MARKS_PATH:-$HOME/.marks}"
 if [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
@@ -53,12 +53,12 @@ if [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
 fi
 
 while IFS='' read line; do
-    shortcut="${line%%$'\t'*}"
+    mark="${line%%$'\t'*}"
     path="${line##*$'\t'}"
     path="$(eval "echo \"$path\"")" # expand variables
 
-    if [[ -e "$DOTFILES_MARKS_PATH/$shortcut" ]]; then
-        rm -f "$DOTFILES_MARKS_PATH/$shortcut"
+    if [[ -e "$DOTFILES_MARKS_PATH/$mark" ]]; then
+        rm -f "$DOTFILES_MARKS_PATH/$mark"
     fi
-    ln -s "$path" "$DOTFILES_MARKS_PATH/$shortcut"
+    ln -s "$path" "$DOTFILES_MARKS_PATH/$mark"
 done < <(sed '/^#/d; s/~/$HOME/' "$config_file")
