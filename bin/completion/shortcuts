@@ -1,0 +1,5 @@
+#!/bin/bash
+
+results=(add remove list update)
+
+echo "${results[@]}"

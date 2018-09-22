@@ -1,0 +1,10 @@
+#!/bin/bash
+
+results=()
+
+shortcuts=($(shortcuts list -s))
+for shortcut in "${shortcuts[@]}"; do
+    results+=("$shortcut")
+done
+
+echo "${results[@]}"

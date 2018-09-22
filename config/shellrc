@@ -90,7 +90,6 @@ if [ "$SHELLNAME" = zsh ]; then
         dirpersist
         git
         history
-        jump
         pip
         rsync
         z
@@ -120,6 +119,8 @@ elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/config/bash-init.sh"
     source "$DOTFILES_HOME/config/completions.bash"
 fi
+
+export DOTFILES_MARKS_PATH="$DOTFILES_ENV_HOME/.marks"
 
 ################################################################################
 ###########################  Environment variables  ############################
@@ -258,6 +259,13 @@ json () {
     fi;
 }
 
+jump () {
+    cd -P "$DOTFILES_MARKS_PATH/$1" 2>/dev/null || {
+        echo "No such shortcut: $1"
+        return 1
+    }
+}
+
 keybindings () {
     less "$DOTFILES_HOME/config/keybindings.$SHELLNAME"
 }
@@ -269,6 +277,14 @@ linerange () {
 [ "$SHELLNAME" = zsh ] && unalias man
 man () {
     command man "$@" | pipe_to_visual
+}
+
+mark () {
+    shortcuts add "$@" && source ~/.shortcuts.sh
+}
+
+marks () {
+    shortcuts list
 }
 
 mkcd () {
@@ -383,6 +399,10 @@ terminal_resize () {
 
 unique_paths () {
     echo -n "$1:" | awk -v RS=':' -v ORS=":" '!a[$1]++' | sed 's/:\+/:/g; s/^:\|:$//g'
+}
+
+unmark () {
+    shortcuts remove "$@" && source ~/.shortcuts.sh
 }
 
 up () {
