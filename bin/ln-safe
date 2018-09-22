@@ -2,7 +2,7 @@
 
 set -e
 
-safe_link() {
+safe_link () {
     local interactive='true'
     if [ "$1" = '-f' ]; then
         interactive='false'
@@ -39,4 +39,6 @@ safe_link() {
     fi
 }
 
-safe_link "$@"
+if [ "$#" -gt 0 ]; then
+    safe_link "$@"
+fi
