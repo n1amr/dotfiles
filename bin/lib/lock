@@ -2,7 +2,7 @@
 
 [ -n "$DOTFILES_LOCK" ] && return || export DOTFILES_LOCK=true
 
-source "$DOTFILES_HOME/bin/lib/log"
+. "$DOTFILES_HOME/bin/lib/log"
 
 __lock_verbose=false
 if [ "$1" = '--verbose' ]; then

@@ -2,7 +2,8 @@
 
 set -e
 
-. "$(dirname "$0")/bin/lib/polyfills.sh"
+DOTFILES_HOME="$(dirname "$0")"
+. "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
 dir="$(realpath "$(dirname "$0")")"
 

@@ -1,8 +1,6 @@
 #!/bin/sh
 
-can_execute () {
-    { which "$@" || type "$@"; } > /dev/null 2>&1
-}
+. "$DOTFILES_HOME/bin/lib/can_execute"
 
 can_execute realpath || realpath () {
     local p

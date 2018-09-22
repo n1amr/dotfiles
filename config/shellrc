@@ -143,6 +143,9 @@ export LANG="${LANG:-en_US.UTF-8}"
 ################################################################################
 #################################  Functions  ##################################
 
+# Sourced functions
+source "$DOTFILES_HOME/bin/lib/can_execute"
+
 __dotfiles_command_not_found_handler () {
     if [[ -x /usr/lib/command-not-found ]]; then
         /usr/lib/command-not-found -- "$1"
@@ -186,10 +189,6 @@ calc () {
 
     [[ -n "$setup" ]] && setup="$setup; "
     python -c 'import math; '"$setup"'print('"$query"')'
-}
-
-can_execute () {
-    { which "$@" || type "$@"; } > /dev/null 2>&1
 }
 
 cdf () {
