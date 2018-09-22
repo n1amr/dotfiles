@@ -421,6 +421,7 @@ export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 ################################################################################
 ##################################  Aliases  ###################################
 
+alias -- '-'='cd -'
 alias alert='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/alert.ogg"'
 alias apt='sudo apt'
 alias bakmv='bak --move'
