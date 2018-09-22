@@ -1,0 +1,114 @@
+#!/bin/bash
+
+set -e
+
+source ~/.dotfiles.env
+source "$DOTFILES_HOME/bin/lib/can_execute"
+source "$DOTFILES_HOME/bin/lib/polyfills.sh"
+
+config_file="$(custom-env-resolve 'config/shortcuts.tsv')"
+
+list_shortcuts () {
+    local long='true'
+    [[ "$1" == '-s' ]] && { long='false'; }
+
+    if [[ "$long" == 'true' ]]; then
+        cat "$config_file" |
+            sed '/^#/d; s/\t/\t => /' |
+            ( can_execute column && column -c1 -t || cat ) |
+            less -FRX
+    else
+        cat "$config_file" | sed '/^#/d; s/\t.*//'
+    fi
+}
+
+add_shortcut () {
+    local interactive='true'
+    [[ "$1" == '-f' ]] && { interactive='false'; shift; }
+    if [[ "$#" -lt 1 ]]; then
+        echo >&2 "Usage: $0 add SHORTCUT [PATH]"
+        return 1
+    fi
+    local shortcut="$1"
+
+    local path
+    if [[ "$#" -lt 2 ]]; then
+        path="$(realpath .)"
+    else
+        path="$(realpath -s "$2")"
+    fi
+
+    local line="$(cat "$config_file" | grep "^${shortcut}\s\+")"
+    if [[ -n "$line" ]]; then
+        echo >&2 "Shortcut ${shortcut} exists. Remove it first"
+        remove_shortcut "${shortcut}" || return 1
+    fi
+
+    local response
+    if [ "$interactive" = 'true' ]; then
+        printf "Add %s => %s ? ([y]/n) " "$shortcut" "$path"
+        read -r response
+    else
+        response='y'
+    fi
+
+    if [ "$response" == 'n' ]; then
+        return 1
+    fi
+
+    echo "${shortcut}"$'\t'"${path}" | tee -a "$config_file" | sed 's/^/>> /'
+    update_shortcuts
+    return 0
+}
+
+remove_shortcut () {
+    local interactive='true'
+    [[ "$1" == '-f' ]] && { interactive='false'; shift; }
+    if [[ "$#" -lt 1 ]]; then
+        echo >&2 "Usage: $0 remove SHORTCUT"
+        return 1
+    fi
+    local shortcut="$1"
+    local line="$(cat "$config_file" | grep "^${shortcut}\s\+")"
+    if [[ -z "$line" ]]; then
+        echo >&2 "Cannot find shortcut ${shortcut}"
+        return 1
+    fi
+
+    local path="${line##*$'\t'}"
+
+    local response
+    if [ "$interactive" = 'true' ]; then
+        printf "Remove %s => %s ? ([y]/n) " "$shortcut" "$path"
+        read -r response
+    else
+        response='y'
+    fi
+
+    if [ "$response" == 'n' ]; then
+        return 1
+    fi
+
+    sed "/^${shortcut}\s\+/d" -i "$config_file"
+    update_shortcuts
+    return 0
+}
+
+update_shortcuts () {
+    "$DOTFILES_HOME/bin/update-shortcuts" > /dev/null
+}
+
+if [[ "$#" = '0' ]]; then
+    list_shortcuts "$@"
+    exit
+fi
+
+subcommand="$1"
+shift
+case "$subcommand" in
+    add) add_shortcut "$@" ;;
+    list) list_shortcuts "$@" ;;
+    remove) remove_shortcut "$@" ;;
+    update) update_shortcuts "$@" ;;
+    *) echo >&2 "Usage: $0 [add|list|remove|update]"; exit 1 ;;
+esac
