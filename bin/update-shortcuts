@@ -28,7 +28,7 @@ find_or_append () {
 ( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
     {printf "__DF_SHORTCUT_%s=\"%s\"\n", $1, $2}
     {printf "X%s=\"$__DF_SHORTCUT_%s\"\n", $1, $1}
-    {printf "alias o%s='\''cd \"$__DF_SHORTCUT_%s\";'\''\n", $1, $1}
+    {printf "alias o%s='\''cd \"$__DF_SHORTCUT_%s\"'\''\n", $1, $1}
     {printf "alias G%s='\''cd \"$__DF_SHORTCUT_%s\" && l'\''\n", $1, $1}
     {printf "alias Y%s='\''cp -iv -t \"$__DF_SHORTCUT_%s\" -r '\''\n", $1, $1}
     {printf "alias M%s='\''mv -iv -t \"$__DF_SHORTCUT_%s\"'\''\n", $1, $1}
