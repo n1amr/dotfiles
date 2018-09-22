@@ -540,8 +540,10 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "HLP= --help 2>&1 | pipe_to_visual"
 fi
 
-if [[ ! -f ~/.marks.sh ]] || [[ ! -f ~/.ranger-marks.conf ]]; then
-    "$DOTFILES_HOME/bin/update-marks"
+if [[ ! -f ~/.marks.sh ]] ||
+        [[ ! -f ~/.ranger-marks.conf ]] ||
+        [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
+    "$DOTFILES_HOME/bin/update-marks" > /dev/null
 fi
 source ~/.marks.sh
 
