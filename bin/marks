@@ -15,7 +15,7 @@ list_marks () {
     if [[ "$long" == 'true' ]]; then
         cat "$config_file" |
             sed '/^#/d; s/\t/\t => /' |
-            ( can_execute column && column -c1 -t || cat ) |
+            ( can_execute column && column -c1 -t -s $'\t' || cat ) |
             less -FRX
     else
         cat "$config_file" | sed '/^#/d; s/\t.*//'
