@@ -60,7 +60,7 @@ source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
 run_custom_hook () {
     local HOOK="$1"
-    local DOTFILES_CUSTOM_HOOK_FILE="$DOTFILES_HOME/custom/config/dotfiles/shellrc/hooks/$HOOK.sh"
+    local DOTFILES_CUSTOM_HOOK_FILE="$(custom-env-resolve "config/dotfiles/shellrc/hooks/$HOOK.sh")"
     if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
         source "$DOTFILES_CUSTOM_HOOK_FILE"
     else
