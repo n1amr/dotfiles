@@ -15,9 +15,10 @@ else
     return
 fi
 
+export LANG='en_US.UTF-8'
+
 [ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ] && IS_TTY='true' || IS_TTY='false'
 grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
-
 
 export DOTFILES_ENV="${DOTFILES_ENV:-default}"
 export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
