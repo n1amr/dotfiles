@@ -8,7 +8,12 @@ config_file="$("$DOTFILES_HOME/bin/custom-env-resolve" 'config/marks.tsv')"
 
 [[ ! -f "$config_file" ]] && {
     echo >&2 "$0: Cannot find configuration file at $config_file"
-    exit 1
+    mkdir -p "$(dirname "$config_file")"
+    {
+        echo "# Add marks to this file using the syntax MARK	PATH eg:"
+        echo "# h	~"
+    } > "$config_file"
+    exit
 }
 
 # Output locations
