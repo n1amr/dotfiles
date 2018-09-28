@@ -288,6 +288,14 @@ mkcd () {
     mkdir -pv "$@" && cd "$1"
 }
 
+path () {
+    if [ "$SHELLNAME" = zsh ]; then
+        echo "${PATH//:/\n}"
+    elif [ "$SHELLNAME" = bash ]; then
+        echo "${PATH//:/$'\n'}"
+    fi
+}
+
 pipe_to_editor () {
     remove_color_codes | "$EDITOR" -
 }
