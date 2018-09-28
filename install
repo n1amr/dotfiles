@@ -10,6 +10,7 @@ dir="$(realpath "$(dirname "$0")")"
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
+DOTFILES_CUSTOM_REPO_URL='git@gitlab.com:n1amr/dotfiles-config'
 
 interactive='true'
 
@@ -49,7 +50,22 @@ if [ "$interactive" = 'true' ]; then
     if [ ! -z "$response" ]; then
         DOTFILES_HOME="$(realpath "$response")"
     fi
+
+    # Set custom repo
+    printf "Enter dotfiles custom repo url [%s]: " "$DOTFILES_CUSTOM_REPO_URL"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DOTFILES_CUSTOM_REPO_URL="$(realpath "$response")"
+    fi
 fi
+
+set +e && (
+    [ ! -d "$DOTFILES_HOME/custom" ] && (
+        cd "$DOTFILES_HOME"
+        echo "dotfiles: Cloning custom repo to dotfiles"
+        git clone "$DOTFILES_CUSTOM_REPO_URL" 'custom'
+    )
+); set -e
 
 export DOTFILES_ENV
 export DOTFILES_HOME
