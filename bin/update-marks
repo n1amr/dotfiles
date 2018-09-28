@@ -49,7 +49,9 @@ if [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
     if [[ -f "$DOTFILES_MARKS_PATH" ]]; then
         mv "$DOTFILES_MARKS_PATH" "$DOTFILES_MARKS_PATH.bak.$(date --utc +"%Y%m%d%H%M%S")"
     fi
-    mkdir -pv "$DOTFILES_MARKS_PATH"
+    mkdir -p "$DOTFILES_MARKS_PATH"
+else
+    find "$DOTFILES_MARKS_PATH" -mindepth 1 -delete
 fi
 
 while IFS='' read line; do
