@@ -11,7 +11,7 @@ if [ -n "$BASH_VERSION" ]; then
 elif [ -n "$ZSH_VERSION" ]; then
     SHELLNAME=zsh
 else
-    echo 'Shell type not supported by this script'
+    echo >&2 'dotfiles: Shell type not supported by this script'
     return
 fi
 
@@ -27,10 +27,10 @@ export DOTFILES_HOME="${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}"
 
 generate_global_dotfiles_env () {
     local env_file="$1"
-    touch "$env_file"
+    mkdir -p "$(dirname "$env_file")"
 
-    echo "Note: Creating new dotfiles.env file at $env_file:"
-    echo "# ===== Start ====="
+    echo >&2 "dotfiles: Creating new dotfiles.env file at $env_file:"
+    echo >&2 "# ===== Start ====="
     (
         echo '#!/bin/sh'
         echo
@@ -43,8 +43,8 @@ generate_global_dotfiles_env () {
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
-    ) | tee -a "$env_file"
-    echo "# ===== End ====="
+    ) | tee -a "$env_file" 1>&2
+    echo >&2 "# ===== End ====="
 }
 
 # Load dotfiles.env file
@@ -64,7 +64,7 @@ run_custom_hook () {
     if [ -f "$DOTFILES_CUSTOM_HOOK_FILE" ]; then
         source "$DOTFILES_CUSTOM_HOOK_FILE"
     else
-        echo >&2 "Creating $DOTFILES_CUSTOM_HOOK_FILE"
+        echo >&2 "dotfiles: Creating $DOTFILES_CUSTOM_HOOK_FILE"
         mkdir -p "$(dirname "$DOTFILES_CUSTOM_HOOK_FILE")"
         echo "#!/bin/bash" >> "$DOTFILES_CUSTOM_HOOK_FILE"
     fi
@@ -153,7 +153,7 @@ __dotfiles_command_not_found_handler () {
         /usr/lib/command-not-found -- "$1"
         return "$?"
     else
-        echo "$1: command not found" >&2
+        echo >&2 "$1: command not found"
         return 127
     fi
 }
