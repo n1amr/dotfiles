@@ -11,8 +11,9 @@ if [ -z "$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT" ]; then
     echo "export DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT='$DOTFILES_CONFIG_GOOGLE_DRIVE_ROOT'" >> ~/.dotfiles.env
 fi
 
-UPDATEDRIVE_CONFIG_FILE="$DOTFILES_HOME/custom/config/dotfiles/updatedriverc"
+UPDATEDRIVE_CONFIG_FILE="$(custom-env-resolve 'config/dotfiles/updatedrive/rc')"
 if [ ! -f "$UPDATEDRIVE_CONFIG_FILE" ]; then
+    mkdir -p "$(dirname "$UPDATEDRIVE_CONFIG_FILE")"
     cat > "$UPDATEDRIVE_CONFIG_FILE" <<EOF
 export auto_pull_dirs=(
     # "File1"
