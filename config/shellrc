@@ -39,6 +39,8 @@ generate_global_dotfiles_env () {
         echo "export DOTFILES_ENV_USER=\"\${DOTFILES_ENV_USER:-$DOTFILES_ENV_HOME}\""
         echo "export DOTFILES_HOME=\"\${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}\""
         echo
+        echo "export PATH=\"\$DOTFILES_HOME/custom/bin:\$DOTFILES_HOME/bin:\$PATH\""
+        echo
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
