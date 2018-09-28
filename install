@@ -190,7 +190,7 @@ if [ "$DOTFILES_ENV" != 'default' ]; then
 fi
 safe_link "$DST_HOME/.dotfiles.env" "$LOCAL_DOTFILES_ENV_FILE"
 
-"$DOTFILES_HOME/bin/update-marks"
+HOME="$DST_HOME" "$DOTFILES_HOME/bin/update-marks"
 
 # fzf install
 "$DOTFILES_HOME/thirdparty/fzf/install" --bin
