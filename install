@@ -170,7 +170,7 @@ if [ ! -f "$DOTFILES_ENV_FILE" ]; then
     generate_global_dotfiles_env "$DOTFILES_ENV_FILE"
 fi
 
-LOCAL_DOTFILES_ENV_FILE="$(custom-env-resolve dotfiles.env)"
+LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/dotfiles.env"
 if [ "$DOTFILES_ENV" != 'default' ]; then
     if [ ! -f "$LOCAL_DOTFILES_ENV_FILE" ]; then
         {
