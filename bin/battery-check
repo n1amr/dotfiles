@@ -1,50 +1,88 @@
 #!/bin/bash
 
 set -e
+source ~/.dotfiles.env
 
-beep='paplay /usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
-battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ empty|percentage"'
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
+beep () {
+    paplay '/usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
+}
+
+alert () {
+    paplay "$DOTFILES_HOME/resources/sounds/alert.ogg"
+}
+
+battery () {
+    upower -i "$(upower -e | grep 'BAT')" |
+        grep -E "state|to\ empty|percentage"
+}
 
 state () {
-    eval "$battery" | grep 'state' | awk '{print $2}'
+    battery | grep 'state' | awk '{print $2}'
 }
 
 battery_percentage () {
-    eval "$battery" | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}'
+    battery | grep 'percentage' | awk '{print $2}' | awk -F '%' '{print $1}'
+}
+
+speak () {
+    which espeak > /dev/null && espeak -a 200 -s 200 "$@"
+}
+
+report () {
+    if which mutt > /dev/null; then
+        battery | mutt -s "$DOTFILES_ENV: Hibernating $(date -Isec)" "$EMAIL"
+    else
+        date -Isec >> ~/battery.log
+        battery >> ~/battery.log
+    fi
 }
 
 recheck () {
-    [ "$(state)" == 'discharging' ] || exit
+    [ "$(state)" == 'discharging' ] || {
+        speak 'Charger is connected. Thank you'
+        exit 0
+    }
 }
 
+run_beep () {
+    for _ in {1..3}; do
+        speak 'Battery is low. Please connect the charger'
+        for i in {20..0}; do
+            for _ in {0..1}; do
+                beep &
+                k="$i"
+                while [ "$k" -gt 0 ]; do
+                    sleep 0.002
+                    k="$(( k - 1 ))"
+                done
+            done
+            recheck
+        done
+    done
+
+    report &
+
+    speak 'Battery is low. You have only 10 seconds to connect the charger before hibernating'
+    for i in {10..0}; do
+        speak "$i"
+        alert
+        recheck
+    done
+
+    speak 'Started hibernating now. Goodbye'
+    recheck
+
+    exit 1
+}
 
 # Get the integer percentage of current battery capacity
 p="$(battery_percentage)"
 
-run_beep () {
-    for i in {10..0}; do
-        for _ in {0..3}; do
-            eval "$beep" &
-            k="$i"
-            while [ "$k" -gt 0 ]; do
-                sleep 0.05
-                k="$(( k - 1 ))"
-            done
-        done
-        recheck
-    done
-
-    for i in {0..3}; do
-        eval "$beep"
-        recheck
-    done
-}
-
-if [ "$p" -le 15 ] && [ "$(state)" == 'discharging' ]; then
-    run_beep &
-    sleep 30
-
-    recheck
-    sudo pm-hibernate
+DOTFILES_CONFIG_BATTERY_SUSPEND_THRESHOLD="${DOTFILES_CONFIG_BATTERY_SUSPEND_THRESHOLD:-15}"
+if [ "$p" -le "$DOTFILES_CONFIG_BATTERY_SUSPEND_THRESHOLD" ] && [ "$(state)" == 'discharging' ]; then
+    run_beep
 fi
+
+exit 0

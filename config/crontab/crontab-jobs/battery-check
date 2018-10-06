@@ -3,4 +3,9 @@
 source ~/.dotfiles.env
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
-battery-check
+sudo -Hu "$DOTFILES_ENV_USER" "$DOTFILES_HOME/bin/battery-check"
+exit_code="$?"
+
+if [[ "$exit_code" != '0' ]]; then
+    "$DOTFILES_HOME/config/i3/bin/i3-suspend" || pm-suspend
+fi

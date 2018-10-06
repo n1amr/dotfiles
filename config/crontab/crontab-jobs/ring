@@ -2,4 +2,4 @@
 
 source ~/.dotfiles.env
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-paplay "$DOTFILES_HOME/resources/Schedule.ogg"
+paplay "$DOTFILES_HOME/resources/sounds/ring.ogg"
