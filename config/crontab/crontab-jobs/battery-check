@@ -3,9 +3,22 @@
 source ~/.dotfiles.env
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
-sudo -Hu "$DOTFILES_ENV_USER" "$DOTFILES_HOME/bin/battery-check"
-exit_code="$?"
+FLOCK_LOCK_FILE="/home/n1amr/lock"
+source "$DOTFILES_HOME/bin/lib/flock"
 
-if [[ "$exit_code" != '0' ]]; then
-    "$DOTFILES_HOME/config/i3/bin/i3-suspend" || pm-suspend
+if ! flock_exlock_now; then
+    echo "Error: Could not get lock $FLOCK_LOCK_FILE"
+    exit 1
 fi
+
+while true; do
+    sudo -Hu "$DOTFILES_ENV_USER" "$DOTFILES_HOME/bin/battery-check"
+    exit_code="$?"
+
+    if [[ "$exit_code" != '0' ]]; then
+        "$DOTFILES_HOME/config/i3/bin/i3-lock" || true
+        /usr/sbin/pm-suspend
+    fi
+
+    sleep 1
+done
