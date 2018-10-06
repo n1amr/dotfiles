@@ -1,0 +1,6 @@
+#!/bin/bash
+
+status="$(upower -i "$(upower -e | grep 'line_power')" | grep -E "online:" | sed -E 's/\s+/ /g; s/^\s+//')"
+
+echo "$status"
+grep 'yes' <<<"$status" > /dev/null
