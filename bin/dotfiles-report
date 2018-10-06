@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+source ~/.dotfiles.env
+
+subject="$1"
+DEFAULT_REPORT_TO_EMAIL="n1amr1@gmail.com"
+if [[ -n "$DOTFILES_ENV" ]]; then
+    subject="$DOTFILES_ENV: $subject"
+    DEFAULT_REPORT_TO_EMAIL="n1amr1+dotfiles.${DOTFILES_ENV}@gmail.com"
+fi
+
+REPORT_TO_EMAIL="${DOTFILES_CONFIG_REPORT_TO_EMAIL:-$DEFAULT_REPORT_TO_EMAIL}"
+
+{
+    date -Isec
+    echo "=================================  Start  ======================================"
+    cat
+    echo "==================================  End  ======================================="
+} | tee -a "$DOTFILES_HOME/logs/reports" | {
+    if which mutt > /dev/null; then
+        mutt -s "$subject" "$REPORT_TO_EMAIL"
+    fi
+}

@@ -2,8 +2,6 @@
 
 set -e
 source ~/.dotfiles.env
-# TODO
-export DOTFILES_CONFIG_REPORT_TO_EMAIL="${DOTFILES_CONFIG_REPORT_TO_EMAIL:-n1amr1@gmail.com}"
 
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
@@ -33,12 +31,7 @@ speak () {
 }
 
 report () {
-    if which mutt > /dev/null; then
-        battery | mutt -s "$DOTFILES_ENV: Hibernating $(date -Isec)" "$DOTFILES_CONFIG_REPORT_TO_EMAIL"
-    else
-        date -Isec >> ~/battery.log
-        battery >> ~/battery.log
-    fi
+    battery | dotfiles-report "Hibernating $(date -Isec)"
 }
 
 recheck () {
