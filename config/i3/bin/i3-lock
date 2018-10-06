@@ -1,6 +1,8 @@
 #!/bin/bash
 
 source ~/.dotfiles.env
+export DISPLAY=':0'
+export XAUTHORITY="/run/user/$(id -u "$DOTFILES_ENV_USER")/gdm/Xauthority"
 
 BACKGROUND_COLOR='#000000'
 
