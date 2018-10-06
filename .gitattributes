@@ -1,4 +1,5 @@
 /config/ipython/* linguist-vendored
 /config/irssi/scripts/* linguist-vendored
 /config/vim/bundle/* linguist-vendored
+/config/vim/syntax/i3.vim linguist-vendored
 /thirdparty/* linguist-vendored
