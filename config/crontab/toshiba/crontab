@@ -2,10 +2,10 @@
 #===============================================================================
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
-0        *        *        *        *        env > "/tmp/cron-$LOGNAME.env"
-*        *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/battery-check" &
-*/15     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/ring" &
-*/15     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/twitter-bots" &
-*/30     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive" &
-*/15     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/youtube-dl" &
+  0      *        *        *        *        env > "/tmp/cron-$LOGNAME.env"
+  *      *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/battery-check" &
+  */15   *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/ring" &
+  */15   *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/twitter-bots" &
+  */30   *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive" &
+  */15   *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/youtube-dl" &
 #===============================================================================
