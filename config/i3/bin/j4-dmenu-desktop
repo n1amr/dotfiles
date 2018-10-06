@@ -12,4 +12,4 @@ tmp_dir="$(dirname "$0")/../tmp"
 [[ ! -d "$tmp_dir" ]] && mkdir -p "$tmp_dir"
 
 usage_log_file="$(realpath "$tmp_dir/j4-dmenu-desktop-usage-log")"
-"$J4_DMENU_DESKTOP" --usage-log="$usage_log_file" --display-binary                               130 ↵
+"$J4_DMENU_DESKTOP" --usage-log="$usage_log_file" --display-binary
