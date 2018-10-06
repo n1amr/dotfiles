@@ -2,10 +2,11 @@
 #===============================================================================
 # Min    Hour     Day      Month    Weekday  Command
 #===============================================================================
-0        *        *        *        *        env > "/tmp/cron-$LOGNAME.env"
-5        1        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/packt-open" &
-*/15     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/ring" &
-*/30     8-18     *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/custom/bin/ssd-backup" &
-*        *        *        *        *        DISPLAY=:0.0 xset s reset
-# */30     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive" &
+  0        *        *        *        *        env > "/tmp/cron-$LOGNAME.env"
+  *        *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/battery-low-caution" &
+  *        *        *        *        *        DISPLAY=:0.0 xset s reset
+  5        1        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/packt-open" &
+  */15     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/ring" &
+  */30     8-18     *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/custom/bin/ssd-backup" &
+  */30     *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/updatedrive" &
 #===============================================================================

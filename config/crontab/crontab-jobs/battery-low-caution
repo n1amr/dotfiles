@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ~/.dotfiles.env
+export PATH="$DOTFILES_HOME/bin:$PATH"
+
+[ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ] && exit
+
+[ "$(cat /sys/class/power_supply/BAT0/capacity)" -lt 25 ] &&
+DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus' \
+    notify-send -u critical -i battery-caution "Battery critically low."
