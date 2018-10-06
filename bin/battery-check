@@ -36,7 +36,7 @@ report () {
 
 recheck () {
     [ "$(state)" == 'discharging' ] || {
-        speak 'Charger is connected. Thank you'
+        speak 'Charger is connected. Thanks'
         exit 0
     }
 }
@@ -59,8 +59,9 @@ run_beep () {
 
     report &
 
-    speak 'Battery is low. You have only 10 seconds to connect the charger before hibernating'
-    for i in {10..0}; do
+    timeout='10'
+    speak "Battery is low. You have only $timeout seconds to connect the charger before hibernating"
+    for i in $(seq 0 "$timeout" | tac); do
         speak "$i"
         alert
         recheck
@@ -69,7 +70,7 @@ run_beep () {
     speak 'Started hibernating now. Goodbye'
     recheck
 
-    exit 1
+    exit 74
 }
 
 # Get the integer percentage of current battery capacity

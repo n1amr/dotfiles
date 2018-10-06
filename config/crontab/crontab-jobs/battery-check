@@ -3,7 +3,7 @@
 source ~/.dotfiles.env
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
-FLOCK_LOCK_FILE="/home/n1amr/lock"
+FLOCK_LOCK_FILE="/tmp/battery-check.lock"
 source "$DOTFILES_HOME/bin/lib/flock"
 
 if ! flock_exlock_now; then
@@ -15,7 +15,7 @@ while true; do
     sudo -Hu "$DOTFILES_ENV_USER" "$DOTFILES_HOME/bin/battery-check"
     exit_code="$?"
 
-    if [[ "$exit_code" != '0' ]]; then
+    if [[ "$exit_code" == '74' ]]; then
         "$DOTFILES_HOME/config/i3/bin/i3-lock" || true
         /usr/sbin/pm-suspend
     fi
