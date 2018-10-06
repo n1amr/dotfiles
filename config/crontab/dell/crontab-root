@@ -7,6 +7,7 @@
   35     15       23       1        *        /usr/share/wakeup/setnextalarm.py n1amr >/dev/null 2>&1
   35     15       23       1        *        /usr/bin/wakeup n1amr 0 >/dev/null 2>&1 #entered by setnextalarm
   0      *        *        *        *        updatedb &
+  *      *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/battery-check" &
   0      5        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/download-updates" &
   @reboot                                    . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/hibernate-fix" &
   0      *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/hibernate-fix" &
