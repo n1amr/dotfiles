@@ -123,11 +123,13 @@ for cf in bashrc zshrc; do
 done
 
 # Custom config directories
+mkdir -pv "$DOTFILES_HOME/custom/config/feh/"
 mkdir -pv "$DOTFILES_HOME/custom/config/mutt/"
 mkdir -pv "$DOTFILES_HOME/custom/config/ranger/"
 mkdir -pv "$DOTFILES_HOME/custom/history/"
 
 safe_link "$DST_HOME/.config/cmus/" "$DOTFILES_HOME/config/cmus/"
+safe_link "$DST_HOME/.config/feh/" "$DOTFILES_HOME/custom/config/feh/"
 safe_link "$DST_HOME/.config/ranger/" "$DOTFILES_HOME/custom/config/ranger/"
 safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
 
@@ -141,6 +143,7 @@ if [ -x "$custom_install" ]; then
 fi
 
 safe_link "$DST_HOME/.config/Code/User/" "$DOTFILES_HOME/config/vscode/User/"
+safe_link "$DST_HOME/.config/feh/keys" "$DOTFILES_HOME/config/feh/keys"
 safe_link "$DST_HOME/.config/i3/" "$DOTFILES_HOME/config/i3/"
 safe_link "$DST_HOME/.config/nvim/init.vim" "$DOTFILES_HOME/config/nvim.vim"
 safe_link "$DST_HOME/.config/ranger/commands.py" "$DOTFILES_HOME/config/ranger/commands.py"
