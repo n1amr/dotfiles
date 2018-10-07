@@ -3,10 +3,12 @@
 source ~/.dotfiles.env
 
 CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-/tmp/clipboard}"
+
 copy  () { cat > "$CLIPBOARD_FILE"; }
 paste () { cat   "$CLIPBOARD_FILE"; }
 
 FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
+[[ "$FILE_ONLY_MODE" == 'true' ]] && [[ ! -f "$CLIPBOARD_FILE" ]] && touch "$CLIPBOARD_FILE"
 
 if [[ "$FILE_ONLY_MODE" != 'true' ]]; then
     if which xsel > /dev/null 2>&1; then
@@ -15,8 +17,22 @@ if [[ "$FILE_ONLY_MODE" != 'true' ]]; then
     fi
 fi
 
+append=''
+append_lines=''
+case "$1" in
+    -a) append='true' ;;
+    -l|-al|-la) append='true' && append_lines='true' ;;
+esac
+
 [[ ! -t 0 ]] && pipe_input='true'
 [[ ! -t 1 ]] && pipe_output='true'
 
-[[ -n "$pipe_input" ]] && copy
+[[ -n "$append" ]] && prev="$(paste)" || prev=''
+[[ -n "$pipe_input" ]] && {
+    [[ -n "$append" ]] && {
+        echo -n "$prev"
+        [[ -n "$append_lines" ]] && echo
+    }
+    cat
+} | copy
 paste | cat
