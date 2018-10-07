@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+source ~/.dotfiles.env
+
+called="$(basename "$0")"
+[[ "$called" != 'scratch' ]] && type="${called#scratch.}" || { type="$1" && shift; }
+
+SCRIPTS_TEMPLATES="$DOTFILES_HOME/custom/config/file-templates/Script"
+
+ext=''
+template=''
+command=(/usr/bin/env)
+case "$type" in
+    bash) command+=(bash) && template="$SCRIPTS_TEMPLATES/Bash Script.bash" ;;
+    zsh) command+=(zsh) && template="$SCRIPTS_TEMPLATES/Zsh Script.zsh" ;;
+    python|py) command+=(python) && template="$SCRIPTS_TEMPLATES/Python Script.py" ;;
+    node|js) command+=(node) && template="$SCRIPTS_TEMPLATES/Node.js Script.js" ;;
+    *) echo >&2 "$0: Unrecognized type $type" && exit 1 ;;
+esac
+
+[[ -z "$ext" ]] && ext="${template##*.}"
+file="$(mktemp "/tmp/scratch-$(date --utc +"%Y%m%d%H%M%S")-XXXXXX.$ext")"
+
+if [[ -n "$template" ]]; then
+    cp -a "$template" "$file"
+else
+    touch "$file"
+fi
+
+"$VISUAL" +$ "$file" && "${command[@]}" "$file" "$@"
