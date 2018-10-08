@@ -216,6 +216,16 @@ deduplicate_env_paths () {
     export LDFLAGS="$(unique_paths "$(echo "$LDFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
 }
 
+every () {
+    p="$1"
+    shift
+    while true; do
+        clear
+        "$@"
+        sleep "$p"
+    done
+}
+
 findword () {
     grep -P "$1" /usr/share/dict/words
 }

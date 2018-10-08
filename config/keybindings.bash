@@ -47,6 +47,7 @@ bind '"\er" "\C-e\C-ur\n\C-y"'
 bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 
 bind '"\C-xr" "\C-e\C-uexec \"${SHELLNAME:-$SHELL}\"\C-j\C-y"'
+bind '"\C-xe" "\C-e\C-ufunc () { \C-y; } && every  func\C-b\C-b\C-b\C-b\C-b"'
 
 # git
 bind '"\C-gd" "\C-e\C-ugit diff\C-j\C-y"'
