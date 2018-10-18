@@ -403,10 +403,11 @@ reset_keybindings () {
 }
 
 targz () {
+    local name="$(echo "$1" | sed 's/\/\+$//')"
     if [[ "$2" = '--' ]]; then
-        tar -zcvf "$1.tar.gz" "${@:3}"
+        tar -zcvf "${name}.tar.gz" "${@:3}"
     else
-        tar -zcvf "$1.tar.gz" "$@"
+        tar -zcvf "${name}.tar.gz" "$@"
     fi
 }
 
