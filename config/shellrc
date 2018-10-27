@@ -317,13 +317,18 @@ pipe_to_visual () {
 }
 
 print_title_comment () {
-    LENGTH=80
-    if [ ${#1} -ge $LENGTH ]; then
-        echo "### ${1} ###"
-    elif [ ${#1} -eq 0 ]; then
-        printf "%*s\n" $LENGTH "#" | tr ' ' '#'
+    local LENGTH=80
+    local s="$@"
+    if [ "${#s}" -ge "$LENGTH" ]; then
+        echo "###  ${s}  ###"
+    elif [ "${#s}" -eq 0 ]; then
+        printf "%*s\n" "$LENGTH" "#" | tr ' ' '#'
     else
-        printf "%*s%*s\n" $(( (${#1} + 4 + LENGTH) / 2)) "__${1// /$}__" $(( LENGTH - (${#1} + 4 + LENGTH) / 2)) "#" | tr ' _$' '#  '
+        local l_pad="$(( (LENGTH - (${#s} + 4)) / 2))"
+        local r_pad="$(( LENGTH - (${#s} + 4 + l_pad) ))"
+        printf "%*s" "$l_pad" "#" | tr ' ' '#'
+        echo -n "  $s  "
+        printf "%*s\n" "$r_pad" "#" | tr ' ' '#'
     fi
 }
 
