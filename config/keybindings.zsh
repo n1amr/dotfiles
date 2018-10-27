@@ -51,8 +51,11 @@ bindkey -s "^[[15~" "^Q^P^J"
 bindkey -s "^[r" "^Qr^M"
 bindkey -s "^[u" "^Qcd ..^M"
 
-bindkey -s "^Xr" "^Qexec \"\${SHELLNAME:-\$SHELL}\"^M"
+bindkey -s "^Xc" "\"\$()\"^B^B"
 bindkey -s "^Xe" "^E^Unocorrect func () { ^Y; } && every  func^B^B^B^B^B"
+bindkey -s "^Xl" "\"\$(!!)\""
+bindkey -s "^Xr" "^Qexec \"\${SHELLNAME:-\$SHELL}\"^M"
+bindkey -s "^Xw" "^E^U\"\$(^Y)\"^A"
 
 # git
 bindkey -s "^Gd" "^Qgit diff^M"
