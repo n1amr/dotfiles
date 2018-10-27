@@ -163,6 +163,7 @@ __dotfiles_command_not_found_handler () {
 __dotfiles_ps () {
     local args=()
     local cols='pid,cmd'
+    local arg
     for arg in "$@"; do
         case "$arg" in
             -l) cols='pid,ppid,user,rss:10,size:10,vsz:10,pcpu,pmem,start,stat,cmd' ;;
@@ -181,7 +182,8 @@ block_caret () {
 }
 
 calc () {
-    setup=''
+    local setup=''
+    local query
     if [[ "$#" = '0' ]]; then
         read query
     elif [[ "$1" == '-s' ]]; then
@@ -217,7 +219,7 @@ deduplicate_env_paths () {
 }
 
 every () {
-    p="$1"
+    local p="$1"
     shift
     while true; do
         clear
@@ -627,11 +629,11 @@ __ps1_pyenv_version () {
 }
 
 __ps1_warnings () {
-    msgs=()
+    local msgs=()
     [ "$DISPLAY" != ':0' ] && msgs+=("DISPLAY=$DISPLAY")
     [ "$USER" = 'root' ] && msgs+=("ROOT")
     [ "$SHELLNAME" != 'zsh' ] && msgs+=("SHELL=$SHELLNAME")
-    msg="${msgs[@]}"
+    local msg="${msgs[@]}"
     msg="${msg// / | }"
     [ -n "$msg" ] && echo " ($msg)"
 }
