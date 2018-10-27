@@ -222,6 +222,8 @@ every () {
     local p="$1"
     shift
     while true; do
+        echo
+        print_title_comment "[$(date -Isec)] Every ${p}s: \$ $@"
         clear
         "$@"
         sleep "$p"
