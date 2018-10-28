@@ -5,7 +5,8 @@
     ca = commit -a
     co = checkout
     df = diff
-    l = log --graph --pretty='%C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an> %C(dim white)%d%C(reset)' --abbrev-commit
+    l = log --graph --pretty=longline
+    rl = log --walk-reflogs --pretty=reflog-short
     st = status
     rb = rebase -i
     rbb = "!f() { git rebase -i HEAD~$1; }; f"
@@ -26,6 +27,38 @@
 
 [color]
     ui = true
+
+[format]
+    pretty = default
+
+[pretty]
+    default = %C(bold white)--------------------------------------------------------------------------------%n%C(reset)\
+Commit: %C(bold red)%H%C(dim white)%d%C(reset)%n\
+Author: %C(bold blue)%an <%ae>%C(reset)%n\
+Date:   %ci %C(green)(%cr)%C(reset)%n\
+%n%w(0,4,4)%B%w(0,0,0)%-
+    detailed = %C(bold white)--------------------------------------------------------------------------------%n%C(reset)\
+Commit Hash:     %C(bold red)%H%C(dim white)%d%C(reset)%n\
+Parent Hashes:   %C(bold red)%P%C(reset)%n\
+Tree Hash:       %C(bold red)%T%C(reset)%n\
+Author:          %C(bold blue)%an <%ae>%C(reset)%n\
+Author Date:     %ai %C(green)(%ar)%C(reset)%n\
+Committer:       %C(bold blue)%cn <%ce>%C(reset)%n\
+Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
+Reflog Selector: %C(yellow)%gd%C(reset)%n\
+Reflog Subject:  %gs%C(reset)%n\
+%n%w(0,4,4)%B%w(0,0,0)%-
+    reflog-short = %C(reset)%C(bold red)%h <- %p%C(reset) - %C(yellow)%gd%C(dim white)%d%C(reset) - %ci %C(green)(%cr)%C(reset): %gs
+    reflog-long = %C(bold white)--------------------------------------------------------------------------------%n%C(reset)\
+Reflog Subject:  %gs%C(reset)%n\
+Reflog Selector: %C(yellow)%gd%C(dim white)%d%C(reset)%n\
+Commit Hash:     %C(bold red)%H%C(reset)%n\
+Parent Hashes:   %C(bold red)%P%C(reset)%n\
+Author:          %C(bold blue)%an <%ae>%C(reset)%n\
+Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
+%n%w(0,4,4)%B%w(0,0,0)%-
+    longline = %C(bold red)%h%C(reset) - %s %C(green)(%cr) %C(bold blue)<%an>%C(dim white)%d%C(reset)
+    longline-iso = %C(bold red)%h %C(reset)[%ci]: %s %C(green)(%cr) %C(bold blue)<%an - %ae>%C(dim white)%d%C(reset)
 
 [pager]
     diff = true
