@@ -2,13 +2,19 @@
     a = add
     br = branch
     c = commit
-    ca = commit -a
     co = checkout
     df = diff
-    l = log --graph --pretty=longline
-    rl = log --walk-reflogs --pretty=reflog-short
+    mt = mergetool
     st = status
+
+    l = log --graph --pretty=longline
+    ll = log --graph
+    lp = log --graph --patch
     rb = rebase -i
+    rbc = rebase --continue
+    rl = log --walk-reflogs --pretty=reflog-short
+    rll = log --walk-reflogs --pretty=reflog-long
+
     rbb = "!f() { git rebase -i HEAD~$1; }; f"
     go = "!f() { git-browse $*; }; f"
     create-github = "!f() { git-create-github $*; }; f"
