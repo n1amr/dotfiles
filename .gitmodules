@@ -58,6 +58,10 @@
     path = notes
     url = https://gitlab.com/n1amr/notes-and-instructions.git
     branch = master
+[submodule "thirdparty/binaries"]
+    path = thirdparty/binaries
+    url = https://gitlab.com/n1amr/dotfiles-binaries.git
+    branch = master
 [submodule "thirdparty/dunst"]
     path = thirdparty/dunst
     url = https://github.com/dunst-project/dunst
