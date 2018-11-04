@@ -569,6 +569,7 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "V=| pipe_to_visual"
     alias -g "VS=| remove_color_codes | vim-server"
     alias -g "HLP= --help 2>&1 | pipe_to_visual"
+    alias -g "P=| pipe"
 fi
 
 if [[ ! -f ~/.marks.sh ]] ||
