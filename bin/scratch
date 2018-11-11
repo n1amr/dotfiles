@@ -7,7 +7,7 @@ source ~/.dotfiles.env
 called="$(basename "$0")"
 [[ "$called" != 'scratch' ]] && type="${called#scratch.}" || { type="$1" && shift; }
 
-SCRIPTS_TEMPLATES="$DOTFILES_HOME/custom/config/file-templates/Script"
+SCRIPTS_TEMPLATES="$(dirname "$0")/scratch-templates"
 
 ext=''
 template=''
@@ -16,6 +16,8 @@ case "$type" in
     bash) command+=(bash) && template="$SCRIPTS_TEMPLATES/Bash Script.bash" ;;
     zsh) command+=(zsh) && template="$SCRIPTS_TEMPLATES/Zsh Script.zsh" ;;
     python|py) command+=(python) && template="$SCRIPTS_TEMPLATES/Python Script.py" ;;
+    python-click|py-click|pyclick|click)
+        command+=(python) && template="$SCRIPTS_TEMPLATES/Python Script (Click).py" ;;
     node|js) command+=(node) && template="$SCRIPTS_TEMPLATES/Node.js Script.js" ;;
     *) echo >&2 "$0: Unrecognized type $type" && exit 1 ;;
 esac
