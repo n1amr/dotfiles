@@ -291,6 +291,10 @@ keybindings () {
     less "$DOTFILES_HOME/config/keybindings.$SHELLNAME"
 }
 
+leak () {
+    tee 1>&2 | cat
+}
+
 linerange () {
     head -"$2" | tail -n +"$1"
 }
@@ -571,6 +575,7 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g 'S=| subl'
     alias -g "E=| pipe_to_editor"
     alias -g "V=| pipe_to_visual"
+    alias -g "TV=| leak | pipe_to_visual"
     alias -g "VS=| remove_color_codes | vim-server"
     alias -g "HLP= --help 2>&1 | pipe_to_visual"
     alias -g "P=| pipe"
