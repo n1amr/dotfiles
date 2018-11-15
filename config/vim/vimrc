@@ -103,9 +103,12 @@ set ttimeoutlen=10
 let &backupdir=$VIM_CONFIG_DIR . '/tmp/backups//'
 let &directory=$VIM_CONFIG_DIR . '/tmp/swaps//'
 let &undodir=$VIM_CONFIG_DIR . '/tmp/undo//'
-set backup
-set undofile
-autocmd BufWritePre * let &bex = '.bak.' . strftime("%Y%m%d-%H%M%S")
+
+if $FAST_VIM != 'true'
+  set backup
+  set undofile
+  autocmd BufWritePre * let &bex = '.bak.' . strftime("%Y%m%d-%H%M%S")
+endif
 
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
@@ -383,5 +386,8 @@ if has("autocmd")
   endfor
 endif
 
-call EnableAutoReadWrite()
 call EnableWrappedLineMovement()
+
+if $FAST_VIM != 'true'
+  call EnableAutoReadWrite()
+endif
