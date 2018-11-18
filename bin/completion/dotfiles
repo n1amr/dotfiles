@@ -1,0 +1,5 @@
+#!/bin/bash
+
+results=(install update pull config)
+
+echo "${results[@]}"

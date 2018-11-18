@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+CURRENT_DOTFILES="$(realpath "$(dirname "$0")/..")"
+
+for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
+        echo ">> cd $dir"
+        cd "$dir"
+
+        echo ">> git add ."
+        git add .
+
+        echo ">> git stash -u"
+        git stash -u
+
+        echo ">> git checkout -f master"
+        git checkout -f master
+
+        echo ">> git add ."
+        git add .
+
+        echo ">> git stash -u"
+        git stash -u
+
+        echo ">> git fetch origin"
+        git fetch origin
+
+        echo ">> git reset --hard origin/master"
+        git reset --hard origin/master
+
+        echo ">> git pull origin master --rebase --recurse-submodules -j16"
+        git pull origin master --rebase --recurse-submodules -j16
+
+        echo ">> git checkout -f -"
+        git checkout -f -
+
+        echo ">> git submodule update --init --recursive"
+        git submodule update --init --recursive
+
+        echo ">> git submodule foreach --recursive 'git checkout -f master'"
+        git submodule foreach --recursive 'git checkout -f master'
+
+        echo ">> git submodule update --init --recursive"
+        git submodule update --init --recursive
+
+        # echo ">> git stash apply"
+        # git stash apply
+); done

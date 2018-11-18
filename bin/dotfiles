@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+CURRENT_DOTFILES="$(realpath "$(dirname "$0")/..")"
+
+[[ -x ~/.dotfiles.env ]] && source ~/.dotfiles.env
+DOTFILES_HOME="${DOTFILES_HOME:-$CURRENT_DOTFILES}"
+
+subcommand="$1"
+shift
+
+case "$subcommand" in
+    install)
+        exec "$DOTFILES_HOME/install" "$@" ;;
+    update|pull)
+        exec "$DOTFILES_HOME/bin/dotfiles-update" "$@" ;;
+    config) (
+        cd "$DOTFILES_HOME"
+        "${EDITOR:-vim}" \
+            "${DOTFILES_ENV_HOME:-$HOME}/.dotfiles.env" \
+            "$DOTFILES_HOME/custom/dotfiles.env" \
+            "$DOTFILES_HOME/config/shellrc" \
+            "$DOTFILES_HOME/config/vim/vimrc" \
+            "$DOTFILES_HOME/config/i3/config" \
+            "$DOTFILES_HOME/config/ranger/rc.conf" \
+            "$DOTFILES_HOME/config/ranger/rifle.conf" \
+        ;
+    ) ;;
+    *)
+        echo >&2 "Error: unknown command $subcommand" ;;
+esac
