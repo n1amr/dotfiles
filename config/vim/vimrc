@@ -1,3 +1,5 @@
+set nocompatible
+
 let mapleader = " "
 
 if len($VIM_CONFIG_DIR) == 0
@@ -31,6 +33,7 @@ set ruler
 set scroll=0
 set scrolloff=0
 set showcmd
+set showmode
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 set ttimeout
 set ttyfast
@@ -49,6 +52,7 @@ set foldlevelstart=99
 " View
 set colorcolumn=81
 set cursorline
+set laststatus=2
 set number
 set relativenumber
 if has("unix") && !has("nvim")
@@ -76,6 +80,7 @@ set background=dark
 colorscheme PaperColor
 
 " Indentation
+set autoindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
@@ -104,10 +109,15 @@ let &backupdir=$VIM_CONFIG_DIR . '/tmp/backups//'
 let &directory=$VIM_CONFIG_DIR . '/tmp/swaps//'
 let &undodir=$VIM_CONFIG_DIR . '/tmp/undo//'
 
+set swapfile
+set writebackup
 if $FAST_VIM != 'true'
   set backup
   set undofile
   autocmd BufWritePre * let &bex = '.bak.' . strftime("%Y%m%d-%H%M%S")
+else
+  set nobackup
+  set noundofile
 endif
 
 " Enable per-directory .vimrc files and disable unsafe commands in them
@@ -115,7 +125,6 @@ set exrc
 set secure
 
 set mouse=a
-set nocompatible
 set pastetoggle=<F10>
 
 " Restore buffer, remember marks for 9999 files, remember registers up to 512Kb
@@ -133,6 +142,8 @@ set encoding=utf8
 if exists("&cryptmethod")
   set cryptmethod=blowfish2
 endif
+
+set nrformats-=octal
 
 " =============================== Key bindings =================================
 
@@ -300,7 +311,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "powerlineish"
 let g:airline#extensions#tabline#enabled = 1
-set laststatus=2
 
 " ctrlp
 let g:ctrlp_cmd = 'CtrlPBuffer'
