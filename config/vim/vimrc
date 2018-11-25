@@ -408,6 +408,13 @@ if has("autocmd")
     let type = substitute(type, '.vim$', '', '')
     execute 'autocmd FileType ' . type . ' runtime scripts/filetype-config/' . type . '.vim'
   endfor
+
+  " New file templates
+  let types = systemlist('ls -1 ' . SingleQuote($VIM_CONFIG_DIR . '/templates'))
+  for type in types
+    let type = substitute(type, '.tpl$', '', '')
+    execute 'autocmd BufNewFile *.' . type . ' 0r ' . escape($VIM_CONFIG_DIR . '/templates/' . type . '.tpl', " \"'.")
+  endfor
 endif
 
 call EnableWrappedLineMovement()
