@@ -218,8 +218,8 @@ deduplicate_env_paths () {
     fi
 
     export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"
-    export CPPFLAGS="$(unique_paths "$(echo "$CPPFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
-    export LDFLAGS="$(unique_paths "$(echo "$LDFLAGS" | tr ' ' ':')" | tr ':' ' ')" # TODO: refactor
+    export CPPFLAGS="$(unique_paths "$CPPFLAGS" ' ')"
+    export LDFLAGS="$(unique_paths "$LDFLAGS" ' ')"
 }
 
 every () {
@@ -433,7 +433,8 @@ terminal_resize () {
 }
 
 unique_paths () {
-    echo -n "$1:" | awk -v RS=':' -v ORS=":" '!a[$1]++' | sed 's/:\+/:/g; s/^:\|:$//g'
+    local sep="${2:-:}"
+    echo -n "$1$sep" | awk -v RS="$sep" -v ORS="$sep" '!a[$1]++' | sed "s/$sep\+/$sep/g; s/^$sep\|$sep$//g"
 }
 
 unmark () {
