@@ -106,10 +106,11 @@ endif
 set timeoutlen=1000
 set ttimeoutlen=10
 
-" Centralize swapfile, backups, and undo history
+" Centralize swapfile, backups, undo history and views
 let &backupdir=$VIM_CONFIG_DIR . '/tmp/backups//'
 let &directory=$VIM_CONFIG_DIR . '/tmp/swaps//'
 let &undodir=$VIM_CONFIG_DIR . '/tmp/undo//'
+let &viewdir=$VIM_CONFIG_DIR . '/tmp/view//'
 
 set swapfile
 set writebackup
@@ -228,6 +229,14 @@ function! EnableAutoReloadVimrc()
   augroup autoreloadvimrc
     autocmd!
     autocmd BufWritePost .vimrc runtime vimrc
+  augroup END
+endfunction
+
+function! EnableAutoSaveFolds()
+  augroup auto_save_folds
+    autocmd!
+    autocmd BufWinLeave * mkview
+    autocmd BufWinEnter * silent loadview
   augroup END
 endfunction
 
@@ -405,6 +414,8 @@ call EnableWrappedLineMovement()
 
 if $FAST_VIM != 'true'
   call EnableAutoReadWrite()
+  " TODO: handle error when opening/closing empty buffer
+  " call EnableAutoSaveFolds()
 else
   set lazyredraw
 endif
