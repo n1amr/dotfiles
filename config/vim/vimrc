@@ -426,3 +426,6 @@ if $FAST_VIM != 'true'
 else
   set lazyredraw
 endif
+
+" Highlight trailing spaces
+match ErrorMsg '\s\+$'
