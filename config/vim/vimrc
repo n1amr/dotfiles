@@ -403,4 +403,6 @@ call EnableWrappedLineMovement()
 
 if $FAST_VIM != 'true'
   call EnableAutoReadWrite()
+else
+  set lazyredraw
 endif
