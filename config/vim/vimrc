@@ -46,6 +46,7 @@ set wildmode=longest,list:longest,list:full
 
 " Fold
 set foldenable
+set foldcolumn=2
 set foldmethod=indent
 set foldlevel=99
 set foldlevelstart=99
