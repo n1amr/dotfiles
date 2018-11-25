@@ -691,13 +691,13 @@ if [ "$SHELLNAME" = zsh ]; then
 elif [ "$SHELLNAME" = bash ]; then
     shopt -s autocd
     shopt -s globstar
+    # Save and reload the history after each command finishes
+    if [ "$SHELLNAME" = bash ] && [ "$IS_WSL" != 'true' ]; then
+        export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
+    fi
     command_not_found_handle () { __dotfiles_command_not_found_handler "$@"; }
 fi
 
-# Save and reload the history after each command finishes
-if [ "$SHELLNAME" = bash ]; then
-    export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
-fi
 
 # only in interactive shell
 if [[ $- == *i* ]]; then
