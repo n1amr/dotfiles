@@ -147,8 +147,11 @@ set nrformats-=octal
 
 " =============================== Key bindings =================================
 
-noremap <c-k> :m-2<CR>
-noremap <c-j> :m+<CR>
+nnoremap <c-k> :m-2<CR>
+nnoremap <c-j> :m+<CR>
+
+vnoremap <c-k> :m '<-2<CR>gv=gv
+vnoremap <c-j> :m '>+1<CR>gv=gv
 
 noremap <Leader> "+
 noremap <Leader><Leader> :let @+ = getreg('"')<CR>
