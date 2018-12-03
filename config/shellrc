@@ -459,15 +459,21 @@ export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
 export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
 export PATH="$BUILD_PREFIX/bin:$PATH"
 
-export PATH="$NDENV_ROOT/bin:$PATH"
-can_execute ndenv && eval "$(ndenv init -)"
+[[ "${DOTFILES_CONFIG_ENABLE_NDENV:-true}" == 'true' ]] && {
+    export PATH="$NDENV_ROOT/bin:$PATH"
+    can_execute ndenv && eval "$(ndenv init -)"
+}
 
-export PATH="$PYENV_ROOT/bin:$PATH"
-can_execute pyenv && eval "$(pyenv init -)"
+[[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && {
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    can_execute pyenv && eval "$(pyenv init -)"
+}
 
-export PATH="$RBENV_ROOT/bin:$PATH"
-export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
-can_execute rbenv && eval "$(rbenv init -)"
+[[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && {
+    export PATH="$RBENV_ROOT/bin:$PATH"
+    export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
+    can_execute rbenv && eval "$(rbenv init -)"
+}
 
 export PATH="$DOTFILES_HOME/bin:$PATH"
 export PATH="$DOTFILES_HOME/config/i3/bin:$PATH"
@@ -707,7 +713,9 @@ fi
 
 eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
 
-source load_ssh_agent
+[[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && {
+    source load_ssh_agent
+}
 
 if [ "$SHELLNAME" = zsh ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
