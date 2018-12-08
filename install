@@ -133,12 +133,17 @@ safe_link "$DST_HOME/.config/feh/" "$DOTFILES_HOME/custom/config/feh/"
 safe_link "$DST_HOME/.config/ranger/" "$DOTFILES_HOME/custom/config/ranger/"
 safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
 
+DOTFILES_ENV="${DOTFILES_ENV:-default}"
+DOTFILES_ENV_HOME="$DST_HOME"
+DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
+
 custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
 if [ -x "$custom_install" ]; then
     export interactive
     export DOTFILES_ENV
     export DOTFILES_HOME
     export DST_HOME
+    export DOTFILES_ENV_HOME
     "$custom_install"
 fi
 
@@ -157,10 +162,6 @@ safe_link "$DST_HOME/.marks.tsv" "$(custom-env-resolve 'config/marks.tsv')"
 safe_link "$DST_HOME/.shell_history" "$DOTFILES_CUSTOM_DIR/history/shell_history"
 safe_link "$DST_HOME/.shell_history.bak" "$DOTFILES_CUSTOM_DIR/history/shell_history.bak"
 safe_link "$DST_HOME/.vimrc" "$DOTFILES_HOME/config/vim/vimrc"
-
-DOTFILES_ENV="${DOTFILES_ENV:-default}"
-DOTFILES_ENV_HOME="$DST_HOME"
-DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 
 generate_global_dotfiles_env () {
     local env_file="$1"
