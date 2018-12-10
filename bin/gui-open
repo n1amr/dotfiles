@@ -3,17 +3,31 @@
 verbose=''
 while [ $# -gt 0 ]; do
     case "$1" in
-        -v) verbose='true' ;;
+        -v) verbose='true' ; shift ;;
         --) shift ; break ;;
         *)  break ;;
     esac
     shift
 done
 
+open () { xdg-open "$1" & }
+
+[[ "$DOTFILES_CONFIG_IS_WSL" == 'true' ]] && {
+    open () {
+        local file="$1"
+        local winpath="$(wslpath -aw "$file")"
+        explorer "$winpath"
+    }
+}
+
 if [[ -z "$verbose" ]]; then
     exec > /dev/null 2>&1
 fi
 
+if [[ "$#" == 0 ]]; then
+    open . &
+fi
+
 for file in "$@"; do
-    xdg-open "$file" &
+    open "$file" &
 done
