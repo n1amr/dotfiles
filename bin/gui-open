@@ -20,14 +20,17 @@ open () { xdg-open "$1" & }
     }
 }
 
+open_with_redirect () { open "$@"; }
 if [[ -z "$verbose" ]]; then
-    exec > /dev/null 2>&1
+    open_with_redirect () { open "$@" > /dev/null 2>&1 & }
 fi
 
 if [[ "$#" == 0 ]]; then
-    open . &
+    open_with_redirect .
 fi
 
 for file in "$@"; do
-    open "$file" &
+    [[ -e "$file" ]] && open_with_redirect "$file" || {
+        echo >&2 "File not found: $file"
+    }
 done
