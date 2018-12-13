@@ -485,6 +485,7 @@ export PATH="$DOTFILES_HOME/custom/bin:$PATH"
 alias -- '-'='cd -'
 alias alert='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/alert.ogg"'
 alias apt='sudo apt'
+alias bakgz='bak --gzip'
 alias bakmv='bak --move'
 alias beep='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/bell.ogg"'
 alias c='clipboard'

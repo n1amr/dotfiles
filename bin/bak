@@ -2,13 +2,31 @@
 
 if [ "$1" = '--move' ]; then
     shift
-    while [ $# != 0 ]; do
-        mv -i "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
+    for arg in "$@"; do
+        mv -i "$arg" "${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
         shift
     done
+elif [ "$1" = '--gzip' ]; then
+    shift
+    for arg in "$@"; do
+        if [[ -d "$arg" ]]; then
+            arg="$(realpath -s "$arg")"
+            tmp_copy="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+            [[ -e "$tmp_copy" ]] && {
+                echo >&2 "Cannot overwrite $tmp_copy"
+                continue
+            }
+            cp -r "$arg" "$tmp_copy"
+            ( cd "$(dirname "$tmp_copy")"
+                tar -zcvf "$(basename "$tmp_copy").tar.gz" "$(basename "$tmp_copy")"
+            )
+            rm -rf "$tmp_copy"
+        else
+            gzip <"$arg" >"${arg}.bak.$(date --utc +"%Y%m%d%H%M%S").gz"
+        fi
+    done
 else
-    while [ $# != 0 ]; do
-        cp -ir "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
-        shift
+    for arg in "$@"; do
+        cp -ir "$arg" "${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
     done
 fi
