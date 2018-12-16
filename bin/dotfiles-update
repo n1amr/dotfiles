@@ -30,7 +30,8 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         git reset --hard origin/master
 
         echo ">> git pull origin master --rebase --recurse-submodules -j16"
-        git pull origin master --rebase --recurse-submodules -j16
+        git pull origin master --rebase --recurse-submodules -j16 ||
+            git pull origin master --rebase --recurse-submodules
 
         echo ">> git checkout -f -"
         git checkout -f -
