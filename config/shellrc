@@ -328,6 +328,10 @@ pipe_to_visual () {
     remove_color_codes | "$VISUAL" -
 }
 
+print_horizontal_line () {
+    yes -- "${@:-=}" | tr -d $'\n' | head -c "$COLUMNS"
+}
+
 print_title_comment () {
     local LENGTH=80
     local s="$@"
