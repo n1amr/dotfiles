@@ -12,8 +12,6 @@ let $VIM_CONFIG_DIR=expand($VIM_CONFIG_DIR)
 
 let g:pathogen_disabled = [
   \ 'dracula',
-  \ 'gruvbox',
-  \ 'vim-nerdtree-tabs',
   \ ]
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()

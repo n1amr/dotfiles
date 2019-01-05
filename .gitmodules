@@ -14,10 +14,6 @@
     path = config/vim/bundle/dracula
     url = https://github.com/dracula/vim
     branch = master
-[submodule "config/vim/bundle/gruvbox"]
-    path = config/vim/bundle/gruvbox
-    url = https://github.com/morhetz/gruvbox
-    branch = master
 [submodule "config/vim/bundle/nerdtree.vim"]
     path = config/vim/bundle/nerdtree.vim
     url = https://github.com/scrooloose/nerdtree.git
@@ -41,10 +37,6 @@
 [submodule "config/vim/bundle/vim-markdown"]
     path = config/vim/bundle/vim-markdown
     url = https://github.com/tpope/vim-markdown
-    branch = master
-[submodule "config/vim/bundle/vim-nerdtree-tabs"]
-    path = config/vim/bundle/vim-nerdtree-tabs
-    url = https://github.com/jistr/vim-nerdtree-tabs
     branch = master
 [submodule "config/vim/bundle/vim-pathogen"]
     path = config/vim/bundle/vim-pathogen
