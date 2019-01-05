@@ -222,7 +222,7 @@ function! EnableAutoReadWrite()
   autocmd QuitPre * call WriteTempIfEmpty()
   autocmd VimLeave * call WriteTempIfEmpty()
 
-  autocmd VimLeave * call SaveSession()
+  " autocmd VimLeave * call SaveSession()
 endfunction
 
 function! EnableAutoReloadVimrc()
