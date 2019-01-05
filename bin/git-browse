@@ -117,4 +117,4 @@ case "$action" in
 esac
 
 echo "Opening $url"
-gui-open "$url"
+open-url "$url"

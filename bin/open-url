@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BROWSER='firefox'
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --) shift ; break ;;
+        *)  break ;;
+    esac
+    shift
+done
+
+open () { xdg-open "$1" & }
+open_with_redirect () { open "$@" > /dev/null 2>&1 & }
+
+for url in "$@"; do
+    open_with_redirect "$url"
+done
