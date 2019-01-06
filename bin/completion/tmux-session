@@ -7,4 +7,4 @@ for session in "${sessions[@]}"; do
     results+=("$session")
 done
 
-echo "${results[@]}"
+printf '%s\n' "${results[@]}"

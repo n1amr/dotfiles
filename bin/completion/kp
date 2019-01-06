@@ -2,4 +2,4 @@
 
 results=(pull push)
 
-echo "${results[@]}"
+printf '%s\n' "${results[@]}"

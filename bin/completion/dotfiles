@@ -2,4 +2,4 @@
 
 results=(install update pull config)
 
-echo "${results[@]}"
+printf '%s\n' "${results[@]}"

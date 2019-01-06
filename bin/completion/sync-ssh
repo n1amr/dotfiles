@@ -7,4 +7,4 @@ for f in "$PROFILES_DIR"/*; do
     results+=("$(basename "$f")")
 done
 
-echo "${results[@]}"
+printf '%s\n' "${results[@]}"

@@ -2,4 +2,4 @@
 
 results=(add remove list update)
 
-echo "${results[@]}"
+printf '%s\n' "${results[@]}"
