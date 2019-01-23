@@ -580,6 +580,7 @@ alias vimrc='"$EDITOR" "$DOTFILES_HOME/config/vim/vimrc"'
 alias vs='vim-server'
 alias wget='wget -c'
 alias x='extract'
+alias xdu='ncdu -x'
 alias zshrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 
 if [ "$SHELLNAME" = zsh ]; then
