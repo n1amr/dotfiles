@@ -405,6 +405,7 @@ psgrep () {
 
 ranger () {
     local RANGER_DIR_FILE="$HOME/.rangerdir"
+    touch "$RANGER_DIR_FILE"
     command ranger --choosedir="$RANGER_DIR_FILE" "$@"
     cd "$(cat "$RANGER_DIR_FILE")"
 }
