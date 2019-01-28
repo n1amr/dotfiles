@@ -17,13 +17,17 @@ YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
 TARGET_DIR=''
 PLAYLIST_ID=''
+FORMAT='18'
 while [[ $# -gt 0 ]]; do
     if [[ -z "$PLAYLIST_ID" ]]; then
         PLAYLIST_ID="$1"
     elif [[ -z "$TARGET_DIR" ]]; then
         TARGET_DIR="$1"
+    elif [[ "$1" == '-f' ]]; then
+        shift
+        FORMAT="$1"
     else
-        echo "Usage: youtube-dl-playlist PLAYLIST_ID [TARGET_DIR]"
+        echo "Usage: youtube-dl-playlist PLAYLIST_ID [TARGET_DIR] [-f <FORMAT>]"
         exit 1
     fi
     shift
@@ -57,7 +61,7 @@ if [ ! -f "$COOKIE_FILE" ]; then
 fi
 
 ARGS=()
-ARGS+=(-f 18)
+ARGS+=(-f "$FORMAT")
 ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
 ARGS+=(--continue --ignore-errors)
 ARGS+=(--mark-watched)
