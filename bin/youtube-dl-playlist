@@ -15,64 +15,69 @@ fi
 YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"
 YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
 
-TARGET_DIR=''
-PLAYLIST_ID=''
+OUTPUT_DIR=''
+URL=''
 FORMAT='18'
+FLAG_REVERSE=''
+FLAG_NO_COOKIES=''
 while [[ $# -gt 0 ]]; do
-    if [[ -z "$PLAYLIST_ID" ]]; then
-        PLAYLIST_ID="$1"
-    elif [[ -z "$TARGET_DIR" ]]; then
-        TARGET_DIR="$1"
+    if [[ -z "$URL" ]]; then
+        URL="$1"
+    elif [[ -z "$OUTPUT_DIR" ]]; then
+        OUTPUT_DIR="$1"
     elif [[ "$1" == '-f' ]]; then
         shift
         FORMAT="$1"
+    elif [[ "$1" == '--reverse' ]]; then
+        FLAG_REVERSE='true'
+    elif [[ "$1" == '--no-cookies' ]]; then
+        FLAG_NO_COOKIES='true'
     else
-        echo "Usage: youtube-dl-playlist PLAYLIST_ID [TARGET_DIR] [-f <FORMAT>]"
+        echo >&2 "Usage: youtube-dl-playlist URL [OUTPUT_DIR] [-f <FORMAT>] [--reverse] [--no-cookies]"
         exit 1
     fi
     shift
 done
 
-if [[ -z "$PLAYLIST_ID" ]]; then
-    echo "Error: You must pass the playlist id"
+if [[ -z "$URL" ]]; then
+    echo >&2 "Error: You must pass the playlist url"
     exit 1
 fi
 
-if [[ -z "$TARGET_DIR" ]]; then
-    TARGET_DIR="$(dirname "${BASH_SOURCE[0]}")"
+if [[ -z "$OUTPUT_DIR" ]]; then
+    OUTPUT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 fi
-TARGET_DIR="$(realpath "$TARGET_DIR")"
+OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
-PLAYLIST_URL="https://youtube.com/playlist?list=$PLAYLIST_ID"
 COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
 LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"; export LOCK_FILE
-ARCHIVE_FILE="$TARGET_DIR/.download_archive"
+ARCHIVE_FILE="$OUTPUT_DIR/.download_archive"
 DEFAULT_OUTPUT_TEMPLATE='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE:-$DEFAULT_OUTPUT_TEMPLATE}"
 
-cd "$YOUTUBE_HOME"
-if [ ! -d .youtube-dl ]; then
-    mkdir .youtube-dl
+if [ ! -d "$YOUTUBE_HOME/.youtube-dl" ]; then
+    mkdir "$YOUTUBE_HOME/.youtube-dl"
 fi
 
-if [ ! -f "$COOKIE_FILE" ]; then
-    echo "Please copy cookies.txt to $COOKIE_FILE"
+if [ ! -f "$COOKIE_FILE" ] && [ "$FLAG_NO_COOKIES" != 'true' ]; then
+    echo >&2 "Please copy cookies.txt to $COOKIE_FILE or use option --no-cookies"
     exit 1
 fi
 
 ARGS=()
 ARGS+=(-f "$FORMAT")
+[[ "$FLAG_REVERSE" == 'true' ]] && ARGS+=(--playlist-reverse)
+[[ "$FLAG_NO_COOKIES" != 'true' ]] && ARGS+=(--cookie "$COOKIE_FILE")
 ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
 ARGS+=(--continue --ignore-errors)
 ARGS+=(--mark-watched)
-ARGS+=(--cookie "$COOKIE_FILE")
 ARGS+=(--download-archive "$ARCHIVE_FILE")
 ARGS+=(-o "$OUTPUT_TEMPLATE")
-ARGS+=("$PLAYLIST_URL")
+ARGS+=("$URL")
 
-echo "Target directory: $TARGET_DIR"
-echo "Playlist url: $PLAYLIST_URL"
+echo "Output directory: $OUTPUT_DIR"
+echo "URL: $PLAYLIST_URL"
 echo "Command: $YOUTUBE_DOWNLADER ${ARGS[@]}"
 
-cd "$TARGET_DIR"
+cd "$OUTPUT_DIR"
 "$YOUTUBE_DOWNLADER" "${ARGS[@]}"
