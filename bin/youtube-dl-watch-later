@@ -12,46 +12,29 @@ if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
     echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles.env
 fi
 
-YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"
-YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
+OUTPUT_DIR="$DOTFILES_CONFIG_YOUTUBE_HOME"
+CONFIG_DIR="$OUTPUT_DIR/.youtube-dl"
+LOCK_FILE="$CONFIG_DIR/lock" && export LOCK_FILE
 
-PLAYLIST='WL'
-URL="https://youtube.com/playlist?list=$PLAYLIST"
-
-if [ ! -d "$YOUTUBE_HOME/.youtube-dl/" ]; then
-    mkdir "$YOUTUBE_HOME/.youtube-dl/"
-fi
-
-COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
-ARCHIVE_FILE="$YOUTUBE_HOME/.youtube-dl/archive"
-OUTPUT_TEMPLATE='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
-
-if [ ! -f "$COOKIE_FILE" ]; then
-    echo "Please copy cookies.txt into '$COOKIE_FILE'"
-    exit 1
-fi
-
-LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"
-has_lock=false
+ARGS=()
+ARGS+=(--output-dir "$OUTPUT_DIR")
+ARGS+=(--config-dir "$CONFIG_DIR")
+ARGS+=(--log)
+ARGS+=(--use-cookies)
+ARGS+=(--no-subs)
+ARGS+=(--output-template '%(title)s - (@%(uploader)s - %(id)s).%(ext)s')
+ARGS+=(--begin-args)
+ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date --utc +"%Y%m%d%H%M%S"). $f"; done')
+ARGS+=(--end-args)
+ARGS+=('https://youtube.com/playlist?list=WL')
 
 cleanup () {
     echo 'Exiting'
     [ "$has_lock" = true ] && release_lock "$LOCK_FILE"
 }
-trap 'cleanup' EXIT INT
 
+has_lock='false'
+trap 'cleanup' EXIT INT
 acquire_lock "$LOCK_FILE" && has_lock=true || exit 1
 
-ARGS=()
-ARGS+=(-f 18)
-ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
-ARGS+=(--continue --ignore-errors)
-ARGS+=(--mark-watched)
-ARGS+=(--cookie "$COOKIE_FILE")
-ARGS+=(--download-archive "$ARCHIVE_FILE")
-ARGS+=(-o "$OUTPUT_TEMPLATE")
-ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date --utc +"%Y%m%d%H%M%S"). $f"; done')
-ARGS+=("$URL")
-
-cd "$YOUTUBE_HOME"
-"$YOUTUBE_DOWNLADER" "${ARGS[@]}"
+"$DOTFILES_HOME/bin/youtube-dl-playlist" "${ARGS[@]}"

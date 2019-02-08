@@ -2,82 +2,128 @@
 
 set -e
 
-source ~/.dotfiles.env
-source "$DOTFILES_HOME/bin/lib/log"
-source "$DOTFILES_HOME/bin/lib/lock" --verbose
+YOUTUBE_DL="${YOUTUBE_DL:=$PYENV_ROOT/shims/youtube-dl}"
+OUTPUT_TEMPLATE_INDEXED='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
+OUTPUT_TEMPLATE_DEFAULT='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 
-if [ -z "$DOTFILES_CONFIG_YOUTUBE_HOME" ]; then
-    echo -n 'Enter youtube home directory: '
-    read -r DOTFILES_CONFIG_YOUTUBE_HOME
-    echo "export DOTFILES_CONFIG_YOUTUBE_HOME='$DOTFILES_CONFIG_YOUTUBE_HOME'" >> ~/.dotfiles.env
-fi
+invalid_argument () {
+    echo >&2 "Invalid arguments: $1"
+    echo >&2 "Usage: youtube-dl-playlist -o OUTPUT_DIR [-f <FORMAT>] [--reverse] [--no-cookies] URL"
+    exit 1
+}
 
-YOUTUBE_DOWNLADER="$PYENV_ROOT/shims/youtube-dl"
-YOUTUBE_HOME="$DOTFILES_CONFIG_YOUTUBE_HOME"
-
+CONFIG_DIR=''
 OUTPUT_DIR=''
+COOKIES_FILE=''
 URL=''
 FORMAT='18'
 FLAG_REVERSE=''
-FLAG_NO_COOKIES=''
+FLAG_USE_COOKIES='false'
+FLAG_DOWNLOAD_SUBS='true'
+FLAG_USE_LOG='false'
+TARGET_TYPE=''
+OUTPUT_TEMPLATE=''
+YOUTUBE_DL_ARGS=()
+
+# Parse arguments
+inside_youtube_dl_args='false'
 while [[ $# -gt 0 ]]; do
-    if [[ -z "$URL" ]]; then
-        URL="$1"
-    elif [[ -z "$OUTPUT_DIR" ]]; then
-        OUTPUT_DIR="$1"
-    elif [[ "$1" == '-f' ]]; then
-        shift
-        FORMAT="$1"
-    elif [[ "$1" == '--reverse' ]]; then
-        FLAG_REVERSE='true'
-    elif [[ "$1" == '--no-cookies' ]]; then
-        FLAG_NO_COOKIES='true'
-    else
-        echo >&2 "Usage: youtube-dl-playlist URL [OUTPUT_DIR] [-f <FORMAT>] [--reverse] [--no-cookies]"
-        exit 1
-    fi
+    [[ "$inside_youtube_dl_args" == 'true' ]] &&
+        [[ "$1" != '--end-args' ]] &&
+        YOUTUBE_DL_ARGS+=("$1") && shift && continue
+
+    case "$1" in
+        -t|--output-template) OUTPUT_TEMPLATE="$2" && shift ;;
+        -c|--config-dir) CONFIG_DIR="$2" && shift ;;
+        -o|--output-dir) OUTPUT_DIR="$2" && shift ;;
+        -f|--format) FORMAT="$2" && shift ;;
+        -l|--playlist) TARGET_TYPE='playlist' ;;
+        --channel) TARGET_TYPE='channel' ;;
+        --reverse) FLAG_REVERSE='true' ;;
+        --cookies) COOKIES_FILE="$2" && shift && FLAG_USE_COOKIES='true' ;;
+        --no-cookies) FLAG_USE_COOKIES='false' ;;
+        --use-cookies) FLAG_USE_COOKIES='true' ;;
+        --log) FLAG_USE_LOG='true' ;;
+        --no-subs) FLAG_DOWNLOAD_SUBS='false' ;;
+        --begin-args) inside_youtube_dl_args='true' ;;
+        --end-args) inside_youtube_dl_args='false' ;;
+        *)
+            [[ -n "$URL" ]] && invalid_argument "$1"
+            URL="$1"
+        ;;
+    esac
     shift
 done
 
+# Validate arguments
 if [[ -z "$URL" ]]; then
-    echo >&2 "Error: You must pass the playlist url"
+    echo >&2 "Error: URL argument is required"
     exit 1
 fi
 
 if [[ -z "$OUTPUT_DIR" ]]; then
-    OUTPUT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-fi
-OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
-
-COOKIE_FILE="$YOUTUBE_HOME/.youtube-dl/cookies.txt"
-LOCK_FILE="$YOUTUBE_HOME/.youtube-dl/lock"; export LOCK_FILE
-ARCHIVE_FILE="$OUTPUT_DIR/.download_archive"
-DEFAULT_OUTPUT_TEMPLATE='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
-OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE:-$DEFAULT_OUTPUT_TEMPLATE}"
-
-if [ ! -d "$YOUTUBE_HOME/.youtube-dl" ]; then
-    mkdir "$YOUTUBE_HOME/.youtube-dl"
-fi
-
-if [ ! -f "$COOKIE_FILE" ] && [ "$FLAG_NO_COOKIES" != 'true' ]; then
-    echo >&2 "Please copy cookies.txt to $COOKIE_FILE or use option --no-cookies"
+    echo >&2 "Error: Output dir argument is required"
     exit 1
 fi
 
+OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
+[[ ! -d "$OUTPUT_DIR" ]] && mkdir -p "$OUTPUT_DIR"
+
+if [[ -z "$CONFIG_DIR" ]]; then
+    if [[ -d "$YOUTUBE_HOME/.youtube-dl" ]]; then
+        CONFIG_DIR="$YOUTUBE_HOME/.youtube-dl"
+    else
+        CONFIG_DIR="$(realpath "$OUTPUT_DIR/.youtube-dl")"
+    fi
+fi
+
+[[ ! -d "$CONFIG_DIR" ]] && mkdir -p "$CONFIG_DIR"
+
+ARCHIVE_FILE="$CONFIG_DIR/download_archive.txt"
+[[ "$FLAG_USE_LOG" == 'true' ]] && LOG_FILE="$CONFIG_DIR/log" || LOG_FILE='/dev/null'
+
+[[ "$FLAG_USE_COOKIES" == 'true' ]] && {
+    [[ -z "$COOKIES_FILE" ]] && COOKIES_FILE="$CONFIG_DIR/cookies.txt"
+    if [[ ! -f "$COOKIES_FILE" ]]; then
+        echo >&2 "Please copy cookies.txt to $COOKIES_FILE or use option --no-cookies"
+        exit 1
+    fi
+}
+
+[[ -z "$OUTPUT_TEMPLATE" ]] && {
+    [[ "$TARGET_TYPE" == 'playlist' ]] && OUTPUT_TEMPLATE="$OUTPUT_TEMPLATE_INDEXED"
+    OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE:-$OUTPUT_TEMPLATE_DEFAULT}"
+}
+
+[[ "$TARGET_TYPE" == 'channel' ]] && FLAG_REVERSE='true'
+
 ARGS=()
 ARGS+=(-f "$FORMAT")
-[[ "$FLAG_REVERSE" == 'true' ]] && ARGS+=(--playlist-reverse)
-[[ "$FLAG_NO_COOKIES" != 'true' ]] && ARGS+=(--cookie "$COOKIE_FILE")
-ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
+[[ "$FLAG_REVERSE" == 'true' ]] &&
+    ARGS+=(--playlist-reverse)
+[[ "$FLAG_USE_COOKIES" == 'true' ]] &&
+    ARGS+=(--cookie "$(realpath "$COOKIES_FILE")")
+[[ "$FLAG_DOWNLOAD_SUBS" == 'true' ]] &&
+    ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
 ARGS+=(--continue --ignore-errors)
 ARGS+=(--mark-watched)
-ARGS+=(--download-archive "$ARCHIVE_FILE")
+ARGS+=(--download-archive "$(realpath "$ARCHIVE_FILE")")
 ARGS+=(-o "$OUTPUT_TEMPLATE")
+ARGS+=("${YOUTUBE_DL_ARGS[@]}")
 ARGS+=("$URL")
 
-echo "Output directory: $OUTPUT_DIR"
-echo "URL: $PLAYLIST_URL"
-echo "Command: $YOUTUBE_DOWNLADER ${ARGS[@]}"
-
-cd "$OUTPUT_DIR"
-"$YOUTUBE_DOWNLADER" "${ARGS[@]}"
+{
+    echo
+    echo "=================================================="
+    echo "Started at: $(date -Isec)"
+} >> "$LOG_FILE"
+{
+    echo "Output directory: $OUTPUT_DIR"
+    echo "Command: $YOUTUBE_DL ${ARGS[@]}"
+    cd "$OUTPUT_DIR" && "$YOUTUBE_DL" "${ARGS[@]}"
+} | tee -a "$LOG_FILE"
+{
+    echo
+    echo "Finished at: $(date -Isec)"
+    echo "=================================================="
+} >> "$LOG_FILE"
