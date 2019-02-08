@@ -9,6 +9,6 @@
   0      *        *        *        *        updatedb &
   *      *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/bin/battery-check" &
   *      *        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/bin/wifi-check" &
-  0      5        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/download-updates" &
-  0      5        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/config/crontab/crontab-jobs/sync" more &
+  0      5        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/bin/cronjobs/download-updates" &
+  0      5        *        *        *        . ~/.dotfiles.env && "$DOTFILES_HOME/bin/cronjobs/sync" more &
 #===============================================================================
