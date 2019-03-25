@@ -82,6 +82,9 @@ handle_extension() {
             lynx -dump -- "${FILE_PATH}" && exit 5
             elinks -dump "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
+        tsv)
+            pretty-print-tsv "$FILE_PATH" && exit 5
+            exit 1;;
     esac
 }
 
