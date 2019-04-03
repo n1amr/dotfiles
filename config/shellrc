@@ -433,6 +433,15 @@ targz () {
     fi
 }
 
+zipc () {
+    local name="$(echo "$1" | sed 's/\/\+$//')"
+    if [[ "$2" = '--' ]]; then
+        zip -r "${name}.zip" "${@:3}"
+    else
+        zip -r "${name}.zip" "$@"
+    fi
+}
+
 terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
 }
