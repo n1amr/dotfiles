@@ -77,7 +77,12 @@ let g:PaperColor_Theme_Options = {
   \ }
 set t_Co=256   " This is may or may not needed.
 set background=dark
-colorscheme PaperColor
+
+if get(g:, 'isMergeTool', 0)
+  colorscheme chroma
+else
+  colorscheme PaperColor
+endif
 
 " Indentation
 set autoindent
