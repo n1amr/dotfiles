@@ -16,7 +16,8 @@ open () { xdg-open "$1" & }
     open () {
         local file="$1"
         local winpath="$(wslpath -aw "$file")"
-        explorer "$winpath"
+        winpath="${winpath%\\}"
+        windows_explorer "$winpath"
     }
 }
 
