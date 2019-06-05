@@ -432,3 +432,6 @@ endif
 
 " Highlight trailing spaces
 match ErrorMsg '\s\+$'
+
+" Avoid vulnerability in vim versions < 8.1.1365
+set nomodeline
