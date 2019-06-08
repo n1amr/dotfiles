@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+repo="$(mktemp -d /tmp/gitdiff-XXXXXXX)"
+
+filename='file'
+
+{
+    git -C "$repo" init
+
+    cat "$1" > "$repo/$filename"
+    git -C "$repo" add "./$filename"
+    git -C "$repo" commit -m 'first' --allow-empty
+
+    git -C "$repo" rm -f "./$filename"
+
+    cat "$2" > "$repo/$filename"
+    git -C "$repo" add "./$filename"
+
+} 1>&2
+
+shift
+shift
+git -C "$repo" diff --cached "$@" && rm -rf "$repo"
