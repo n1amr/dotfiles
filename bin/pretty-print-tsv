@@ -20,7 +20,7 @@ def pretty_print_file(file_path):
 def read_table(file_path):
     table = []
     delimiter = '\t'
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'r', encoding='utf-16-le') as file:
         for line in file:
             row = line.rstrip('\n').rstrip('\r').split(delimiter)
             table.append(row)
