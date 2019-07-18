@@ -3,11 +3,12 @@
     "workbench.colorTheme": "Visual Studio Dark",
     "editor.tabSize": 2,
     "editor.lineNumbers": "relative",
-    "editor.fontFamily": "Ubuntu Mono",
+    "editor.fontFamily": "Consolas",
     "editor.fontSize": 14,
     "files.autoSave": "onFocusChange",
     "files.autoSaveDelay": 1000,
-    // vim extension
+    // # Extensions
+    // vim:
     "vim.hlsearch": true,
     "vim.useSystemClipboard": false,
     "vim.leader": " ",
@@ -33,4 +34,6 @@
             ]
         }
     ],
+    // Python
+    "python.jediEnabled": false,
 }
