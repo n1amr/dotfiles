@@ -24,6 +24,7 @@
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
     author-date = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f"
+    backup = "!f() { local branch_name="${1:-$(git rev-parse --abbrev-ref HEAD)}"; local tag_name="BACKUP/${branch_name}-$(date +"%Y-%m-%d_%H-%M-%S")"; git tag "$tag_name" "${1:-HEAD}" && echo "Created tag: $tag_name"; }; f"
 
 [core]
     editor = vim
