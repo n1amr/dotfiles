@@ -12,7 +12,10 @@ else
     echo "Please enter a new private token. From https://github.com/settings/tokens"
     echo -n ">>> "
     read -r GITHUB_PRIVATE_TOKEN
-    echo "export GITHUB_PRIVATE_TOKEN = ${GITHUB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
+    {
+        echo "#!/bin/sh"
+        echo "export GITHUB_PRIVATE_TOKEN='${GITHUB_PRIVATE_TOKEN}'"
+    } > "${TOKEN_FILE}"
     chmod +x "$TOKEN_FILE"
 fi
 
