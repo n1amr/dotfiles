@@ -29,22 +29,38 @@ find_or_append () {
     fi
 }
 
+# Add marks to shell config
 ( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
     {printf "__DF_MARK_%s=\"%s\"\n", $1, $2}
     {printf "X%s=\"$__DF_MARK_%s\"\n", $1, $1}
-    {printf "alias o%s='\''cd \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias G%s='\''cd \"$__DF_MARK_%s\" && l'\''\n", $1, $1}
-    {printf "alias Y%s='\''cp -iv -t \"$__DF_MARK_%s\" -r '\''\n", $1, $1}
-    {printf "alias M%s='\''mv -iv -t \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias o,%s='\''o \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias l,%s='\''l \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias r,%s='\''r \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias g,%s='\''cd \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias M,%s='\''mv -iv -t \"$__DF_MARK_%s\"'\''\n", $1, $1}
+    {printf "alias Y,%s='\''cp -iv -t \"$__DF_MARK_%s\" -r '\''\n", $1, $1}
+
+    # TODO: deprecate duo to collisions with command names
+    {printf "alias o%s='\''echo \"DEPRECATED ALIAS, alternative: g,%s\" >&2; cd \"$__DF_MARK_%s\"'\''\n", $1, $1, $1}
 ''') > "$shellrc_output"
 find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
 
+# Add marks to ranger config
 ( sort -r "$config_file" | sed "/^#/d; s/~/${HOME//\//\\\/}/" | awk -F'\t' '''
     {printf "# %s => %s\n", $1, $2}
-    {printf "map gt%s cd %s\n", $1, $2}
-    {printf "map gT%s chain tab_new; cd %s\n", $1, $2}
-    {printf "map Mt%s shell mv -v %%s \"%s\"\n", $1, $2}
-    {printf "map Yt%s shell cp -rv %%s \"%s\"\n", $1, $2}
+
+    {printf "map g,%s; cd %s\n", $1, $2}
+    {printf "map D%s; cd %s\n", $1, $2}
+    {printf "map T%s; chain tab_new; cd %s\n", $1, $2}
+
+    {printf "map ,%s;g cd %s\n", $1, $2}
+    {printf "map ,%s;t chain tab_new; cd %s\n", $1, $2}
+    {printf "map ,%s;m shell mv -v %%s \"%s\"\n", $1, $2}
+    {printf "map ,%s;y shell cp -rv %%s \"%s\"\n", $1, $2}
+
+    # TODO: deprecate
+    {printf "map gt%s; cd %s\n", $1, $2}
+
     {printf "\n"}
 ''') > "$ranger_output"
 find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-marks.conf'
@@ -59,6 +75,7 @@ else
     find "$DOTFILES_MARKS_PATH" -mindepth 1 -delete
 fi
 
+# Add symlinks to ~/.marks dir
 while IFS='' read line; do
     mark="${line%%$'\t'*}"
     path="${line##*$'\t'}"
