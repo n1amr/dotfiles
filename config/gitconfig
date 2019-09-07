@@ -15,11 +15,11 @@
     rl = log --walk-reflogs --pretty=reflog-short
     rll = log --walk-reflogs --pretty=reflog-long
 
-    rbb = "!f() { git rebase -i HEAD~$1; }; f"
-    go = "!f() { git-browse $*; }; f"
-    create-github = "!f() { git-create-github $*; }; f"
-    create-gitlab = "!f() { git-create-gitlab $*; }; f"
-    next = "!f() { git checkout \"$(git log --reverse --ancestry-path HEAD..master --oneline | head -1 | awk '{print $1}')\"; }; f"
+    rbb = "!f() { count="$1"; shift; git rebase -i "$@" "HEAD~${count}"; }; f"
+    go = "!f() { git-browse "$@"; }; f"
+    create-github = "!f() { git-create-github "$@"; }; f"
+    create-gitlab = "!f() { git-create-gitlab "$@"; }; f"
+    next = "!f() { branch="$[1:-master]"; git checkout \"$(git log --reverse --ancestry-path HEAD.."$branch" --oneline | head -1 | awk '{print $1}')\"; }; f"
     prev = checkout HEAD~
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
