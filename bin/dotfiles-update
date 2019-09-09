@@ -3,6 +3,7 @@
 set -e
 
 CURRENT_DOTFILES="$(realpath "$(dirname "$0")/..")"
+branch='master'
 
 for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         echo ">> cd $dir"
@@ -14,8 +15,8 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         echo ">> git stash -u"
         git stash -u
 
-        echo ">> git checkout -f master"
-        git checkout -f master
+        echo ">> git checkout -f $branch"
+        git checkout -f "$branch"
 
         echo ">> git add ."
         git add .
@@ -26,12 +27,12 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         echo ">> git fetch origin"
         git fetch origin
 
-        echo ">> git reset --hard origin/master"
-        git reset --hard origin/master
+        echo ">> git reset --hard origin/$branch"
+        git reset --hard "origin/$branch"
 
-        echo ">> git pull origin master --rebase --recurse-submodules -j16"
-        git pull origin master --rebase --recurse-submodules -j16 ||
-            git pull origin master --rebase --recurse-submodules
+        echo ">> git pull origin $branch --rebase --recurse-submodules -j16"
+        git pull origin "$branch" --rebase --recurse-submodules -j16 ||
+            git pull origin "$branch" --rebase --recurse-submodules
 
         echo ">> git checkout -f -"
         git checkout -f -
@@ -39,8 +40,8 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         echo ">> git submodule update --init --recursive"
         git submodule update --init --recursive
 
-        echo ">> git submodule foreach --recursive 'git checkout -f master'"
-        git submodule foreach --recursive 'git checkout -f master'
+        echo ">> git submodule foreach --recursive 'git checkout -f $branch'"
+        git submodule foreach --recursive "git checkout -f \"$branch\""
 
         echo ">> git submodule update --init --recursive"
         git submodule update --init --recursive
