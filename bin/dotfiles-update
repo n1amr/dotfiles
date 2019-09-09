@@ -49,3 +49,9 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
         # echo ">> git stash apply"
         # git stash apply
 ); done
+
+echo ">> $CURRENT_DOTFILES/bin/marks update"
+"$CURRENT_DOTFILES/bin/marks" update
+
+echo ">> exec ${SHELLNAME:-$SHELL}"
+exec "${SHELLNAME:-$SHELL}"
