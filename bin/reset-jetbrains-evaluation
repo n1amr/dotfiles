@@ -18,5 +18,9 @@ for config_dir in ~/.jetbrains/config/*; do
     cd "$config_dir"
     pwd
     rm -vrf eval
-    sed -i '/evlsprt/d' options/options.xml
+    for options_file in options/options.xml options/other.xml; do
+        if [[ -f "$options_file" ]]; then
+            sed -i '/evlsprt/d' "$options_file"
+        fi
+    done
 done
