@@ -1,0 +1,80 @@
+[core]
+    bare = false
+    filemode = true
+    logallrefupdates = true
+    repositoryformatversion = 0
+[gui]
+    wmstate = normal
+    geometry = 1099x491+-10+14 219 227
+
+[remote "origin"]
+    url = git@github.com:n1amr/dotfiles.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "gitlab"]
+    url = git@gitlab.com:n1amr/dotfiles.git
+    fetch = +refs/heads/*:refs/remotes/gitlab/*
+
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[branch "ms"]
+    remote = origin
+    merge = refs/heads/ms
+
+[gitflow "branch"]
+    develop = develop
+[gitflow "path"]
+    hooks = /home/n1amr/.dotfiles/.git/hooks
+
+[submodule "config/vim/bundle/auto-pairs"]
+    url = https://github.com/jiangmiao/auto-pairs
+[submodule "config/vim/bundle/ctrlp.vim"]
+    url = https://github.com/kien/ctrlp.vim
+[submodule "config/vim/bundle/dracula"]
+    url = https://github.com/dracula/vim
+[submodule "config/vim/bundle/gruvbox"]
+    url = https://github.com/morhetz/gruvbox
+[submodule "config/vim/bundle/nerdtree.vim"]
+    url = https://github.com/scrooloose/nerdtree.git
+[submodule "config/vim/bundle/papercolor-theme"]
+    url = https://github.com/NLKNguyen/papercolor-theme
+[submodule "config/vim/bundle/vim-airline-themes.vim"]
+    url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "config/vim/bundle/vim-airline.vim"]
+    url = https://github.com/vim-airline/vim-airline.git
+[submodule "config/vim/bundle/vim-closetag"]
+    url = git@github.com:alvan/vim-closetag
+[submodule "config/vim/bundle/vim-markdown"]
+    url = https://github.com/tpope/vim-markdown
+[submodule "config/vim/bundle/vim-nerdtree-tabs"]
+    url = https://github.com/jistr/vim-nerdtree-tabs
+[submodule "config/vim/bundle/vim-pathogen"]
+    url = https://github.com/tpope/vim-pathogen
+[submodule "config/vim/bundle/vim-theme-chroma"]
+    url = https://github.com/crater2150/vim-theme-chroma
+[submodule "config/sublime-text-3"]
+    url = git@gitlab.com:n1amr/sublime-text-3-config.git
+[submodule "config/vim"]
+    url = git@gitlab.com:n1amr/vim-config.git
+[submodule "notes"]
+    url = git@gitlab.com:n1amr/notes-and-instructions.git
+[submodule "thirdparty/binaries"]
+    url = git@gitlab.com:n1amr/dotfiles-binaries
+[submodule "thirdparty/dunst"]
+    url = git@github.com:dunst-project/dunst
+[submodule "thirdparty/fzf"]
+    url = git@github.com:junegunn/fzf.git
+[submodule "thirdparty/git-flow-completion"]
+    url = git@github.com:petervanderdoes/git-flow-completion
+[submodule "thirdparty/gitflow-avh"]
+    url = git@github.com:petervanderdoes/gitflow-avh
+[submodule "thirdparty/oh-my-zsh"]
+    url = git@github.com:robbyrussell/oh-my-zsh.git
+[submodule "thirdparty/playerctl"]
+    url = git@github.com:acrisci/playerctl
+[submodule "thirdparty/tmux-plugins/tmux-yank"]
+    url = git@github.com:tmux-plugins/tmux-yank
+[submodule "thirdparty/vim-stream"]
+    url = git@github.com:MilesCranmer/vim-stream
+[submodule "thirdparty/zsh-plugins/you-should-use"]
+    url = git@github.com:MichaelAquilina/zsh-you-should-use
