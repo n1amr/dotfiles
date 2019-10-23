@@ -308,6 +308,10 @@ mark () {
     marks add "$@" && source ~/.marks.sh
 }
 
+mdd () {
+    for p in "$@"; do mkdir -pv "$(dirname "$p")"; done
+}
+
 mkcd () {
     mkdir -pv "$@" && cd "$1"
 }
