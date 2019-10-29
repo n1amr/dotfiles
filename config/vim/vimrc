@@ -181,6 +181,7 @@ nnoremap gk :call FloatUp()<CR>
 nnoremap gj :call FloatDown()<CR>
 
 nnoremap <silent> <ESC>/ :nohl<CR>
+nnoremap <silent> <C-g>/ :%s///ng<CR>
 
 inoremap <Tab> <C-N>
 inoremap <C-r><C-r> <C-o>:reg<CR><CR><C-r>
