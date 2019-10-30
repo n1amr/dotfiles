@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+for f in "$@"; do
+    { set +e
+        errors="$(jq . < "$f" 2>&1)"
+        status="$?"
+    set -e; }
+    if [[ $status != '0' ]]; then
+        echo "$f :: $errors"
+    fi
+done
