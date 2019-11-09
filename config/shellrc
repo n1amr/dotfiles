@@ -477,17 +477,26 @@ export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
 export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
 export PATH="$BUILD_PREFIX/bin:$PATH"
 
-[[ "${DOTFILES_CONFIG_ENABLE_NDENV:-true}" == 'true' ]] && {
+init_ndenv () {
     export PATH="$NDENV_ROOT/bin:$PATH"
     can_execute ndenv && eval "$(ndenv init -)"
 }
+[[ "${DOTFILES_CONFIG_ENABLE_NDENV:-true}" == 'true' ]] && init_ndenv
 
-[[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && {
+init_pyenv () {
     export PATH="$PYENV_ROOT/bin:$PATH"
     can_execute pyenv && eval "$(pyenv init -)"
 }
+[[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && init_pyenv
 
-[[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && {
+init_rbenv () {
+    export PATH="$RBENV_ROOT/bin:$PATH"
+    export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
+    can_execute rbenv && eval "$(rbenv init -)"
+}
+[[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && init_rbenv
+
+init_rbenv () {
     export PATH="$RBENV_ROOT/bin:$PATH"
     export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
     can_execute rbenv && eval "$(rbenv init -)"
