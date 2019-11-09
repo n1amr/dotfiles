@@ -16,5 +16,13 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+if [ -f "$HOME/.dotfiles.env" ]; then
+    . "$HOME/.dotfiles.env"
+fi
+
+[[ -n "${DOTFILES_CONFIG_TEXLIVE_BIN}" ]] && {
+    export PATH="$DOTFILES_CONFIG_TEXLIVE_BIN:$PATH"
+}
+
 # set PATH so it includes user's private bin directories
 PATH="$HOME/.local/bin:$PATH"
