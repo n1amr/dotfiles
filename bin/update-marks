@@ -39,9 +39,6 @@ find_or_append () {
     {printf "alias g,%s='\''cd \"$__DF_MARK_%s\"'\''\n", $1, $1}
     {printf "alias M,%s='\''mv -iv -t \"$__DF_MARK_%s\"'\''\n", $1, $1}
     {printf "alias Y,%s='\''cp -iv -t \"$__DF_MARK_%s\" -r '\''\n", $1, $1}
-
-    # TODO: deprecate duo to collisions with command names
-    {printf "alias o%s='\''echo \"DEPRECATED ALIAS, alternative: g,%s\" >&2; cd \"$__DF_MARK_%s\"'\''\n", $1, $1, $1}
 ''') > "$shellrc_output"
 find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
 
@@ -50,16 +47,12 @@ find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
     {printf "# %s => %s\n", $1, $2}
 
     {printf "map g,%s; cd %s\n", $1, $2}
-    {printf "map D%s; cd %s\n", $1, $2}
     {printf "map T%s; chain tab_new; cd %s\n", $1, $2}
 
     {printf "map ,%s;g cd %s\n", $1, $2}
     {printf "map ,%s;t chain tab_new; cd %s\n", $1, $2}
     {printf "map ,%s;m shell mv -v %%s \"%s\"\n", $1, $2}
     {printf "map ,%s;y shell cp -rv %%s \"%s\"\n", $1, $2}
-
-    # TODO: deprecate
-    {printf "map gt%s; cd %s\n", $1, $2}
 
     {printf "\n"}
 ''') > "$ranger_output"
