@@ -450,6 +450,10 @@ terminal_resize () {
     eval "$(/usr/bin/resize | head -2)"
 }
 
+unique_lines () {
+    awk '!cnt[$0]++'
+}
+
 unique_paths () {
     local sep="${2:-:}"
     echo -n "$1$sep" | awk -v RS="$sep" -v ORS="$sep" '!a[$1]++' | sed "s/$sep\+/$sep/g; s/^$sep\|$sep$//g"
@@ -748,9 +752,10 @@ fi
 
 eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
 
-[[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && {
+init_ssh () {
     source load_ssh_agent
 }
+[[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && init_ssh
 
 if [ "$SHELLNAME" = zsh ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
