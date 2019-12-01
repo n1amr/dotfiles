@@ -110,5 +110,6 @@ case "$subcommand" in
     list) list_marks "$@" ;;
     remove) remove_mark "$@" ;;
     update) update_marks "$@" ;;
-    *) echo >&2 "Usage: $0 [add|list|remove|update]"; exit 1 ;;
+    edit) "${EDITOR:-vim}" "$config_file" ;;
+    *) echo >&2 "Usage: $0 [add|list|remove|update|edit]"; exit 1 ;;
 esac

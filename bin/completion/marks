@@ -1,5 +1,5 @@
 #!/bin/bash
 
-results=(add remove list update)
+results=(add remove list update edit)
 
 printf '%s\n' "${results[@]}"
