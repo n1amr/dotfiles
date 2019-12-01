@@ -56,7 +56,7 @@ if [ ! -f "$DOTFILES_ENV_FILE" ]; then
 fi
 source "$DOTFILES_ENV_FILE"
 
-export PATH="$DOTFILES_HOME/bin:$PATH"
+export PATH="$DOTFILES_HOME/bin:$DOTFILES_HOME/thirdparty/binaries:$PATH"
 
 source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 

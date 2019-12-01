@@ -48,11 +48,11 @@
     branch = master
 [submodule "notes"]
     path = notes
-    url = https://gitlab.com/n1amr/notes-and-instructions.git
+    url = https://github.com/n1amr/dotfiles.notes.git
     branch = master
 [submodule "thirdparty/binaries"]
     path = thirdparty/binaries
-    url = https://gitlab.com/n1amr/dotfiles-binaries.git
+    url = https://github.com/n1amr/dotfiles.binaries.git
     branch = master
 [submodule "thirdparty/dunst"]
     path = thirdparty/dunst

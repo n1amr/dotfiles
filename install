@@ -10,7 +10,7 @@ dir="$(realpath "$(dirname "$0")")"
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
-DOTFILES_CUSTOM_REPO_URL='git@gitlab.com:n1amr/dotfiles-config'
+DOTFILES_CUSTOM_REPO_URL='git@github.com:n1amr/dotfiles.custom'
 
 interactive='true'
 
