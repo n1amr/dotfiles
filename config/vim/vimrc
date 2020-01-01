@@ -24,6 +24,7 @@ set display=truncate
 set fileencodings=ucs-bom,utf-8,default,latin1
 set helplang=en
 set langnoremap
+set nofixendofline
 set nolangremap
 set nrformats=bin,hex
 set printoptions=paper:letter
