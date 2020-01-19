@@ -210,6 +210,17 @@ cdtree () {
     tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
 }
 
+
+d () {
+	if [[ -n $1 ]]; then
+		dirs "$@"
+	else
+		dirs -v | \
+            # head -10  | \
+            tac
+	fi
+}
+
 deduplicate_env_paths () {
     if [ "$SHELLNAME" = zsh ]; then
         export -U PATH
