@@ -639,6 +639,10 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "P=| pipe"
 fi
 
+for i in {0..19}; do
+    alias "$i=cd -$i"
+done
+
 if [[ ! -f ~/.marks.sh ]] ||
         [[ ! -f ~/.ranger-marks.conf ]] ||
         [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
