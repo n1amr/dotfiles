@@ -630,6 +630,7 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g 'A=2>&1'
     alias -g 'C=| clipboard'
     alias -g 'G=| grep -P'
+    alias -g 'LL=| less -FRX'
     alias -g 'S=| subl'
     alias -g "E=| pipe_to_editor"
     alias -g "V=| pipe_to_visual"
