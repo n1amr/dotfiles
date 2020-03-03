@@ -53,5 +53,9 @@
   {
     "key": "ctrl+shift+n",
     "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.files.newUntitledFile"
   }
 ]
