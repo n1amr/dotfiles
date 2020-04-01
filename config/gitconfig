@@ -6,7 +6,8 @@
     current-branch = rev-parse --abbrev-ref HEAD
     df = diff
     f = fetch -v --all
-    mt = mergetool
+    mtv = mergetool --tool customVimMergeTool
+    mt = mergetool --tool customVimMergeToolMin
     pick = cherry-pick
     st = status
 
@@ -84,10 +85,14 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
     tool = vimdiff
 
 [merge]
-    tool = customVimMergeTool # vimdiff
+    tool = customVimMergeToolMin # vimdiff
 
 [mergetool "customVimMergeTool"]
     cmd = vim -d -f --cmd 'let g:isMergeTool = 1' -c '4wincmd w | wincmd J' $LOCAL $BASE $REMOTE $MERGED
+
+[mergetool "customVimMergeToolMin"]
+    # cmd = vim -d -f --cmd 'let g:isMergeTool = 1' $MERGED
+    cmd = vim -d -f --cmd 'let g:isMergeTool = 1' -c '4wincmd w | wincmd J | only | nnoremap ZZ :w \\| qa<CR>' $LOCAL $BASE $REMOTE $MERGED
 
 [grep]
     linenumber = true
