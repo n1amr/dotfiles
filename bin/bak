@@ -3,8 +3,9 @@
 if [ "$1" = '--move' ]; then
     shift
     for arg in "$@"; do
-        mv -i "$arg" "${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
-        shift
+        dst="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        mv -i "$arg" "$dst"
+        echo "$dst"
     done
 elif [ "$1" = '--gzip' ]; then
     shift
@@ -27,6 +28,8 @@ elif [ "$1" = '--gzip' ]; then
     done
 else
     for arg in "$@"; do
-        cp -ir "$arg" "${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        dst="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        cp -ir "$arg" "$dst"
+        echo "$dst"
     done
 fi
