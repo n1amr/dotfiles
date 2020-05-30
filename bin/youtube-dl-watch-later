@@ -26,6 +26,7 @@ ARGS+=(--output-template '%(title)s - (@%(uploader)s - %(id)s).%(ext)s')
 ARGS+=(--begin-args)
 ARGS+=(--exec 'file={}; noext="${file%.*}"; for f in "$noext".*; do mv "$f" "$(date --utc +"%Y%m%d%H%M%S"). $f"; done')
 ARGS+=(--end-args)
+ARGS+=("$@")
 ARGS+=('https://youtube.com/playlist?list=WL')
 
 cleanup () {
