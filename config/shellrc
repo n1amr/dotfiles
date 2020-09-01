@@ -144,6 +144,8 @@ export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
 
 export LANG="${LANG:-en_US.UTF-8}"
 
+export DOTFILES_CD_REG_PATH='/tmp/dotfiles/cd-reg'
+
 ################################################################################
 #################################  Functions  ##################################
 
@@ -203,6 +205,43 @@ cdd () {
 
 cdf () {
     diff -u "$1" "$2" | colordiff | less -FRX
+}
+
+cdlist () {
+    keys=()
+    while IFS= read -d '' -r file; do
+        keys+=("$(basename "$file")")
+    done < <(find "$DOTFILES_CD_REG_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
+
+    for key in "${keys[@]}"; do
+        value="$(cdg "$key")"
+        echo "[$key] -> $value"
+    done
+}
+
+cdclear () {
+    find "$DOTFILES_CD_REG_PATH" -mindepth 1 -print -delete
+}
+
+cds () {
+    mkdir -p "$DOTFILES_CD_REG_PATH"
+    key="${1:-default}"
+    value="$(realpath "${2:-.}")"
+    echo "$value" > "$DOTFILES_CD_REG_PATH/$key"
+    echo "[$key] -> $value"
+}
+
+cdg () {
+    key="${1:-default}"
+    value="$(cat "$DOTFILES_CD_REG_PATH/$key")"
+    echo "$value"
+}
+
+cdl () {
+    key="${1:-default}"
+    value="$(cdg "$key")"
+    echo "cd [$key] -> $value"
+    cd "$value"
 }
 
 cdtree () {
@@ -589,7 +628,7 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias myips='ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)'\'' | awk '\''{ sub(/inet6? (addr:)? ?/, ""); print }'\'''
 alias nmcli='nmcli -a'
 alias o='gui-open'
-alias ord='cd "$(cat /tmp/ranger-dir)"'
+alias ord='cdl ranger'
 alias p='ipython'
 alias pdfjoin='pdfjoin --paper a4paper --rotateoversize false'
 alias ps='__dotfiles_ps'
