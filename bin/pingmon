@@ -1,0 +1,46 @@
+#!/bin/bash
+
+source ~/.dotfiles.env
+
+sound_file="$DOTFILES_HOME/resources/sounds/Beep_Once.ogg"
+log_file="$HOME/ping.log"
+error_file="$HOME/ping.error"
+
+invert='false'
+if [[ "$1" == '-i' ]]; then
+    invert='true'
+    shift
+fi
+
+host="${1:-1.1}"
+
+beep () {
+    DISPLAY=:0 paplay "$sound_file"
+}
+
+process_line() {
+    while true; do
+        read a
+
+        if ! grep 'icmp_seq' <<<"$a" > /dev/null; then
+            continue
+        fi
+
+        msg="$(date -Isec): $a"
+
+        if grep -P 'time=' <<<"$a" > /dev/null; then
+            echo "$msg"
+            echo "$msg" >> "$log_file"
+            [[ "$invert" == 'true' ]] && beep &
+        else
+            echo "$msg" | grep -P '.' --color=yes
+            echo "$msg" >> "$error_file"
+            [[ "$invert" == 'false' ]] && beep &
+        fi
+    done
+}
+
+while true; do
+    ping -c 5 "$host" 2>&1
+    sleep 1
+done | process_line
