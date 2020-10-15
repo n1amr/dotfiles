@@ -6,15 +6,23 @@ sound_file="$DOTFILES_HOME/resources/sounds/Beep_Once.ogg"
 log_file="$HOME/ping.log"
 error_file="$HOME/ping.error"
 
+silent='false'
 invert='false'
-if [[ "$1" == '-i' ]]; then
-    invert='true'
+while [[ "$#" -gt 0 ]]; do
+    arg="$1"
     shift
-fi
+    if [[ "$arg" == '-s' ]]; then
+        silent='true'
+    fi
+    if [[ "$arg" == '-i' ]]; then
+        invert='true'
+    fi
+done
 
 host="${1:-1.1}"
 
 beep () {
+    [[ "$silent" == 'true' ]] && return
     DISPLAY=:0 paplay "$sound_file"
 }
 
