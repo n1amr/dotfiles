@@ -19,10 +19,20 @@ fi
 
 append=''
 append_lines=''
-case "$1" in
-    -a) append='true' ;;
-    -l|-al|-la) append='true' && append_lines='true' ;;
-esac
+no_new_line=''
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -a) append='true' ;;
+        -l) append='true'; append_lines='true' ;;
+        -s) no_new_line='true' ;;
+        *)
+            echo >&2 "Invalid arguments: $1"
+            echo >&2 "Usage: clipboard [-a] [-l] [-s]"
+            exit 1
+        ;;
+    esac
+    shift
+done
 
 [[ ! -t 0 ]] && pipe_input='true'
 [[ ! -t 1 ]] && pipe_output='true'
@@ -33,6 +43,6 @@ esac
         echo -n "$prev"
         [[ -n "$append_lines" ]] && echo
     }
-    cat
+    [[ -n "$no_new_line" ]] && echo -n "$(cat)" || cat
 } | copy
 paste | cat

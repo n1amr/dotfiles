@@ -668,6 +668,7 @@ alias zshrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 if [ "$SHELLNAME" = zsh ]; then
     alias -g 'A=2>&1'
     alias -g 'C=| clipboard'
+    alias -g 'CS=| clipboard -s'
     alias -g 'G=| grep -P'
     alias -g 'LL=| less -FRX'
     alias -g 'S=| subl'
