@@ -279,6 +279,16 @@ function! IndentWidth(width)
   let &tabstop=a:width
 endfunction
 
+if has("win32")
+  function! ListDir(s)
+    return systemlist('dir /b ' . SingleQuote(s))
+  endfunction
+else
+  function! ListDir(s)
+    return systemlist('ls -1 ' . SingleQuote(s))
+  endfunction
+endif
+
 function! RestoreLastSession()
   let l:file = g:sessiondir . '/' . systemlist('ls -1 ' . g:sessiondir)[-1]
   execute 'source ' . escape(l:file, " \"'.")
@@ -290,9 +300,15 @@ function! SaveSession()
   execute 'mksession!' escape(l:session_file, " \"'.")
 endfunction
 
-function! SingleQuote(s)
-  return "'" . substitute(a:s, "'", "'\\\\''", 'g') . "'"
-endfunction
+if has("win32")
+  function! SingleQuote(s)
+    return "\"" . substitute(substitute(a:s, "/", "\\", 'g'), "\"", "'\\\\\"\"", 'g') . "\""
+  endfunction
+else
+  function! SingleQuote(s)
+    return "'" . substitute(a:s, "'", "'\\\\''", 'g') . "'"
+  endfunction
+endif
 
 function! Trim()
   normal m`
