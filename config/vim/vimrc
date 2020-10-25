@@ -281,11 +281,11 @@ endfunction
 
 if has("win32")
   function! ListDir(s)
-    return systemlist('dir /b ' . SingleQuote(s))
+    return systemlist('dir /b ' . QuotePath(a:s))
   endfunction
 else
   function! ListDir(s)
-    return systemlist('ls -1 ' . SingleQuote(s))
+    return systemlist('ls -1 ' . QuotePath(a:s))
   endfunction
 endif
 
@@ -301,11 +301,11 @@ function! SaveSession()
 endfunction
 
 if has("win32")
-  function! SingleQuote(s)
+  function! QuotePath(s)
     return "\"" . substitute(substitute(a:s, "/", "\\", 'g'), "\"", "'\\\\\"\"", 'g') . "\""
   endfunction
 else
-  function! SingleQuote(s)
+  function! QuotePath(s)
     return "'" . substitute(a:s, "'", "'\\\\''", 'g') . "'"
   endfunction
 endif
@@ -325,7 +325,7 @@ function! WriteTempIfEmpty()
     let l:date = systemlist('date -Isec')[0]
     let l:temp_path_prefix = g:buffersdir . '/' . l:epoch . "-XXXX"
     let l:temp_path_suffix = '-' . l:date . ' ' . l:title
-    let l:temp_path = systemlist('mktemp ' . SingleQuote(l:temp_path_prefix) . ' --suffix=' . SingleQuote(l:temp_path_suffix))[0]
+    let l:temp_path = systemlist('mktemp ' . QuotePath(l:temp_path_prefix) . ' --suffix=' . QuotePath(l:temp_path_suffix))[0]
     execute 'write!' escape(l:temp_path, " \"'.")
   endif
 endfunction
@@ -424,14 +424,14 @@ if has("autocmd")
   autocmd BufEnter * if &filetype == "" | setlocal filetype=text | endif
 
   " Run a file type based script
-  let types = systemlist('ls -1 ' . SingleQuote($VIM_CONFIG_DIR . '/scripts/filetype-config'))
+  let types = ListDir($VIM_CONFIG_DIR . '/scripts/filetype-config')
   for type in types
     let type = substitute(type, '.vim$', '', '')
     execute 'autocmd FileType ' . type . ' runtime scripts/filetype-config/' . type . '.vim'
   endfor
 
   " New file templates
-  let types = systemlist('ls -1 ' . SingleQuote($VIM_CONFIG_DIR . '/templates'))
+  let types = ListDir($VIM_CONFIG_DIR . '/templates')
   for type in types
     let type = substitute(type, '.tpl$', '', '')
     execute 'autocmd BufNewFile *.' . type . ' 0r ' . escape($VIM_CONFIG_DIR . '/templates/' . type . '.tpl', " \"'.")
