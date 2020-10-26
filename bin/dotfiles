@@ -20,6 +20,8 @@ case "$subcommand" in
         "${EDITOR:-vim}" \
             "${DOTFILES_ENV_HOME:-$HOME}/.dotfiles.env" \
             "$DOTFILES_HOME/custom/dotfiles.env" \
+            "$(custom-env-resolve 'config/marks.tsv')" \
+            "$(custom-env-resolve 'config/dotfiles/shellrc/hooks/post-shellrc.sh')" \
             "$DOTFILES_HOME/config/shellrc" \
             "$DOTFILES_HOME/config/vim/vimrc" \
             "$DOTFILES_HOME/config/i3/config" \
