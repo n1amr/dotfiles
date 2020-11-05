@@ -1,38 +1,52 @@
 [alias]
+    # Short names
     a = add
     br = branch
     c = commit
     co = checkout
-    current-branch = rev-parse --abbrev-ref HEAD
     df = diff
-    f = fetch -v --all
-    mtv = mergetool --tool customVimMergeTool
-    mt = mergetool --tool customVimMergeToolMin
     pick = cherry-pick
     st = status
 
+    cor = "!git checkout-remote"
+    cs = "!git create-stash"
+    go = "!f() { git-browse \"$@\"; }; f"
+    next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"
+    rbb = "!f() { count=\"$1\"; shift; git rebase -i \"$@\" \"HEAD~${count}\"; }; f"
+    rbon = "!git rebase-on"
+    rrb = "!git redo-rebase-on"
+
+    # Simple
+    current-branch = rev-parse --abbrev-ref HEAD
+    f = fetch -v --all
     l = log --graph --pretty=longline
     ll = log --graph
     lp = log --graph --patch
+    mt = mergetool --tool customVimMergeToolMin
+    mtv = mergetool --tool customVimMergeTool
+    prev = checkout HEAD~
+    rb = rebase -i
+    rbc = rebase --continue
     rl = log --walk-reflogs --pretty=reflog-short
     rll = log --walk-reflogs --pretty=reflog-long
 
-    rb = rebase -i
-    rbc = rebase --continue
-    rbon = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
-    rrb = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
+    # External scripts
+    create-github = "!git-create-github"
+    create-gitlab = "!git-create-gitlab"
 
-    rbb = "!f() { count=\"$1\"; shift; git rebase -i \"$@\" \"HEAD~${count}\"; }; f"
-    go = "!f() { git-browse \"$@\"; }; f"
-    create-github = "!f() { git-create-github \"$@\"; }; f"
-    create-gitlab = "!f() { git-create-gitlab \"$@\"; }; f"
-    next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"
-    prev = checkout HEAD~
-    recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
-    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
+    # Functions
     author-date = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f"
     backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"Created tag: $tag_name\"; }; f"
-    init-root = "!f() { git init; git commit --allow-empty -m \"Root Commit\"; }; f"
+    stash-all = "!f() { ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\" && return 1; git stash -u; }; f"
+    checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
+    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
+    create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
+    init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
+    is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
+    is-index-empty = "!f() { test -z \"$(git diff-index --name-only HEAD)\"; }; f"
+    rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
+    recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
+    redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
 
 [core]
     editor = vim
