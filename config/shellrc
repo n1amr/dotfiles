@@ -85,6 +85,7 @@ if [ "$SHELLNAME" = zsh ]; then
     export DISABLE_UNTRACKED_FILES_DIRTY="true"
     export ZSH_DISABLE_COMPFIX=true
     export HIST_STAMPS='' # "%Y-%m-%d %H:%M:%S"
+    export DISABLE_AUTO_UPDATE='true'
 
     export plugins=(
         common-aliases
