@@ -43,7 +43,7 @@
     create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
     init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
     is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
-    is-index-empty = "!f() { test -z \"$(git diff-index --name-only HEAD)\"; }; f"
+    is-index-empty = "!f() { test -z \"$(git diff-index --cached --name-only HEAD)\"; }; f"
     rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
