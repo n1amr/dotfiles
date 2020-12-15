@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -exec basename {} \;

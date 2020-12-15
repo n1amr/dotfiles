@@ -145,7 +145,7 @@ export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
 
 export LANG="${LANG:-en_US.UTF-8}"
 
-export DOTFILES_CD_REG_PATH='/tmp/dotfiles/cd-reg'
+export DOTFILES_TEMP_PATHS_STORE_PATH='/tmp/dotfiles/temp_paths'
 
 ################################################################################
 #################################  Functions  ##################################
@@ -206,43 +206,6 @@ cdd () {
 
 cdf () {
     diff -u "$1" "$2" | colordiff | less -FRX
-}
-
-cdlist () {
-    keys=()
-    while IFS= read -d '' -r file; do
-        keys+=("$(basename "$file")")
-    done < <(find "$DOTFILES_CD_REG_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
-
-    for key in "${keys[@]}"; do
-        value="$(cdg "$key")"
-        echo "[$key] -> $value"
-    done
-}
-
-cdclear () {
-    find "$DOTFILES_CD_REG_PATH" -mindepth 1 -print -delete
-}
-
-cds () {
-    mkdir -p "$DOTFILES_CD_REG_PATH"
-    key="${1:-default}"
-    value="$(realpath "${2:-.}")"
-    echo "$value" > "$DOTFILES_CD_REG_PATH/$key"
-    echo "[$key] -> $value"
-}
-
-cdg () {
-    key="${1:-default}"
-    value="$(cat "$DOTFILES_CD_REG_PATH/$key")"
-    echo "$value"
-}
-
-cdl () {
-    key="${1:-default}"
-    value="$(cdg "$key")"
-    echo "cd [$key] -> $value"
-    cd "$value"
 }
 
 cdtree () {
@@ -488,6 +451,55 @@ targz () {
     fi
 }
 
+tp_init () {
+    mkdir -p "$DOTFILES_TEMP_PATHS_STORE_PATH"
+}
+
+tp_cd () {
+    tp_init
+    key="${1:-default}"
+    value="$(tp_get "$key")"
+    [[ -n "$value" ]] && {
+        echo "cd [$key] -> $value"
+        cd "$value"
+    }
+}
+
+tp_flush () {
+    tp_init
+    tp_list
+    find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -print -delete > /dev/null
+}
+
+tp_get () {
+    tp_init
+    key="${1:-default}"
+    value="$(cat "$DOTFILES_TEMP_PATHS_STORE_PATH/$key")"
+    echo "$value"
+}
+
+tp_list () {
+    tp_init
+    key="${1:-default}"
+    keys=()
+    while IFS= read -d '' -r file; do
+        keys+=("$(basename "$file")")
+    done < <(find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
+
+    for key in "${keys[@]}"; do
+        value="$(tp_get "$key")"
+        echo "[$key] -> $value"
+    done
+}
+
+tp_set () {
+    tp_init
+    key="${1:-default}"
+    value="$(realpath "${2:-.}")"
+    echo "$value" > "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+    echo "[$key] -> $value"
+}
+
 zipc () {
     local name="$(echo "$1" | sed 's/\/\+$//')"
     if [[ "$2" = '--' ]]; then
@@ -576,6 +588,7 @@ alias bakgz='bak --gzip'
 alias bakmv='bak --move'
 alias beep='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/bell.ogg"'
 alias c='clipboard'
+alias cdtp='tp_cd'
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
@@ -629,7 +642,7 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias myips='ip addr | grep -Po '\''inet6? (addr:)?\s?((([0-9]+\.){3}[0-9]+)|[a-fA-F0-9:]+)'\'' | awk '\''{ sub(/inet6? (addr:)? ?/, ""); print }'\'''
 alias nmcli='nmcli -a'
 alias o='gui-open'
-alias ord='cdl ranger'
+alias ord='tpg ranger'
 alias p='ipython'
 alias pdfjoin='pdfjoin --paper a4paper --rotateoversize false'
 alias ps='__dotfiles_ps'
@@ -653,6 +666,10 @@ alias t-display-restore='tmux setenv -g DISPLAY :0'
 alias t='tmux'
 alias tf='tail -F'
 alias tmain='tmux-session main'
+alias tpcd='tp_cd'
+alias tpg='tp_get'
+alias tpl='tp_list'
+alias tps='tp_set'
 alias tsn='tmux-session'
 alias tssh='tmux-session ssh'
 alias u='up'

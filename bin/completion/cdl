@@ -1,3 +1,0 @@
-#!/bin/bash
-
-find "$DOTFILES_CD_REG_PATH" -mindepth 1 -maxdepth 1 -type f -exec basename {} \;

@@ -53,7 +53,7 @@ bind '"\C-xr" "\C-e\C-uexec \"${SHELLNAME:-$SHELL}\"\C-j\C-y"'
 bind '"\C-xw" "\C-e\C-u\"\$(\C-y)\"\C-a"'
 bind '"\C-xp" "\"\$(wslpath )\"\C-b\C-b"'
 bind '"\C-xP" "\"\$(wslpath '\'''\'')\"\C-b\C-b"'
-bind '"\C-xg" "\"\$(cdg )\"\C-b\C-b"'
+bind '"\C-xg" "\"\$(tpg )\"\C-b\C-b"'
 
 # git
 bind '"\C-gd" "\C-e\C-ugit diff\C-j\C-y"'
