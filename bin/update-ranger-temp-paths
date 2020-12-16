@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+source ~/.dotfiles.env
+
+# Config locations
+store_path="$DOTFILES_TEMP_PATHS_STORE_PATH"
+
+[[ ! -d "$store_path" ]] && exit
+
+ranger_output="$HOME/.ranger-temp-paths.conf"
+
+format () {
+    while IFS= read -d '' -r file; do
+        keys+=("$(basename "$file")")
+    done < <(find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
+    for key in "${keys[@]}"; do
+        echo -e "$key\t$(cat "$DOTFILES_TEMP_PATHS_STORE_PATH/$key")"
+    done
+}
+
+# Add marks to ranger config
+( format | sort -r | awk -F'\t' '''
+    {printf "# %s => %s\n", $1, $2}
+
+    {printf "map g,,%s; cd %s\n", $1, $2}
+
+    {printf "map ,,%s;g cd %s\n", $1, $2}
+    {printf "map ,,%s;t chain tab_new; cd %s\n", $1, $2}
+    {printf "map ,,%s;m shell mv -v %%s \"%s\"\n", $1, $2}
+    {printf "map ,,%s;y shell cp -rv %%s \"%s\"\n", $1, $2}
+
+    {printf "\n"}
+''') > "$ranger_output"
+
+find_or_append () {
+    file="$1"
+    shift
+    line="$@"
+    if ! grep -q "$line" "$file" > /dev/null 2>&1; then
+        echo "$line" >> "$file"
+    fi
+}
+find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-temp-paths.conf'

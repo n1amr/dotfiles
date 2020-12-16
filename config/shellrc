@@ -146,6 +146,12 @@ export SUDO_PROMPT=${SUDO_PROMPT:-"[sudo] password for %u on %h: "}
 export LANG="${LANG:-en_US.UTF-8}"
 
 export DOTFILES_TEMP_PATHS_STORE_PATH='/tmp/dotfiles/temp_paths'
+if [[ ! -d "$DOTFILES_TEMP_PATHS_STORE_PATH" ]]; then
+    mkdir -p "$DOTFILES_TEMP_PATHS_STORE_PATH"
+fi
+if [[ ! -f ~/.ranger-temp-paths.conf ]]; then
+    "$DOTFILES_HOME/bin/update-ranger-temp-paths" > /dev/null
+fi
 
 ################################################################################
 #################################  Functions  ##################################
