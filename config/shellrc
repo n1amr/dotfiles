@@ -498,6 +498,12 @@ tp_list () {
     done
 }
 
+tp_remove () {
+    tp_init
+    key="${1:-default}"
+    rm -fv "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+}
+
 tp_set () {
     tp_init
     key="${1:-default}"
@@ -676,6 +682,7 @@ alias tp='tp_cd'
 alias tpcd='tp_cd'
 alias tpg='tp_get'
 alias tpl='tp_list'
+alias tpr='tp_remove'
 alias tps='tp_set'
 alias tsn='tmux-session'
 alias tssh='tmux-session ssh'
