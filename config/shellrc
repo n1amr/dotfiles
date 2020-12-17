@@ -301,10 +301,15 @@ json () {
 }
 
 jump () {
-    cd -P "$DOTFILES_MARKS_PATH/$1" 2>/dev/null || {
-        echo "No such mark: $1"
+    jump_mark "$1" || tp_cd "$1" ||
+    {
+        echo "No such mark or temp path: $1" >&2
         return 1
     }
+}
+
+jump_mark () {
+    [[ -d "$DOTFILES_MARKS_PATH/$1" ]] && cd -P "$DOTFILES_MARKS_PATH/$1" || return 1
 }
 
 keybindings () {
@@ -678,7 +683,7 @@ alias t-display-restore='tmux setenv -g DISPLAY :0'
 alias t='tmux'
 alias tf='tail -F'
 alias tmain='tmux-session main'
-alias tp='tp_cd'
+alias tp='tp_get'
 alias tpcd='tp_cd'
 alias tpg='tp_get'
 alias tpl='tp_list'

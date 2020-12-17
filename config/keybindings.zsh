@@ -58,7 +58,7 @@ bindkey -s "^Xr" "^Qexec \"\${SHELLNAME:-\$SHELL}\"^M"
 bindkey -s "^Xw" "^E^U\"\$(^Y)\"^A"
 bindkey -s "^Xp" "\"\$(wslpath )\"^B^B"
 bindkey -s "^XP" "\"\$(wslpath '')\"^B^B^B"
-bindkey -s "^Xg" "\"\$(tpg )\"^B^B"
+bindkey -s "^Xg" "\"\$(tp )\"^B^B"
 
 # git
 bindkey -s "^Gd" "^Qgit diff^M"

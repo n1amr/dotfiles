@@ -2,9 +2,16 @@
 
 results=()
 
+# Marks
 marks=($(marks list -s))
 for mark in "${marks[@]}"; do
     results+=("$mark")
 done
+
+# Temp paths
+while IFS= read key; do
+    results+=("$key")
+done < <(find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -exec basename {} \;)
+
 
 printf '%s\n' "${results[@]}"

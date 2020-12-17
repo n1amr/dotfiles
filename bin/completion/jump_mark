@@ -1,0 +1,10 @@
+#!/bin/bash
+
+results=()
+
+marks=($(marks list -s))
+for mark in "${marks[@]}"; do
+    results+=("$mark")
+done
+
+printf '%s\n' "${results[@]}"
