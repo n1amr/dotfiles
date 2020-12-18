@@ -5,10 +5,9 @@ set -e
 DOTFILES_HOME="$(dirname "$0")"
 . "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
-dir="$(realpath "$(dirname "$0")")"
+DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
 
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
-DOTFILES_HOME="$dir"
 DST_HOME="$HOME"
 DOTFILES_CUSTOM_REPO_URL='git@github.com:n1amr/dotfiles.custom'
 
@@ -72,9 +71,9 @@ export DOTFILES_HOME
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
 if [ "$interactive" = 'true' ]; then
-    safe_link () { "$dir/bin/ln-safe" "$@"; }
+    safe_link () { "$DOTFILES_HOME/bin/ln-safe" "$@"; }
 else
-    safe_link () { "$dir/bin/ln-safe" -f "$@"; }
+    safe_link () { "$DOTFILES_HOME/bin/ln-safe" -f "$@"; }
 fi
 
 DOTFILES_DIR="$DST_HOME/.dotfiles"
@@ -137,14 +136,17 @@ DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_ENV_HOME="$DST_HOME"
 DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 
-custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
-if [ -x "$custom_install" ]; then
-    export interactive
-    export DOTFILES_ENV
-    export DOTFILES_HOME
-    export DST_HOME
-    export DOTFILES_ENV_HOME
-    "$custom_install"
+export interactive
+export DOTFILES_ENV
+export DOTFILES_HOME
+export DST_HOME
+export DOTFILES_ENV_HOME
+global_custom_install="$DOTFILES_CUSTOM_DIR/custom_install"
+env_custom_install="$(custom-env-resolve 'custom_install')"
+if [ -x "$env_custom_install" ]; then
+    "$env_custom_install"
+elif [ -x "$global_custom_install" ]; then
+    "$global_custom_install"
 fi
 
 safe_link "$DST_HOME/.config/Code/User/" "$DOTFILES_HOME/config/vscode/User/"
