@@ -44,5 +44,7 @@ if [[ -f "$SSH_ENV" ]]; then
 fi
 
 if [[ -z "$SSH_AUTH_SOCK" ]] || ! check_socket_running "$SSH_AUTH_SOCK"; then
+    rm -f "$SSH_AUTH_SOCK"
+    rmdir "$(dirname "$SSH_AUTH_SOCK")"
     start_new_agent
 fi
