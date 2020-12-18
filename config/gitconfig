@@ -111,11 +111,6 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 [grep]
     linenumber = true
 
-[user]
-    name = Amr Alaa
-    email = n1amr1@gmail.com
-    signingkey = 7C837246
-
 [credential]
     helper = cache
 
@@ -152,3 +147,6 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
     release = release/
     support = support/
     versiontag = ""
+
+[include]
+    path = ~/.gitconfig.env

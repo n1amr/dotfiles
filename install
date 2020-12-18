@@ -156,6 +156,7 @@ safe_link "$DST_HOME/.config/ranger/rc.conf" "$DOTFILES_HOME/config/ranger/rc.co
 safe_link "$DST_HOME/.config/ranger/rifle.conf" "$DOTFILES_HOME/config/ranger/rifle.conf"
 safe_link "$DST_HOME/.config/ranger/scope.sh" "$DOTFILES_HOME/config/ranger/scope.sh"
 safe_link "$DST_HOME/.config/vlc/" "$DOTFILES_HOME/config/vlc/"
+safe_link "$DST_HOME/.gitconfig.env" "$(custom-env-resolve 'config/gitconfig.env')"
 safe_link "$DST_HOME/.ipython/profile_default/" "$DOTFILES_HOME/config/ipython/profile_default/"
 safe_link "$DST_HOME/.irssi/" "$DOTFILES_HOME/config/irssi/"
 safe_link "$DST_HOME/.marks.tsv" "$(custom-env-resolve 'config/marks.tsv')"
