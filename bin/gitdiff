@@ -10,22 +10,40 @@ on_exit () {
 
 trap on_exit EXIT INT
 
-filename='file'
+files=()
+args=()
+while [[ "$#" -gt 0 ]]; do
+    if [[ "$1" == '--' ]]; then
+        args=("${files[@]}")
+        files=()
+    else
+        files+=("$1")
+    fi
+    shift
+done
 
+files_count="${#files[@]}"
 {
     git -C "$repo" init
+    content_path="$repo/content"
 
-    cat "$1" > "$repo/$filename"
-    git -C "$repo" add "./$filename"
-    git -C "$repo" commit -m 'first' --allow-empty
+    previous_file=''
+    for idx in "${!files[@]}"; do
+        file="$(realpath "${files[$idx]}")"
+        cp -rv "$file" "$content_path"
+        git -C "$repo" add 'content'
+        git -C "$repo" commit --allow-empty -m "$previous_file --> $file"
 
-    git -C "$repo" rm -f "./$filename"
-
-    cat "$2" > "$repo/$filename"
-    git -C "$repo" add "./$filename"
-
+        if [[ "$(( $idx + 1 ))" != "$files_count" ]]; then
+            git -C "$repo" rm -rf 'content'
+        fi
+        previous_file="$file"
+    done
 } 1>&2
 
-shift
-shift
-git -C "$repo" diff --cached "$@"
+commits_count="$(( $files_count - 1 ))"
+{
+    echo "diff --git ${files[@]}"
+    echo '================================================================================'
+    git -C "$repo" log --reverse --patch "HEAD~$commits_count"..HEAD "${args[@]}"
+} | less
