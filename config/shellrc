@@ -453,6 +453,12 @@ reset_keybindings () {
     fi
 }
 
+ssha () {
+    for key in "$@"; do
+        ssh-add "$key"
+    done
+}
+
 targz () {
     local name="$(echo "$1" | sed 's/\/\+$//')"
     if [[ "$2" = '--' ]]; then

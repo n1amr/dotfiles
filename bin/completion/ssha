@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find ~/.ssh -name '*.pub' | sed 's/\.pub$//'
