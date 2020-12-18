@@ -218,5 +218,6 @@ HOME="$DST_HOME" "$DOTFILES_HOME/bin/update-marks"
 
 echo "Successful!"
 if [ "$interactive" = 'true' ]; then
-    exec "$SHELL"
+    echo ">> exec ${SHELLNAME:-$SHELL}"
+    exec "${SHELLNAME:-$SHELL}"
 fi

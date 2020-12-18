@@ -53,5 +53,4 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
 echo ">> $CURRENT_DOTFILES/bin/marks update"
 "$CURRENT_DOTFILES/bin/marks" update
 
-echo ">> exec ${SHELLNAME:-$SHELL}"
-exec "${SHELLNAME:-$SHELL}"
+"$CURRENT_DOTFILES/install" -f
