@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -eu
 
 DOTFILES_HOME="$(dirname "$0")"
 . "$DOTFILES_HOME/bin/lib/polyfills.sh"
@@ -190,36 +190,39 @@ generate_global_dotfiles_env () {
     echo "# ===== End ====="
 }
 
-DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles.env"
-if [ ! -f "$DOTFILES_ENV_FILE" ]; then
-    generate_global_dotfiles_env "$DOTFILES_ENV_FILE"
+GLOBAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/dotfiles.env"
+if [ ! -f "$GLOBAL_DOTFILES_ENV_FILE" ]; then
+    generate_global_dotfiles_env "$GLOBAL_DOTFILES_ENV_FILE"
 fi
 
-LOCAL_DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/dotfiles.env"
-if [ "$DOTFILES_ENV" != 'default' ]; then
-    if [ ! -f "$LOCAL_DOTFILES_ENV_FILE" ]; then
-        {
-            echo "#!/bin/sh"
-            echo
-            echo "export DOTFILES_ENV='$DOTFILES_ENV'"
-            echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
-            echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
-            echo "export DOTFILES_HOME='$DOTFILES_HOME'"
-            echo ". \"\$DOTFILES_HOME/custom/dotfiles.env\""
-            echo
-            echo "# Add environent dependent config in this file"
-        } > "$LOCAL_DOTFILES_ENV_FILE"
-    fi
+DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/dotfiles.env"
+if [ "$DOTFILES_ENV" != 'default' ] && [ ! -f "$DOTFILES_ENV_FILE" ]; then
+    {
+        echo "#!/bin/sh"
+        echo
+        echo "export DOTFILES_ENV='$DOTFILES_ENV'"
+        echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
+        echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
+        echo "export DOTFILES_HOME='$DOTFILES_HOME'"
+        echo ". \"\$DOTFILES_HOME/custom/dotfiles.env\""
+        echo
+        echo "# Add environent dependent config in this file"
+    } > "$DOTFILES_ENV_FILE"
 fi
-safe_link "$DST_HOME/.dotfiles.env" "$LOCAL_DOTFILES_ENV_FILE"
 
-HOME="$DST_HOME" "$DOTFILES_HOME/bin/update-marks"
+safe_link "$DST_HOME/.dotfiles.env" "$DOTFILES_ENV_FILE"
 
-# fzf install
-"$DOTFILES_HOME/thirdparty/fzf/install" --bin
+install () {
+    "$DOTFILES_HOME/bin/update-marks"
+
+    # fzf install
+    "$DOTFILES_HOME/thirdparty/fzf/install" --bin
+}
+
+HOME="$DST_HOME" install
 
 echo "Successful!"
 if [ "$interactive" = 'true' ]; then
     echo ">> exec ${SHELLNAME:-$SHELL}"
-    exec "${SHELLNAME:-$SHELL}"
+    HOME="$DST_HOME" exec "${SHELLNAME:-$SHELL}"
 fi
