@@ -4,6 +4,12 @@ set -e
 
 repo="$(mktemp -d /tmp/gitdiff-XXXXXXX)"
 
+on_exit () {
+    rm -rf "$repo"
+}
+
+trap on_exit EXIT INT
+
 filename='file'
 
 {
@@ -22,4 +28,4 @@ filename='file'
 
 shift
 shift
-git -C "$repo" diff --cached "$@" && rm -rf "$repo"
+git -C "$repo" diff --cached "$@"
