@@ -582,12 +582,6 @@ init_rbenv () {
 }
 [[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && init_rbenv
 
-init_rbenv () {
-    export PATH="$RBENV_ROOT/bin:$PATH"
-    export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
-    can_execute rbenv && eval "$(rbenv init -)"
-}
-
 [[ -n "${DOTFILES_CONFIG_TEXLIVE_BIN}" ]] && {
     export PATH="$DOTFILES_CONFIG_TEXLIVE_BIN:$PATH"
 }
