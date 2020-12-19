@@ -2,16 +2,17 @@
 
 source ~/.dotfiles.env
 
-CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-/tmp/clipboard}"
+CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-$DOTFILES_ENV_HOME/.clipboard}"
 
 copy  () { cat > "$CLIPBOARD_FILE"; }
 paste () { cat   "$CLIPBOARD_FILE"; }
+[[ ! -f "$CLIPBOARD_FILE" ]] && mkdir -p "$(dirname "$CLIPBOARD_FILE")" && touch "$CLIPBOARD_FILE"
+chown "$DOTFILES_ENV_USER" "$CLIPBOARD_FILE"
+chmod 600 "$CLIPBOARD_FILE"
 
 FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
-[[ "$FILE_ONLY_MODE" == 'true' ]] && [[ ! -f "$CLIPBOARD_FILE" ]] && touch "$CLIPBOARD_FILE"
-
 if [[ "$FILE_ONLY_MODE" != 'true' ]]; then
-    if which xsel > /dev/null 2>&1; then
+    if ( which xsel && xsel ) > /dev/null 2>&1; then
         copy  () { xsel -ib; }
         paste () { xsel -ob; }
     fi
