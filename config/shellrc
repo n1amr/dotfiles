@@ -88,14 +88,8 @@ if [ "$SHELLNAME" = zsh ]; then
     export DISABLE_AUTO_UPDATE='true'
 
     export plugins=(
-        common-aliases
-        dircycle
-        dirhistory
         dirpersist
-        git
-        history
         pip
-        rsync
         z
     )
 
@@ -619,6 +613,7 @@ alias f='find'
 alias fgrep='grep -F'
 alias g='grep'
 alias ga='git add'
+alias gaa='git add --all'
 alias gapa='git add --patch'
 alias gc='git commit -v'
 alias gcl='git clone --recursive'
@@ -701,18 +696,24 @@ alias xdu='ncdu -x'
 alias zshrc='"$EDITOR" "$DOTFILES_HOME/config/shellrc"'
 
 if [ "$SHELLNAME" = zsh ]; then
+    alias -g "E=| pipe_to_editor"
+    alias -g "G=| grep"
+    alias -g "H=| head"
+    alias -g "HLP= --help 2>&1 | pipe_to_visual"
+    alias -g "L=| less"
+    alias -g "P=| pipe"
+    alias -g "T=| tail"
+    alias -g "TV=| leak | pipe_to_visual"
+    alias -g "V=| pipe_to_visual"
+    alias -g "VS=| remove_color_codes | vim-server"
     alias -g 'A=2>&1'
     alias -g 'C=| clipboard'
     alias -g 'CS=| clipboard -s'
     alias -g 'G=| grep -P'
     alias -g 'LL=| less -FRX'
     alias -g 'S=| subl'
-    alias -g "E=| pipe_to_editor"
-    alias -g "V=| pipe_to_visual"
-    alias -g "TV=| leak | pipe_to_visual"
-    alias -g "VS=| remove_color_codes | vim-server"
-    alias -g "HLP= --help 2>&1 | pipe_to_visual"
-    alias -g "P=| pipe"
+    alias -g "NE='2> /dev/null'"
+    alias -g "NUL='> /dev/null 2>&1'"
 fi
 
 for i in {0..19}; do
