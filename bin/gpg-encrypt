@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -eu
+
+password=''
+
+if [[ "$#" -ge 4 ]]; then
+    case "$1" in
+        -p|--password)
+            password="$2"
+            shift
+            shift
+        ;;
+        *)
+            echo "Usage: $0 [<-p|--password> PASSWORD] INPUT OUTPUT" >&2
+            exit 1
+        ;;
+    esac
+fi
+input="$1"
+output="$2"
+
+while [[ -z "$password" ]]; do
+    echo -n "Enter password: "
+    read -s password1
+    echo
+    echo -n "Confirm password: "
+    read -s password2
+    echo
+    if [[ "$password1" != "$password2" ]]; then
+        echo "Passwords don't match. Try again"
+    elif [[ -z "$password1" ]]; then
+        echo "Password cannot be empty. Try again"
+    else
+        password="$password1"
+        break
+    fi
+done
+
+gpg --symmetric -a --batch --passphrase "$password" -o "$output" "$input"
+echo "$output"

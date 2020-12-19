@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -eu
+
+password=''
+
+if [[ "$#" -ge 4 ]]; then
+    case "$1" in
+        -p|--password)
+            password="$2"
+            shift
+            shift
+        ;;
+        *)
+            echo "Usage: $0 [<-p|--password> PASSWORD] INPUT OUTPUT" >&2
+            exit 1
+        ;;
+    esac
+fi
+input="$1"
+output="$2"
+
+if [[ -z "$password" ]]; then
+    echo -n "Enter password: "
+    read -s password
+    echo
+fi
+
+gpg --decrypt --batch --passphrase "$password" "$input" > "$output"
+echo "$output"
