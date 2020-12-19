@@ -121,6 +121,9 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 [push]
     default = upstream
 
+[pull]
+    ff = only
+
 [url "git@github.com:"]
     pushInsteadOf = "github:"
 
