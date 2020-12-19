@@ -42,30 +42,33 @@ if [[ ! -d "$SSH_HOME/" ]]; then
     chmod 700 "$SSH_HOME/"
 fi
 
-if [[ -n "$SSH_AUTH_SOCK" ]] &&
-        check_socket_running "$SSH_AUTH_SOCK" &&
-        ! echo "$SSH_AUTH_SOCK" | grep /keyring/ > /dev/null; then
-    # Agent socket is already running
-    return
-fi
+if [[ -z "$SSH_AUTH_SOCK" ]] ||
+        ! check_socket_running "$SSH_AUTH_SOCK" ||
+        echo "$SSH_AUTH_SOCK" | grep /keyring/ > /dev/null; then
+    if [[ -f "$SSH_ENV" ]]; then
+        source "$SSH_ENV" > /dev/null 2>&1
+    fi
 
-if [[ -f "$SSH_ENV" ]]; then
-    source "$SSH_ENV" > /dev/null 2>&1
-fi
+    if [[ -z "$SSH_AUTH_SOCK" ]] || ! check_socket_running "$SSH_AUTH_SOCK"; then
+        # # Don't clean if ssh-agent is running
+        # if [[ "$(command ps -p $SSH_AGENT_PID -o comm=)"  == 'ssh-agent' ]]; then
+        #     clean
+        # fi
 
-if [[ -z "$SSH_AUTH_SOCK" ]] || ! check_socket_running "$SSH_AUTH_SOCK"; then
-    # # Don't clean if ssh-agent is running
-    # if [[ "$(command ps -p $SSH_AGENT_PID -o comm=)"  == 'ssh-agent' ]]; then
-    #     clean
-    # fi
+        start_new_agent
 
-    start_new_agent
-
-    # Clean files on shell exit if socket cannot be tested
-    if ! check_socket_running "$SSH_AUTH_SOCK"; then
-        __load_ssh_agent_on_shell_exit() {
-            rm -f "$SSH_AUTH_SOCK"
-            rmdir "$(dirname "$SSH_AUTH_SOCK")"
-        }
+        # Clean files on shell exit if socket cannot be tested
+        if ! check_socket_running "$SSH_AUTH_SOCK"; then
+            __load_ssh_agent_on_shell_exit() {
+                rm -f "$SSH_AUTH_SOCK"
+                rmdir "$(dirname "$SSH_AUTH_SOCK")"
+            }
+        fi
     fi
 fi
+
+unset -f check_socket_running
+unset -f check_socket_running_using_ssh_add
+unset -f check_socket_running_using_nc
+unset -f supports_z_option
+unset -f start_new_agent
