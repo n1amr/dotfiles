@@ -1,6 +1,16 @@
 #!/bin/bash
 
 check_socket_running() {
+    check_socket_running_using_ssh_add
+}
+
+check_socket_running_using_ssh_add() {
+    ssh-add -l > /dev/null 2>&1
+    test "$?" != 2
+    return "$?"
+}
+
+check_socket_running_using_nc() {
     SOCK="$1"
     if supports_z_option; then
         nc -z -U "$SOCK" > /dev/null 2>&1
