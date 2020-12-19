@@ -86,6 +86,7 @@ if [ "$SHELLNAME" = zsh ]; then
     export ZSH_DISABLE_COMPFIX=true
     export HIST_STAMPS='' # "%Y-%m-%d %H:%M:%S"
     export DISABLE_AUTO_UPDATE='true'
+    export DIRSTACKSIZE='100'
 
     export plugins=(
         dirpersist
@@ -716,8 +717,10 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "NUL='> /dev/null 2>&1'"
 fi
 
-for i in {0..19}; do
+i=0
+while [[ "$i" -lt "$DIRSTACKSIZE" ]]; do
     alias "$i=cd -$i"
+    i="$(( $i + 1 ))"
 done
 
 if [[ ! -f ~/.marks.sh ]] ||
