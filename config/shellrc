@@ -867,3 +867,17 @@ block_caret
 
 run_custom_hook 'post-shellrc'
 deduplicate_env_paths
+
+################################################################################
+################################### Cleanup  ###################################
+
+exit_traps=(
+    __load_ssh_agent_on_shell_exit
+)
+
+__dotfiles_shell_exit_trap () {
+    for trap_name in "${exit_traps[@]}"; do
+        type "$trap_name" > /dev/null 2>&1 && "$trap_name" || true
+    done
+}
+trap __dotfiles_shell_exit_trap EXIT

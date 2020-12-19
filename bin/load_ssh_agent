@@ -44,7 +44,18 @@ if [[ -f "$SSH_ENV" ]]; then
 fi
 
 if [[ -z "$SSH_AUTH_SOCK" ]] || ! check_socket_running "$SSH_AUTH_SOCK"; then
-    rm -f "$SSH_AUTH_SOCK"
-    rmdir "$(dirname "$SSH_AUTH_SOCK")"
+    # # Don't clean if ssh-agent is running
+    # if [[ "$(command ps -p $SSH_AGENT_PID -o comm=)"  == 'ssh-agent' ]]; then
+    #     clean
+    # fi
+
     start_new_agent
+
+    # Clean files on shell exit if socket cannot be tested
+    if ! check_socket_running "$SSH_AUTH_SOCK"; then
+        __load_ssh_agent_on_shell_exit() {
+            rm -f "$SSH_AUTH_SOCK"
+            rmdir "$(dirname "$SSH_AUTH_SOCK")"
+        }
+    fi
 fi
