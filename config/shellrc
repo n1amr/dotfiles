@@ -445,6 +445,17 @@ reset_keybindings () {
     fi
 }
 
+silent_background () {
+    if [ "$SHELLNAME" = zsh ]; then
+        setopt local_options no_notify no_monitor
+        "$@" &
+    elif [ "$SHELLNAME" = bash ]; then
+        { 2>&3 "$@" & } 3>&2 2>/dev/null
+    else  # Unknownness - just background it
+        "$@" &
+    fi
+}
+
 ssha () {
     for key in "$@"; do
         ssh-add "$key"
@@ -573,24 +584,34 @@ export LDFLAGS="-L$BUILD_PREFIX/lib $LDFLAGS"
 export LD_LIBRARY_PATH="$BUILD_PREFIX/lib:$LD_LIBRARY_PATH"
 export PATH="$BUILD_PREFIX/bin:$PATH"
 
+__dotfiles_init () {
+    local background="${DOTFILES_CONFIG_BACKGROUND_INIT:-false}"
+    if [[ "$background" = 'true' ]]; then
+        silent_background "$1"
+        echo "Initialiing $1 in background..."
+    else
+        "$1"
+    fi
+}
+
 init_ndenv () {
     export PATH="$NDENV_ROOT/bin:$PATH"
     can_execute ndenv && eval "$(ndenv init -)"
 }
-[[ "${DOTFILES_CONFIG_ENABLE_NDENV:-true}" == 'true' ]] && init_ndenv
+[[ "${DOTFILES_CONFIG_ENABLE_NDENV:-true}" == 'true' ]] && __dotfiles_init init_ndenv
 
 init_pyenv () {
     export PATH="$PYENV_ROOT/bin:$PATH"
     can_execute pyenv && eval "$(pyenv init -)"
 }
-[[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && init_pyenv
+[[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && __dotfiles_init init_pyenv
 
 init_rbenv () {
     export PATH="$RBENV_ROOT/bin:$PATH"
     export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
     can_execute rbenv && eval "$(rbenv init -)"
 }
-[[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && init_rbenv
+[[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && __dotfiles_init init_rbenv
 
 [[ -n "${DOTFILES_CONFIG_TEXLIVE_BIN}" ]] && {
     export PATH="$DOTFILES_CONFIG_TEXLIVE_BIN:$PATH"
@@ -865,7 +886,7 @@ eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
 init_ssh () {
     source load_ssh_agent
 }
-[[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && init_ssh
+[[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && __dotfiles_init init_ssh
 
 if [ "$SHELLNAME" = zsh ]; then
     source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
