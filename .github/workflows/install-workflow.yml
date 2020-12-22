@@ -1,0 +1,101 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Install ${{ matrix.params.env }}
+
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    container: ubuntu:18.04
+
+    strategy:
+      matrix:
+        params:
+        - env: default
+          user: n1amr
+        - env: dell
+          user: n1amr
+        - env: toshiba
+          user: n1amr
+        - env: pi
+          user: pi
+        - env: ms
+          user: amralaa
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+      - name: '[Pre] Clone custom config repository'
+        shell: bash
+        run: |
+          rm -rfv ./dotfiles/custom
+
+      - name: 'Clone custom config repository'
+        uses: actions/checkout@v1
+        with:
+          repository: n1amr/dotfiles.custom
+          ref: refs/heads/master
+          submodules: true
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          path: ./dotfiles/custom
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y git curl zsh bash
+
+      - name: Add user
+        shell: bash
+        run: |
+          mkdir -pv /home
+          useradd -s /bin/zsh -d "/home/${{ matrix.params.user }}" -m -G sudo "${{ matrix.params.user }}"
+
+      - name: Install dotfiles
+        env:
+          DOTFILES_CUSTOM_REPO_URL: 'https://github.com/n1amr/dotfiles.custom'
+          USER: ${{ matrix.params.user }}
+          HOME: /home/${{ matrix.params.user }}
+          DOTFILES_ENV: ${{ matrix.params.env }}
+        run: |
+          ./install -f
+
+      - name: List files
+        shell: bash
+        run: |
+          find "/home/${{ matrix.params.user }}" | sort
+
+      # - name: Set git credentials
+      #   shell: bash
+      #   env:
+      #     GIT_ASKPASS: /askpass
+      #     GIT_PASSWORD: ${{ secrets.REPO_ACCESS_TOKEN }}
+      #   run: |
+      #     echo -e "#!/bin/sh\n
+      #       exec echo \"$GIT_PASSWORD\"" > "$GIT_ASKPASS"
+      #     cat "$GIT_ASKPASS"
+      #     chmod +x "$GIT_ASKPASS"
+      #     # git config credential.helper '!f() { sleep 1; echo "username=${GITHUB_REPOSITORY_OWNER}"; echo "password=${GIT_PASSWORD}"; }; f'
+
+      # - name: Update dotfiles
+      #   env:
+      #     USER: ${{ matrix.params.user }}
+      #     HOME: /home/${{ matrix.params.user }}
+      #   run: |
+      #     zsh -i -c 'dotfiles update'
+
+      # - name: List files
+      #   shell: bash
+      #   run: |
+      #     find "/home/${{ matrix.params.user }}" | sort
