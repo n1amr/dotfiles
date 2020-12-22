@@ -9,7 +9,7 @@ DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
 
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DST_HOME="$HOME"
-DOTFILES_CUSTOM_REPO_URL='git@github.com:n1amr/dotfiles.custom'
+DOTFILES_CUSTOM_REPO_URL="${DOTFILES_CUSTOM_REPO_URL:-git@github.com:n1amr/dotfiles.custom}"
 
 interactive='true'
 
@@ -58,13 +58,20 @@ if [ "$interactive" = 'true' ]; then
     fi
 fi
 
-set +e && (
-    [ ! -d "$DOTFILES_HOME/custom" ] && (
-        cd "$DOTFILES_HOME"
-        echo "dotfiles: Cloning custom repo to dotfiles"
-        git clone "$DOTFILES_CUSTOM_REPO_URL" 'custom'
+bakmv () {
+    mv -v "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
+}
+
+DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
+set +e
+(
+    [ ! -e "$DOTFILES_CUSTOM_DIR/.git" ] && (
+        [ -e "$DOTFILES_CUSTOM_DIR" ] && bakmv "$DOTFILES_CUSTOM_DIR"
+        echo "dotfiles: Cloning custom repo to dotfiles..."
+        git clone -v --recursive "$DOTFILES_CUSTOM_REPO_URL" "$DOTFILES_CUSTOM_DIR"
     )
-); set -e
+)
+set -e
 
 export DOTFILES_ENV
 export DOTFILES_HOME
@@ -79,13 +86,12 @@ fi
 DOTFILES_DIR="$DST_HOME/.dotfiles"
 if [ ! "$DOTFILES_DIR" -ef "$DOTFILES_HOME" ]; then
     if [ -e "$DOTFILES_DIR" ]; then
-        mv "$DOTFILES_DIR" "${DOTFILES_DIR}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        bakmv "$DOTFILES_DIR"
     fi
     ln -sf "$DOTFILES_HOME" "$DOTFILES_DIR"
     # DOTFILES_HOME="$DOTFILES_DIR"
 fi
 
-DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
 mkdir -pv "$DOTFILES_CUSTOM_DIR"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/bin"
 mkdir -pv "$DOTFILES_CUSTOM_DIR/config/dotfiles"
@@ -195,7 +201,12 @@ if [ ! -f "$GLOBAL_DOTFILES_ENV_FILE" ]; then
     generate_global_dotfiles_env "$GLOBAL_DOTFILES_ENV_FILE"
 fi
 
-DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/dotfiles.env"
+if [ "$DOTFILES_ENV" != 'default' ]; then
+    DOTFILES_ENV_FILE="$DOTFILES_CUSTOM_DIR/env/$DOTFILES_ENV/dotfiles.env"
+else
+    DOTFILES_ENV_FILE="$GLOBAL_DOTFILES_ENV_FILE"
+fi
+
 if [ "$DOTFILES_ENV" != 'default' ] && [ ! -f "$DOTFILES_ENV_FILE" ]; then
     {
         echo "#!/bin/sh"

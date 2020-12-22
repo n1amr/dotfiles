@@ -1,7 +1,18 @@
+# My repos
 [submodule "config/sublime-text-3"]
     path = config/sublime-text-3
-    url = https://gitlab.com/n1amr/sublime-text-3-config.git
+    url = https://github.com/n1amr/sublime-text-3.config.git
     branch = master
+[submodule "notes"]
+    path = notes
+    url = https://github.com/n1amr/dotfiles.notes.git
+    branch = master
+[submodule "thirdparty/binaries"]
+    path = thirdparty/binaries
+    url = https://github.com/n1amr/dotfiles.binaries.git
+    branch = master
+
+# Thirdpart repos
 [submodule "config/vim/bundle/auto-pairs"]
     path = config/vim/bundle/auto-pairs
     url = https://github.com/jiangmiao/auto-pairs
@@ -32,7 +43,7 @@
     branch = master
 [submodule "config/vim/bundle/vim-closetag"]
     path = config/vim/bundle/vim-closetag
-    url = git@github.com:alvan/vim-closetag
+    url = https://github.com/alvan/vim-closetag
     branch = master
 [submodule "config/vim/bundle/vim-markdown"]
     path = config/vim/bundle/vim-markdown
@@ -45,14 +56,6 @@
 [submodule "config/vim/bundle/vim-theme-chroma"]
     path = config/vim/bundle/vim-theme-chroma
     url = https://github.com/crater2150/vim-theme-chroma
-    branch = master
-[submodule "notes"]
-    path = notes
-    url = https://github.com/n1amr/dotfiles.notes.git
-    branch = master
-[submodule "thirdparty/binaries"]
-    path = thirdparty/binaries
-    url = https://github.com/n1amr/dotfiles.binaries.git
     branch = master
 [submodule "thirdparty/dunst"]
     path = thirdparty/dunst
