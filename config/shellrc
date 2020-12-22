@@ -153,6 +153,7 @@ fi
 
 # Sourced functions
 source "$DOTFILES_HOME/bin/lib/can_execute"
+source "$DOTFILES_HOME/bin/singlequote"
 
 __dotfiles_command_not_found_handler () {
     if [[ -x /usr/lib/command-not-found ]]; then
@@ -460,56 +461,70 @@ targz () {
 }
 
 tp_init () {
-    mkdir -p "$DOTFILES_TEMP_PATHS_STORE_PATH"
+    [[ ! -d "$DOTFILES_TEMP_PATHS_STORE_PATH" ]] &&
+        mkdir -p "$DOTFILES_TEMP_PATHS_STORE_PATH"
 }
 
 tp_cd () {
     tp_init
-    key="${1:-default}"
-    value="$(tp_get "$key")"
-    [[ -n "$value" ]] && {
-        echo "cd [$key] -> $value"
+    local key="${1:-default}"
+    local value="$(tp_get "$key")" && {
         cd "$value"
+        echo "cd [$key] -> $value"
     }
 }
 
 tp_flush () {
     tp_init
-    tp_list
+    tp_list -e
     find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -print -delete > /dev/null
 }
 
 tp_get () {
     tp_init
-    key="${1:-default}"
-    value="$(cat "$DOTFILES_TEMP_PATHS_STORE_PATH/$key")"
-    echo "$value"
+    local key="${1:-default}"
+    local file="$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+    if [[ -f "$file" ]] && local value="$(cat "$file")" && [[ -n "$value" ]]; then
+        echo "$value"
+    else
+        echo "temp path doesn't exist: $key. Press ctrl-c to abort" >&2
+        while read -s ignored; do
+            echo "Press ctrl-c to abort" >&2
+        done
+    fi
 }
 
 tp_list () {
     tp_init
-    key="${1:-default}"
-    keys=()
+    print_item () { echo "[$1] -> $2"; }
+    [[ "$1" == '-e' ]] && print_item () {
+        echo "tp_set $(singlequote "$1") $(singlequote "$2")"
+    }
+
+    local keys=()
     while IFS= read -d '' -r file; do
         keys+=("$(basename "$file")")
     done < <(find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
 
+    local key
     for key in "${keys[@]}"; do
-        value="$(tp_get "$key")"
-        echo "[$key] -> $value"
+        local value="$(tp_get "$key")"
+        print_item "$key" "$value"
     done
+
+    unset -f print_item
 }
 
 tp_remove () {
     tp_init
-    key="${1:-default}"
+    local key="${1:-default}"
     rm -fv "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
 }
 
 tp_set () {
     tp_init
-    key="${1:-default}"
-    value="$(realpath "${2:-.}")"
+    local key="${1:-default}"
+    local value="$(realpath "${2:-.}")"
     echo "$value" > "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
     echo "[$key] -> $value"
 }
