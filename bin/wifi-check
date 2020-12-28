@@ -4,8 +4,15 @@ source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/log"
 PATH="$DOTFILES_HOME/bin:$PATH"
 
-WIFI_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/wifi-check-list"
-[ -f "$WIFI_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$WIFI_LIST_FILE"
+config_file="$DOTFILES_HOME/custom/config/dotfiles/wifi-check-list.sh"
+[ -f "$config_file" ] || {
+    echo "#!/bin/sh"
+    echo "set -eu"
+    echo "# Enter wifi SSID list here"
+    echo "wifi_ordered_list=("
+    echo ")"
+} > "$config_file"
+source "$config_file"
 
 DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"
 
@@ -27,25 +34,49 @@ disconnect() {
     fi
 }
 
-info "status: $(status)"
-if [ "$(status)" = "connected" ] && testnet > /dev/null 2>&1; then
-    info "connected to: $(active_connection)"
-    exit 0
-else
-    disconnect
+testnet_and_exit () {
+    current_status="$(status)"
+    current_active_connection="$(active_connection)"
+    info "Status: $current_status, Active connection: $current_active_connection"
+    info "Testing internet access..."
+    testnet > /dev/null 2>&1
+    testnet_status="$?"
+    if [[ "$testnet_status" = '0' ]]; then
+        info "Has access to internet using \"$current_active_connection\""
+        exit 0
+    else
+        error "Has no access to internet using \"$current_active_connection\""
+        return 1
+    fi
+}
+
+current_status="$(status)"
+if [[ "$(status)" = "connected" ]]; then
+    current_active_connection="$(active_connection)"
+    info "Connected to $current_active_connection"
+    for id in "${wifi_keep_connected[@]}"; do
+        if [[ "$current_active_connection" == "$id" ]]; then
+            testnet_and_exit || break
+        fi
+    done
 fi
 
-while IFS= read -r line; do
-    [ "$(status)" = "connected" ] && break
-    (echo "$line" | grep -Pq '^(#.*|\s*)$') && continue
-    id="$line"
-    info "connecting to \"$id\"..."
-    timeout 5s nmcli connection up id "$id"
-done < "$WIFI_LIST_FILE"
+for id in "${wifi_ordered_list[@]}"; do
+    current_status="$(status)"
+    info "Testing connection \"$id\""
+    if [[ "$(status)" = "connected" ]]; then
+        current_active_connection="$(active_connection)"
+        if [[ "$current_active_connection" = "$id" ]]; then
+            info "Already connected to $current_active_connection"
+        fi
+    else
+        info "Connecting to \"$id\"..."
+        timeout 5s nmcli connection up id "$id"
 
-if [ "$(status)" = "connected" ] && testnet > /dev/null 2>&1; then
-    info "successfully connected to $(active_connection)"
-else
-    error "could not connect"
-    exit 1
-fi
+        info "Connected to \"$id\""
+    fi
+    testnet_and_exit
+done
+
+error "All possible connections failed."
+testnet_and_exit
