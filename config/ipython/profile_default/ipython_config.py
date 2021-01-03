@@ -22,6 +22,8 @@ c.TerminalInteractiveShell.true_color = True
 
 c.TerminalIPythonApp.display_banner = False
 
+c.Completer.use_jedi = False
+
 # # Enable Powerline prompt
 # from powerline.bindings.ipython.since_5 import PowerlinePrompts
 #
