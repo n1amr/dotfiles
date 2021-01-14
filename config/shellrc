@@ -215,6 +215,10 @@ cdtree () {
     tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
 }
 
+cpd () {
+    dst="${@: -1}"
+    mkdir -pv "$dst" && cp -v "$@"
+}
 
 d () {
 	if [[ -n $1 ]]; then
@@ -331,6 +335,11 @@ mdd () {
 
 mkcd () {
     mkdir -pv "$@" && cd "$1"
+}
+
+mvd () {
+    dst="${@: -1}"
+    mkdir -pv "$dst" && mv -v "$@"
 }
 
 path () {
