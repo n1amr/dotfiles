@@ -1,0 +1,13 @@
+{
+  "keys": {
+    "edit": {
+      "bind": {
+        "Ctrl-\\": "jupyter-notebook:split-cell-at-cursor",
+        "Ctrl-Shift-S": "jupyter-notebook:split-cell-at-cursor"
+      }
+    }
+  },
+  "load_extensions": {
+    "vim_binding/vim_binding": true
+  }
+}
