@@ -1,40 +1,97 @@
-{
-    "window.zoomLevel": 0,
-    "workbench.colorTheme": "Visual Studio Dark",
-    "editor.tabSize": 2,
-    "editor.lineNumbers": "relative",
-    "editor.fontFamily": "Consolas",
-    "editor.fontSize": 14,
-    "files.autoSave": "onFocusChange",
-    "files.autoSaveDelay": 1000,
-    // # Extensions
-    // vim:
-    "vim.hlsearch": true,
-    "vim.useSystemClipboard": false,
-    "vim.leader": " ",
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "leader"
-            ],
-            "after": [
-                "\"",
-                "+",
-            ]
-        }
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "leader"
-            ],
-            "after": [
-                "\"",
-                "+",
-            ]
-        }
-    ],
-    // Python
-    "python.jediEnabled": false,
-    "python.languageServer": "Microsoft",
-}
+// Place your key bindings in this file to overwrite the defaults
+[
+  {
+    "key": "ctrl+shift+q",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "shift+alt+f",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "-editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+shift+down",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+alt+down",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+shift+up",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+alt+up",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "-workbench.action.zoomIn"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "editor.action.fontZoomIn"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "editor.action.fontZoomOut"
+  },
+  {
+    "key": "ctrl+shift+a",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "alt+enter",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+    "command": "editor.action.quickFix"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.files.action.showActiveFileInExplorer"
+  },
+  {
+    "key": "ctrl+k ctrl+i",
+    "when": "editorTextFocus",
+    "command": "editor.action.showHover"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "when": "editorTextFocus",
+    "command": "editor.action.triggerParameterHints"
+  },
+  {
+    "key": "ctrl+alt+shift+space",
+    "when": "editorTextFocus",
+    "command": "closeParameterHints"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "terminal.focus"
+  },
+]

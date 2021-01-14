@@ -1,61 +1,95 @@
-// Place your key bindings in this file to overwrite the defaults
-[
-  {
-    "key": "ctrl+shift+q",
-    "command": "editor.action.formatDocument",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "shift+alt+f",
-    "command": "-editor.action.formatDocument",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "ctrl+shift+down",
-    "command": "editor.action.insertCursorBelow",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+alt+down",
-    "command": "-editor.action.insertCursorBelow",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+shift+up",
-    "command": "editor.action.insertCursorAbove",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+alt+up",
-    "command": "-editor.action.insertCursorAbove",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+=",
-    "command": "-workbench.action.zoomIn"
-  },
-  {
-    "key": "ctrl+=",
-    "command": "editor.action.fontZoomIn"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "-workbench.action.zoomOut"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "editor.action.fontZoomOut"
-  },
-  {
-    "key": "ctrl+shift+a",
-    "command": "workbench.action.showCommands"
-  },
-  {
-    "key": "ctrl+shift+n",
-    "command": "workbench.action.quickOpen"
-  },
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.files.newUntitledFile"
-  }
-]
+{
+    // --------------------------------------------------------------------------------
+    // Builtin Config
+    // --------------------------------------------------------------------------------
+
+    // Behavior
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveDelay": 5000,  // Not applicable
+    "files.eol": "auto",
+    "files.insertFinalNewline": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+
+    // Appearance
+    "editor.fontFamily": "Consolas",
+    "editor.fontSize": 14,
+    "editor.lineNumbers": "relative",
+    "editor.tabSize": 4,
+    "editor.rulers": [80, 120],
+    "window.zoomLevel": 1,
+    "workbench.colorTheme": "Visual Studio Dark",
+    // "workbench.colorCustomizations": {
+    //     "[Visual Studio Dark]": {
+    //         "activityBar.background": "#202020",
+    //         "activityBar.activeBackground": "#404040",
+    //     }
+    // },
+
+    // --------------------------------------------------------------------------------
+    // Extensions Config
+    // --------------------------------------------------------------------------------
+
+    // vim:
+    "vim.hlsearch": true,
+    "vim.useSystemClipboard": false,
+    "vim.leader": " ",
+    "vim.handleKeys": {
+        // Disabled
+        "<C-a>": false,
+        "<C-b>": false,
+        "<C-c>": false,
+        "<C-f>": false,
+        "<C-x>": false,
+
+        // Enabled
+        "<C-d>": true,
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "leader"
+            ],
+            "after": [
+                "\"",
+                "+",
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "leader"
+            ],
+            "after": [
+                "\"",
+                "+",
+            ]
+        }
+    ],
+
+    // Python
+    "python.languageServer": "Microsoft",
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--max-line-length", "120",
+        "--experimental",
+    ],
+
+    // Kubernetes
+    "vs-kubernetes": {
+        "vs-kubernetes.helm-path.windows": "C:\\Users\\amralaa\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe"
+    },
+
+    // Remote - SSH
+    "remote.SSH.remotePlatform": {
+        "mt-gpu": "linux"
+    },
+
+    // --------------------------------------------------------------------------------
+    // Other
+    // --------------------------------------------------------------------------------
+    "__append_new_settings_here__": "yes",
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+}
