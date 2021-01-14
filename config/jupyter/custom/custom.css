@@ -33,7 +33,7 @@ a:focus {
  -webkit-font-smoothing: antialiased !important;
 }
 div#maintoolbar {
- position: absolute;
+ /* position: absolute; */
  width: 90%;
  margin-left: -10%;
  padding-right: 8%;
@@ -505,7 +505,7 @@ body > #header .header-bar {
 span.checkpoint_status,
 span.autosave_status {
  font-size: small;
- display: none;
+ display: block;
 }
 #menubar,
 div#menubar {
@@ -797,7 +797,7 @@ div.notification_widget {
  display: block;
 }
 div#ipython_notebook {
- display: none;
+ display: block;
 }
 i.fa.fa-icon {
  -webkit-font-smoothing: antialiased;
@@ -1462,6 +1462,10 @@ a {
  -webkit-font-smoothing: subpixel-antialiased;
  font-weight: 400;
 }
+.CodeMirror-lines {
+ background-color: #282828;
+ background: #282828;
+}
 div.input_area {
  background-color: #282828;
  background: #282828;
@@ -1633,8 +1637,7 @@ div.cell.selected .prompt {
  top: 0;
 }
 .run_this_cell {
- visibility: hidden;
- color: transparent;
+ color: #ffffff !important;
  padding-top: 0px;
  padding-bottom: 0px;
  padding-left: 3px;
@@ -3267,3 +3270,10 @@ span.save_widget span.filename:hover {
     });
 </script>
     
+
+.cm-animate-fat-cursor {
+  background-color: #555;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  background: #555;
+}
