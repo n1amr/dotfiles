@@ -36,4 +36,5 @@
     ],
     // Python
     "python.jediEnabled": false,
+    "python.languageServer": "Microsoft",
 }
