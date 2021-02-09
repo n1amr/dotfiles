@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -eu
+
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 SOURCE_DIR TARGET_DIR" >&2
+    exit 1
+fi
+
+source_dir="$(realpath "$1")"
+target_dir="$2"
+
+mkdir -pv "$target_dir"
+target_dir="$(realpath "$target_dir")"
+
+cd "$source_dir"
+find -type f |
+    sort |
+    xargs -P128 -n8 bash -c 'target_dir="$1"; shift; for f in "$@"; do echo "$f"; mkdir -pv "$target_dir/$(dirname "$f")"; yes y | cp -v "$f" "$target_dir/$f"; done' 'arg_0' "$target_dir"
