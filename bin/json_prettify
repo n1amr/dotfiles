@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+
+import click
+import datetime
+import json
+import logging
+import os
+import shutil
+import time
+
+
+logging.basicConfig(
+    format='[%(asctime)s] %(levelname)-8s: %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S',
+)
+logging.Formatter.converter = time.gmtime
+log = logging.getLogger(__name__)
+
+
+def load_json(path, *, encoding):
+    with open(path, 'r', encoding=encoding) as f:
+        return json.load(f)
+
+
+def write_json(content, path, *, indent, ensure_ascii, encoding):
+    with open(path, 'w', encoding=encoding) as f:
+        json.dump(content, f, indent=indent, ensure_ascii=ensure_ascii)
+
+
+@click.command()
+@click.option('--input-encoding', type=str, default='utf-8')
+@click.option('--indent', type=int, default=2)
+@click.option('--ascii', is_flag=True, default=False)
+@click.argument(
+    'file',
+    type=click.Path(dir_okay=False, readable=True, writable=True, resolve_path=True),
+    nargs=-1, required=True,
+)
+def cli(
+        input_encoding,
+        indent,
+        ascii,
+        file,
+):
+    paths = file
+    del file
+
+    for path in paths:
+        try:
+            prettify(path, indent, ascii, input_encoding)
+            log.info(f'Successfully processed file: {path}')
+        except Exception as e:
+            log.error(f"Could not process file: {path}")
+            log.error(e)
+
+
+TIMESTAMP_FORMAT = '%Y%m%d%H%M%S%f'
+
+
+def prettify(path: str, indent: int, ascii: bool, input_encoding):
+    json_content = load_json(path, encoding=input_encoding)
+
+    filename = os.path.basename(path)
+    dir_path = os.path.dirname(path)
+    timestamp = datetime.datetime.now().strftime(TIMESTAMP_FORMAT)
+    backup_path = os.path.join(dir_path, f'.{filename}.tmp.{timestamp}')
+    shutil.move(path, backup_path)
+    write_json(
+        json_content, path,
+        indent=indent, ensure_ascii=ascii, encoding='utf-8',
+    )
+    os.remove(backup_path)
+
+
+if __name__ == '__main__':
+    cli()
