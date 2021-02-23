@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eu
+
+curl ipinfo.io/ip ||
+    curl ifconfig.me/ip ||
+    dig +short myip.opendns.com @resolver1.opendns.com
