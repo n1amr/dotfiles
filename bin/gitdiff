@@ -30,6 +30,7 @@ files_count="${#files[@]}"
     previous_file=''
     for idx in "${!files[@]}"; do
         file="$(realpath "${files[$idx]}")"
+        rm -rf "$content_path"
         cp -rv "$file" "$content_path"
         git -C "$repo" add 'content'
         git -C "$repo" commit --allow-empty -m "$previous_file --> $file"
