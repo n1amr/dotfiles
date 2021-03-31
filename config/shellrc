@@ -462,6 +462,9 @@ silent_background () {
 }
 
 ssha () {
+    if [[ "$#" = 0 ]]; then
+        ssh-add
+    fi
     for key in "$@"; do
         ssh-add "$key"
     done
