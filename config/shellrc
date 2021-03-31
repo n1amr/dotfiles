@@ -119,8 +119,6 @@ elif [ "$SHELLNAME" = bash ]; then
     source "$DOTFILES_HOME/config/completions.bash"
 fi
 
-export DOTFILES_MARKS_PATH="$DOTFILES_ENV_HOME/.marks"
-
 ################################################################################
 ###########################  Environment variables  ############################
 
@@ -147,6 +145,9 @@ fi
 if [[ ! -f ~/.ranger-temp-paths.conf ]]; then
     "$DOTFILES_HOME/bin/update-ranger-temp-paths" > /dev/null
 fi
+
+export DOTFILES_MARKS_PATH="$DOTFILES_ENV_HOME/.marks"
+export MANPAGER="/bin/sh -c 'col -b | vim -c '\''set ft=man ts=8 nomod nolist nonu noma'\'' -'"
 
 ################################################################################
 #################################  Functions  ##################################
@@ -320,11 +321,6 @@ linerange () {
     head -"$2" | tail -n +"$1"
 }
 
-[ "$SHELLNAME" = zsh ] && unalias man
-man () {
-    command man "$@" | pipe_to_visual
-}
-
 mark () {
     marks add "$@" && source ~/.marks.sh
 }
@@ -351,11 +347,11 @@ path () {
 }
 
 pipe_to_editor () {
-    remove_color_codes | "$EDITOR" -
+    remove_color_codes | "$EDITOR" "$@" -
 }
 
 pipe_to_visual () {
-    remove_color_codes | "$VISUAL" -
+    remove_color_codes | "$VISUAL" "$@" -
 }
 
 print_horizontal_line () {
