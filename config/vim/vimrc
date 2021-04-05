@@ -146,6 +146,7 @@ let g:buffersdir=$VIM_CONFIG_DIR . '/tmp/buffers/'
 let g:sessiondir=$VIM_CONFIG_DIR . '/tmp/sessions/'
 
 set encoding=utf8
+set termencoding=utf8
 if exists("&cryptmethod")
   set cryptmethod=blowfish2
 endif
@@ -344,7 +345,9 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = "powerlineish"
+if !(has("win32") && !has("gui_running"))
+    let g:airline_theme = "powerlineish"
+endif
 let g:airline#extensions#tabline#enabled = 1
 
 " ctrlp
@@ -376,6 +379,8 @@ if has("gui_running")
     let &guifont='DejaVu Sans Mono for Powerline 12'
   elseif has("win32")
     set guifont=Consolas:h12
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12:qDRAFT
+    set guifontwide=DejaVu\ Sans\ Mono\ for\ Powerline:h12:qDRAFT
   endif
   set guioptions=agimLt
   set lines=999 columns=999
