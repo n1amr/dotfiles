@@ -26,7 +26,7 @@ for source_path in "$@"; do
         echo "Cannot copy file to directory path: $target_path" >&2
         exit 1
     }
-    command mv-v "$source_path" "$target_path"
+    command mv -v "$source_path" "$target_path"
 done
 '''
 
