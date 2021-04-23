@@ -1,95 +1,221 @@
-{
-    // --------------------------------------------------------------------------------
-    // Builtin Config
-    // --------------------------------------------------------------------------------
-
-    // Behavior
-    "files.autoSave": "onFocusChange",
-    "files.autoSaveDelay": 5000,  // Not applicable
-    "files.eol": "auto",
-    "files.insertFinalNewline": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-
-    // Appearance
-    "editor.fontFamily": "Consolas",
-    "editor.fontSize": 14,
-    "editor.lineNumbers": "relative",
-    "editor.tabSize": 4,
-    "editor.rulers": [80, 120],
-    "window.zoomLevel": 1,
-    "workbench.colorTheme": "Visual Studio Dark",
-    // "workbench.colorCustomizations": {
-    //     "[Visual Studio Dark]": {
-    //         "activityBar.background": "#202020",
-    //         "activityBar.activeBackground": "#404040",
-    //     }
-    // },
-
-    // --------------------------------------------------------------------------------
-    // Extensions Config
-    // --------------------------------------------------------------------------------
-
-    // vim:
-    "vim.hlsearch": true,
-    "vim.useSystemClipboard": false,
-    "vim.leader": " ",
-    "vim.handleKeys": {
-        // Disabled
-        "<C-a>": false,
-        "<C-b>": false,
-        "<C-c>": false,
-        "<C-f>": false,
-        "<C-x>": false,
-
-        // Enabled
-        "<C-d>": true,
-    },
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "leader"
-            ],
-            "after": [
-                "\"",
-                "+",
-            ]
-        }
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "leader"
-            ],
-            "after": [
-                "\"",
-                "+",
-            ]
-        }
-    ],
-
-    // Python
-    "python.languageServer": "Microsoft",
-    "python.formatting.provider": "autopep8",
-    "python.formatting.autopep8Args": [
-        "--max-line-length", "120",
-        "--experimental",
-    ],
-
-    // Kubernetes
-    "vs-kubernetes": {
-        "vs-kubernetes.helm-path.windows": "C:\\Users\\amralaa\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe"
-    },
-
-    // Remote - SSH
-    "remote.SSH.remotePlatform": {
-        "mt-gpu": "linux"
-    },
-
-    // --------------------------------------------------------------------------------
-    // Other
-    // --------------------------------------------------------------------------------
-    "__append_new_settings_here__": "yes",
-    "files.exclude": {
-        "**/__pycache__": true
-    },
-}
+// Keybindings - Windows
+[
+  {
+    "key": "ctrl+shift+q",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "shift+alt+f",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "-editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+shift+down",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+alt+down",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+shift+up",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+alt+up",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "-workbench.action.zoomIn"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "editor.action.fontZoomIn"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "editor.action.fontZoomOut"
+  },
+  {
+    "key": "ctrl+shift+a",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "alt+enter",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+    "command": "editor.action.quickFix"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.files.action.showActiveFileInExplorer"
+  },
+  {
+    "key": "ctrl+k ctrl+i",
+    "when": "editorTextFocus",
+    "command": "editor.action.showHover"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "when": "editorTextFocus",
+    "command": "editor.action.triggerParameterHints"
+  },
+  {
+    "key": "ctrl+alt+shift+space",
+    "when": "editorTextFocus",
+    "command": "closeParameterHints"
+  },
+  {
+    "key": "ctrl+j",
+    "when": "!inDebugMode",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+j ctrl+j",
+    "when": "inDebugMode",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "terminal.focus"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "editor.action.fontZoomReset"
+  },
+  {
+    "key": "ctrl+f10",
+    "command": "editor.debug.action.runToCursor"
+  },
+  {
+    "key": "ctrl+alt+c",
+    "command": "workbench.debug.action.focusCallStackView"
+  },
+  {
+    "key": "ctrl+alt+w",
+    "command": "workbench.debug.action.focusWatchView"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "ctrl+f9",
+    "command": "debug.enableOrDisableBreakpoint"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "workbench.debug.action.focusBreakpointsView"
+  },
+  {
+    "key": "ctrl+alt+home",
+    "command": "workbench.action.keepEditor"
+  },
+  {
+    "key": "ctrl+j ctrl+e",
+    "when": "inDebugMode",
+    "command": "editor.debug.action.selectionToRepl"
+  },
+  {
+    "key": "ctrl+j ctrl+w",
+    "when": "inDebugMode",
+    "command": "editor.debug.action.selectionToWatch"
+  },
+  {
+    "key": "ctrl+j ctrl+i",
+    "when": "inDebugMode",
+    "command": "workbench.debug.action.focusRepl"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+p",
+    "when": "!terminalFocus",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "when": "sideBarFocus",
+    "command": "workbench.action.nextSideBarView"
+  },
+  {
+    "key": "ctrl+pageup",
+    "when": "sideBarFocus",
+    "command": "workbench.action.previousSideBarView"
+  },
+  {
+    "key": "ctrl+k ctrl+k",
+    "when": "editorTextFocus",
+    "command": "bookmarks.toggle"
+  },
+  {
+    "key": "ctrl+k ctrl+n",
+    "when": "editorTextFocus",
+    "command": "bookmarks.jumpToNext"
+  },
+  {
+    "key": "ctrl+k ctrl+p",
+    "when": "editorTextFocus",
+    "command": "bookmarks.jumpToPrevious"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.focusNext"
+  },
+  {
+    "key": "ctrl+pageup",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.focusPrevious"
+  },
+  {
+    "key": "ctrl+shift+pagedown",
+    "when": "panelFocus",
+    "command": "workbench.action.nextPanelView"
+  },
+  {
+    "key": "ctrl+shift+pageup",
+    "when": "panelFocus",
+    "command": "workbench.action.previousPanelView"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.view.extension.bookmarks"
+  },
+  {
+    "key": "ctrl+f6",
+    "command": "workbench.action.tasks.runTask"
+  },
+  {
+    "key": "ctrl+f4",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.kill"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+]

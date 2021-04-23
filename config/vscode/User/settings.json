@@ -1,97 +1,192 @@
-// Place your key bindings in this file to overwrite the defaults
-[
-  {
-    "key": "ctrl+shift+q",
-    "when": "editorTextFocus && !editorReadonly",
-    "command": "editor.action.formatDocument"
-  },
-  {
-    "key": "shift+alt+f",
-    "when": "editorTextFocus && !editorReadonly",
-    "command": "-editor.action.formatDocument"
-  },
-  {
-    "key": "ctrl+shift+down",
-    "when": "editorTextFocus",
-    "command": "editor.action.insertCursorBelow"
-  },
-  {
-    "key": "ctrl+alt+down",
-    "when": "editorTextFocus",
-    "command": "-editor.action.insertCursorBelow"
-  },
-  {
-    "key": "ctrl+shift+up",
-    "when": "editorTextFocus",
-    "command": "editor.action.insertCursorAbove"
-  },
-  {
-    "key": "ctrl+alt+up",
-    "when": "editorTextFocus",
-    "command": "-editor.action.insertCursorAbove"
-  },
-  {
-    "key": "ctrl+=",
-    "command": "-workbench.action.zoomIn"
-  },
-  {
-    "key": "ctrl+=",
-    "command": "editor.action.fontZoomIn"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "-workbench.action.zoomOut"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "editor.action.fontZoomOut"
-  },
-  {
-    "key": "ctrl+shift+a",
-    "command": "workbench.action.showCommands"
-  },
-  {
-    "key": "ctrl+shift+n",
-    "command": "workbench.action.quickOpen"
-  },
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.files.newUntitledFile"
-  },
-  {
-    "key": "alt+enter",
-    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
-    "command": "editor.action.quickFix"
-  },
-  {
-    "key": "shift+alt+l",
-    "command": "workbench.files.action.showActiveFileInExplorer"
-  },
-  {
-    "key": "ctrl+k ctrl+i",
-    "when": "editorTextFocus",
-    "command": "editor.action.showHover"
-  },
-  {
-    "key": "ctrl+shift+space",
-    "when": "editorTextFocus",
-    "command": "editor.action.triggerParameterHints"
-  },
-  {
-    "key": "ctrl+alt+shift+space",
-    "when": "editorTextFocus",
-    "command": "closeParameterHints"
-  },
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.togglePanel"
-  },
-  {
-    "key": "ctrl+shift+j",
-    "command": "workbench.action.toggleMaximizedPanel"
-  },
-  {
-    "key": "ctrl+shift+t",
-    "command": "terminal.focus"
-  },
-]
+// Settings
+{
+    "files.autoSave": "off",
+    "files.autoSaveDelay": 5000, // Not applicable
+    "files.eol": "auto",
+    "files.insertFinalNewline": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.startupEditor": "none",
+    "editor.mouseWheelZoom": true,
+    
+    // Appearance
+    // // Editor
+    "editor.fontSize": 14,
+    "editor.lineNumbers": "on",
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "all",
+    "editor.wrappingIndent": "indent",
+    "editor.rulers": [80, 100, 120],
+    "editor.wordWrap": "off",
+
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.rulers": [80, 100, 120],
+    },
+
+    // // Style
+    // "editor.fontFamily": "Consolas",
+    "editor.fontFamily": "DejaVu Sans Mono for Powerline",
+    "window.zoomLevel": 1,
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorCustomizations": {
+        "[Visual Studio Dark]": {
+            "quickInputList.focusBackground": "#1A237E",
+            "list.hoverBackground": "#001064",
+
+            "activityBar.background": "#202020",
+            "activityBar.activeBackground": "#404040",
+        }
+    },
+
+    // Terminal
+    "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
+    "terminal.integrated.shell.windows": "${env:winDir}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    // "terminal.integrated.shellArgs.windows": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"],
+    "terminal.integrated.profiles.windows": {
+        "Dev Box": {
+            "source": "PowerShell",
+            "overrideName": true,
+            "args": [
+                "-File",
+                "${env:home}\\scripts\\ssh-devbox.ps1",
+            ],
+        },
+        "Dev Box Jupyter": {
+            "source": "PowerShell",
+            "overrideName": true,
+            "args": [
+                "-File",
+                "${env:home}\\scripts\\ssh-devbox-jupyter.ps1",
+            ],
+        },
+        // "PowerShell": {
+        //     "source": "PowerShell",
+        //     "overrideName": true,
+        // },
+        // "cmd": {
+        //     "overrideName": true,
+        //     "path": [
+        //         "${env:windir}\\Sysnative\\cmd.exe",
+        //         "${env:windir}\\System32\\cmd.exe",
+        //     ],
+        //     "args": [],
+        // },
+    },
+
+    // =========================================================================
+    // Extensions Config
+    // =========================================================================
+
+    // vim:
+    // "vim.vimrc.enable": true, # Causes extension to not work
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": false,
+    "vim.foldfix": true,
+    "vim.leader": " ",
+    "vim.showMarksInGutter": true,
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-b>": false,
+        "<C-c>": false,
+        "<C-f>": false,
+        "<C-t>": false,
+        "<C-w>": false,
+        "<C-x>": false,
+
+        // Enabled (hanled by vim)
+        "<C-d>": true,
+        "<C-e>": true,
+        "<C-u>": true,
+        "<C-y>": true,
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": [ "leader" ], "after": [ "\"", "+" ] },
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": [ "leader" ], "after": [ "\"", "+" ] },
+    ],
+
+    // Python
+    "python.languageServer": "Microsoft",
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--max-line-length", "120",
+        "--experimental",
+    ],
+
+    // Remote - SSH
+    "remote.SSH.remotePlatform": {
+        "main": "linux",
+        "mt-gpu": "linux",
+        "ITP": "linux",
+        "ITP-2": "linux",
+    },
+
+    // Code Spell Checker
+    "cSpell.enabled": true,
+    "cSpell.userWords": [
+        "Apim",
+        "CUDA",
+        "EVAL",
+        "NLTK",
+        "PREPROCESS",
+        "Popen",
+        "XGLUE",
+        "XTREME",
+        "amralaa",
+        "bufsize",
+        "datefmt",
+        "dtype",
+        "fmeasure",
+        "gmtime",
+        "itertools",
+        "kwargs",
+        "mainzprmblob",
+        "mbart",
+        "mkdir",
+        "ngram",
+        "numpy",
+        "pycountry",
+        "repos",
+        "tqdm",
+        "unsqueeze",
+        "westus",
+        "xargs",
+        "zcode"
+    ],
+
+    // =========================================================================
+    // Files
+    // =========================================================================
+
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/.hg/store/**": true,
+        "**/__pycache__/**": true,
+        "**/*.pyc": true,
+    },
+    "workbench.editorAssociations": [
+        { "filenamePattern": "*.ipynb", "viewType": "jupyter.notebook.ipynb" },
+    ], 
+    "files.associations": {
+        ".text": "txt",
+    },
+
+    // =========================================================================
+    // Other
+    // =========================================================================
+    "editor.accessibilitySupport": "off",
+    "diffEditor.renderSideBySide": false,
+    "jupyter.allowUnauthorizedRemoteConnection": true,
+    "git.autofetch": true,
+
+    // "debug.inlineValues": true,
+    "__append_new_settings_here__": "yes",
+}
