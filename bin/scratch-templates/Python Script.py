@@ -4,6 +4,7 @@ import argparse
 import logging
 import os
 import sys
+import tempfile
 import time
 
 THIS_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -29,7 +30,7 @@ def setup_logging():
     short_logging_format = '[%(asctime)s.%(msecs)03d] %(levelname)-s: %(message)s'
     long_logging_format = f'{short_logging_format} --- %(name)s at %(filename)s:%(lineno)d'
     time_format = '%Y-%m-%d %H:%M:%S'
-    log_file = os.path.join(THIS_DIR, 'log.txt')
+    log_file = os.path.abspath(tempfile.mktemp(suffix='.txt', prefix=f'{os.path.basename(__file__)}.log-'))
 
     logging.basicConfig(
         format=short_logging_format,
