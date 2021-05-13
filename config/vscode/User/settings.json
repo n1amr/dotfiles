@@ -186,6 +186,7 @@
     "diffEditor.renderSideBySide": false,
     "jupyter.allowUnauthorizedRemoteConnection": true,
     "git.autofetch": true,
+    "keyboard.dispatch": "keyCode", // Fixed: caps:escape not working on Ubuntu
 
     // "debug.inlineValues": true,
     "__append_new_settings_here__": "yes",
