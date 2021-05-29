@@ -18,10 +18,7 @@ info "Searching for bots in '$BOTS_ROOT'"
 for bot_root in "${BOTS_ROOT}"/bot-*; do
     if [[ -d "$bot_root" ]]; then
         info "Starting bot in '$bot_root'"
-        LOG_FILE="$bot_root/log"
-        date >> "$LOG_FILE"
-        echo -e "\n\n" >> "$LOG_FILE"
-        "$BOT_SCRIPT" "$bot_root" >> "$LOG_FILE" 2>&1 &
+        "$BOT_SCRIPT" "$bot_root" &
     else
         info "Ignored bot in '$bot_root'"
     fi
