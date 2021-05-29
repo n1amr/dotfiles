@@ -1,8 +1,4 @@
 # My repos
-[submodule "config/sublime-text-3"]
-    path = config/sublime-text-3
-    url = https://github.com/n1amr/sublime-text-3.config.git
-    branch = master
 [submodule "notes"]
     path = notes
     url = https://github.com/n1amr/dotfiles.notes.git
