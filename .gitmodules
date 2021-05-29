@@ -8,7 +8,7 @@
     url = https://github.com/n1amr/dotfiles.binaries.git
     branch = master
 
-# Thirdpart repos
+# Thirdparty repos
 [submodule "config/vim/bundle/auto-pairs"]
     path = config/vim/bundle/auto-pairs
     url = https://github.com/jiangmiao/auto-pairs
