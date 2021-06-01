@@ -35,6 +35,9 @@
 
             "activityBar.background": "#202020",
             "activityBar.activeBackground": "#404040",
+
+            "statusBar.background": "#263238",
+            "statusBar.debuggingBackground": "#6A1B9A",
         }
     },
 
