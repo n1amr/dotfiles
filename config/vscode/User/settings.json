@@ -193,4 +193,5 @@
 
     // "debug.inlineValues": true,
     "__append_new_settings_here__": "yes",
+    "python.pythonPath": "/home/n1amr/.pyenv/versions/3.7.9/bin/python",
 }
