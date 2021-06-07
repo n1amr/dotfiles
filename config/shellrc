@@ -610,7 +610,10 @@ init_ndenv () {
 
 init_pyenv () {
     export PATH="$PYENV_ROOT/bin:$PATH"
-    can_execute pyenv && eval "$(pyenv init -)"
+    can_execute pyenv && {
+        eval "$(pyenv init --path)" || true
+        eval "$(pyenv init -)"
+    }
 }
 [[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && __dotfiles_init init_pyenv
 
