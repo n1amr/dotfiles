@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+set -xv
+
+branch="$1"
+test -n "$branch" || {
+    echo "Specify branch to review" >&2
+    return 1
+}
+
+repo_dir="$(git root-dir)"
+root_dir="${root_dir:-.}"
+
+active_branch_file="$root_dir/.git/review/branch"
+mkdir -pv "$(dirname "$active_branch_file")"
+echo "$branch" | tee "$active_branch_file"
+
+checkpoint_file="$root_dir/.git/review/checkpoints/${branch//\//%}"
+last_checkpoint="$(cat "$checkpoint_file" | tail -n 1 || echo -n '')"
+
+git stash-all
+git is-clean
+git fetch -v origin "$branch"
+
+merge_base="$(git merge-base "origin/$branch" "origin/${GIT_TARGET_BRANCH:-master}")"
+git checkout -B review "$merge_base"
+
+{
+    test -z "$last_checkpoint" ||
+        git checkout -f "$last_checkpoint" -- .
+}
+git restore --source "origin/$branch" -- .

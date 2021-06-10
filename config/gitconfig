@@ -34,6 +34,8 @@
     # External scripts
     create-github = "!git-create-github"
     create-gitlab = "!git-create-gitlab"
+    review = "!git-review"
+    review-checkpoint = "!git-review-checkpoint"
 
     # Functions
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
@@ -49,8 +51,10 @@
     rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
-    review = "!f() { set -x; branch=\"$1\" && test -n \"$branch\" || { echo \"Specify branch to review\" >&2; return 1; } && last_checkpoint=\"$2\" && git stash-all && git is-clean && git fetch -v origin \"$branch\" && merge_base=\"$(git merge-base \"origin/$branch\" \"origin/${GIT_TARGET_BRANCH:-master}\")\" && git checkout -B review \"$merge_base\" && { test -z \"$last_checkpoint\" || git checkout -f \"$last_checkpoint\" -- .; } && git restore --source \"origin/$branch\" -- .; }; f"
-    review-checkpoint = "!f() { set -x; git commit -m \"reviewed: $(date --utc -Isec)\" && git rev-parse --verify HEAD; }; f"
+
+    # TODO: Remove
+    old-review = "!f() { set -x; branch=\"$1\" && test -n \"$branch\" || { echo \"Specify branch to review\" >&2; return 1; } && last_checkpoint=\"$2\" && git stash-all && git is-clean && git fetch -v origin \"$branch\" && merge_base=\"$(git merge-base \"origin/$branch\" \"origin/${GIT_TARGET_BRANCH:-master}\")\" && git checkout -B review \"$merge_base\" && { test -z \"$last_checkpoint\" || git checkout -f \"$last_checkpoint\" -- .; } && git restore --source \"origin/$branch\" -- .; }; f"
+    old-review-checkpoint = "!f() { set -x; git commit -m \"reviewed: $(date --utc -Isec)\" && git rev-parse --verify HEAD; }; f"
 
 [core]
     editor = vim
