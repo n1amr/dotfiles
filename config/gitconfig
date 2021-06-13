@@ -9,6 +9,8 @@
     st = status
 
     cor = "!git checkout-remote"
+    cr = "!git review"
+    crc = "!git review-checkpoint"
     cs = "!git create-stash"
     go = "!f() { git-browse \"$@\"; }; f"
     next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"

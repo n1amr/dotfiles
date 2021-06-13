@@ -30,4 +30,4 @@ git checkout -B review "$merge_base"
     test -z "$last_checkpoint" ||
         git checkout -f "$last_checkpoint" -- .
 }
-git restore --source "origin/$branch" -- .
+git restore --overlay --source "origin/$branch" -- .
