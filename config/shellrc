@@ -306,7 +306,8 @@ jump () {
 }
 
 jump_mark () {
-    [[ -d "$DOTFILES_MARKS_PATH/$1" ]] && cd -P "$DOTFILES_MARKS_PATH/$1" || return 1
+    test -n "$1" -a -d "$DOTFILES_MARKS_PATH/$1" || return 1
+    cd -P "$DOTFILES_MARKS_PATH/$1"
 }
 
 keybindings () {
