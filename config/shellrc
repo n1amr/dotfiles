@@ -544,6 +544,13 @@ tp_set () {
     tp_init
     local key="${1:-default}"
     local value="$(realpath "${2:-.}")"
+    tp_set_value "$key" "$value"
+}
+
+tp_set_value () {
+    tp_init
+    local key="$1"
+    local value="$2"
     echo "$value" > "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
     echo "[$key] -> $value"
 }
@@ -727,6 +734,7 @@ alias tpg='tp_get'
 alias tpl='tp_list'
 alias tpr='tp_remove'
 alias tps='tp_set'
+alias tpsv='tp_set_value'
 alias tsn='tmux-session'
 alias tssh='tmux-session ssh'
 alias u='up'
