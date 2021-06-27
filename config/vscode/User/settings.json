@@ -1,15 +1,21 @@
-// Settings
+// User Settings (All Platforms)
 {
+    // ##################
+    // ###  Behavior  ###
+    // ##################
     "files.autoSave": "off",
-    "files.autoSaveDelay": 5000, // Not applicable
+    "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
     "files.eol": "auto",
     "files.insertFinalNewline": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.startupEditor": "none",
     "editor.mouseWheelZoom": true,
-    
-    // Appearance
-    // // Editor
+
+    // ###########################
+    // ###  Editor Appearance  ###
+    // ###########################
+    "window.zoomLevel": 1,
+    "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
     "editor.fontSize": 14,
     "editor.lineNumbers": "on",
     "editor.tabSize": 4,
@@ -17,16 +23,16 @@
     "editor.wrappingIndent": "indent",
     "editor.rulers": [80, 100, 120],
     "editor.wordWrap": "off",
+    "diffEditor.renderSideBySide": false,
 
     "[python]": {
         "editor.tabSize": 4,
         "editor.rulers": [80, 100, 120],
     },
 
-    // // Style
-    // "editor.fontFamily": "Consolas",
-    "editor.fontFamily": "DejaVu Sans Mono for Powerline",
-    "window.zoomLevel": 1,
+    // ###############
+    // ###  Style  ###
+    // ###############
     "workbench.colorTheme": "Visual Studio Dark",
     "workbench.colorCustomizations": {
         "[Visual Studio Dark]": {
@@ -41,46 +47,68 @@
         }
     },
 
-    // Terminal
+    // ##################
+    // ###  Terminal  ###
+    // ##################
     "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
-    "terminal.integrated.shell.windows": "${env:winDir}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-    // "terminal.integrated.shellArgs.windows": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"],
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
     "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "overrideName": true,
+        },
         "Dev Box": {
             "source": "PowerShell",
             "overrideName": true,
             "args": [
-                "-File",
-                "${env:home}\\scripts\\ssh-devbox.ps1",
+                "-File", "${env:home}\\scripts\\ssh-devbox.ps1",
             ],
         },
         "Dev Box Jupyter": {
             "source": "PowerShell",
             "overrideName": true,
             "args": [
-                "-File",
-                "${env:home}\\scripts\\ssh-devbox-jupyter.ps1",
+                "-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1",
             ],
         },
-        // "PowerShell": {
-        //     "source": "PowerShell",
-        //     "overrideName": true,
-        // },
-        // "cmd": {
-        //     "overrideName": true,
-        //     "path": [
-        //         "${env:windir}\\Sysnative\\cmd.exe",
-        //         "${env:windir}\\System32\\cmd.exe",
-        //     ],
-        //     "args": [],
-        // },
+        "cmd": {
+            "overrideName": true,
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe",
+            ],
+            "args": [],
+        },
     },
 
-    // =========================================================================
-    // Extensions Config
-    // =========================================================================
+    // ###############
+    // ###  Files  ###
+    // ###############
+    "files.exclude": {
+        "**/*.pyc": true,
+        "**/__pycache__": true,
+    },
+    "files.watcherExclude": {
+        "**/*.pyc": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true,
+        "**/__pycache__/**": true,
+        "**/node_modules/*/**": true,
+    },
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb",
+    },
+    "files.associations": {
+        ".text": "txt",
+    },
+
+    // ###########################
+    // ###  Extensions Config  ###
+    // ###########################
 
     // vim:
+    // ====
     // "vim.vimrc.enable": true, # Causes extension to not work
     "vim.hlsearch": true,
     "vim.incsearch": true,
@@ -97,7 +125,7 @@
         "<C-w>": false,
         "<C-x>": false,
 
-        // Enabled (hanled by vim)
+        // Enabled (handled by vim)
         "<C-d>": true,
         "<C-e>": true,
         "<C-u>": true,
@@ -110,29 +138,36 @@
         { "before": [ "leader" ], "after": [ "\"", "+" ] },
     ],
 
-    // Python
+    // Python:
+    // =======
     "python.languageServer": "Microsoft",
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Args": [
         "--max-line-length", "120",
         "--experimental",
     ],
+    "python.pythonPath": "${env:PYENV_ROOT}/shims/python",
+    // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
+    // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
 
-    // Remote - SSH
+    // Remote - SSH:
+    // =============
     "remote.SSH.remotePlatform": {
         "main": "linux",
+        "dell": "linux",
         "mt-gpu": "linux",
         "ITP": "linux",
-        "ITP-2": "linux",
     },
 
-    // Code Spell Checker
+    // Code Spell Checker:
+    // ===================
     "cSpell.enabled": true,
     "cSpell.userWords": [
         "Apim",
         "CUDA",
         "EVAL",
         "NLTK",
+        "Onnx",
         "PREPROCESS",
         "Popen",
         "XGLUE",
@@ -159,39 +194,31 @@
         "zcode"
     ],
 
-    // =========================================================================
-    // Files
-    // =========================================================================
+    // CMake:
+    // ======
+    "cmake.generator": "Unix Makefiles",
+    "cmake.preferredGenerators": [
+        "Unix Makefiles",
+    ],
+    "cmake.configureArgs": [
+        "-G", "Unix Makefiles",
+    ],
 
-    "files.exclude": {
-        "**/__pycache__": true,
-        "**/*.pyc": true,
-    },
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/*/**": true,
-        "**/.hg/store/**": true,
-        "**/__pycache__/**": true,
-        "**/*.pyc": true,
-    },
-    "workbench.editorAssociations": [
-        { "filenamePattern": "*.ipynb", "viewType": "jupyter.notebook.ipynb" },
-    ], 
-    "files.associations": {
-        ".text": "txt",
-    },
-
-    // =========================================================================
-    // Other
-    // =========================================================================
-    "editor.accessibilitySupport": "off",
-    "diffEditor.renderSideBySide": false,
+    // Other Extensions:
+    // =================
     "jupyter.allowUnauthorizedRemoteConnection": true,
+
+    // ###############
+    // ###  Other  ###
+    // ###############
+    "editor.accessibilitySupport": "off",
     "git.autofetch": true,
     "keyboard.dispatch": "keyCode", // Fixed: caps:escape not working on Ubuntu
 
+    // ###################
+    // ###  Temporary  ###
+    // ###################
     // "debug.inlineValues": true,
-    "__append_new_settings_here__": "yes",
-    "python.pythonPath": "/home/n1amr/.pyenv/versions/3.7.9/bin/python",
+
+    "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
 }

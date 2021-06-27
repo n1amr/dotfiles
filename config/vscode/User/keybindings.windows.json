@@ -1,0 +1,240 @@
+// Keybindings (Windows only)
+[
+  {
+    "key": "ctrl+shift+q",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "shift+alt+f",
+    "when": "editorTextFocus && !editorReadonly",
+    "command": "-editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+shift+down",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+alt+down",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorBelow"
+  },
+  {
+    "key": "ctrl+shift+up",
+    "when": "editorTextFocus",
+    "command": "editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+alt+up",
+    "when": "editorTextFocus",
+    "command": "-editor.action.insertCursorAbove"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "-workbench.action.zoomIn"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "editor.action.fontZoomIn"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "editor.action.fontZoomOut"
+  },
+  {
+    "key": "ctrl+shift+a",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "alt+enter",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+    "command": "editor.action.quickFix"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.files.action.showActiveFileInExplorer"
+  },
+  {
+    "key": "ctrl+k ctrl+i",
+    "when": "editorTextFocus",
+    "command": "editor.action.showHover"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "when": "editorTextFocus",
+    "command": "editor.action.triggerParameterHints"
+  },
+  {
+    "key": "ctrl+alt+shift+space",
+    "when": "editorTextFocus",
+    "command": "closeParameterHints"
+  },
+  {
+    "key": "ctrl+j",
+    "when": "!inDebugMode",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+j ctrl+j",
+    "when": "inDebugMode",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "terminal.focus"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "editor.action.fontZoomReset"
+  },
+  {
+    "key": "ctrl+f10",
+    "command": "editor.debug.action.runToCursor"
+  },
+  {
+    "key": "ctrl+alt+c",
+    "command": "workbench.debug.action.focusCallStackView"
+  },
+  {
+    "key": "ctrl+alt+w",
+    "command": "workbench.debug.action.focusWatchView"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "ctrl+f9",
+    "command": "debug.enableOrDisableBreakpoint"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "workbench.debug.action.focusBreakpointsView"
+  },
+  {
+    "key": "ctrl+alt+home",
+    "command": "workbench.action.keepEditor"
+  },
+  {
+    "key": "ctrl+j ctrl+e",
+    "when": "inDebugMode",
+    "command": "editor.debug.action.selectionToRepl"
+  },
+  {
+    "key": "ctrl+j ctrl+w",
+    "when": "inDebugMode",
+    "command": "editor.debug.action.selectionToWatch"
+  },
+  {
+    "key": "ctrl+j ctrl+i",
+    "when": "inDebugMode",
+    "command": "workbench.debug.action.focusRepl"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+p",
+    "when": "!terminalFocus",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "when": "sideBarFocus",
+    "command": "workbench.action.nextSideBarView"
+  },
+  {
+    "key": "ctrl+pageup",
+    "when": "sideBarFocus",
+    "command": "workbench.action.previousSideBarView"
+  },
+  {
+    "key": "ctrl+k ctrl+k",
+    "when": "editorTextFocus",
+    "command": "bookmarks.toggle"
+  },
+  {
+    "key": "ctrl+k ctrl+n",
+    "when": "editorTextFocus",
+    "command": "bookmarks.jumpToNext"
+  },
+  {
+    "key": "ctrl+k ctrl+p",
+    "when": "editorTextFocus",
+    "command": "bookmarks.jumpToPrevious"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.focusNext"
+  },
+  {
+    "key": "ctrl+pageup",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.focusPrevious"
+  },
+  {
+    "key": "ctrl+shift+pagedown",
+    "when": "panelFocus",
+    "command": "workbench.action.nextPanelView"
+  },
+  {
+    "key": "ctrl+shift+pageup",
+    "when": "panelFocus",
+    "command": "workbench.action.previousPanelView"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.view.extension.bookmarks"
+  },
+  {
+    "key": "ctrl+f6",
+    "command": "workbench.action.tasks.runTask"
+  },
+  {
+    "key": "ctrl+f4",
+    "when": "terminalFocus",
+    "command": "workbench.action.terminal.kill"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "workbench.view.scm",
+  },
+  {
+    "key": "backspace",
+    "when": "editorTextFocus && vim.active && !inDebugRepl",
+    "command": "-extension.vim_backspace"
+  },
+  {
+    "key": "backspace",
+    "when": "editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'SearchInProgressMode'",
+    "command": "extension.vim_shift+backspace"
+  },
+  {
+    "key": "shift+backspace",
+    "when": "editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'SearchInProgressMode'",
+    "command": "-extension.vim_shift+backspace",
+  },
+]
