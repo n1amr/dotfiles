@@ -21,12 +21,16 @@ jobs:
         params:
         - env: default
           user: n1amr
+
         - env: dell
           user: n1amr
+
         - env: toshiba
           user: n1amr
+
         - env: pi
           user: pi
+
         - env: ms
           user: amralaa
 
@@ -39,6 +43,7 @@ jobs:
       - name: '[Pre] Clone custom config repository'
         shell: bash
         run: |
+          set -xv
           rm -rfv ./dotfiles/custom
 
       - name: 'Clone custom config repository'
@@ -53,28 +58,49 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
+          set -xv
           apt-get update
           apt-get install -y git curl zsh bash
 
       - name: Add user
         shell: bash
         run: |
+          set -xv
           mkdir -pv /home
           useradd -s /bin/zsh -d "/home/${{ matrix.params.user }}" -m -G sudo "${{ matrix.params.user }}"
 
       - name: Install dotfiles
         env:
-          DOTFILES_CUSTOM_REPO_URL: 'https://github.com/n1amr/dotfiles.custom'
           USER: ${{ matrix.params.user }}
           HOME: /home/${{ matrix.params.user }}
-          DOTFILES_ENV: ${{ matrix.params.env }}
+          DOTFILES_CUSTOM_REPO_URL: 'https://github.com/n1amr/dotfiles.custom'
         run: |
-          ./install -f
+          set -xv
+          sh -xvue ./install -f -e "${{ matrix.params.env }}"
 
-      - name: List files
-        shell: bash
+      - name: Reinstall dotfiles
+        env:
+          USER: ${{ matrix.params.user }}
+          HOME: /home/${{ matrix.params.user }}
         run: |
-          find "/home/${{ matrix.params.user }}" | sort
+          set -xv
+          sh -xvue ./install -f
+
+      - name: Run on zsh
+        env:
+          USER: ${{ matrix.params.user }}
+          HOME: /home/${{ matrix.params.user }}
+        run: |
+          set -xv
+          zsh -xv -c 'source ~/.zshrc'
+
+      - name: Run on bash
+        env:
+          USER: ${{ matrix.params.user }}
+          HOME: /home/${{ matrix.params.user }}
+        run: |
+          set -xv
+          bash -xv -c 'source ~/.bashrc'
 
       # - name: Set git credentials
       #   shell: bash
@@ -94,8 +120,3 @@ jobs:
       #     HOME: /home/${{ matrix.params.user }}
       #   run: |
       #     zsh -i -c 'dotfiles update'
-
-      # - name: List files
-      #   shell: bash
-      #   run: |
-      #     find "/home/${{ matrix.params.user }}" | sort

@@ -29,6 +29,4 @@ for dir in "$CURRENT_DOTFILES" "$CURRENT_DOTFILES/custom"; do (
     git submodule update --init --recursive
 ); done
 
-"$CURRENT_DOTFILES/bin/marks" update
-
 "$CURRENT_DOTFILES/install" -f
