@@ -928,6 +928,6 @@ exit_traps=(
 __dotfiles_shell_exit_trap () {
     for trap_name in "${exit_traps[@]}"; do
         type "$trap_name" > /dev/null 2>&1 && "$trap_name" || true
-    done
+    done || true
 }
 trap __dotfiles_shell_exit_trap EXIT
