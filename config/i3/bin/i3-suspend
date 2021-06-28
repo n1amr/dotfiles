@@ -2,5 +2,13 @@
 
 source ~/.dotfiles.env
 
-sudo -v && SUDO=sudo || SUDO=''
-"$DOTFILES_HOME/config/i3/bin/i3-lock" && sleep 1 && $SUDO systemctl suspend
+# Run following commands if i3 cannot run systemctl:
+#   sudo groupadd i3
+#   sudo usermod -aG i3
+#   # Add using $ sudo visudo
+#   %i3 ALL=(ALL:ALL) NOPASSWD: /bin/systemctl
+sudo systemctl --help && SUDO=sudo || SUDO=''
+
+"$DOTFILES_HOME/config/i3/bin/i3-lock"
+sleep 1
+$SUDO systemctl suspend
