@@ -1,35 +1,56 @@
 #!/bin/bash
 
-if [ "$1" = '--move' ]; then
-    shift
+set -eu
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 [--move|--gzip] files..." >&2
+    exit 1
+fi
+
+_new_path() {
+    local file="$1"
+    echo "${file}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+}
+
+_bak_copy() {
     for arg in "$@"; do
-        dst="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
-        mv -i "$arg" "$dst"
-        echo "$dst"
-    done
-elif [ "$1" = '--gzip' ]; then
-    shift
-    for arg in "$@"; do
-        if [[ -d "$arg" ]]; then
-            arg="$(realpath -s "$arg")"
-            tmp_copy="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
-            [[ -e "$tmp_copy" ]] && {
-                echo >&2 "Cannot overwrite $tmp_copy"
-                continue
-            }
-            cp -r "$arg" "$tmp_copy"
-            ( cd "$(dirname "$tmp_copy")"
-                tar -zcvf "$(basename "$tmp_copy").tar.gz" "$(basename "$tmp_copy")"
-            )
-            rm -rf "$tmp_copy"
-        else
-            gzip <"$arg" >"${arg}.bak.$(date --utc +"%Y%m%d%H%M%S").gz"
-        fi
-    done
-else
-    for arg in "$@"; do
-        dst="${arg}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        dst="$(_new_path "$arg")"
         cp -ir "$arg" "$dst"
         echo "$dst"
     done
+}
+
+_bak_move() {
+    for arg in "$@"; do
+        dst="$(_new_path "$arg")"
+        mv -i "$arg" "$dst"
+        echo "$dst"
+    done
+}
+
+_bak_gzip() {
+    for arg in "$@"; do
+        dst="$(_new_path "$arg").gz"
+        if [[ -d "$arg" ]]; then
+            dir="$(realpath -s "$arg")"
+            tmp_root="$(_bak_copy "$dir")"
+            ( cd "$(dirname "$tmp_root")"
+                tar -zcvf "$(basename "$tmp_root").tar.gz" "$(basename "$tmp_root")"
+            ) >&2
+            rm -rf "$tmp_root"
+        else
+            gzip < "$arg" > "$dst"
+        fi
+        echo "$dst"
+    done
+}
+
+if [ "$1" = '--move' ]; then
+    shift
+    _bak_move "$@"
+elif [ "$1" = '--gzip' ]; then
+    shift
+    _bak_gzip "$@"
+else
+    _bak_copy "$@"
 fi
