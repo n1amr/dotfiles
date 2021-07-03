@@ -146,6 +146,7 @@
         "--max-line-length", "120",
         "--experimental",
     ],
+    "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
     "python.pythonPath": "${env:PYENV_ROOT}/shims/python",
     // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
     // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
