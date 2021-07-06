@@ -36,7 +36,8 @@ FILE_EXTENSION_LOWER=$(echo ${FILE_EXTENSION} | tr '[:upper:]' '[:lower:]')
 # Settings
 HIGHLIGHT_SIZE_MAX=262143  # 256KiB
 HIGHLIGHT_TABWIDTH=8
-HIGHLIGHT_STYLE='pablo'
+# HIGHLIGHT_STYLE='pablo'
+HIGHLIGHT_STYLE='maroloccio'
 PYGMENTIZE_STYLE='autumn'
 
 
@@ -82,9 +83,13 @@ handle_extension() {
             lynx -dump -- "${FILE_PATH}" && exit 5
             elinks -dump "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
+        json)
+            # jq . "$FILE_PATH" && exit 5
+            # cat "$FILE_PATH" && exit 5
+            ;;
         tsv)
-            pretty-print-tsv "$FILE_PATH" && exit 5
-            exit 1;;
+            # pretty-print-tsv "$FILE_PATH" && exit 5
+            ;;
     esac
 }
 
@@ -132,7 +137,7 @@ handle_mime() {
     local mimetype="${1}"
     case "${mimetype}" in
         # Text
-        text/* | */xml)
+        text/* | */xml | */csv | */json | */tsv)
             # Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
