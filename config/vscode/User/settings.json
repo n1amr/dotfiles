@@ -11,9 +11,9 @@
     "workbench.startupEditor": "none",
     "editor.mouseWheelZoom": true,
 
-    // ###########################
-    // ###  Editor Appearance  ###
-    // ###########################
+    // ####################
+    // ###  Appearance  ###
+    // ####################
     "window.zoomLevel": 1,
     "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
     "editor.fontSize": 14,
@@ -97,7 +97,7 @@
         "**/node_modules/*/**": true,
     },
     "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb",
+        "*.ipynb": "jupyter-notebook"
     },
     "files.associations": {
         ".text": "txt",
@@ -140,14 +140,14 @@
 
     // Python:
     // =======
-    "python.languageServer": "Microsoft",
+    "python.languageServer": "Pylance",
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Args": [
         "--max-line-length", "120",
         "--experimental",
     ],
-    "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
-    "python.pythonPath": "${env:PYENV_ROOT}/shims/python",
+    "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+    "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
     // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
     // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
 
