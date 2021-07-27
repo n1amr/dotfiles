@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eu
+
+source "$(dirname "$0")/temp_paths"
+tp_get "$@"

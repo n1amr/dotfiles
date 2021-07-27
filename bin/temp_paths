@@ -1,0 +1,88 @@
+#!/bin/bash
+
+export DOTFILES_TEMP_PATHS_STORE_PATH="${DOTFILES_TEMP_PATHS_STORE_PATH:-$DOTFILES_ENV_HOME/.temp_paths}"
+
+tp_init () {
+    if [[ ! -d "$DOTFILES_TEMP_PATHS_STORE_PATH" ]]; then
+        mkdir -p "$DOTFILES_TEMP_PATHS_STORE_PATH"
+    fi
+}
+
+tp_cd () {
+    tp_init
+    local key="${1:-default}"
+    local value="$(tp_get "$key")" && {
+        cd "$value"
+        echo "cd [$key] -> $value"
+    }
+}
+
+tp_flush () {
+    tp_init
+    tp_list -e
+    find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -print -delete > /dev/null
+}
+
+tp_get () {
+    tp_init
+    local key="${1:-default}"
+    local file="$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+    if [[ -f "$file" ]] && local value="$(cat "$file")" && [[ -n "$value" ]]; then
+        echo "$value"
+    else
+        echo "temp path doesn't exist: $key. Press ctrl-c to abort" >&2
+        while read -s ignored; do
+            echo "Press ctrl-c to abort" >&2
+        done
+    fi
+}
+
+tp_list () {
+    tp_init
+    print_item () { echo "[$1] -> $2"; }
+    [[ "$1" == '-e' ]] && print_item () {
+        echo "tp_set $(singlequote "$1") $(singlequote "$2")"
+    }
+
+    local keys=()
+    while IFS= read -d '' -r file; do
+        keys+=("$(basename "$file")")
+    done < <(find "$DOTFILES_TEMP_PATHS_STORE_PATH" -mindepth 1 -maxdepth 1 -type f -print0)
+
+    local key
+    for key in "${keys[@]}"; do
+        local value="$(tp_get "$key")"
+        print_item "$key" "$value"
+    done
+
+    unset -f print_item
+}
+
+tp_remove () {
+    tp_init
+    local key="${1:-default}"
+    rm -fv "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+}
+
+tp_set () {
+    tp_init
+    local key="${1:-default}"
+    local value="$(realpath "${2:-.}")"
+    tp_set_value "$key" "$value"
+}
+
+tp_set_value () {
+    tp_init
+    local key="$1"
+    local value="$2"
+    echo "$value" > "$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
+    echo "[$key] -> $value"
+}
+
+tp_generate_ranger_cd_command () {
+    tp_init
+    local key="$1"
+    echo "cd $(tp_get "$key")" | tee ~/.ranger-cd-command # TODO: Handle single quotes properly
+}
+
+tp_init
