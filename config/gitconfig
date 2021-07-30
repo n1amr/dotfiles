@@ -42,7 +42,7 @@
     # Functions
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
     author-date-old = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f" # git versoin < 2.22.0
-    backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"Created tag: $tag_name\"; }; f"
+    backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
     stash-all = "!f() { ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\" && return 1; git stash -u; }; f"
     checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
     cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
