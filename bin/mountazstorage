@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -eu
+
+fatal() {
+    local message="$1"
+    echo "$message" >&2
+    exit 1
+}
+
+if [[ "$#" > 3 ]] || [[ "$#" < 2 ]]; then
+    fatal "Usage: $0 ACCOUNT_NAME CONTAINER_NAME [MOUNT_PATH]"
+fi
+
+account_name="$1"
+container_name="$2"
+mount_path="${3:-$HOME/mnt/$1/$2}"
+
+credentials_file="$HOME/.storage-connections/$account_name.sh"
+if [[ ! -f "$credentials_file" ]]; then
+    EDITOR="${EDITOR:-vim}"
+    if ! type "$EDITOR"; then
+        fatal "Cannot find EDITOR: $EDITOR"
+    fi
+
+    mkdir -p "$(dirname "$credentials_file")"
+    echo """export AZURE_STORAGE_ACCOUNT='$account_name'
+export AZURE_STORAGE_ACCESS_KEY='' # <--- Add account key here""" > "$credentials_file"
+    chmod 600 "$credentials_file"
+
+    echo "Please configure credential file at: $credentials_file"
+    "$EDITOR" "$credentials_file"
+fi
+
+source "$credentials_file"
+if [[ -z "$AZURE_STORAGE_ACCESS_KEY" ]]; then
+    fatal "AZURE_STORAGE_ACCESS_KEY cannot be empty"
+fi
+
+temp_mount="/mnt/blobfusetmp-$USER/$account_name/$container_name"
+[[ ! -d "$temp_mount" ]] && sudo mkdir -p "$temp_mount"
+sudo mount \
+    -t tmpfs \
+    -o size=64g \
+    tmpfs \
+    "$temp_mount" \
+;
+sudo chown "$USER:$USER" "$temp_mount"
+
+[[ ! -d "$mount_path" ]] && mkdir -p "$mount_path"
+blobfuse "$mount_path" \
+    --container-name="$container_name" \
+    --tmp-path="$temp_mount" \
+    -o attr_timeout=240 \
+    -o entry_timeout=240 \
+    -o negative_timeout=120 \
+;
+
+sleep 0.25
+if mount | grep "$mount_path" > /dev/null ; then
+    echo -n "Successfully mounted: " >&2
+    echo "$mount_path"
+else
+    fatal "Could not be mounted"
+fi
