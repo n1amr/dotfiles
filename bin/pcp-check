@@ -13,11 +13,12 @@ target_dir="$2"
 mkdir -pv "$target_dir"
 target_dir="$(realpath "$target_dir")"
 
-errors_log="$(mktemp /tmp/pmv-errors-XXXXXX)"
+errors_log="$(mktemp /tmp/pcp-check-errors-XXXXXX)"
 
 command='''
 target_dir="$1"; shift
 
+missing="false"
 for source_path in "$@"; do
     echo "$source_path"
     mkdir -pv "$target_dir/$(dirname "$source_path")"
@@ -26,8 +27,15 @@ for source_path in "$@"; do
         echo "Cannot copy file to directory path: $target_path" >&2
         exit 1
     }
-    command mv -v "$source_path" "$target_path"
+    if ! command test -x "$target_path"; then
+        echo "$source_path" >&2
+        missing="true"
+    fi
 done
+
+if [[ "$missing" == "true" ]]; then
+    exit 1
+fi
 '''
 
 print_errors() {

@@ -33,10 +33,9 @@ done
 print_errors() {
     echo "Errors log at: $errors_log"
     "${PAGER:-less}" "$errors_log"
+    exit 1
 }
 
-(
-    cd "$source_dir"
-    find -L -not -type d -print0 |
-        xargs -0 -P128 -n8 bash -c "$command" 'arg_0' "$target_dir" 2> >(tee -a "$errors_log") || print_errors
-)
+cd "$source_dir"
+find -L -not -type d -print0 |
+    xargs -0 -P128 -n8 bash -c "$command" 'arg_0' "$target_dir" 2> >(tee -a "$errors_log") || print_errors
