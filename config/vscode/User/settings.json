@@ -35,16 +35,24 @@
     // ###############
     "workbench.colorTheme": "Visual Studio Dark",
     "workbench.colorCustomizations": {
+        // Material colors; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+        /* Colors:
+            #1A237E Indigo
+            #33691E Light Green
+            #B71C1C Red
+            #4A148C Purple
+        */
         "[Visual Studio Dark]": {
-            "quickInputList.focusBackground": "#1A237E",
-            "list.hoverBackground": "#001064",
-
             "activityBar.background": "#202020",
             "activityBar.activeBackground": "#404040",
+            "titleBar.activeBackground": "#3c3c3c",
 
             "statusBar.background": "#263238",
             "statusBar.debuggingBackground": "#6A1B9A",
-        }
+
+            "quickInputList.focusBackground": "#1A237E",
+            "list.hoverBackground": "#001064",
+        },
     },
 
     // ##################
@@ -174,6 +182,7 @@
         "XGLUE",
         "XTREME",
         "amralaa",
+        "astimezone",
         "bufsize",
         "datefmt",
         "dtype",
