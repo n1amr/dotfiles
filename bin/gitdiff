@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 repo="$(mktemp -d /tmp/gitdiff-XXXXXXX)"
 
@@ -32,6 +32,8 @@ files_count="${#files[@]}"
         file="$(realpath "${files[$idx]}")"
         rm -rf "$content_path"
         cp -rv "$file" "$content_path"
+        find "$content_path" -path '*/.git/*' -delete
+
         git -C "$repo" add 'content'
         git -C "$repo" commit --allow-empty -m "$previous_file --> $file"
 
