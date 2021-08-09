@@ -27,7 +27,7 @@ for source_path in "$@"; do
         echo "Cannot copy file to directory path: $target_path" >&2
         exit 1
     }
-    if ! command test -x "$target_path"; then
+    if ! ( test -e "$target_path" && ! test -d "$target_path" ); then
         echo "$source_path" >&2
         missing="true"
     fi
