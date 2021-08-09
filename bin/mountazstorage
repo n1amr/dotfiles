@@ -34,7 +34,7 @@ fi
 
 source "$credentials_file"
 if [[ -z "$AZURE_STORAGE_ACCESS_KEY" ]]; then
-    fatal "AZURE_STORAGE_ACCESS_KEY cannot be empty"
+    fatal "AZURE_STORAGE_ACCESS_KEY cannot be empty. Please validate credentials at $credentials_file"
 fi
 
 temp_mount="/mnt/blobfusetmp-$USER/$account_name/$container_name"
@@ -56,10 +56,11 @@ blobfuse "$mount_path" \
     -o negative_timeout=120 \
 ;
 
-sleep 0.25
+sleep 1
 if mount | grep "$mount_path" > /dev/null ; then
     echo -n "Successfully mounted: " >&2
     echo "$mount_path"
 else
+    sudo umount "$temp_mount"
     fatal "Could not be mounted"
 fi
