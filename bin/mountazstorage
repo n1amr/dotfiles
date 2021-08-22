@@ -54,6 +54,7 @@ blobfuse "$mount_path" \
     -o attr_timeout=240 \
     -o entry_timeout=240 \
     -o negative_timeout=120 \
+    --log-level=LOG_ERR \
 ;
 
 sleep 1
