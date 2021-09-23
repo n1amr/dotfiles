@@ -753,7 +753,11 @@ __ps1_git_branch () {
 }
 
 __ps1_pyenv_version () {
-    echo "${PYENV_VERSION:+ (${PYENV_VERSION})}" 2>/dev/null
+    # echo "${PYENV_VERSION:+ (${PYENV_VERSION})}" 2>/dev/null
+    # TODO: Show only when using non global version
+    if [[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]]; then
+        echo " (py $(pyenv version-name))" 2>/dev/null
+    fi
 }
 
 __ps1_warnings () {
