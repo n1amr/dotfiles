@@ -60,6 +60,8 @@
     // ##################
     "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
     "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.scrollback": 100000,
+    "terminal.integrated.persistentSessionScrollback": 100000,
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
             "source": "PowerShell",
@@ -166,6 +168,8 @@
         "dell": "linux",
         "mt-gpu": "linux",
         "ITP": "linux",
+        "ITP-V100": "linux",
+        "ITP-0907-V100": "linux"
     },
 
     // Code Spell Checker:
@@ -213,6 +217,10 @@
     "cmake.configureArgs": [
         "-G", "Unix Makefiles",
     ],
+
+    // Docker:
+    // ======
+    "docker.explorerRefreshInterval": 3000,
 
     // Other Extensions:
     // =================
