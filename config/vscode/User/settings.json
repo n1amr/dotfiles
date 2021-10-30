@@ -201,7 +201,7 @@
         "unsqueeze",
         "westus",
         "xargs",
-        "zcode"
+        "zcode",
     ],
 
     // CMake:
@@ -228,7 +228,7 @@
     // ###############
     "editor.accessibilitySupport": "off",
     "git.autofetch": true,
-    "keyboard.dispatch": "keyCode", // Fixed: caps:escape not working on Ubuntu
+    "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
 
     // ###################
     // ###  Temporary  ###
