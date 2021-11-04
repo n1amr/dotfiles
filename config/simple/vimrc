@@ -1,0 +1,44 @@
+let mapleader = " "
+set backspace=indent,eol,start
+set nrformats=bin,hex
+set scroll=0
+set scrolloff=0
+set showcmd
+set ttimeout
+set number
+" set relativenumber
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+set nowrap
+if exists("&esckeys")
+  set esckeys
+endif
+set timeoutlen=1000
+set ttimeoutlen=10
+set history=1000
+if exists("&cryptmethod")
+  set cryptmethod=blowfish2
+endif
+
+noremap <c-k> :m-2<CR>
+noremap <c-j> :m+<CR>
+noremap <Leader> "+
+noremap <Leader><Leader> :let @+ = getreg('"')<CR>
+nnoremap <ESC>/ :nohl<CR>
+
+set noswapfile
+
+vnoremap <silent> * :<C-U>
+  \ let old_reg = getreg('"') <Bar> let old_regtype = getregtype('"')<CR>
+  \ gvy/<C-R><C-R>=substitute(escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')
+  \ <CR><CR> gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \ let old_reg = getreg('"') <Bar> let old_regtype = getregtype('"')<CR>
+  \ gvy?<C-R><C-R>=substitute(escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')
+  \ <CR><CR> gV:call setreg('"', old_reg, old_regtype)<CR>
