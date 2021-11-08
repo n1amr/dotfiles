@@ -1,3 +1,5 @@
+colorscheme ron
+
 let mapleader = " "
 set backspace=indent,eol,start
 set nrformats=bin,hex
