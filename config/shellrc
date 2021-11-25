@@ -241,6 +241,15 @@ deduplicate_env_paths () {
     export LDFLAGS="$(unique_paths "$LDFLAGS" ' ')"
 }
 
+edit_history () {
+    echo >&2 "Editing $HISTFILE"
+    if [[ "$VISUAL" == *vim* ]]; then
+        "$VISUAL" -c '$' "$HISTFILE"
+    else
+        "$VISUAL" "$HISTFILE"
+    fi
+}
+
 every () {
     local p="$1"
     shift
@@ -586,6 +595,7 @@ alias dl='trash'
 alias dotrc='dotfiles config'
 alias dt='date +"%Y-%m-%d %H:%M:%S %Z %:::z %a %r"'
 alias dud='du -d 1 -h'
+alias eh='edit_history'
 alias emacs='DISPLAY= emacs'
 alias f='find'
 alias fgrep='grep -F'
