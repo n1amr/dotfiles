@@ -10,20 +10,24 @@ PATH="$DOTFILES_HOME/bin/:$PATH"
 
 info "Started at $(date)"
 
-SYNCF_RC="$DOTFILES_HOME/custom/config/dotfiles/syncf"
+SYNCF_CONFIG_ROOT="$DOTFILES_HOME/custom/config/dotfiles/syncf"
 
 profile="${1:-default}"
 info "Selected profile: $profile"
 
-profile_file="$SYNCF_RC/profiles/$profile"
-assert_file "$profile_file"
+profile_dir="$SYNCF_CONFIG_ROOT/profiles/$profile"
+profile_config="$profile_dir/config.sh"
+assert_file "$profile_config"
 
-export SYNCF_RC
-source "$profile_file"
+export SYNCF_CONFIG_ROOT
+export SYNCF_PROFILE_DIR="$profile_dir"
+export SYNCF_DEFAULT_EXCLUDES_FILE="$SYNCF_CONFIG_ROOT/default-excludes"
+export SYNCF_DEFAULT_BACKUP_CLEAN_FILE="$SYNCF_CONFIG_ROOT/default-backup-clean-files"
+source "$profile_config"
 
 required_parameters=(
-    DESTINATION_DIR
-    INCLUDES_FILE
+    SYNCF_DESTINATION_DIR
+    SYNCF_INCLUDES_FILE
 )
 
 for param_name in "${required_parameters[@]}"; do
@@ -35,18 +39,18 @@ for param_name in "${required_parameters[@]}"; do
     fi
 done
 
-if [ ! -d "$DESTINATION_DIR" ]; then
-    error "Destination directory not found: $DESTINATION_DIR"
+if [ ! -d "$SYNCF_DESTINATION_DIR" ]; then
+    error "Destination directory not found: $SYNCF_DESTINATION_DIR"
     exit 1
 fi
 
-EXCLUDES_FILE="${EXCLUDES_FILE:-$SYNCF_RC/default-excludes}"
-assert_file "$EXCLUDES_FILE"
+SYNCF_EXCLUDES_FILE="${SYNCF_EXCLUDES_FILE:-$SYNCF_DEFAULT_EXCLUDES_FILE}"
+assert_file "$SYNCF_EXCLUDES_FILE"
 
-BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_RC/default-backup-clean-files}"
+BACKUP_CLEAN_FILE="${BACKUP_CLEAN_FILE:-$SYNCF_DEFAULT_BACKUP_CLEAN_FILE}"
 assert_file "$BACKUP_CLEAN_FILE"
 
-BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$DESTINATION_DIR.backups}"
+BACKUP_ROOT_DIR="${BACKUP_ROOT_DIR:-$SYNCF_DESTINATION_DIR.backups}"
 timestamp="$(dotfiles-timestamp)"
 backup_dir="$BACKUP_ROOT_DIR/backup-${timestamp}"
 log_file="$BACKUP_ROOT_DIR/logs/backup-${timestamp}.log"
@@ -56,14 +60,18 @@ info "Logging to $log_file"
 
 trap 'exit 2' INT
 
-RSYNC_ARGS=(-av --delete --relative --exclude-from="$EXCLUDES_FILE")
-# RSYNC_ARGS+=(--delete-excluded)
+RSYNC_ARGS=(-av --delete --relative --exclude-from="$SYNCF_EXCLUDES_FILE")
 RSYNC_ARGS+=(--log-file="$log_file")
 
-BACKUP_DISABLE="${BACKUP_DISABLE:-false}"
-if [[ "$BACKUP_DISABLE" = "false" ]]; then
+SYNCF_BACKUP_DISABLE="${SYNCF_BACKUP_DISABLE:-false}"
+if [[ "$SYNCF_BACKUP_DISABLE" = "false" ]]; then
     info "Backup is enabled"
     RSYNC_ARGS+=(-b --backup-dir="$backup_dir")
+fi
+
+if [[ "${SYNCF_DELETE_EXCLUDED:-false}" == 'true' ]]; then
+    info "Will delete excluded files"
+    RSYNC_ARGS+=(--delete-excluded)
 fi
 
 set +e
@@ -73,13 +81,13 @@ while IFS='' read -r line; do
         continue
     fi
     info "Syncing $line ..."
-    info rsync "${RSYNC_ARGS[@]}" "$line" "$DESTINATION_DIR"
-    rsync "${RSYNC_ARGS[@]}" "$line" "$DESTINATION_DIR"
-done < "$INCLUDES_FILE"
+    info rsync "${RSYNC_ARGS[@]}" "$line" "$SYNCF_DESTINATION_DIR"
+    rsync "${RSYNC_ARGS[@]}" "$line" "$SYNCF_DESTINATION_DIR"
+done < "$SYNCF_INCLUDES_FILE"
 set -e
 info "Finished syncing"
 
-[[ "$BACKUP_DISABLE" = "true" ]] && exit
+[[ "$SYNCF_BACKUP_DISABLE" = "true" ]] && exit
 
 shopt -s dotglob
 
