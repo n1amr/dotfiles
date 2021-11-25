@@ -192,12 +192,13 @@
         "-G", "Unix Makefiles",
     ],
 
-    // Docker:
+    // GitLens:
     // ======
-    "docker.explorerRefreshInterval": 3000,
+    "gitlens.views.searchAndCompare.files.layout": "tree",
 
     // Other Extensions:
     // =================
+    "docker.explorerRefreshInterval": 3000,
     "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
     "jupyter.allowUnauthorizedRemoteConnection": true,
 
@@ -214,7 +215,6 @@
     // "debug.inlineValues": true,
 
     "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-    "gitlens.views.searchAndCompare.files.layout": "tree",
     "diffEditor.renderSideBySide": false,
 }
 
@@ -224,18 +224,20 @@
 
 ## Extensions
 
-Installed extensions:
+General:
 - alefragnani.bookmarks
 - buenon.scratchpads
 - chrisdias.vscode-opennewinstance
 - eamodio.gitlens
 - github.remotehub
+- heaths.vscode-guid
 - jsynowiec.vscode-insertdatestring
 - ms-azuretools.vscode-docker
 - ms-vscode-remote.remote-containers
 - ms-vscode-remote.remote-ssh
 - ms-vscode-remote.remote-ssh-edit
 - ms-vscode.powershell
+- ms-vsliveshare.vsliveshare
 - njpwerner.autodocstring
 - redhat.vscode-xml
 - redhat.vscode-yaml
@@ -245,16 +247,25 @@ Installed extensions:
 - thesofakillers.vscode-pbtxt
 - tyriar.windows-terminal
 - vscodevim.vim
-- Python:
-    - ms-python.python
-    - ms-python.vscode-pylance
-    - ms-toolsai.jupyter
-    - ms-toolsai.jupyter-keymap
-    - ms-toolsai.jupyter-renderers
-- C++:
-    - ms-vscode.cmake-tools
-    - ms-vscode.cpptools
-    - twxs.cmake
+
+Python:
+- ms-python.python
+- ms-python.vscode-pylance
+- ms-toolsai.jupyter
+- ms-toolsai.jupyter-keymap
+- ms-toolsai.jupyter-renderers
+
+C++:
+- ms-vscode.cmake-tools
+- ms-vscode.cpptools
+- twxs.cmake
+
+Kusto:
+- rosshamish.kuskus-kusto-language-server
+- rosshamish.kuskus-kusto-syntax-highlighting
+
+Scala:
+- scala-lang.scala
 
 Disabled:
 - ankitbko.vscode-pull-request-azdo
@@ -267,8 +278,6 @@ Disabled:
 - redhat.vscode-commons
 - torn4dom4n.latex-support
 
-New:
-- ms-vsliveshare.vsliveshare
-- heaths.vscode-guid
+Trying out:
 
 */
