@@ -1,9 +1,5 @@
 // User Settings (All Platforms)
 {
-    // ##################
-    // ###  Behavior  ###
-    // ##################
-    "diffEditor.renderSideBySide": false,
     "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
     "editor.fontSize": 14,
     "editor.lineNumbers": "on",
@@ -218,6 +214,8 @@
     // "debug.inlineValues": true,
 
     "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+    "gitlens.views.searchAndCompare.files.layout": "tree",
+    "diffEditor.renderSideBySide": false,
 }
 
 /*
@@ -271,5 +269,6 @@ Disabled:
 
 New:
 - ms-vsliveshare.vsliveshare
+- heaths.vscode-guid
 
 */
