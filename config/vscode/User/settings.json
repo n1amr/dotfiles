@@ -1,5 +1,8 @@
 // User Settings (All Platforms)
 {
+    // ##################
+    // ###  Behavior  ###
+    // ##################
     "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
     "editor.fontSize": 14,
     "editor.lineNumbers": "on",
@@ -103,7 +106,8 @@
         "*.ipynb": "jupyter-notebook"
     },
     "files.associations": {
-        ".text": "txt",
+        "*.text": "plaintext",
+        "*.txt": "plaintext",
     },
 
     // ###########################
@@ -170,6 +174,7 @@
         "Popen",
         "amralaa",
         "astimezone",
+        "clickhouse",
         "datefmt",
         "dtype",
         "gmtime",
@@ -279,5 +284,6 @@ Disabled:
 - torn4dom4n.latex-support
 
 Trying out:
+- ms-dotnettools.dotnet-interactive-vscode
 
 */
