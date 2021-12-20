@@ -17,7 +17,6 @@
     "files.eol": "auto",
     "files.insertFinalNewline": false,
     "search.collapseResults": "auto",
-    "window.zoomLevel": 1,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.startupEditor": "none",
 
@@ -220,6 +219,7 @@
     // "debug.inlineValues": true,
 
     "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+    "window.zoomLevel": 1,
     "diffEditor.renderSideBySide": false,
 }
 
