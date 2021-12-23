@@ -2,33 +2,37 @@
 
 # IMPORTANT: caller scripts must not use `exec`
 # IMPORTANT: if calling script defines an EXIT trap, this new trap should call flock_exit_trap() for proper unlocking.
-[ -n "$DOTFILES_FLOCK" ] && return || export DOTFILES_FLOCK=true
+if [ -n "$DOTFILES_FLOCK" ]; then
+    return
+else
+    export DOTFILES_FLOCK=true
+fi
 
-__FLOCK_CALLER="$(realpath "$(caller | cut -d ' ' -f 1 --complement)")"
-__FLOCK_DEFAULT_LOCKFILE="/tmp/lock-$(echo "$__FLOCK_CALLER" | sed 's#/#%#g')"
-FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$1}"
-FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$__FLOCK_DEFAULT_LOCKFILE}"
+if [[ "$#" -gt 0 ]]; then
+    FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$1}"
+else
+    __FLOCK_CALLER="$(realpath "$(caller | cut -d ' ' -f 1 --complement)")"
+    __FLOCK_DEFAULT_LOCKFILE="/tmp/lock-$(echo "$__FLOCK_CALLER" | sed 's#/#%#g')"
+    FLOCK_LOCK_FILE="${FLOCK_LOCK_FILE:-$__FLOCK_DEFAULT_LOCKFILE}"
+fi
 
 __FLOCK_LOCKFD=99
 
-__flock_lock () {
-    flock "-$1" $__FLOCK_LOCKFD
-}
-
-__flock_no_more_locking () {
-    __flock_lock u
-    __flock_lock xn && rm -f "$FLOCK_LOCK_FILE"
-}
-
-__flock_prepare_locking () {
-    eval "exec $__FLOCK_LOCKFD>\"$FLOCK_LOCK_FILE\""
-    trap __flock_no_more_locking EXIT
-}
+__flock_lock () { flock "-$1" $__FLOCK_LOCKFD; }
 
 flock_exlock_now()  { __flock_lock xn; }  # obtain an exclusive lock immediately or fail
 flock_exlock()      { __flock_lock x;  }  # obtain an exclusive lock
 flock_shlock()      { __flock_lock s;  }  # obtain a shared lock
 flock_unlock()      { __flock_lock u;  }  # drop a lock
-flock_exit_trap()   { __flock_no_more_locking; }
+
+flock_exit_trap() {
+    flock_unlock
+    flock_exlock_now && rm -f "$FLOCK_LOCK_FILE"
+}
+
+__flock_prepare_locking () {
+    eval "exec $__FLOCK_LOCKFD>\"$FLOCK_LOCK_FILE\""
+    trap flock_exit_trap EXIT
+}
 
 __flock_prepare_locking
