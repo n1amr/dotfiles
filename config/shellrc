@@ -99,7 +99,7 @@ if [ "$SHELLNAME" = zsh ]; then
 
     export HISTSIZE=1000000000
     export SAVEHIST="$HISTSIZE"
-    export HISTFILESIZE="$HISTFILE"
+    export HISTFILESIZE="$HISTSIZE"
 
     setopt HIST_BEEP                 # Beep when accessing nonexistent history.
     setopt BANG_HIST                 # Treat the '!' character specially during expansion.
