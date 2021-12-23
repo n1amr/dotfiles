@@ -15,7 +15,18 @@ else
     return
 fi
 
+# Default Locale
 export LANG='en_US.UTF-8'
+export LC_ALL="${LC_ALL:-$LANG}"
+export LC_ADDRESS="${LC_ADDRESS:-$LANG}"
+export LC_IDENTIFICATION="${LC_IDENTIFICATION:-$LANG}"
+export LC_MEASUREMENT="${LC_MEASUREMENT:-$LANG}"
+export LC_MONETARY="${LC_MONETARY:-$LANG}"
+export LC_NAME="${LC_NAME:-$LANG}"
+export LC_NUMERIC="${LC_NUMERIC:-$LANG}"
+export LC_PAPER="${LC_PAPER:-$LANG}"
+export LC_TELEPHONE="${LC_TELEPHONE:-$LANG}"
+export LC_TIME="${LC_TIME:-$LANG}"
 
 [ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ] && IS_TTY='true' || IS_TTY='false'
 grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
