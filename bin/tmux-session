@@ -1,11 +1,15 @@
 #!/bin/bash
 
+set -eu
+
+export DISPLAY="${DISPLAY:-:0}"
+
 session="$1"
 if ! tmux has-session -t="$session"; then
     tmux new-session -d -s "$session"
 fi
 
-if [[ -z "$TMUX" ]]; then
+if [[ -z "${TMUX:-}" ]]; then
     exec tmux attach -t "$session"
 else
     exec tmux switch-client -t "$session"
