@@ -7,28 +7,46 @@ CURRENT_DOTFILES="$(realpath "$(dirname "$0")/..")"
 [[ -x ~/.dotfiles.env ]] && source ~/.dotfiles.env
 DOTFILES_HOME="${DOTFILES_HOME:-$CURRENT_DOTFILES}"
 
-subcommand="$1"
-shift
+main() {
+    subcommand="$1"
+    shift
 
-case "$subcommand" in
-    install)
-        exec "$DOTFILES_HOME/install" "$@" ;;
-    update|pull)
-        exec "$DOTFILES_HOME/bin/dotfiles-update" "$@" ;;
-    config) (
-        cd "$DOTFILES_HOME"
-        "${EDITOR:-vim}" \
-            "${DOTFILES_ENV_HOME:-$HOME}/.dotfiles.env" \
-            "$DOTFILES_HOME/custom/dotfiles.env" \
-            "$(custom-env-resolve 'config/marks.tsv')" \
-            "$(custom-env-resolve 'config/dotfiles/shellrc/hooks/post-shellrc.sh')" \
-            "$DOTFILES_HOME/config/shellrc" \
-            "$DOTFILES_HOME/config/vim/vimrc" \
-            "$DOTFILES_HOME/config/i3/config" \
-            "$DOTFILES_HOME/config/ranger/rc.conf" \
-            "$DOTFILES_HOME/config/ranger/rifle.conf" \
-        ;
-    ) ;;
-    *)
-        echo >&2 "Error: unknown command $subcommand" ;;
-esac
+    case "$subcommand" in
+        install)
+            exec "$DOTFILES_HOME/install" "$@" ;;
+        update|pull)
+            exec "$DOTFILES_HOME/bin/dotfiles-update" "$@" ;;
+        config)
+            dotfiles_config "$@" ;;
+        *)
+            echo >&2 "Error: unknown command $subcommand" ;;
+    esac
+}
+
+dotfiles_config() {
+    files=(
+        "${DOTFILES_ENV_HOME:-$HOME}/.dotfiles.env"
+        "${DOTFILES_ENV_HOME:-$HOME}/.dotfiles.env.local"
+        "$DOTFILES_HOME/custom/dotfiles.env"
+    )
+
+    env_files=(
+        'config/dotfiles/shellrc/hooks/post-shellrc.sh'
+        'config/shellrc'
+        'config/vim/vimrc'
+        'config/tmux.conf'
+        'config/ranger/rc.conf'
+        'config/ranger/rifle.conf'
+        'config/i3/config'
+        'config/marks.tsv'
+    )
+
+    for env_file in "${env_files[@]}"; do
+        files+=( "$(custom-env-resolve "$env_file")" )
+    done
+
+    cd "$DOTFILES_HOME"
+    exec "${EDITOR:-vim}" "${files[@]}"
+}
+
+main "$@"
