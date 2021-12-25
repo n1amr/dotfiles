@@ -4,7 +4,14 @@ set -eu
 
 export DISPLAY="${DISPLAY:-:0}"
 
-session="$1"
+if [[ "$#" -eq 0 ]]; then
+    source ~/.dotfiles.env
+    default_session="${DOTFILES_CONFIG_TMUX_DEFAULT_SESSION:-$USER}"
+    session="$default_session"
+else
+    session="$1"
+fi
+
 if ! tmux has-session -t="$session"; then
     tmux new-session -d -s "$session"
 fi
