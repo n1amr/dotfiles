@@ -272,6 +272,9 @@ Kusto:
 Scala:
 - scala-lang.scala
 
+Work:
+- yiwwan.vscode-scope
+
 Disabled:
 - ankitbko.vscode-pull-request-azdo
 - github.vscode-pull-request-github
