@@ -220,6 +220,8 @@
 
     "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
     "window.zoomLevel": 1,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "diffEditor.renderSideBySide": false,
 }
 
@@ -259,6 +261,11 @@ Python:
 - ms-toolsai.jupyter
 - ms-toolsai.jupyter-keymap
 - ms-toolsai.jupyter-renderers
+
+JavaScript/TypeScript:
+- dbaeumer.vscode-eslint
+- esbenp.prettier-vscode
+- ms-vscode.js-debug
 
 C++:
 - ms-vscode.cmake-tools
