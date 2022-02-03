@@ -9,6 +9,7 @@
     "editor.mouseWheelZoom": true,
     "editor.renderWhitespace": "all",
     "editor.rulers": [80, 100, 120],
+    "editor.suggestSelection": "first",
     "editor.tabSize": 4,
     "editor.wordWrap": "off",
     "editor.wrappingIndent": "indent",
@@ -17,8 +18,13 @@
     "files.eol": "auto",
     "files.insertFinalNewline": false,
     "search.collapseResults": "auto",
+    "window.zoomLevel": 1,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.startupEditor": "none",
+
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
 
     "[python]": {
         "editor.tabSize": 4,
@@ -205,6 +211,7 @@
     "docker.explorerRefreshInterval": 3000,
     "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
     "jupyter.allowUnauthorizedRemoteConnection": true,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 
     // ###############
     // ###  Other  ###
@@ -219,9 +226,6 @@
     // "debug.inlineValues": true,
 
     "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-    "window.zoomLevel": 1,
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "diffEditor.renderSideBySide": false,
 }
 
@@ -295,5 +299,6 @@ Disabled:
 
 Trying out:
 - ms-dotnettools.dotnet-interactive-vscode
+- visualstudioexptteam.vscodeintellicode
 
 */
