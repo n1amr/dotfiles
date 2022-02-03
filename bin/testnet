@@ -21,7 +21,7 @@ if ! test_google; then
         ping -c 3 "$h" | grep rtt
     done
 
-    wget http://google.com -vdO - 2>&1 | less
+    wget http://google.com -vdO - 2>&1 | cat
     echo 'Failed'
     exit 1
 fi
