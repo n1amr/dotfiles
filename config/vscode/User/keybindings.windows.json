@@ -220,7 +220,7 @@
   },
   {
     "key": "ctrl+shift+g",
-    "command": "workbench.view.scm",
+    "command": "workbench.view.scm"
   },
   {
     "key": "backspace",
@@ -235,6 +235,6 @@
   {
     "key": "shift+backspace",
     "when": "editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'SearchInProgressMode'",
-    "command": "-extension.vim_shift+backspace",
-  },
+    "command": "-extension.vim_shift+backspace"
+  }
 ]

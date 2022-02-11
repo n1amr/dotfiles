@@ -1,304 +1,325 @@
 // User Settings (All Platforms)
 {
-    // ##################
-    // ###  Behavior  ###
-    // ##################
-    "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
-    "editor.fontSize": 14,
-    "editor.lineNumbers": "on",
-    "editor.mouseWheelZoom": true,
-    "editor.renderWhitespace": "all",
-    "editor.rulers": [80, 100, 120],
-    "editor.suggestSelection": "first",
+  // ##################
+  // ###  Behavior  ###
+  // ##################
+  "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
+  "editor.fontSize": 14,
+  "editor.lineNumbers": "on",
+  "editor.mouseWheelZoom": true,
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [80, 100, 120],
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 4,
+  "editor.wordWrap": "off",
+  "editor.wrappingIndent": "indent",
+  "files.autoSave": "off",
+  "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
+  "files.eol": "auto",
+  "files.insertFinalNewline": false,
+  "search.collapseResults": "auto",
+  "window.zoomLevel": 1,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.startupEditor": "none",
+
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[python]": {
     "editor.tabSize": 4,
-    "editor.wordWrap": "off",
-    "editor.wrappingIndent": "indent",
-    "files.autoSave": "off",
-    "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
-    "files.eol": "auto",
-    "files.insertFinalNewline": false,
-    "search.collapseResults": "auto",
-    "window.zoomLevel": 1,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "workbench.startupEditor": "none",
+    "editor.rulers": [80, 100, 120]
+  },
 
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
+  // ===========================================================================
 
-    "[python]": {
-        "editor.tabSize": 4,
-        "editor.rulers": [80, 100, 120],
-    },
-
-    // ###############
-    // ###  Style  ###
-    // ###############
-    "workbench.colorTheme": "Visual Studio Dark",
-    "workbench.colorCustomizations": {
-        // Material colors; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
-        /* Colors:
+  // ###############
+  // ###  Style  ###
+  // ###############
+  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.colorCustomizations": {
+    // Material colors; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+    /* Colors:
             #1A237E Indigo
             #33691E Light Green
             #B71C1C Red
             #4A148C Purple
         */
-        "[Visual Studio Dark]": {
-            "activityBar.background": "#202020",
-            "activityBar.activeBackground": "#404040",
-            "titleBar.activeBackground": "#3c3c3c",
+    "[Visual Studio Dark]": {
+      "activityBar.background": "#202020",
+      "activityBar.activeBackground": "#404040",
+      "titleBar.activeBackground": "#3c3c3c",
 
-            "statusBar.background": "#263238",
-            "statusBar.debuggingBackground": "#6A1B9A",
+      "statusBar.background": "#263238",
+      "statusBar.debuggingBackground": "#6A1B9A",
 
-            "quickInputList.focusBackground": "#1A237E",
-            "list.hoverBackground": "#001064",
-        },
+      "quickInputList.focusBackground": "#1A237E",
+      "list.hoverBackground": "#001064"
+    }
+  },
+
+  // ##################
+  // ###  Terminal  ###
+  // ##################
+  "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.persistentSessionScrollback": 100000,
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "overrideName": true
     },
-
-    // ##################
-    // ###  Terminal  ###
-    // ##################
-    "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "terminal.integrated.scrollback": 100000,
-    "terminal.integrated.persistentSessionScrollback": 100000,
-    "terminal.integrated.profiles.windows": {
-        "PowerShell": {
-            "source": "PowerShell",
-            "overrideName": true,
-        },
-        "Dev Box": {
-            "source": "PowerShell",
-            "overrideName": true,
-            "args": [
-                "-File", "${env:home}\\scripts\\ssh-devbox.ps1",
-            ],
-        },
-        "Dev Box Jupyter": {
-            "source": "PowerShell",
-            "overrideName": true,
-            "args": [
-                "-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1",
-            ],
-        },
-        "cmd": {
-            "overrideName": true,
-            "path": [
-                "${env:windir}\\Sysnative\\cmd.exe",
-                "${env:windir}\\System32\\cmd.exe",
-            ],
-            "args": [],
-        },
+    "Dev Box": {
+      "source": "PowerShell",
+      "overrideName": true,
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"]
     },
-
-    // ###############
-    // ###  Files  ###
-    // ###############
-    "files.exclude": {
-        "**/*.pyc": true,
-        "**/__pycache__": true,
+    "Dev Box Jupyter": {
+      "source": "PowerShell",
+      "overrideName": true,
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1"]
     },
-    "files.watcherExclude": {
-        "**/*.pyc": true,
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/.hg/store/**": true,
-        "**/__pycache__/**": true,
-        "**/node_modules/*/**": true,
-    },
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter-notebook"
-    },
-    "files.associations": {
-        "*.text": "plaintext",
-        "*.txt": "plaintext",
-    },
+    "cmd": {
+      "overrideName": true,
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": []
+    }
+  },
 
-    // ###########################
-    // ###  Extensions Config  ###
-    // ###########################
+  // ===========================================================================
 
-    // vim:
-    // ====
-    // "vim.vimrc.enable": true, # Causes extension to not work
-    "vim.foldfix": true,
-    "vim.hlsearch": true,
-    "vim.incsearch": true,
-    "vim.leader": " ",
-    "vim.showMarksInGutter": true,
-    "vim.useSystemClipboard": false,
+  // ###############
+  // ###  Files  ###
+  // ###############
+  "files.exclude": {
+    "**/*.pyc": true,
+    "**/__pycache__": true
+  },
+  "files.watcherExclude": {
+    "**/*.pyc": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true,
+    "**/__pycache__/**": true,
+    "**/node_modules/*/**": true
+  },
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "files.associations": {
+    "*.text": "plaintext",
+    "*.txt": "plaintext"
+  },
 
-    "vim.handleKeys": {
-        "<C-a>": false,
-        "<C-b>": false,
-        "<C-c>": false,
-        "<C-f>": false,
-        "<C-t>": false,
-        "<C-w>": false,
-        "<C-x>": false,
+  // ===========================================================================
 
-        // Enabled (handled by vim)
-        "<C-d>": true,
-        "<C-e>": true,
-        "<C-u>": true,
-        "<C-y>": true,
-    },
-    "vim.normalModeKeyBindingsNonRecursive": [
-        { "before": [ "leader" ], "after": [ "\"", "+" ] },
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        { "before": [ "leader" ], "after": [ "\"", "+" ] },
-    ],
+  // ###########################
+  // ###  Extensions Config  ###
+  // ###########################
 
-    // Python:
-    // =======
-    "python.languageServer": "Pylance",
-    "python.formatting.provider": "autopep8",
-    "python.formatting.autopep8Args": [
-        "--max-line-length", "120",
-        "--experimental",
-    ],
-    "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-    "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-    // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
-    // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
+  // vim:
+  // ====
+  // "vim.vimrc.enable": true, # Causes extension to not work
+  "vim.foldfix": true,
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.leader": " ",
+  "vim.showMarksInGutter": true,
+  "vim.useSystemClipboard": false,
 
-    // Remote - SSH:
-    // =============
-    "remote.SSH.remotePlatform": {
-        "dell": "linux",
-        "main": "linux",
-        "mt-gpu": "linux",
-    },
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-b>": false,
+    "<C-c>": false,
+    "<C-f>": false,
+    "<C-t>": false,
+    "<C-w>": false,
+    "<C-x>": false,
 
-    // Code Spell Checker:
-    // ===================
-    "cSpell.enabled": true,
-    "cSpell.userWords": [
-        "Popen",
-        "amralaa",
-        "astimezone",
-        "clickhouse",
-        "datefmt",
-        "dtype",
-        "gmtime",
-        "itertools",
-        "jsonl",
-        "kwargs",
-        "mkdir",
-        "numpy",
-        "tqdm",
-        "xargs",
-    ],
+    // Enabled (handled by vim)
+    "<C-d>": true,
+    "<C-e>": true,
+    "<C-u>": true,
+    "<C-y>": true
+  },
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["leader"], "after": ["\"", "+"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["leader"], "after": ["\"", "+"] }
+  ],
 
-    // CMake:
-    // ======
-    "cmake.generator": "Unix Makefiles",
-    "cmake.preferredGenerators": [
-        "Unix Makefiles",
-    ],
-    "cmake.configureArgs": [
-        "-G", "Unix Makefiles",
-    ],
+  // Python:
+  // =======
+  "python.languageServer": "Pylance",
+  "python.formatting.provider": "autopep8",
+  "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "120",
+    "--experimental"
+  ],
+  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
+  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
 
-    // GitLens:
-    // ======
-    "gitlens.views.searchAndCompare.files.layout": "tree",
+  // Prettier
+  // =============
+  "prettier.useTabs": false,
+  // "prettier.tabWidth": 4,
+  // "prettier.singleQuote": true,
+  // "prettier.trailingComma": "all"
 
-    // Other Extensions:
-    // =================
-    "docker.explorerRefreshInterval": 3000,
-    "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
-    "jupyter.allowUnauthorizedRemoteConnection": true,
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  // Remote - SSH:
+  // =============
+  "remote.SSH.remotePlatform": {
+    "dell": "linux",
+    "main": "linux",
+    "mt-gpu": "linux"
+  },
 
-    // ###############
-    // ###  Other  ###
-    // ###############
-    "editor.accessibilitySupport": "off",
-    "git.autofetch": true,
-    "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
+  // Code Spell Checker:
+  // ===================
+  "cSpell.enabled": true,
+  "cSpell.userWords": [
+    "Popen",
+    "amralaa",
+    "astimezone",
+    "clickhouse",
+    "cmake",
+    "datefmt",
+    "dtype",
+    "gmtime",
+    "itertools",
+    "jsonl",
+    "kwargs",
+    "mkdir",
+    "mutex",
+    "numpy",
+    "parquetjs",
+    "tqdm",
+    "xargs"
+  ],
 
-    // ###################
-    // ###  Temporary  ###
-    // ###################
-    // "debug.inlineValues": true,
+  // CMake:
+  // ======
+  "cmake.generator": "Unix Makefiles",
+  "cmake.preferredGenerators": ["Unix Makefiles"],
+  "cmake.configureArgs": ["-G", "Unix Makefiles"],
 
-    "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-    "diffEditor.renderSideBySide": false,
+  // GitLens:
+  // ======
+  "gitlens.views.searchAndCompare.files.layout": "tree",
+
+  // Other Extensions:
+  // =================
+  "docker.explorerRefreshInterval": 3000,
+  "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
+  "jupyter.allowUnauthorizedRemoteConnection": true,
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+  // ###############
+  // ###  Other  ###
+  // ###############
+  "editor.accessibilitySupport": "off",
+  "git.autofetch": true,
+  "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
+
+  // ===========================================================================
+
+  // ###################
+  // ###  Temporary  ###
+  // ###################
+  // "debug.inlineValues": true,
+
+  // ===========================================================================
+
+  // ###############
+  // ###  Notes  ###
+  // ###############
+
+  // Installed Extensions:
+  // =================
+  /**
+    General:
+    - alefragnani.bookmarks
+    - buenon.scratchpads
+    - chrisdias.vscode-opennewinstance
+    - eamodio.gitlens
+    - github.remotehub
+    - heaths.vscode-guid
+    - jsynowiec.vscode-insertdatestring
+    - ms-azuretools.vscode-docker
+    - ms-vscode-remote.remote-containers
+    - ms-vscode-remote.remote-ssh
+    - ms-vscode-remote.remote-ssh-edit
+    - ms-vscode.powershell
+    - ms-vsliveshare.vsliveshare
+    - njpwerner.autodocstring
+    - redhat.vscode-xml
+    - redhat.vscode-yaml
+    - rogalmic.bash-debug
+    - shalimski.swapdiff
+    - streetsidesoftware.code-spell-checker
+    - thesofakillers.vscode-pbtxt
+    - tyriar.windows-terminal
+    - vscodevim.vim
+
+    Python:
+    - ms-python.python
+    - ms-python.vscode-pylance
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-keymap
+    - ms-toolsai.jupyter-renderers
+
+    JavaScript/TypeScript:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - ms-vscode.js-debug
+
+    C++:
+    - ms-vscode.cmake-tools
+    - ms-vscode.cpptools
+    - twxs.cmake
+
+    Kusto:
+    - rosshamish.kuskus-kusto-language-server
+    - rosshamish.kuskus-kusto-syntax-highlighting
+
+    Scala:
+    - scala-lang.scala
+
+    Work:
+    - yiwwan.vscode-scope
+
+    Disabled:
+    - ankitbko.vscode-pull-request-azdo
+    - github.vscode-pull-request-github
+    - grapecity.gc-excelviewer
+    - leo-labs.dotnet
+    - ms-dotnettools.csharp
+    - ms-kubernetes-tools.vscode-kubernetes-tools
+    - ms-vscode-remote.remote-wsl
+    - redhat.vscode-commons
+    - torn4dom4n.latex-support
+
+    Trying out:
+    - ms-dotnettools.dotnet-interactive-vscode
+    - visualstudioexptteam.vscodeintellicode
+    - randomfractalsinc.vscode-data-preview
+    - ms-vscode.vscode-node-azure-pack
+   */
+
+  // ===========================================================================
+
+  "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+  "diffEditor.renderSideBySide": false
 }
-
-/*
-
-# Notes
-
-## Extensions
-
-General:
-- alefragnani.bookmarks
-- buenon.scratchpads
-- chrisdias.vscode-opennewinstance
-- eamodio.gitlens
-- github.remotehub
-- heaths.vscode-guid
-- jsynowiec.vscode-insertdatestring
-- ms-azuretools.vscode-docker
-- ms-vscode-remote.remote-containers
-- ms-vscode-remote.remote-ssh
-- ms-vscode-remote.remote-ssh-edit
-- ms-vscode.powershell
-- ms-vsliveshare.vsliveshare
-- njpwerner.autodocstring
-- redhat.vscode-xml
-- redhat.vscode-yaml
-- rogalmic.bash-debug
-- shalimski.swapdiff
-- streetsidesoftware.code-spell-checker
-- thesofakillers.vscode-pbtxt
-- tyriar.windows-terminal
-- vscodevim.vim
-
-Python:
-- ms-python.python
-- ms-python.vscode-pylance
-- ms-toolsai.jupyter
-- ms-toolsai.jupyter-keymap
-- ms-toolsai.jupyter-renderers
-
-JavaScript/TypeScript:
-- dbaeumer.vscode-eslint
-- esbenp.prettier-vscode
-- ms-vscode.js-debug
-
-C++:
-- ms-vscode.cmake-tools
-- ms-vscode.cpptools
-- twxs.cmake
-
-Kusto:
-- rosshamish.kuskus-kusto-language-server
-- rosshamish.kuskus-kusto-syntax-highlighting
-
-Scala:
-- scala-lang.scala
-
-Work:
-- yiwwan.vscode-scope
-
-Disabled:
-- ankitbko.vscode-pull-request-azdo
-- github.vscode-pull-request-github
-- grapecity.gc-excelviewer
-- leo-labs.dotnet
-- ms-dotnettools.csharp
-- ms-kubernetes-tools.vscode-kubernetes-tools
-- ms-vscode-remote.remote-wsl
-- redhat.vscode-commons
-- torn4dom4n.latex-support
-
-Trying out:
-- ms-dotnettools.dotnet-interactive-vscode
-- visualstudioexptteam.vscodeintellicode
-
-*/
