@@ -155,7 +155,7 @@ if [[ ! -f ~/.ranger-temp-paths.conf ]]; then
 fi
 
 export DOTFILES_MARKS_PATH="$DOTFILES_ENV_HOME/.marks"
-export MANPAGER="/bin/sh -c 'col -b | vim -c '\''set ft=man ts=8 nomod nolist nonu noma'\'' -'"
+export MANPAGER="/bin/sh -c 'col -b | vim -c '\''set filetype=man nolist tabstop=8 norelativenumber nonumber foldcolumn=0 nomodified nomodifiable'\'' -'"
 
 ################################################################################
 #################################  Functions  ##################################
