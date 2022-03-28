@@ -3,6 +3,7 @@
   // ##################
   // ###  Behavior  ###
   // ##################
+
   "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
   "editor.fontSize": 14,
   "editor.lineNumbers": "on",
@@ -40,15 +41,19 @@
   // ###############
   // ###  Style  ###
   // ###############
+
   "workbench.colorTheme": "Visual Studio Dark",
   "workbench.colorCustomizations": {
-    // Material colors; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
-    /* Colors:
-            #1A237E Indigo
-            #33691E Light Green
-            #B71C1C Red
-            #4A148C Purple
-        */
+    /*
+      Colors:
+        #1A237E Indigo
+        #33691E Light Green
+        #B71C1C Red
+        #4A148C Purple
+
+      Material colors;
+        https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+    */
     "[Visual Studio Dark]": {
       "activityBar.background": "#202020",
       "activityBar.activeBackground": "#404040",
@@ -62,9 +67,12 @@
     }
   },
 
+  // ===========================================================================
+
   // ##################
   // ###  Terminal  ###
   // ##################
+
   "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.scrollback": 100000,
@@ -99,6 +107,7 @@
   // ###############
   // ###  Files  ###
   // ###############
+
   "files.exclude": {
     "**/*.pyc": true,
     "**/__pycache__": true
@@ -238,6 +247,7 @@
   // ###################
   // ###  Temporary  ###
   // ###################
+
   // "debug.inlineValues": true,
 
   // ===========================================================================
@@ -321,5 +331,6 @@
   // ===========================================================================
 
   "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-  "diffEditor.renderSideBySide": false
+  "diffEditor.renderSideBySide": false,
+  "debug.console.wordWrap": false
 }
