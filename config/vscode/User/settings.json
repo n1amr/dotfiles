@@ -1,6 +1,6 @@
 // User Settings (All Platforms)
 {
-  // Updated at: 2022-03-29 00:48:02 +02:00
+  // Updated at: 2022-04-08 19:28:01 +02:00
 
   // ##################
   // ###  Behavior  ###
@@ -80,6 +80,8 @@
   "terminal.integrated.fontFamily": "DejaVu Sans Mono for Powerline",
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.enablePersistentSessions": true,
+  "terminal.integrated.persistentSessionReviveProcess": "onExit",
   "terminal.integrated.persistentSessionScrollback": 100000,
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
@@ -204,13 +206,14 @@
   // ===================
   "cSpell.enabled": true,
   "cSpell.userWords": [
-    "Popen",
+    "Adls",
     "amralaa",
     "astimezone",
     "clickhouse",
     "cmake",
     "datefmt",
     "dtype",
+    "eventhub",
     "gmtime",
     "itertools",
     "jsonl",
@@ -219,6 +222,7 @@
     "mutex",
     "numpy",
     "parquetjs",
+    "Popen",
     "tqdm",
     "xargs"
   ],
@@ -336,6 +340,14 @@
   // ===========================================================================
 
   "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+  "diffEditor.renderSideBySide": false,
   "debug.console.wordWrap": false,
-  "diffEditor.renderSideBySide": false
+  "azure.resourceFilter": [
+    "72f988bf-86f1-41af-91ab-2d7cd011db47/42db8b88-f5e6-40b8-9b0b-0af715701fc8",
+    "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780"
+  ],
+  "azureResourceManagerTools.parameterFiles": {
+    "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.gitignored.jsonc": "alerts-actions.gitignored.parameters.json",
+    "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.jsonc": "alerts-actions.gitignored.parameters.json"
+  },
 }
