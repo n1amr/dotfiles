@@ -1,5 +1,7 @@
 // User Settings (All Platforms)
 {
+  // Updated at: 2022-03-29 00:48:02 +02:00
+
   // ##################
   // ###  Behavior  ###
   // ##################
@@ -33,7 +35,9 @@
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.rulers": [80, 100, 120]
+    "editor.rulers": [80, 100, 120],
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
   },
 
   // ===========================================================================
@@ -173,7 +177,8 @@
   "python.formatting.autopep8Args": [
     "--max-line-length",
     "120",
-    "--experimental"
+    "--experimental",
+    "--aggressive",
   ],
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
   "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
@@ -331,6 +336,6 @@
   // ===========================================================================
 
   "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-  "diffEditor.renderSideBySide": false,
-  "debug.console.wordWrap": false
+  "debug.console.wordWrap": false,
+  "diffEditor.renderSideBySide": false
 }
