@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source ~/.dotfiles.env
+source "$DOTFILES_HOME/bin/lib/log"
+export PATH="$DOTFILES_HOME/bin:$PATH"
+
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)" || true
+eval "$(pyenv init -)"
+
+FAILED_NOTIFICATIONS_DIR="$DOTFILES_HOME/tmp/notifications"
+
+if [[ ! -d "$FAILED_NOTIFICATIONS_DIR" ]]; then
+    exit 0
+fi
+
+while IFS= read file; do
+    content="$(cat "$file")"
+    profile="$(echo "$content" | head -n 1)"
+    subject="$(echo "$content" | head -n 2 | tail -n 1)"
+    body="$(echo "$content" | tail -n +3)"
+
+    echo "$body"
+
+    send_output="$(echo "$body" | IS_RETRYING='true' SEND_NOTIFICATION_PROFILE="$profile" send-notification "$subject" 2>&1)"
+    if echo "$send_output" | grep -i 'Telegram notification is sent'; then
+        echo 'Resent successfully.'
+        rm -fv "$file"
+    else
+        echo 'Failed to resend.'
+    fi
+done < <(find "$FAILED_NOTIFICATIONS_DIR" -maxdepth 1 -type f)
+
+find "$FAILED_NOTIFICATIONS_DIR" -type d -empty -delete

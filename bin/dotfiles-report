@@ -5,21 +5,20 @@ set -e
 source ~/.dotfiles.env
 
 subject="$1"
-DEFAULT_REPORT_TO_EMAIL="n1amr1@gmail.com"
+
 if [[ -n "$DOTFILES_ENV" ]]; then
-    subject="$DOTFILES_ENV: $subject"
-    DEFAULT_REPORT_TO_EMAIL="n1amr1+dotfiles.${DOTFILES_ENV}@gmail.com"
+    subject="[$DOTFILES_ENV] $subject"
 fi
 
-REPORT_TO_EMAIL="${DOTFILES_CONFIG_REPORT_TO_EMAIL:-$DEFAULT_REPORT_TO_EMAIL}"
-
-{
-    date -Isec
-    echo "=================================  Start  ======================================"
+body="$({
+    echo "Environment: $DOTFILES_ENV"
+    echo "Time: $(date -Isec)"
+    echo ""
+    echo "content:"
+    echo "========"
+    echo ""
     cat
-    echo "==================================  End  ======================================="
-} | tee -a "$DOTFILES_HOME/logs/reports" | {
-    if which mutt > /dev/null; then
-        mutt -s "$subject" "$REPORT_TO_EMAIL"
-    fi
-}
+})"
+
+echo "$body" | tee -a "$DOTFILES_HOME/logs/reports" |
+    send-notification "$subject"

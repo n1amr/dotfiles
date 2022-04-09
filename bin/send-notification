@@ -1,0 +1,90 @@
+#!/bin/bash
+
+set -eu
+
+source ~/.dotfiles.env
+
+if ! pyenv root > /dev/null; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+
+THIS_DIR="$(dirname "$0")"
+FAILED_NOTIFICATIONS_DIR="$DOTFILES_HOME/tmp/notifications"
+IS_RETRYING="${IS_RETRYING:-false}"
+
+main() {
+    if [[ "$#" -ne 1 ]]; then
+        echo "Usage: echo 'Message body' | $0 <SUBJECT>" >&2
+        exit 1
+    fi
+
+    local subject="$1"
+
+    local body
+    if [[ ! -t 0 ]]; then
+        body="$(cat)"
+    else
+        body=''
+    fi
+
+    echo "$body" | send_telegram "$subject" &
+
+    if [[ "$DOTFILES_CONFIG_EMAIL_NOTIFICATION" = 'true' ]]; then
+        echo "$body" | send_email "$subject" &
+    fi
+
+    wait
+}
+
+send_telegram() {
+    local subject="$1"
+    local body="$(cat)"
+
+    echo "$body" | "$THIS_DIR/send-notification-telegram" "$subject" &&
+        echo "Telegram notification is sent." ||
+        {
+            echo "Failed to send telegram notification."
+            echo "$body" | on_failure "$subject"
+        }
+}
+
+send_email() {
+    local subject="$1"
+    local body="$(cat)"
+
+    echo "$body" | "$THIS_DIR/send-notification-email" "$subject" &&
+        echo "Eamil is sent." ||
+        {
+            echo "Failed to send email."
+            echo "$body" | on_failure "$subject"
+        }
+}
+
+on_failure() {
+    if [[ "$IS_RETRYING" = 'true' ]]; then
+        return
+    fi
+
+    local subject="$1"
+    local body="$(cat)"
+
+    local timestamp="$(date -Isec)"
+    local filename="$timestamp ${subject//\//%}.txt"
+
+    local message_path="$FAILED_NOTIFICATIONS_DIR/$filename"
+
+    mkdir -pv "$(dirname "$message_path")"
+    {
+        echo "${SEND_NOTIFICATION_PROFILE:-}"
+        echo "$subject [RESEND $timestamp]"
+        echo "$body"
+    } > "$message_path"
+
+    echo "Failed notification message is saved to: $message_path" >&2
+}
+
+main "$@"

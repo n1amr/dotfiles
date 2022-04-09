@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+
+import datetime
+import os
+import re
+import sys
+import telegram_send
+import tempfile
+
+from typing import Optional
+
+DOTFILES_HOME = os.environ.get('DOTFILES_HOME', os.path.expanduser(f'~/.dotfiles'))
+PROFILES_DIR = os.path.join(DOTFILES_HOME, 'custom/config/telegram-send')
+
+SUMMARY_LENGTH = 200
+MAX_LENGTH = 4000
+DEFAULT_PROFILE = 'notifications'
+
+
+def main():
+    if len(sys.argv) != 2:
+        print(f'Usage: echo "Message body" | {sys.argv[0]} <SUBJECT>', file=sys.stderr)
+
+        return 1
+
+    subject = sys.argv[1]
+
+    if not os.isatty(sys.stdin.fileno()):
+        body = sys.stdin.read()
+    else:
+        body = None
+
+    send_notification(subject, body)
+
+    return 0
+
+
+def send_notification(subject: str, body: str):
+    has_body = bool(body)
+    is_short_body = has_body and len(body) <= SUMMARY_LENGTH
+
+    if has_body:
+        if is_short_body:
+            summary = body
+        else:
+            summary = body[:SUMMARY_LENGTH - 4] + ' ...'
+
+        message = f'🔔 {subject}\n\n{summary}'
+    else:
+        message = f'🔔 {subject}'
+
+    message = message[:MAX_LENGTH]
+
+    config_path = get_config_path()
+
+    if not has_body:
+        telegram_send.send(messages=[message], conf=config_path)
+    else:
+        timestamp = datetime.datetime.utcnow().isoformat(timespec='seconds')
+        prefix = to_safe_filename(f'{timestamp}-{subject}-')
+
+        with tempfile.NamedTemporaryFile(mode='w+t', encoding='utf-8', prefix=prefix) as file:
+            file.write(body)
+            file.seek(0)
+
+            telegram_send.send(files=[file], captions=[message], conf=config_path)
+
+
+def get_config_path() -> str:
+    profile = os.environ.get('SEND_NOTIFICATION_PROFILE', DEFAULT_PROFILE)
+
+    config_path = locate_config_path(profile)
+
+    if config_path:
+        return config_path
+
+    print(
+        f'WARNING: Notifications profile is not found: {profile}.'
+        f' Will use default profile: {DEFAULT_PROFILE}.'
+    )
+
+    config_path = locate_config_path(DEFAULT_PROFILE)
+
+    return config_path
+
+
+def locate_config_path(profile: str) -> Optional[str]:
+    config_path = os.path.join(PROFILES_DIR, f'{profile}.conf')
+
+    if os.path.exists(config_path):
+        return config_path
+
+    return None
+
+
+def to_safe_filename(filename: str) -> str:
+    filename = filename.replace('/', '%')
+    filename = re.sub(r'\s', '_', filename)
+    filename = re.sub(r'[^-\w %()_=+\'".,\[\]{}]', '.', filename)
+    return filename
+
+
+if __name__ == '__main__':
+    sys.exit(main())

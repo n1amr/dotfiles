@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -eu
+
+THIS_DIR="$(dirname "$0")"
+
+DEFAULT_EMAIL='n1amr1@gmail.com'
+
+if [[ "$#" -ne 1 ]]; then
+    echo "Usage: echo 'Message body' | $0 <SUBJECT>" >&2
+    exit 1
+fi
+
+subject="$1"
+email="${EMAIL:-$DEFAULT_EMAIL}"
+
+if [[ ! -t 0 ]]; then
+    body="$(cat)"
+else
+    body=''
+fi
+
+echo "$body" | mutt -s "$subject" "$email"
