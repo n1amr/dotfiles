@@ -1,6 +1,6 @@
 // User Settings (All Platforms)
 {
-  // Updated at: 2022-04-08 19:28:01 +02:00
+  // Updated at: 2022-04-15 18:16:43 +02:00
 
   // ##################
   // ###  Behavior  ###
@@ -235,6 +235,8 @@
 
   // GitLens:
   // ======
+  "gitlens.advanced.fileHistoryFollowsRenames": true,
+  "gitlens.plusFeatures.enabled": false,
   "gitlens.views.searchAndCompare.files.layout": "tree",
 
   // Other Extensions:
@@ -340,7 +342,6 @@
   // ===========================================================================
 
   "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-  "diffEditor.renderSideBySide": false,
   "debug.console.wordWrap": false,
   "azure.resourceFilter": [
     "72f988bf-86f1-41af-91ab-2d7cd011db47/42db8b88-f5e6-40b8-9b0b-0af715701fc8",
@@ -350,4 +351,5 @@
     "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.gitignored.jsonc": "alerts-actions.gitignored.parameters.json",
     "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.jsonc": "alerts-actions.gitignored.parameters.json"
   },
+  "diffEditor.renderSideBySide": false,
 }
