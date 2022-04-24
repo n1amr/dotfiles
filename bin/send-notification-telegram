@@ -26,7 +26,7 @@ def main():
     subject = sys.argv[1]
 
     if not os.isatty(sys.stdin.fileno()):
-        body = sys.stdin.read()
+        body = sys.stdin.read().rstrip('\r\n')
     else:
         body = None
 
