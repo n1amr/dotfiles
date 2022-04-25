@@ -212,6 +212,7 @@
     "clickhouse",
     "cmake",
     "datefmt",
+    "dotfiles",
     "dtype",
     "eventhub",
     "gmtime",
