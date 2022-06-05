@@ -21,7 +21,6 @@
   "files.eol": "auto",
   "files.insertFinalNewline": false,
   "search.collapseResults": "auto",
-  "window.zoomLevel": 1,
   "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.startupEditor": "none",
 
@@ -131,7 +130,8 @@
   },
   "files.associations": {
     "*.text": "plaintext",
-    "*.txt": "plaintext"
+    "*.txt": "plaintext",
+    "*.kql": "dotnet-interactive.kql"
   },
 
   // ===========================================================================
@@ -224,6 +224,7 @@
     "numpy",
     "parquetjs",
     "Popen",
+    "screenshotting",
     "tqdm",
     "xargs"
   ],
@@ -352,5 +353,6 @@
     "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.gitignored.jsonc": "alerts-actions.gitignored.parameters.json",
     "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.jsonc": "alerts-actions.gitignored.parameters.json"
   },
+  "window.zoomLevel": 1,
   "diffEditor.renderSideBySide": false,
 }
