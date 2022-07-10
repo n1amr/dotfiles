@@ -7,7 +7,7 @@ source ~/.dotfiles.env
 DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/safe-download-connections"
 [ -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"
 
-DEVICE="$(nmcli dev | grep wifi | cut -d ' ' -f 1)"
+DEVICE="$(nmcli dev | grep -P '\swifi\s' | awk '{print $1}' | head -n 1)"
 
 active_connection () {
     nmcli --fields DEVICE,NAME con show --active | grep -P "^$DEVICE" | awk '{print $2}'
