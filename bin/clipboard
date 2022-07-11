@@ -2,48 +2,71 @@
 
 source ~/.dotfiles.env
 
-CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-$DOTFILES_ENV_HOME/.clipboard}"
-
-copy  () { cat > "$CLIPBOARD_FILE"; }
-paste () { cat   "$CLIPBOARD_FILE"; }
-[[ ! -f "$CLIPBOARD_FILE" ]] && mkdir -p "$(dirname "$CLIPBOARD_FILE")" && touch "$CLIPBOARD_FILE"
-chown "$DOTFILES_ENV_USER" "$CLIPBOARD_FILE"
-chmod 600 "$CLIPBOARD_FILE"
-
-FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
-if [[ "$FILE_ONLY_MODE" != 'true' ]]; then
-    if ( which xsel && xsel ) > /dev/null 2>&1; then
-        copy  () { xsel -ib; }
-        paste () { xsel -ob; }
-    fi
-fi
-
 append=''
 append_lines=''
 no_new_line=''
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -a) append='true' ;;
-        -l) append='true'; append_lines='true' ;;
-        -s) no_new_line='true' ;;
-        *)
-            echo >&2 "Invalid arguments: $1"
-            echo >&2 "Usage: clipboard [-a] [-l] [-s]"
-            exit 1
-        ;;
-    esac
-    shift
-done
+pipe_input=''
+pipe_output=''
 
-[[ ! -t 0 ]] && pipe_input='true'
-[[ ! -t 1 ]] && pipe_output='true'
+main() {
+    parse_args "$@"
 
-[[ -n "$append" ]] && prev="$(paste)" || prev=''
-[[ -n "$pipe_input" ]] && {
-    [[ -n "$append" ]] && {
-        echo -n "$prev"
-        [[ -n "$append_lines" ]] && echo
-    }
-    [[ -n "$no_new_line" ]] && echo -n "$(cat)" || cat
-} | copy
-paste | cat
+    if [[ -n "$pipe_input" ]]; then
+        new_content="$(get_new_content)"
+        echo -n "$new_content" | copy
+    fi
+
+    paste | cat
+}
+
+FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
+if [[ "$FILE_ONLY_MODE" != 'true' ]] && ( which xsel && xsel -ob ) > /dev/null 2>&1; then
+    copy  () { xsel -ib; }
+    paste () { xsel -ob; }
+else
+    CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-$DOTFILES_ENV_HOME/.clipboard}"
+
+    [[ ! -f "$CLIPBOARD_FILE" ]] && mkdir -p "$(dirname "$CLIPBOARD_FILE")" && touch "$CLIPBOARD_FILE"
+    chown "$DOTFILES_ENV_USER" "$CLIPBOARD_FILE"
+    chmod 600 "$CLIPBOARD_FILE"
+
+    copy  () { cat > "$CLIPBOARD_FILE"; }
+    paste () { cat   "$CLIPBOARD_FILE"; }
+fi
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -a) append='true' ;;
+            -l) append='true'; append_lines='true' ;;
+            -s) no_new_line='true' ;;
+            *)
+                echo >&2 "Invalid arguments: $1"
+                echo >&2 "Usage: clipboard [-a] [-l] [-s]"
+                exit 1
+            ;;
+        esac
+        shift
+    done
+
+    [[ ! -t 0 ]] && pipe_input='true'
+    [[ ! -t 1 ]] && pipe_output='true'
+}
+
+get_new_content() {
+    if [[ -n "$append" ]]; then
+        echo -n "$(paste)"
+
+        if [[ -n "$append_lines" ]]; then
+            echo
+        fi
+    fi
+
+    echo -n "$(cat)"
+
+    if [[ -z "$no_new_line" ]]; then
+        echo
+    fi
+}
+
+main "$@"
