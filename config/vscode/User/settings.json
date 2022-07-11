@@ -1,6 +1,6 @@
 // User Settings (All Platforms)
 {
-  // Updated at: 2022-06-09 14:11:00 +02:00
+  // Updated at: 2022-07-11 02:11:28 +02:00
 
   // ##################
   // ###  Behavior  ###
@@ -182,10 +182,10 @@
     "--experimental",
     "--aggressive",
   ],
-  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
+  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
-  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.10/bin/python", // TODO: Remove
+  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.13/bin/python", // TODO: Remove
 
   // Prettier
   // =============
