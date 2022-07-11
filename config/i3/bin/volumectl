@@ -5,6 +5,8 @@ source ~/.dotfiles.env
 MIXER='pulse'
 DELTA="${2:-5}"
 
+SINK_ID="$(pactl list short sinks | head -n 1 | awk '{print $1}')"
+
 notify () {
     paplay "$DOTFILES_HOME/resources/sounds/audio-volume-change.oga" &
     notify-send -a volumectl -t 500 -i stock_volume "Volume: $(print_level)"
@@ -31,22 +33,22 @@ volume_set () {
 
 volume_up () {
     volume_unmute
-    # pactl set-sink-volume 0 +5%
+    # pactl set-sink-volume "$SINK_ID" +5%
     amixer -D "$MIXER" sset Master "${DELTA}%+"
 }
 
 volume_down () {
     volume_unmute
-    # pactl set-sink-volume 0 -5%
+    # pactl set-sink-volume "$SINK_ID" -5%
     amixer -D "$MIXER" sset Master "${DELTA}%-"
 }
 
 volume_mute_toggle () {
-    pactl set-sink-mute 0 toggle
+    pactl set-sink-mute "$SINK_ID" toggle
 }
 
 volume_unmute () {
-    pactl set-sink-mute 0 off
+    pactl set-sink-mute "$SINK_ID" off
 }
 
 case "$1" in
