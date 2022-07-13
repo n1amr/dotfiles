@@ -6,7 +6,7 @@ source ~/.dotfiles.env
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
 beep () {
-    paplay '/usr/share/sounds/ubuntu/stereo/message-new-instant.ogg'
+    paplay "$DOTFILES_HOME/resources/sounds/message.ogg"
 }
 
 alert () {
