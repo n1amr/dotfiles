@@ -67,7 +67,12 @@ tp_remove () {
 tp_set () {
     tp_init
     local key="${1:-default}"
-    local value="$(realpath "${2:-.}")"
+    local value="${2:-.}"
+    if [[ -e "$value" ]]; then
+        value="$(realpath "$value")"
+    else
+        echo "Path value does not exist: $value" >&2
+    fi
     tp_set_value "$key" "$value"
 }
 
