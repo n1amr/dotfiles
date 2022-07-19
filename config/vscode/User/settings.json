@@ -25,11 +25,11 @@
   "workbench.startupEditor": "none",
 
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
 
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
 
   "[python]": {
@@ -348,10 +348,12 @@
   "debug.console.wordWrap": false,
   "azure.resourceFilter": [
     "72f988bf-86f1-41af-91ab-2d7cd011db47/42db8b88-f5e6-40b8-9b0b-0af715701fc8",
-    "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780"
+    "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780",
+    "cba545ce-21d5-4fcc-a680-d9477e5f872e/f08e8989-79d3-4847-b6ea-d5f8a08a56f2"
   ],
   "azureResourceManagerTools.parameterFiles": {
   },
   "window.zoomLevel": 1,
   "diffEditor.renderSideBySide": false,
+  "azureResourceGroups.groupBy": "resourceGroup",
 }
