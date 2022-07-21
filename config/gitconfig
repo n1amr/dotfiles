@@ -124,6 +124,9 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 [credential]
     helper = cache
 
+[init]
+    defaultBranch = master
+
 [commit]
     gpgsign = false
     verbose = true
