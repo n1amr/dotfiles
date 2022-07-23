@@ -1,22 +1,39 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 source ~/.dotfiles.env
 
-DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/safe-download-connections"
-[ -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ] || echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"
-
-DEVICE="$(nmcli dev | grep -P '\swifi\s' | awk '{print $1}' | head -n 1)"
-
-active_connection () {
-    nmcli --fields DEVICE,NAME con show --active | grep -P "^$DEVICE" | awk '{print $2}'
-}
-
-while IFS= read -r ssid; do
-    if [ "$(active_connection)" = "$ssid" ]; then
+main() {
+    SHOULD_IGNORE="${DOTFILES_ALLOW_DOWNLOAD_FOR_ALL:-false}"
+    if [[ "$SHOULD_IGNORE" == 'true' ]]; then
         exit 0
     fi
-done < "$DOWNLOAD_CONNECTIONS_LIST_FILE"
 
-exit 1
+    DOWNLOAD_CONNECTIONS_LIST_FILE="$DOTFILES_HOME/custom/config/dotfiles/safe-download-connections"
+    if [[ ! -f "$DOWNLOAD_CONNECTIONS_LIST_FILE" ]]; then
+        echo "# Enter wifi SSID list here" > "$DOWNLOAD_CONNECTIONS_LIST_FILE"
+    fi
+
+    connection="$(get_active_connection)"
+
+    while IFS= read -r ssid; do
+        if [[ "$connection" == "$ssid" ]]; then
+            exit 0
+        fi
+    done < "$DOWNLOAD_CONNECTIONS_LIST_FILE"
+
+    exit 1
+}
+
+get_active_connection() {
+    local device="$(get_wifi_device)"
+
+    nmcli --fields DEVICE,NAME con show --active | grep -P "^$device" | awk '{print $2}'
+}
+
+get_wifi_device() {
+    nmcli dev | grep -P '\swifi\s' | awk '{print $1}' | head -n 1
+}
+
+main "$@"
