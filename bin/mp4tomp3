@@ -1,6 +1,21 @@
 #!/bin/bash
 
-in="$1"
-out="${2:-${in%.mp4}.mp3}"
+set -eu
 
-ffmpeg -i "$in" -vn -acodec libmp3lame -ac 2 -qscale:a 4 -ar 48000 "$out"
+main() {
+    for path in "$@"; do
+        echo "Converting $path..."
+        convert_file "$path" 2> /dev/null
+    done
+
+    echo "Finished."
+}
+
+convert_file() {
+    input_path="$1"
+    output_path="${2:-${input_path%.mp4}.mp3}"
+
+    ffmpeg -i "$input_path" -vn -acodec libmp3lame -ac 2 -qscale:a 4 -ar 48000 "$output_path"
+}
+
+main "$@"
