@@ -4,7 +4,7 @@ set -e
 
 source ~/.dotfiles.env
 
-TOKEN_FILE="$DOTFILES_HOME/custom/keys/github_token"
+TOKEN_FILE="${DOTFILES_CONFIG_GITHUB_TOKEN_PATH:-$DOTFILES_HOME/custom/keys/github_token}"
 
 if [[ -x "$TOKEN_FILE" ]]; then
     source "$TOKEN_FILE"
