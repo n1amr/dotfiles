@@ -1,7 +1,6 @@
 // User Settings (All Platforms)
+// Last update: 2023-03-07 19:17:15 +02:00
 {
-  // Updated at: 2022-07-11 02:11:28 +02:00
-
   // ##################
   // ###  Behavior  ###
   // ##################
@@ -19,10 +18,14 @@
   "files.autoSave": "off",
   "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
   "files.eol": "auto",
-  "files.insertFinalNewline": false,
   "search.collapseResults": "auto",
   "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.startupEditor": "none",
+
+  // Auto Format
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
 
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -37,6 +40,7 @@
     "editor.rulers": [80, 100, 120],
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
+    "editor.defaultFormatter": "ms-python.python",
   },
 
   // ===========================================================================
@@ -146,6 +150,7 @@
   "vim.foldfix": true,
   "vim.hlsearch": true,
   "vim.incsearch": true,
+  "vim.ignorecase": false,
   "vim.leader": " ",
   "vim.showMarksInGutter": true,
   "vim.useSystemClipboard": false,
@@ -200,7 +205,8 @@
     "dell": "linux",
     "main": "linux",
     "mt-gpu": "linux",
-    "clickhouse-build": "linux"
+    "clickhouse-build": "linux",
+    "personal-azure": "linux"
   },
 
   // Code Spell Checker:
@@ -220,11 +226,13 @@
     "itertools",
     "jsonl",
     "kwargs",
+    "loadtest",
     "mkdir",
     "mutex",
     "numpy",
     "parquetjs",
     "Popen",
+    "pycache",
     "screenshotting",
     "tqdm",
     "xargs"
@@ -254,6 +262,7 @@
   // ###############
   "editor.accessibilitySupport": "off",
   "git.autofetch": true,
+  "git.mergeEditor": false, // Disable 3-way merge editor
   "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
 
   // ===========================================================================
@@ -351,9 +360,9 @@
     "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780",
     "cba545ce-21d5-4fcc-a680-d9477e5f872e/f08e8989-79d3-4847-b6ea-d5f8a08a56f2"
   ],
-  "azureResourceManagerTools.parameterFiles": {
-  },
+  "azureResourceManagerTools.parameterFiles": {},
+  "diffEditor.ignoreTrimWhitespace": true,
+  "azureResourceGroups.groupBy": "resourceGroup",
   "window.zoomLevel": 1,
   "diffEditor.renderSideBySide": false,
-  "azureResourceGroups.groupBy": "resourceGroup",
 }
