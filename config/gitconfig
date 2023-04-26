@@ -133,6 +133,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [push]
     default = upstream
+	autoSetupRemote = true
 
 [pull]
     ff = only
