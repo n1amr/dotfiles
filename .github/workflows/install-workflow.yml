@@ -25,6 +25,9 @@ jobs:
         - env: dell
           user: n1amr
 
+        - env: azure
+          user: n1amr
+
         - env: toshiba
           user: n1amr
 
