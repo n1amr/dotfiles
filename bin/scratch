@@ -23,7 +23,7 @@ case "$type" in
 esac
 
 [[ -z "$ext" ]] && ext="${template##*.}"
-file="$(mktemp "/tmp/scratch-$(date --utc +"%Y%m%d%H%M%S")-XXXXXX.$ext")"
+file="$(mktemp "/tmp/scratch-$(date -u +"%Y%m%d%H%M%S")-XXXXXX.$ext")"
 
 if [[ -n "$template" ]]; then
     cp -a "$template" "$file"

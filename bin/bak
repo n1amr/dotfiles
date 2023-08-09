@@ -9,7 +9,7 @@ fi
 
 _new_path() {
     local file="$1"
-    echo "${file}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+    echo "${file}.bak.$(date -u +"%Y%m%d%H%M%S")"
 }
 
 _bak_copy() {

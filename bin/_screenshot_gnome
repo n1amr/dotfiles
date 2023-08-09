@@ -25,13 +25,13 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-file="$SCREENSHOTS_PATH/screenshot-$(date --utc +'%Y%m%d%H%M%S').png"
+file="$SCREENSHOTS_PATH/screenshot-$(date -u +'%Y%m%d%H%M%S').png"
 args+=(-f "$file")
 
 gnome-screenshot "${args[@]}" || exit 1
 
 if [[ -n "$has_delay" ]]; then
-    new_file="$SCREENSHOTS_PATH/screenshot-$(date --utc +'%Y%m%d%H%M%S').png"
+    new_file="$SCREENSHOTS_PATH/screenshot-$(date -u +'%Y%m%d%H%M%S').png"
     mv "$file" "$new_file"
 fi
 

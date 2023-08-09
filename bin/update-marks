@@ -62,7 +62,7 @@ find_or_append "$DOTFILES_HOME/config/ranger/rc.conf" 'source ~/.ranger-marks.co
 DOTFILES_MARKS_PATH="${DOTFILES_MARKS_PATH:-$HOME/.marks}"
 if [[ ! -d "$DOTFILES_MARKS_PATH" ]]; then
     if [[ -f "$DOTFILES_MARKS_PATH" ]]; then
-        mv "$DOTFILES_MARKS_PATH" "$DOTFILES_MARKS_PATH.bak.$(date --utc +"%Y%m%d%H%M%S")"
+        mv "$DOTFILES_MARKS_PATH" "$DOTFILES_MARKS_PATH.bak.$(date -u +"%Y%m%d%H%M%S")"
     fi
     mkdir -p "$DOTFILES_MARKS_PATH"
 else

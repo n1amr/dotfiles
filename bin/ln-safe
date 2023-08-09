@@ -27,7 +27,7 @@ safe_link () {
 
     if [ "$response" != 'n' ]; then
         if [ -e "$from" ]; then
-            mv -v "$from" "${from}.bak.$(date --utc +"%Y%m%d%H%M%S")"
+            mv -v "$from" "${from}.bak.$(date -u +"%Y%m%d%H%M%S")"
         fi
 
         local dir="$(dirname "$from")"

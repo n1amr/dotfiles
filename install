@@ -64,7 +64,7 @@ if [ "$interactive" = 'true' ]; then
 fi
 
 bakmv () {
-    mv -v "$1" "$1.bak.$(date --utc +"%Y%m%d%H%M%S")"
+    mv -v "$1" "$1.bak.$(date -u +"%Y%m%d%H%M%S")"
 }
 
 DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
