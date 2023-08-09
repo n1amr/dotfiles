@@ -597,9 +597,6 @@ alias bakmv='bak --move'
 alias beep='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/bell.ogg"'
 alias c='clipboard'
 alias cdtp='tp_cd'
-alias chgrp='chgrp --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chown='chown --preserve-root'
 alias clock='tty-clock -scn -C 2'
 alias colorgrep='grep --color=always'
 alias cp='cp -i'
@@ -664,7 +661,6 @@ alias r='ranger'
 alias rb='ruby -e'
 alias rd='rmdir'
 alias ring='DISPLAY=:0 paplay "$DOTFILES_HOME/resources/sounds/ring.ogg"'
-alias rm='rm -i --preserve-root'
 alias rsync-copy='rsync -avz --progress -h'
 alias rsync-move='rsync -avz --progress -h --remove-source-files'
 alias rsync-synchronize='rsync -avzu --delete --progress -h'
@@ -716,9 +712,16 @@ if [ "$SHELLNAME" = zsh ]; then
 fi
 
 if [ "$IS_MACOS" = 'true' ]; then
+    # Override incompatible options when on MacOS
     alias l='ls -lgoh -D "%F %T"'
     alias la='ls -lgoh -D "%F %T" -A'
     alias ll='ls -l -D "%F %T"'
+else
+    # Use incompatible options when NOT on MacOS
+    alias chgrp='chgrp --preserve-root'
+    alias chmod='chmod --preserve-root'
+    alias chown='chown --preserve-root'
+    alias rm='rm -i --preserve-root'
 fi
 
 i=0
