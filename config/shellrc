@@ -15,6 +15,12 @@ else
     return
 fi
 
+[ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ] && IS_TTY='true' || IS_TTY='false'
+grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
+OS="$(uname -o)"
+KERNEL="$(uname -s)"
+[ "$OS" = 'Darwin' ] && IS_MACOS='true' || IS_MACOS='false'
+
 # Default Locale
 export LANG='en_US.UTF-8'
 export LC_ALL="${LC_ALL:-$LANG}"
@@ -27,9 +33,6 @@ export LC_NUMERIC="${LC_NUMERIC:-$LANG}"
 export LC_PAPER="${LC_PAPER:-$LANG}"
 export LC_TELEPHONE="${LC_TELEPHONE:-$LANG}"
 export LC_TIME="${LC_TIME:-$LANG}"
-
-[ "$(tty | grep -o '/dev/tty')" = "/dev/tty" ] && IS_TTY='true' || IS_TTY='false'
-grep -qE '(Microsoft|WSL)' /proc/version > /dev/null 2>&1 && IS_WSL='true' || IS_WSL='false'
 
 export DOTFILES_ENV="${DOTFILES_ENV:-default}"
 export DOTFILES_ENV_HOME="${DOTFILES_ENV_HOME:-$HOME}"
@@ -712,6 +715,12 @@ if [ "$SHELLNAME" = zsh ]; then
     alias -g "NUL='> /dev/null 2>&1'"
 fi
 
+if [ "$IS_MACOS" = 'true' ]; then
+    alias l='ls -lgoh -D "%F %T"'
+    alias la='ls -lgoh -D "%F %T" -A'
+    alias ll='ls -l -D "%F %T"'
+fi
+
 i=0
 while [[ "$i" -lt "$DIRSTACKSIZE" ]]; do
     alias "$i=cd -$i"
@@ -846,7 +855,9 @@ if [[ $- == *i* ]]; then
     stty stop undef # to unmap ctrl-s
 fi
 
-eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
+if [ "$IS_MACOS" != 'true' ]; then
+    eval "$(dircolors "$DOTFILES_HOME/config/dircolors")"
+fi
 
 init_ssh () {
     source load_ssh_agent
