@@ -28,7 +28,7 @@ exit_trap() {
 trap exit_trap EXIT
 
 while true; do
-    msg="A new dunst instance started at $(date -Isec)"
+    msg="A new dunst instance started at $(date -Iseconds)"
     echo "$msg"
     (
         sleep 1

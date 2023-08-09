@@ -56,7 +56,7 @@
 
     # TODO: Remove
     old-review = "!f() { set -x; branch=\"$1\" && test -n \"$branch\" || { echo \"Specify branch to review\" >&2; return 1; } && last_checkpoint=\"$2\" && git stash-all && git is-clean && git fetch -v origin \"$branch\" && merge_base=\"$(git merge-base \"origin/$branch\" \"origin/${GIT_TARGET_BRANCH:-master}\")\" && git checkout -B review \"$merge_base\" && { test -z \"$last_checkpoint\" || git checkout -f \"$last_checkpoint\" -- .; } && git restore --source \"origin/$branch\" -- .; }; f"
-    old-review-checkpoint = "!f() { set -x; git commit -m \"reviewed: $(date -u -Isec)\" && git rev-parse --verify HEAD; }; f"
+    old-review-checkpoint = "!f() { set -x; git commit -m \"reviewed: $(date -u -Iseconds)\" && git rev-parse --verify HEAD; }; f"
 
 [core]
     editor = vim

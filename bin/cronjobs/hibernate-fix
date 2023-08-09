@@ -3,5 +3,5 @@
 source ~/.dotfiles.env
 source "$DOTFILES_HOME/bin/lib/log"
 
-info "Started at $(date -Isec)"
+info "Started at $(date -Iseconds)"
 echo "0000:3e:00.0" | tee --append '/sys/bus/pci/drivers/xhci_hcd/unbind'

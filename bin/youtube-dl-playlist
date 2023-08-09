@@ -115,7 +115,7 @@ ARGS+=("$URL")
 {
     echo
     echo "=================================================="
-    echo "Started at: $(date -Isec)"
+    echo "Started at: $(date -Iseconds)"
 } >> "$LOG_FILE"
 {
     echo "Output directory: $OUTPUT_DIR"
@@ -124,6 +124,6 @@ ARGS+=("$URL")
 } | tee -a "$LOG_FILE"
 {
     echo
-    echo "Finished at: $(date -Isec)"
+    echo "Finished at: $(date -Iseconds)"
     echo "=================================================="
 } >> "$LOG_FILE"

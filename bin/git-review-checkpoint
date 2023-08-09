@@ -3,7 +3,7 @@
 set -e
 set -xv
 
-git commit -m "reviewed: $(date -u -Isec)"
+git commit -m "reviewed: $(date -u -Iseconds)"
 root_dir="$(git root-dir)"
 root_dir="${root_dir:-.}"
 

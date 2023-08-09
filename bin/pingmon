@@ -34,7 +34,7 @@ process_line() {
             continue
         fi
 
-        msg="$(date -Isec): $a"
+        msg="$(date -Iseconds): $a"
 
         if grep -P 'time=' <<<"$a" > /dev/null; then
             echo "$msg"

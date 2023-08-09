@@ -269,7 +269,7 @@ every () {
     shift
     while true; do
         echo
-        print_title_comment "[$(date -Isec)] Every ${p}s: \$ $@"
+        print_title_comment "[$(date -Iseconds)] Every ${p}s: \$ $@"
         clear
         "$@"
         sleep "$p"
@@ -816,7 +816,7 @@ ps1_command_reset () {
 }
 
 ps1_time () {
-    ps1_command () { date -Isec; }
+    ps1_command () { date -Iseconds; }
 }
 
 ps1_words () {

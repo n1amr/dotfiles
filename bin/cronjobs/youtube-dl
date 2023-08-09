@@ -17,7 +17,7 @@ if ! ok-to-download; then
 fi
 
 echo -e "\n====================\n"
-date -Isec
+date -Iseconds
 echo -e "====================\n\n"
 
 youtube-dl-watch-later

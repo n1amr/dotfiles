@@ -323,7 +323,7 @@ function! WriteTempIfEmpty()
     let l:title = substitute(getline(1), "[^-A-Za-z0-9_()\"'., ]", '_', 'g')
     let l:title = title[:l:maximum_length - 1]
     let l:epoch = systemlist('date +%s')[0]
-    let l:date = systemlist('date -Isec')[0]
+    let l:date = systemlist('date -Iseconds')[0]
     let l:temp_path_prefix = g:buffersdir . '/' . l:epoch . "-XXXX"
     let l:temp_path_suffix = '-' . l:date . ' ' . l:title
     let l:temp_path = systemlist('mktemp ' . QuotePath(l:temp_path_prefix) . ' --suffix=' . QuotePath(l:temp_path_suffix))[0]

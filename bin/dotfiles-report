@@ -12,7 +12,7 @@ fi
 
 body="$({
     echo "Environment: $DOTFILES_ENV"
-    echo "Time: $(date -Isec)"
+    echo "Time: $(date -Iseconds)"
     echo ""
     echo "content:"
     echo "========"

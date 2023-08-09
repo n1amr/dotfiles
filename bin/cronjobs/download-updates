@@ -12,7 +12,7 @@ fi
 exec > >(tee -a "$DOTFILES_LOG_FILE") 2>&1
 
 echo
-date -Isec
+date -Iseconds
 echo "================================================================================"
 
 sudo apt-get update

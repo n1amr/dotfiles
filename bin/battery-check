@@ -31,7 +31,7 @@ speak () {
 }
 
 report () {
-    battery | dotfiles-report "Low battery. Will hibernate ($(date -Isec))"
+    battery | dotfiles-report "Low battery. Will hibernate ($(date -Iseconds))"
 }
 
 recheck () {
