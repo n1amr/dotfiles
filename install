@@ -8,6 +8,8 @@ DOTFILES_HOME="$(dirname "$0")"
 DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
 
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
+DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
+DOTFILES_ENV_GROUP="${DOTFILES_ENV_GROUP:-$DOTFILES_ENV_USER}"
 DST_HOME="$HOME"
 DOTFILES_CUSTOM_REPO_URL="${DOTFILES_CUSTOM_REPO_URL:-git@github.com:n1amr/dotfiles.custom}"
 
@@ -15,9 +17,12 @@ interactive='true'
 
 while [ $# != 0 ]; do
     case "$1" in
-        --user-home)      DST_HOME="$2";      shift ;;
-        --dotfiles-path)  DOTFILES_HOME="$2"; shift ;;
-        --env|-e)         DOTFILES_ENV="$2";  shift ;;
+        --user-home)      DST_HOME="$2";           shift ;;
+        --dotfiles-path)  DOTFILES_HOME="$2";      shift ;;
+        --env|-e)         DOTFILES_ENV="$2";       shift ;;
+        --user|-u)        DOTFILES_ENV_USER="$2";  shift ;;
+        --group|-g)       DOTFILES_ENV_GROUP="$2"; shift ;;
+
         --no-interactive|-f) interactive='false' ;;
         --interactive|-i)    interactive='true' ;;
         *)
@@ -140,7 +145,6 @@ safe_link "$DST_HOME/.mutt/" "$DOTFILES_HOME/config/mutt/"
 
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_ENV_HOME="$DST_HOME"
-DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
 
 export interactive
 export DOTFILES_ENV
@@ -187,6 +191,7 @@ generate_global_dotfiles_env () {
         echo "export DOTFILES_ENV=\"\${DOTFILES_ENV:-$DOTFILES_ENV}\""
         echo "export DOTFILES_ENV_HOME=\"\${DOTFILES_ENV_HOME:-$DOTFILES_ENV_HOME}\""
         echo "export DOTFILES_ENV_USER=\"\${DOTFILES_ENV_USER:-$DOTFILES_ENV_USER}\""
+        echo "export DOTFILES_ENV_GROUP=\"\${DOTFILES_ENV_GROUP:-$DOTFILES_ENV_GROUP}\""
         echo "export DOTFILES_HOME=\"\${DOTFILES_HOME:-$DOTFILES_ENV_HOME/.dotfiles}\""
         echo
         echo "export PATH=\"\$DOTFILES_HOME/custom/bin:\$DOTFILES_HOME/bin:\$PATH\""
@@ -217,6 +222,7 @@ if [ "$DOTFILES_ENV" != 'default' ] && [ ! -f "$DOTFILES_ENV_FILE" ]; then
         echo "export DOTFILES_ENV='$DOTFILES_ENV'"
         echo "export DOTFILES_ENV_HOME='$DOTFILES_ENV_HOME'"
         echo "export DOTFILES_ENV_USER='$DOTFILES_ENV_USER'"
+        echo "export DOTFILES_ENV_GROUP='$DOTFILES_ENV_GROUP'"
         echo "export DOTFILES_HOME='$DOTFILES_HOME'"
         echo ". \"\$DOTFILES_HOME/custom/dotfiles.env\""
         echo
