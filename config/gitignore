@@ -28,3 +28,6 @@ __pycache__/
 # CLion
 /build/
 /cmake-build-debug/
+
+# MacOS
+.DS_Store
