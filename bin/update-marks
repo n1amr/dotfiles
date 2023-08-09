@@ -31,7 +31,7 @@ find_or_append () {
 }
 
 # Add marks to shell config
-( sed '/^#/d; s/~/$HOME/' "$config_file" | awk -F'\t' '''
+( sed '/^#/d; s|~|$HOME|' "$config_file" | awk -F'\t' '''
     {printf "__DF_MARK_%s=\"%s\"\n", $1, $2}
     {printf "X%s=\"$__DF_MARK_%s\"\n", $1, $1}
     {printf "alias o,%s='\''o \"$__DF_MARK_%s\"'\''\n", $1, $1}
@@ -44,7 +44,7 @@ find_or_append () {
 find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
 
 # Add marks to ranger config
-( sort -r "$config_file" | sed "/^#/d; s/~/${HOME//\//\\\/}/" | awk -F'\t' '''
+( sort -r "$config_file" | sed "/^#/d; s|~|$HOME|" | awk -F'\t' '''
     {printf "# %s => %s\n", $1, $2}
 
     {printf "map g,%s; cd %s\n", $1, $2}
@@ -79,4 +79,4 @@ while IFS='' read line; do
         rm -f "$DOTFILES_MARKS_PATH/$mark"
     fi
     ln -s "$path" "$DOTFILES_MARKS_PATH/$mark"
-done < <(sed '/^#/d; s/~/$HOME/' "$config_file")
+done < <(sed '/^#/d; s|~|$HOME|' "$config_file")
