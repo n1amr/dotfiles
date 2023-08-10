@@ -9,7 +9,7 @@ DOTFILES_HOME="$(realpath "$DOTFILES_HOME")"
 
 DOTFILES_ENV="${DOTFILES_ENV:-default}"
 DOTFILES_ENV_USER="${DOTFILES_ENV_USER:-$USER}"
-DOTFILES_ENV_GROUP="${DOTFILES_ENV_GROUP:-$DOTFILES_ENV_USER}"
+DOTFILES_ENV_GROUP="${DOTFILES_ENV_GROUP:-$(id -gn)}"
 DST_HOME="$HOME"
 DOTFILES_CUSTOM_REPO_URL="${DOTFILES_CUSTOM_REPO_URL:-git@github.com:n1amr/dotfiles.custom}"
 
@@ -26,7 +26,7 @@ while [ $# != 0 ]; do
         --no-interactive|-f) interactive='false' ;;
         --interactive|-i)    interactive='true' ;;
         *)
-            echo 'Invalid Syntax'
+            echo "Invalid syntax. Unknown argument: '$1'."
             exit 1
         ;;
     esac
@@ -46,6 +46,20 @@ if [ "$interactive" = 'true' ]; then
     read -r response
     if [ ! -z "$response" ]; then
         DST_HOME="$(realpath "$response")"
+    fi
+
+    # Set DOTFILES_ENV_USER
+    printf "Enter your user name [%s]: " "$DOTFILES_ENV_USER"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DOTFILES_ENV_USER="$response"
+    fi
+
+    # Set DOTFILES_ENV_GROUP
+    printf "Enter your user's primary group name [%s]: " "$DOTFILES_ENV_GROUP"
+    read -r response
+    if [ ! -z "$response" ]; then
+        DOTFILES_ENV_GROUP="$response"
     fi
 
     # Set DOTFILES_HOME
@@ -70,11 +84,14 @@ bakmv () {
 DOTFILES_CUSTOM_DIR="$DOTFILES_HOME/custom"
 set +e
 (
-    [ ! -e "$DOTFILES_CUSTOM_DIR/.git" ] && (
-        [ -e "$DOTFILES_CUSTOM_DIR" ] && bakmv "$DOTFILES_CUSTOM_DIR"
+    if [ ! -e "$DOTFILES_CUSTOM_DIR/.git" ]; then
+        if [ -e "$DOTFILES_CUSTOM_DIR" ]; then
+            bakmv "$DOTFILES_CUSTOM_DIR"
+        fi
+
         echo "dotfiles: Cloning custom repo to dotfiles..."
         git clone -v --recursive "$DOTFILES_CUSTOM_REPO_URL" "$DOTFILES_CUSTOM_DIR"
-    )
+    fi
 )
 set -e
 
@@ -232,16 +249,20 @@ fi
 
 safe_link "$DST_HOME/.dotfiles.env" "$DOTFILES_ENV_FILE"
 
-install () {
+initialize () {
     . "$DST_HOME/.dotfiles.env" # test sourcing
 
     "$DOTFILES_HOME/bin/marks" update
-    "$DOTFILES_HOME/thirdparty/fzf/install" --bin
+
+    # Unused.
+    if false; then
+        "$DOTFILES_HOME/thirdparty/fzf/install" --bin
+    fi
 }
 
-HOME="$DST_HOME" install
+HOME="$DST_HOME" initialize
 
-echo "Successful!"
+echo "Successfully installed dotfiles at '$DOTFILES_HOME'."
 if [ "$interactive" = 'true' ]; then
     echo ">> exec ${SHELLNAME:-$SHELL}"
     HOME="$DST_HOME" exec "${SHELLNAME:-$SHELL}"

@@ -1,25 +1,50 @@
 #!/bin/sh
 
-set -e
-
 safe_link () {
     local interactive='true'
-    if [ "$1" = '-f' ]; then
-        interactive='false'
+    local verbose='false'
+
+    while [ $# != 0 ]; do
+        case "$1" in
+            --no-interactive|-f) interactive='false' ;;
+            --interactive|-i)    interactive='true' ;;
+            --verbose|-v)        verbose='true' ;;
+
+            *) break ;;
+        esac
+
         shift
+    done
+
+    if [ $# != 2 ]; then
+        echo "ERROR: from and to arguments must be provided. Arguments: $@"
+        return 1
     fi
 
-    local from="$(echo "$1" | sed 's/\(.\)\/*$/\1/g')" # right strip slashes
+    local from="$(echo "$1" | sed 's|/\+$||g')" # right strip slashes
     local to="$2"
 
+    if [ -z "$from" ] || [ -z "$to" ]; then
+        echo "ERROR: Empty path. from: '$from'. to: '$to'."
+        return 1
+    fi
+
+    if [ "$from" = "$to" ]; then
+        echo "ERROR: '$from' == '$to'."
+        return 1
+    fi
+
     if [ -e "$from" ] && [ "$(readlink "$from")" = "$to" ]; then
-        echo "Up to date: $from -> $to"
-        return
+        if [ "$verbose" = 'true' ]; then
+            echo "Up to date: '$from' -> '$to'."
+        fi
+
+        return 0
     fi
 
     local response
     if [ "$interactive" = 'true' ]; then
-        printf "Link %s -> %s ? ([y]/n) " "$from" "$to"
+        printf "Link '%s' -> '%s'? ([y]/n) " "$from" "$to"
         read -r response
     else
         response='y'
@@ -40,5 +65,7 @@ safe_link () {
 }
 
 if [ "$#" -gt 0 ]; then
+    set -eu
+
     safe_link "$@"
 fi
