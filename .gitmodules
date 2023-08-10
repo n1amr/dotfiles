@@ -1,11 +1,11 @@
 # My repos
 [submodule "notes"]
     path = notes
-    url = git@github.com:n1amr/dotfiles.notes.git
+    url = https://github.com/n1amr/dotfiles.notes.git
     branch = master
 [submodule "thirdparty/binaries"]
     path = thirdparty/binaries
-    url = git@github.com:n1amr/dotfiles.binaries.git
+    url = https://github.com/n1amr/dotfiles.binaries.git
     branch = master
 
 # Thirdparty repos
