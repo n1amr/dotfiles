@@ -21,7 +21,7 @@ safe_link () {
         return 1
     fi
 
-    local from="$(echo "$1" | sed 's|/\+$||g')" # right strip slashes
+    local from="$(echo "$1" | sed -r 's|/+$||g')" # right strip slashes
     local to="$2"
 
     if [ -z "$from" ] || [ -z "$to" ]; then
