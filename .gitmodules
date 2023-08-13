@@ -52,7 +52,7 @@
 [submodule "config/vim/bundle/vim-theme-chroma"]
     path = config/vim/bundle/vim-theme-chroma
     url = https://github.com/crater2150/vim-theme-chroma
-    branch = master
+    branch = legacy
 [submodule "thirdparty/dunst"]
     path = thirdparty/dunst
     url = https://github.com/dunst-project/dunst
