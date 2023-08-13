@@ -23,6 +23,9 @@ FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
 if [[ "$FILE_ONLY_MODE" != 'true' ]] && ( which xsel && xsel -ob ) > /dev/null 2>&1; then
     copy  () { xsel -ib; }
     paste () { xsel -ob; }
+elif [ "${IS_MACOS:-false}" = 'true' ] && ( which pbcopy ) > /dev/null 2>&1; then
+    copy  () { pbcopy; }
+    paste () { pbpaste; }
 else
     CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-$DOTFILES_ENV_HOME/.clipboard}"
 
