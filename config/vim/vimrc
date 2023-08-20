@@ -326,7 +326,9 @@ function! WriteTempIfEmpty()
     let l:date = systemlist('date -Iseconds')[0]
     let l:temp_path_prefix = g:buffersdir . '/' . l:epoch . "-XXXX"
     let l:temp_path_suffix = '-' . l:date . ' ' . l:title
-    let l:temp_path = systemlist('mktemp ' . QuotePath(l:temp_path_prefix) . ' --suffix=' . QuotePath(l:temp_path_suffix))[0]
+    " TODO: --suffix argument is not supported on macOS.
+    " let l:temp_path = systemlist('mktemp ' . QuotePath(l:temp_path_prefix) . ' --suffix=' . QuotePath(l:temp_path_suffix))[0]
+    let l:temp_path = systemlist('mktemp ' . QuotePath(l:temp_path_prefix))[0]
     execute 'write!' escape(l:temp_path, " \"'.")
   endif
 endfunction
