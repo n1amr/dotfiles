@@ -1,6 +1,7 @@
 #!/bin/bash
 
-verbose=''
+verbose='false'
+
 while [ $# -gt 0 ]; do
     case "$1" in
         -v) verbose='true' ; shift ;;
@@ -10,28 +11,35 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-open () { xdg-open "$1" & }
+if [[ "$verbose" = 'false' ]]; then
+    open_wrapper () { open_command "$@" > /dev/null 2>&1 & }
+else
+    open_wrapper () { open_command "$@"; }
+fi
 
-[[ "$DOTFILES_CONFIG_IS_WSL" == 'true' ]] && {
-    open () {
+# Define OS-dependent open command.
+if [[ "$DOTFILES_CONFIG_IS_WSL" == 'true' ]]; then
+    open_command () {
         local file="$1"
         local winpath="$(wslpath -aw "$file")"
         winpath="${winpath%\\}"
         windows_explorer "$winpath"
     }
-}
-
-open_with_redirect () { open "$@"; }
-if [[ -z "$verbose" ]]; then
-    open_with_redirect () { open "$@" > /dev/null 2>&1 & }
+elif [[ "$DOTFILES_CONFIG_IS_MACOS" == 'true' ]]; then
+    open_command () { open "$1" & }
+else
+    open_command () { xdg-open "$1" & }
 fi
 
+# Main
 if [[ "$#" == 0 ]]; then
-    open_with_redirect .
+    open_wrapper .
 fi
 
 for file in "$@"; do
-    [[ -e "$file" ]] && open_with_redirect "$file" || {
+    if [[ -e "$file" ]]; then
+        open_wrapper "$file"
+    else
         echo >&2 "File not found: $file"
-    }
+    fi
 done
