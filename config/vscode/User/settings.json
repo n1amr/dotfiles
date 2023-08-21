@@ -363,6 +363,5 @@
   "azureResourceManagerTools.parameterFiles": {},
   "diffEditor.ignoreTrimWhitespace": true,
   "azureResourceGroups.groupBy": "resourceGroup",
-  "window.zoomLevel": 1,
   "diffEditor.renderSideBySide": false,
 }
