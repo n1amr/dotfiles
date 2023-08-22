@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2023-03-07 19:17:15 +02:00
+// Last update: 2023-08-22 17:01:00 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -10,7 +10,7 @@
   "editor.lineNumbers": "on",
   "editor.mouseWheelZoom": true,
   "editor.renderWhitespace": "all",
-  "editor.rulers": [80, 100, 120],
+  "editor.rulers": [ 80, 100, 120 ],
   "editor.suggestSelection": "first",
   "editor.tabSize": 4,
   "editor.wordWrap": "off",
@@ -26,21 +26,41 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  // "json.format.keepLines": false,
 
+  "[arm-template]": {
+    "editor.defaultFormatter": "msazurermtools.azurerm-vscode-tools"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
   "[json]": {
+    "editor.indentSize": 2,
+    "editor.tabSize": 2,
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-
   "[jsonc]": {
+    "editor.indentSize": 2,
+    "editor.tabSize": 2,
     "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.rulers": [80, 100, 120],
+    "editor.rulers": [ 80, 100, 120 ],
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnType": true,
   },
 
   // ===========================================================================
@@ -94,12 +114,12 @@
     "Dev Box": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"]
+      "args": [ "-File", "${env:home}\\scripts\\ssh-devbox.ps1" ]
     },
     "Dev Box Jupyter": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": ["-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1"]
+      "args": [ "-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1" ]
     },
     "cmd": {
       "overrideName": true,
@@ -107,7 +127,7 @@
         "${env:windir}\\Sysnative\\cmd.exe",
         "${env:windir}\\System32\\cmd.exe"
       ],
-      "args": []
+      "args": [ ]
     }
   },
 
@@ -116,6 +136,8 @@
   // ###############
   // ###  Files  ###
   // ###############
+
+  "explorer.excludeGitIgnore": false,
 
   "files.exclude": {
     "**/*.pyc": true,
@@ -130,7 +152,8 @@
     "**/node_modules/*/**": true
   },
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
+    "git-rebase-todo": "gitlens.rebase"
   },
   "files.associations": {
     "*.text": "plaintext",
@@ -150,7 +173,7 @@
   "vim.foldfix": true,
   "vim.hlsearch": true,
   "vim.incsearch": true,
-  "vim.ignorecase": false,
+  "vim.ignorecase": true,
   "vim.leader": " ",
   "vim.showMarksInGutter": true,
   "vim.useSystemClipboard": false,
@@ -171,10 +194,10 @@
     "<C-y>": true
   },
   "vim.normalModeKeyBindingsNonRecursive": [
-    { "before": ["leader"], "after": ["\"", "+"] }
+    { "before": [ "leader" ], "after": [ "\"", "+" ] }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
-    { "before": ["leader"], "after": ["\"", "+"] }
+    { "before": [ "leader" ], "after": [ "\"", "+" ] }
   ],
 
   // Python:
@@ -187,7 +210,6 @@
     "--experimental",
     "--aggressive",
   ],
-  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
   "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
   // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.13/bin/python", // TODO: Remove
@@ -234,6 +256,8 @@
     "Popen",
     "pycache",
     "screenshotting",
+    "SSTREAM",
+    "STREAMEXPIRY",
     "tqdm",
     "xargs"
   ],
@@ -241,13 +265,14 @@
   // CMake:
   // ======
   "cmake.generator": "Unix Makefiles",
-  "cmake.preferredGenerators": ["Unix Makefiles"],
-  "cmake.configureArgs": ["-G", "Unix Makefiles"],
+  "cmake.preferredGenerators": [ "Unix Makefiles" ],
+  "cmake.configureArgs": [ "-G", "Unix Makefiles" ],
 
   // GitLens:
   // ======
   "gitlens.advanced.fileHistoryFollowsRenames": true,
   "gitlens.plusFeatures.enabled": false,
+  "gitlens.rebaseEditor.ordering": "asc",
   "gitlens.views.searchAndCompare.files.layout": "tree",
 
   // Other Extensions:
@@ -360,8 +385,11 @@
     "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780",
     "cba545ce-21d5-4fcc-a680-d9477e5f872e/f08e8989-79d3-4847-b6ea-d5f8a08a56f2"
   ],
-  "azureResourceManagerTools.parameterFiles": {},
-  "diffEditor.ignoreTrimWhitespace": true,
+  "azureResourceManagerTools.parameterFiles": {
+    "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.jsonc": "alerts-actions.gitignored.parameters.json"
+  },
   "azureResourceGroups.groupBy": "resourceGroup",
+  "editor.inlineSuggest.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": false,
 }
