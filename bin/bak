@@ -15,7 +15,7 @@ _new_path() {
 _bak_copy() {
     for arg in "$@"; do
         dst="$(_new_path "$arg")"
-        cp -air "$arg" "$dst"
+        cp -ai "$arg" "$dst"
         echo "$dst"
     done
 }
