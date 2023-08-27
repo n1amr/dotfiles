@@ -19,17 +19,34 @@ main() {
     paste | cat
 }
 
-FILE_ONLY_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-false}"
-if [[ "$FILE_ONLY_MODE" != 'true' ]] && ( which xsel && xsel -ob ) > /dev/null 2>&1; then
-    copy  () { xsel -ib; }
-    paste () { xsel -ob; }
-elif [ "${IS_MACOS:-false}" = 'true' ] && ( which pbcopy ) > /dev/null 2>&1; then
-    copy  () { pbcopy; }
-    paste () { pbpaste; }
-else
+IS_MACOS="${DOTFILES_CONFIG_IS_MACOS:false}"
+FILE_MODE="${DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE:-auto}"
+
+if [[ "$FILE_MODE" == 'false' ]] || [[ "$FILE_MODE" == 'auto' ]]; then
+    if [[ "$IS_MACOS" == 'true' ]] && ( which pbcopy && pbpaste ) > /dev/null 2>&1; then
+        copy  () { pbcopy; }
+        paste () { pbpaste; }
+        FILE_MODE='false'
+    elif ( which xsel && xsel -ob ) > /dev/null 2>&1; then
+        copy  () { xsel -ib; }
+        paste () { xsel -ob; }
+        FILE_MODE='false'
+    elif [[ "$FILE_MODE" == 'auto' ]]; then
+        FILE_MODE='true'
+    else
+        echo "Unable to find copy command and DOTFILES_CONFIG_CLIPBOARD_FILE_ONLY_MODE is set to false." >&2
+        exit 1
+    fi
+fi
+
+if [[ "$FILE_MODE" == 'true' ]]; then
     CLIPBOARD_FILE="${DOTFILES_CONFIG_CLIPBOARD_FILE:-$DOTFILES_ENV_HOME/.clipboard}"
 
-    [[ ! -f "$CLIPBOARD_FILE" ]] && mkdir -p "$(dirname "$CLIPBOARD_FILE")" && touch "$CLIPBOARD_FILE"
+    if [[ ! -f "$CLIPBOARD_FILE" ]]; then
+        mkdir -p "$(dirname "$CLIPBOARD_FILE")"
+        touch "$CLIPBOARD_FILE"
+    fi
+
     chown "$DOTFILES_ENV_USER" "$CLIPBOARD_FILE"
     chmod 600 "$CLIPBOARD_FILE"
 
