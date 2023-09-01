@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2023-08-22 17:01:00 +03:00
+// Last update: 2023-09-01 19:50:35 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -210,6 +210,7 @@
     "--experimental",
     "--aggressive",
   ],
+  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
   "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
   // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.13/bin/python", // TODO: Remove

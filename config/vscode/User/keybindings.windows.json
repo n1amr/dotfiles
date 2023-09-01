@@ -1,4 +1,5 @@
-// Keybindings (Windows only)
+// Keybindings (Windows)
+// Last update: 2023-03-07 19:12:04 +02:00
 [
   {
     "key": "ctrl+shift+q",
@@ -228,13 +229,57 @@
     "command": "-extension.vim_backspace"
   },
   {
-    "key": "backspace",
-    "when": "editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'SearchInProgressMode'",
-    "command": "extension.vim_shift+backspace"
+    "key": "delete",
+    "command": "No Operation",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'Normal'"
   },
   {
-    "key": "shift+backspace",
-    "when": "editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || editorTextFocus && vim.active && vim.use<shift+BS> && !inDebugRepl && vim.mode == 'SearchInProgressMode'",
-    "command": "-extension.vim_shift+backspace"
-  }
+    "key": "delete",
+    "command": "No Operation",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'Visual'"
+  },
+  {
+    "key": "backspace",
+    "command": "extension.vim_shift+backspace",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'Normal'"
+  },
+  {
+    "key": "backspace",
+    "command": "extension.vim_shift+backspace",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'Visual'"
+  },
+  {
+    "key": "backspace",
+    "command": "extension.vim_ctrl+h",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'SearchInProgressMode'"
+  },
+  {
+    "key": "backspace",
+    "command": "extension.vim_ctrl+h",
+    "when": "editorTextFocus && !inDebugRepl && vim.active && vim.mode == 'CommandlineInProgress'"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "vscode.newWindow"
+  },
+  {
+    "key": "alt+left",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "alt+right",
+    "command": "workbench.action.navigateForward"
+  },
+  {
+    "key": "alt+v",
+    "command": "toggleVim"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "-data.preview"
+  },
 ]
