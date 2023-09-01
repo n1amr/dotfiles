@@ -49,10 +49,10 @@ cmus_perform_action() {
         stop)      cmus_remote_w "$server" -s ;;
         next)      cmus_remote_w "$server" -n ;;
         previous)  cmus_remote_w "$server" -r ;;
-        status)  
+        status)
             cmus_status "$server" || exit 1
         ;;
-        play-pause)  
+        play-pause)
             if [[ "$(cmus_status "$server")" != 'Playing' ]]; then
                 cmus_remote_w "$server" -p
             else

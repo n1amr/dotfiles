@@ -8,7 +8,7 @@ repo_name="$1"
 branch="${2:-master}"
 
 # TOKEN_FILE="$DOTFILES_HOME/custom/keys/gitlab_token"
-# 
+#
 # if [[ -x "$TOKEN_FILE" ]]; then
 #     source "$TOKEN_FILE"
 # else
@@ -18,7 +18,7 @@ branch="${2:-master}"
 #     echo "export GITLAB_PRIVATE_TOKEN = ${GITLAB_PRIVATE_TOKEN}" > "${TOKEN_FILE}"
 #     chmod +x "$TOKEN_FILE"
 # fi
-# 
+#
 # private_token="$GITLAB_PRIVATE_TOKEN"
 # url="https://gitlab.com/api/v3/projects?private_token=$private_token"
 
@@ -41,7 +41,7 @@ repo_name="$(echo -n "$repo_name" | tr -c '[:alnum:] -_' '_')"
 
 # temp_file="$(mktemp .gitlab-create-response-XXXXX.tmp.html)"
 # trap 'rm "$temp_file"' EXIT
-# 
+#
 # echo wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
 # wget --header='Content-Type:application/json' "${url}" --post-data="{ \"name\": \"${repo_name}\" }" -O "$temp_file"
 # r=$?
