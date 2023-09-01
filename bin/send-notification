@@ -24,6 +24,11 @@ main() {
 
     local subject="$1"
 
+    if [[ -z "$subject" ]]; then
+        echo "Subject cannot be empty." >&2
+        exit 1
+    fi
+
     local body
     if [[ ! -t 0 ]]; then
         body="$(cat)"
