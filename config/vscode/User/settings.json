@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2023-09-01 19:50:35 +03:00
+// Last update: 2023-09-04 09:49:30 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -355,6 +355,9 @@
 
     Scala:
     - scala-lang.scala
+
+    Swift:
+    - vscode-swiftlint
 
     Work:
     - yiwwan.vscode-scope
