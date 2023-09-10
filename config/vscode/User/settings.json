@@ -10,7 +10,7 @@
   "editor.lineNumbers": "on",
   "editor.mouseWheelZoom": true,
   "editor.renderWhitespace": "all",
-  "editor.rulers": [ 80, 100, 120 ],
+  "editor.rulers": [80, 100, 120],
   "editor.suggestSelection": "first",
   "editor.tabSize": 4,
   "editor.wordWrap": "off",
@@ -42,7 +42,7 @@
   "[jsonc]": {
     "editor.indentSize": 2,
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -56,11 +56,11 @@
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.rulers": [ 80, 100, 120 ],
+    "editor.rulers": [80, 100, 120],
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.python",
-    "editor.formatOnType": true,
+    "editor.formatOnType": true
   },
 
   // ===========================================================================
@@ -114,12 +114,12 @@
     "Dev Box": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": [ "-File", "${env:home}\\scripts\\ssh-devbox.ps1" ]
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"]
     },
     "Dev Box Jupyter": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": [ "-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1" ]
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1"]
     },
     "cmd": {
       "overrideName": true,
@@ -127,7 +127,7 @@
         "${env:windir}\\Sysnative\\cmd.exe",
         "${env:windir}\\System32\\cmd.exe"
       ],
-      "args": [ ]
+      "args": []
     }
   },
 
@@ -142,13 +142,13 @@
   "files.exclude": {
     "**/*.pyc": true,
     "**/__pycache__": true,
-    "**/node_modules/**": true,
+    "**/node_modules/**": true
   },
   "files.watcherExclude": {
     "**/*.pyc": true,
     "**/.git/**": true,
     "**/__pycache__/**": true,
-    "**/node_modules/*/**": true,
+    "**/node_modules/*/**": true
   },
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
@@ -193,10 +193,10 @@
     "<C-y>": true
   },
   "vim.normalModeKeyBindingsNonRecursive": [
-    { "before": [ "leader" ], "after": [ "\"", "+" ] }
+    { "before": ["leader"], "after": ["\"", "+"] }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
-    { "before": [ "leader" ], "after": [ "\"", "+" ] }
+    { "before": ["leader"], "after": ["\"", "+"] }
   ],
 
   // Python:
@@ -207,7 +207,7 @@
     "--max-line-length",
     "120",
     "--experimental",
-    "--aggressive",
+    "--aggressive"
   ],
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
   "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
@@ -265,8 +265,8 @@
   // CMake:
   // ======
   "cmake.generator": "Unix Makefiles",
-  "cmake.preferredGenerators": [ "Unix Makefiles" ],
-  "cmake.configureArgs": [ "-G", "Unix Makefiles" ],
+  "cmake.preferredGenerators": ["Unix Makefiles"],
+  "cmake.configureArgs": ["-G", "Unix Makefiles"],
 
   // GitLens:
   // ======
@@ -394,5 +394,5 @@
   "azureResourceGroups.groupBy": "resourceGroup",
   "editor.inlineSuggest.enabled": true,
   "diffEditor.ignoreTrimWhitespace": true,
-  "diffEditor.renderSideBySide": false,
+  "diffEditor.renderSideBySide": false
 }
