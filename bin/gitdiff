@@ -2,10 +2,13 @@
 
 set -eu
 
-repo="$(mktemp -d /tmp/gitdiff-XXXXXXX)"
+wd="$(mktemp -d "/tmp/gitdiff-$(date -u +"%Y%m%d-%H%M%S")-XXXXXXX")"
+
+repo="$wd/repo"
+mkdir -p "$repo"
 
 on_exit () {
-    rm -rf "$repo"
+    rm -rf "$wd"
 }
 
 trap on_exit EXIT INT
@@ -31,7 +34,7 @@ files_count="${#files[@]}"
     for idx in "${!files[@]}"; do
         file="$(realpath "${files[$idx]}")"
         rm -rf "$content_path"
-        cp -rv "$file" "$content_path"
+        cp -a "$file" "$content_path"
         find "$content_path" -path '*/.git/*' -delete
 
         git -C "$repo" add 'content'
@@ -44,9 +47,17 @@ files_count="${#files[@]}"
     done
 } 1>&2
 
+if [[ -z "${args:-}" ]]; then
+    args=(--)
+fi
+
+log_path="$wd/log.diff"
 commits_count="$(( $files_count - 1 ))"
 {
     echo "diff --git ${files[@]}"
+    echo "# log_path = '$log_path'"
     echo '================================================================================'
     git -C "$repo" log --reverse --patch "HEAD~$commits_count"..HEAD "${args[@]}"
-} | less
+} > "$log_path"
+
+less "$log_path"
