@@ -2,6 +2,12 @@
 
 set -e
 
+source ~/.dotfiles.env
+
+if [[ "${DOTFILES_CONFIG_IS_MACOS:-false}" = 'true' ]]; then
+    exec vim "$@"
+fi
+
 export DISPLAY="${DISPLAY:-:0}"
 
 if [[ -z "$TMUX" ]]; then
