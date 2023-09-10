@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2023-09-04 09:49:30 +03:00
+// Last update: 2023-09-10 15:34:02 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -141,15 +141,14 @@
 
   "files.exclude": {
     "**/*.pyc": true,
-    "**/__pycache__": true
+    "**/__pycache__": true,
+    "**/node_modules/**": true,
   },
   "files.watcherExclude": {
     "**/*.pyc": true,
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/.hg/store/**": true,
+    "**/.git/**": true,
     "**/__pycache__/**": true,
-    "**/node_modules/*/**": true
+    "**/node_modules/*/**": true,
   },
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
