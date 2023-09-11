@@ -58,6 +58,7 @@ generate_global_dotfiles_env () {
         echo "export NDENV_ROOT=\"\$DOTFILES_ENV_HOME/.ndenv\""
         echo "export PYENV_ROOT=\"\$DOTFILES_ENV_HOME/.pyenv\""
         echo "export RBENV_ROOT=\"\$DOTFILES_ENV_HOME/.rbenv\""
+        echo "export NVM_DIR=\"\$DOTFILES_ENV_HOME/.nvm\""
         echo "export BUILD_PREFIX=\"\$DOTFILES_ENV_HOME/.local\""
     ) | tee -a "$env_file" 1>&2
     echo >&2 "# ===== End ====="
@@ -576,6 +577,13 @@ init_rbenv () {
     can_execute rbenv && eval "$(rbenv init -)"
 }
 [[ "${DOTFILES_CONFIG_ENABLE_RBENV:-true}" == 'true' ]] && __dotfiles_init init_rbenv
+
+init_nvm () {
+    export NVM_DIR="$DOTFILES_ENV_HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+}
+[[ "${DOTFILES_CONFIG_ENABLE_NVM:-true}" == 'true' ]] && __dotfiles_init init_nvm
 
 [[ -n "${DOTFILES_CONFIG_TEXLIVE_BIN}" ]] && {
     export PATH="$DOTFILES_CONFIG_TEXLIVE_BIN:$PATH"
