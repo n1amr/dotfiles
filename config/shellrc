@@ -320,16 +320,15 @@ json () {
 }
 
 jump () {
-    jump_mark "$1" || tp_cd "$1" ||
-    {
+    TEMP_PATH_NON_EXISTING_BLOCK='false' tp_cd "$1" || jump_mark "$1" || {
         echo "No such mark or temp path: $1" >&2
         return 1
     }
 }
 
 jump_mark () {
-    test -n "$1" -a -d "$DOTFILES_MARKS_PATH/$1" || return 1
-    cd -P "$DOTFILES_MARKS_PATH/$1"
+    test -n "$1" -a -d "$DOTFILES_MARKS_PATH/$1" &&
+        cd -P "$DOTFILES_MARKS_PATH/$1"
 }
 
 keybindings () {

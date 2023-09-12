@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export DOTFILES_TEMP_PATHS_STORE_PATH="${DOTFILES_TEMP_PATHS_STORE_PATH:-$DOTFILES_ENV_HOME/.temp_paths}"
+marks_dir="${DOTFILES_MARKS_PATH:-$DOTFILES_ENV_HOME/.marks}"
 
 tp_init () {
     if [[ ! -d "$DOTFILES_TEMP_PATHS_STORE_PATH" ]]; then
@@ -11,10 +12,11 @@ tp_init () {
 tp_cd () {
     tp_init
     local key="${1:-default}"
-    local value="$(tp_get "$key")" && {
+    local value="$(tp_get "$key")"
+    if test -n "$value" -a -d "$value"; then
         cd "$value"
         echo "cd [$key] -> $value"
-    }
+    fi
 }
 
 tp_flush () {
@@ -29,11 +31,18 @@ tp_get () {
     local file="$DOTFILES_TEMP_PATHS_STORE_PATH/$key"
     if [[ -f "$file" ]] && local value="$(cat "$file")" && [[ -n "$value" ]]; then
         echo "$value"
+    elif [[ -L "$marks_dir/$key" ]]; then
+        readlink "$marks_dir/$key"
     else
-        echo "temp path doesn't exist: $key. Press ctrl-c to abort" >&2
-        while read -s ignored; do
-            echo "Press ctrl-c to abort" >&2
-        done
+        if [[ "${TEMP_PATH_NON_EXISTING_BLOCK:-true}" = 'true' ]]; then
+            echo "WARNING: temp path doesn't exist: $key. Press ctrl-c to abort" >&2
+            while read -s ignored; do
+                echo "Press ctrl-c to abort" >&2
+            done
+        else
+            echo "WARNING: temp path doesn't exist: $key." >&2
+            return 1
+        fi
     fi
 }
 
@@ -71,7 +80,7 @@ tp_set () {
     if [[ -e "$value" ]]; then
         value="$(realpath "$value")"
     else
-        echo "Path value does not exist: $value" >&2
+        echo "WARNING: Path value does not exist: $value" >&2
     fi
     tp_set_value "$key" "$value"
 }
