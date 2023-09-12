@@ -47,7 +47,7 @@ bind '"\er" "\C-e\C-ur\n\C-y"'
 bind '"\eu" "\C-e\C-ucd ..\n\C-y"'
 
 bind '"\C-xc" "\"\$()\"\C-b\C-b"'
-bind '"\C-xe" "\C-e\C-ufunc () { \C-y; } && every  func\C-b\C-b\C-b\C-b\C-b"'
+bind '"\C-xe" "\C-e\C-u func () { \C-y; } && every  func\C-b\C-b\C-b\C-b\C-b"'
 bind '"\C-xl" "\"\$(!!)\""'
 bind '"\C-xr" "\C-e\C-uexec \"${SHELLNAME:-$SHELL}\"\C-j\C-y"'
 bind '"\C-xw" "\C-e\C-u\"\$(\C-y)\"\C-a"'

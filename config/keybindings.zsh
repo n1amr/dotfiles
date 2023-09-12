@@ -52,7 +52,7 @@ bindkey -s "^[r" "^Qr^M"
 bindkey -s "^[u" "^Qcd ..^M"
 
 bindkey -s "^Xc" "\"\$()\"^B^B"
-bindkey -s "^Xe" "^E^Unocorrect func () { ^Y; } && every  func^B^B^B^B^B"
+bindkey -s "^Xe" "^E^U nocorrect func () { ^Y; } && every  func^B^B^B^B^B"
 bindkey -s "^Xl" "\"\$(!!)\""
 bindkey -s "^Xr" "^Qexec \"\${SHELLNAME:-\$SHELL}\"^M"
 bindkey -s "^Xw" "^E^U\"\$(^Y)\"^A"
