@@ -281,6 +281,8 @@
   "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
   "jupyter.allowUnauthorizedRemoteConnection": true,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "kotlin.languageServer.enabled": false,
+  "kotlin.debugAdapter.enabled": false,
 
   // ###############
   // ###  Other  ###
@@ -358,7 +360,11 @@
     Swift:
     - vscode-swiftlint
 
-    Work:
+    Kotlin:
+    - fwcd.kotlin
+    - mathiasfrohlich.Kotlin
+
+    Scope:
     - yiwwan.vscode-scope
 
     Disabled:
@@ -374,9 +380,9 @@
 
     Trying out:
     - ms-dotnettools.dotnet-interactive-vscode
-    - visualstudioexptteam.vscodeintellicode
-    - randomfractalsinc.vscode-data-preview
     - ms-vscode.vscode-node-azure-pack
+    - randomfractalsinc.vscode-data-preview
+    - visualstudioexptteam.vscodeintellicode
    */
 
   // ===========================================================================
