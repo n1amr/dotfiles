@@ -2,6 +2,6 @@
 
 set -eu
 
-curl ipinfo.io/ip ||
-    curl ifconfig.me/ip ||
+curl ifconfig.me/ip ||
+    curl ipinfo.io/ip ||
     dig +short myip.opendns.com @resolver1.opendns.com
