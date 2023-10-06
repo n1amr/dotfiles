@@ -4,7 +4,7 @@ set -e
 
 source ~/.dotfiles.env
 
-if [[ "${DOTFILES_CONFIG_IS_MACOS:-false}" = 'true' ]]; then
+if [[ "${DOTFILES_CONFIG_ENABLE_VIM_SERVER:-true}" = 'false' ]]; then
     exec vim "$@"
 fi
 
