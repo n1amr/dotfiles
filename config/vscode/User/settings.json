@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2023-09-10 15:34:02 +03:00
+// Last update: 2023-10-19 11:00:51 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -69,7 +69,7 @@
   // ###  Style  ###
   // ###############
 
-  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.colorTheme": "Visual Studio 2019 Dark",
   "workbench.colorCustomizations": {
     /*
       Colors:
@@ -81,7 +81,7 @@
       Material colors;
         https://material.io/design/color/the-color-system.html#tools-for-picking-colors
     */
-    "[Visual Studio Dark]": {
+    "[Visual Studio 2019 Dark]": {
       "activityBar.background": "#202020",
       "activityBar.activeBackground": "#404040",
       "titleBar.activeBackground": "#3c3c3c",
@@ -400,5 +400,6 @@
   "azureResourceGroups.groupBy": "resourceGroup",
   "editor.inlineSuggest.enabled": true,
   "diffEditor.ignoreTrimWhitespace": true,
-  "diffEditor.renderSideBySide": false
+  "diffEditor.renderSideBySide": false,
+  "window.zoomLevel": 1
 }
