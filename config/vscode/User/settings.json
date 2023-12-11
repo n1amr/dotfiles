@@ -399,7 +399,6 @@
   },
   "azureResourceGroups.groupBy": "resourceGroup",
   "editor.inlineSuggest.enabled": true,
-  "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": false,
-  "window.zoomLevel": 1
+  "update.showReleaseNotes": false
 }
