@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+builtin='eDP1'
+external='DP1'
+
+xrandr --output $external --off
+xrandr --output $external --auto
+xrandr --output $external --primary
+xrandr --output $builtin --same-as $external
