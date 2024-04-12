@@ -56,12 +56,13 @@ def send_notification(subject: str, body: str):
     if not has_body:
         telegram_send.send(messages=[message], conf=config_path)
     else:
-        timestamp = datetime.datetime.utcnow().isoformat(timespec='seconds')
-        prefix = to_safe_filename(f'{timestamp}-{subject}-')
+        timestamp = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S')
+        prefix = to_safe_filename(f'telegram-notification-{timestamp}-')
 
         with tempfile.NamedTemporaryFile(mode='w+t', encoding='utf-8', prefix=prefix) as file:
             file.write(body)
             file.seek(0)
+            file.name = timestamp
 
             telegram_send.send(files=[file], captions=[message], conf=config_path)
 

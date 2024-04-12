@@ -49,24 +49,24 @@ send_telegram() {
     local subject="$1"
     local body="$(cat)"
 
-    echo "$body" | "$THIS_DIR/send-notification-telegram" "$subject" &&
-        echo "Telegram notification is sent." ||
-        {
-            echo "Failed to send telegram notification."
-            echo "$body" | on_failure "$subject"
-        }
+    if echo "$body" | "$THIS_DIR/send-notification-telegram" "$subject"; then
+        echo "Telegram notification is sent."
+    else
+        echo "Failed to send telegram notification."
+        echo "$body" | on_failure "$subject"
+    fi
 }
 
 send_email() {
     local subject="$1"
     local body="$(cat)"
 
-    echo "$body" | "$THIS_DIR/send-notification-email" "$subject" &&
-        echo "Eamil is sent." ||
-        {
-            echo "Failed to send email."
-            echo "$body" | on_failure "$subject"
-        }
+    if echo "$body" | "$THIS_DIR/send-notification-email" "$subject"; then
+        echo "Eamil is sent."
+    else
+        echo "Failed to send email."
+        echo "$body" | on_failure "$subject"
+    fi
 }
 
 on_failure() {
