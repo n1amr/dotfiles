@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-03-29 15:32:11 Z
+// Last update: 2024-04-30 18:14:45 Z
 {
   // ##################
   // ###  Behavior  ###
@@ -401,5 +401,6 @@
   "azureResourceGroups.groupBy": "resourceGroup",
   "editor.inlineSuggest.enabled": true,
   "diffEditor.renderSideBySide": false,
-  "update.showReleaseNotes": false
+  "update.showReleaseNotes": false,
+  "security.workspace.trust.untrustedFiles": "open"
 }
