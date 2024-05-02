@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-04-30 18:14:45 Z
+// Last update: 2024-05-02 12:49:38 Z
 {
   // ##################
   // ###  Behavior  ###
@@ -13,7 +13,7 @@
   "editor.rulers": [80, 100, 120],
   "editor.suggestSelection": "first",
   "editor.tabSize": 4,
-  "editor.wordWrap": "off",
+  "editor.wordWrap": "on",
   "editor.wrappingIndent": "indent",
   "files.autoSave": "off",
   "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
@@ -104,7 +104,7 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.scrollback": 100000,
   "terminal.integrated.enablePersistentSessions": true,
-  "terminal.integrated.persistentSessionReviveProcess": "onExit",
+  "terminal.integrated.persistentSessionReviveProcess": "never",
   "terminal.integrated.persistentSessionScrollback": 100000,
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
@@ -204,6 +204,13 @@
   "python.languageServer": "Pylance",
   "python.formatting.provider": "autopep8",
   "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "120",
+    "--experimental",
+    "--aggressive"
+  ],
+  "autopep8.interpreter": ["C:/Program Files/Python311/python.exe"],
+  "autopep8.args": [
     "--max-line-length",
     "120",
     "--experimental",
@@ -311,32 +318,26 @@
   /**
     General:
     - alefragnani.bookmarks
-    - buenon.scratchpads
     - chrisdias.vscode-opennewinstance
     - eamodio.gitlens
     - github.remotehub
     - heaths.vscode-guid
     - jsynowiec.vscode-insertdatestring
     - ms-azuretools.vscode-docker
-    - ms-vscode-remote.remote-containers
     - ms-vscode-remote.remote-ssh
     - ms-vscode-remote.remote-ssh-edit
     - ms-vscode.powershell
     - ms-vsliveshare.vsliveshare
-    - njpwerner.autodocstring
     - redhat.vscode-xml
     - redhat.vscode-yaml
-    - rogalmic.bash-debug
     - shalimski.swapdiff
     - streetsidesoftware.code-spell-checker
-    - thesofakillers.vscode-pbtxt
-    - tyriar.windows-terminal
     - vscodevim.vim
 
     Python:
     - ms-python.python
-    - ms-python.autopep8
     - ms-python.vscode-pylance
+    - ms-python.autopep8
     - ms-toolsai.jupyter
     - ms-toolsai.jupyter-keymap
     - ms-toolsai.jupyter-renderers
@@ -369,6 +370,12 @@
     - yiwwan.vscode-scope
 
     Disabled:
+    - buenon.scratchpads
+    - ms-vscode-remote.remote-containers
+    - njpwerner.autodocstring
+    - rogalmic.bash-debug
+    - thesofakillers.vscode-pbtxt
+    - tyriar.windows-terminal
     - ankitbko.vscode-pull-request-azdo
     - github.vscode-pull-request-github
     - grapecity.gc-excelviewer
@@ -400,7 +407,9 @@
   },
   "azureResourceGroups.groupBy": "resourceGroup",
   "editor.inlineSuggest.enabled": true,
-  "diffEditor.renderSideBySide": false,
   "update.showReleaseNotes": false,
+  "azure.authenticationLibrary": "MSAL",
+  "editor.cursorSurroundingLines": 0,
+  "diffEditor.renderSideBySide": false,
   "security.workspace.trust.untrustedFiles": "open"
 }
