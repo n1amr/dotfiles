@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import asyncio
 import datetime
 import os
 import re
@@ -54,9 +55,10 @@ def send_notification(subject: str, body: str):
     config_path = get_config_path()
 
     if not has_body:
-        telegram_send.send(messages=[message], conf=config_path)
+        task = telegram_send.send(messages=[message], conf=config_path)
+        asyncio.run(task)
     else:
-        timestamp = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S')
+        timestamp = datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%d_%H-%M-%S')
         prefix = to_safe_filename(f'telegram-notification-{timestamp}-')
 
         with tempfile.NamedTemporaryFile(mode='w+t', encoding='utf-8', prefix=prefix) as file:
@@ -64,7 +66,8 @@ def send_notification(subject: str, body: str):
             file.seek(0)
             file.name = timestamp
 
-            telegram_send.send(files=[file], captions=[message], conf=config_path)
+            task = telegram_send.send(files=[file], captions=[message], conf=config_path)
+            asyncio.run(task)
 
 
 def get_config_path() -> str:
