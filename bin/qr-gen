@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+# Install using $ brew install qrencode
+root_out_dir="/tmp/qrencode"
+mkdir -p "$root_out_dir"
+out_dir="$(mktemp -d "$root_out_dir/XXXXXXX")"
+out_path="$out_dir/qr.png"
+qrencode -o "$out_path"
+gui-open "$out_path"
