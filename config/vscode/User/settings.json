@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-05-02 12:49:38 Z
+// Last update: 2024-05-19 14:03:42 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -47,6 +47,11 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -70,6 +75,10 @@
   // ###############
 
   "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "workbench.preferredDarkColorTheme": "Visual Studio 2019 Dark",
+  "workbench.preferredLightColorTheme": "Visual Studio 2019 Dark",
+  "workbench.preferredHighContrastColorTheme": "Visual Studio 2019 Dark",
+  "workbench.preferredHighContrastLightColorTheme": "Visual Studio 2019 Dark",
   "workbench.colorCustomizations": {
     /*
       Colors:
@@ -297,6 +306,7 @@
   "editor.accessibilitySupport": "off",
   "git.autofetch": true,
   "git.mergeEditor": false, // Disable 3-way merge editor
+  "git.autorefresh": true,
   "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
 
   // ===========================================================================
