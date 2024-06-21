@@ -2,7 +2,7 @@
 
 set -e
 
-YOUTUBE_DL="${YOUTUBE_DL:=$PYENV_ROOT/shims/youtube-dl}"
+YOUTUBE_DL="${YOUTUBE_DL:=$PYENV_ROOT/shims/yt-dlp}"
 OUTPUT_TEMPLATE_INDEXED='%(playlist_index)s - %(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 OUTPUT_TEMPLATE_DEFAULT='%(title)s - (@%(uploader)s - %(id)s).%(ext)s'
 
@@ -102,7 +102,7 @@ ARGS+=(-f "$FORMAT")
 [[ "$FLAG_REVERSE" == 'true' ]] &&
     ARGS+=(--playlist-reverse)
 [[ "$FLAG_USE_COOKIES" == 'true' ]] &&
-    ARGS+=(--cookie "$(realpath "$COOKIES_FILE")")
+    ARGS+=(--cookies "$(realpath "$COOKIES_FILE")")
 [[ "$FLAG_DOWNLOAD_SUBS" == 'true' ]] &&
     ARGS+=(--sub-lang en,ar --write-auto-sub --convert-subs srt)
 ARGS+=(--continue --ignore-errors)
