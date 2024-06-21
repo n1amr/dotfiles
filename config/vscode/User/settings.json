@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-05-19 14:03:42 +03:00
+// Last update: 2024-06-21 18:37:33 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -45,7 +45,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -53,7 +55,9 @@
     "editor.formatOnSaveMode": "file"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -226,9 +230,9 @@
     "--aggressive"
   ],
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
+  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
-  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.13/bin/python", // TODO: Remove
+  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.12.4/bin/python", // TODO: Remove
 
   // Prettier
   // =============
