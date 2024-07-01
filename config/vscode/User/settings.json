@@ -428,4 +428,9 @@
   "security.workspace.trust.untrustedFiles": "open",
   "workbench.activityBar.location": "top",
   "window.customTitleBarVisibility": "auto",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "yaml.schemas": {
+    "file:///c%3A/Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.4/dist/toc.schema.json": "/toc\\.yml/i"
+  },
+  "markdown.showToolbar": true,
 }
