@@ -123,6 +123,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [credential]
     helper = cache
+    azreposCredentialType = oauth
 
 [init]
     defaultBranch = master
@@ -133,7 +134,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [push]
     default = upstream
-	autoSetupRemote = true
+    autoSetupRemote = true
 
 [pull]
     ff = only
