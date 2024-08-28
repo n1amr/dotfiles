@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-06-21 18:37:33 +03:00
+// Last update: 2024-08-25 11:40:43 +03:00
 {
   // ##################
   // ###  Behavior  ###
@@ -20,6 +20,8 @@
   "files.eol": "auto",
   "search.collapseResults": "auto",
   "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
   "workbench.startupEditor": "none",
 
   // Auto Format
@@ -433,5 +435,5 @@
     "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.4/dist/toc.schema.json": "/toc\\.yml/i"
   },
   "markdown.showToolbar": true,
-  "workbench.panel.opensMaximized": "always",
+  "workbench.panel.opensMaximized": "never"
 }
