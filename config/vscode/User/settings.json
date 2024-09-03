@@ -267,6 +267,7 @@
     "dtype",
     "eventhub",
     "gmtime",
+    "Interactor",
     "itertools",
     "jsonl",
     "kwargs",
@@ -435,5 +436,10 @@
     "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.4/dist/toc.schema.json": "/toc\\.yml/i"
   },
   "markdown.showToolbar": true,
-  "workbench.panel.opensMaximized": "never"
+  "workbench.panel.opensMaximized": "never",
+  "remote.portsAttributes": {
+    "5001": {
+      "protocol": "https"
+    }
+  }
 }
