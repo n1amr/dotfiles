@@ -278,6 +278,8 @@
     "parquetjs",
     "Popen",
     "pycache",
+    "Renderable",
+    "RNSVG",
     "screenshotting",
     "SSTREAM",
     "STREAMEXPIRY",
@@ -438,7 +440,7 @@
   "markdown.showToolbar": true,
   "workbench.panel.opensMaximized": "never",
   "remote.portsAttributes": {
-    "5001": {
+    "50586": {
       "protocol": "https"
     }
   }

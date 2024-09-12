@@ -267,5 +267,9 @@
     "key": "enter",
     "command": "list.select",
     "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "cmd+w",
+    "command": "-workbench.action.closeWindow"
   }
 ]
