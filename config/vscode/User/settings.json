@@ -262,6 +262,7 @@
     "astimezone",
     "clickhouse",
     "cmake",
+    "cyclomatic",
     "datefmt",
     "dotfiles",
     "dtype",
@@ -283,6 +284,7 @@
     "screenshotting",
     "SSTREAM",
     "STREAMEXPIRY",
+    "Sublayer",
     "tqdm",
     "xargs"
   ],
@@ -435,7 +437,7 @@
   "window.customTitleBarVisibility": "auto",
   "diffEditor.ignoreTrimWhitespace": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.4/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
   "markdown.showToolbar": true,
   "workbench.panel.opensMaximized": "never",
