@@ -8,16 +8,18 @@ remote_name='origin'
 from_checkpoint=''
 save_checkpoint='false'
 fetch='true'
+local_branch='false'
 
 while [ $# != 0 ]; do
     case "$1" in
-        --pr-branch|--branch|--pr|-b)      pr_branch="$2";       shift ;;
+        --pr-branch|--branch|--pr|-b) pr_branch="$2";       shift ;;
         --from-checkpoint|--from|-f)  from_checkpoint="$2"; shift ;;
         --target-branch|-t)           target_branch="$2";   shift ;;
         --remote-name|-r)             remote_name="$2";     shift ;;
 
         --save-checkpoint|--save|-s)  save_checkpoint='true' ;;
         --no-fetch)                   fetch='false' ;;
+        --local)                      local_branch='true' ;;
 
         *)
             if [[ "$#" -eq 1 ]]; then
@@ -55,6 +57,7 @@ debug remote_name="$remote_name"
 debug from_checkpoint="$from_checkpoint"
 debug save_checkpoint="$save_checkpoint"
 debug fetch="$fetch"
+debug local_branch="$local_branch"
 
 if [[ -z "$pr_branch" ]]; then
     echo "Specify branch to review" >&2
@@ -88,11 +91,16 @@ if [[ "$save_checkpoint" == 'true' ]]; then
     exit 0
 fi
 
-if [[ "$fetch" == 'true' ]]; then
+if [[ "$fetch" == 'true' ]] && [[ "$local_branch" == 'false' ]]; then
     git fetch -v "$remote_name" "$target_branch" "$pr_branch"
 fi
 
-merge_base="$(git merge-base "$remote_name/$pr_branch" "$remote_name/$target_branch")"
+pr_branch_ref="$remote_name/$pr_branch"
+if [[ "$local_branch" == 'true' ]]; then
+    pr_branch_ref="$pr_branch"
+fi
+
+merge_base="$(git merge-base "$pr_branch_ref" "$remote_name/$target_branch")"
 debug merge_base="$merge_base"
 
 git stash-all
@@ -108,7 +116,7 @@ if [[ -n "$from_checkpoint" ]] && [[ "$from_checkpoint" != 'null' ]]; then
     git commit -am "Reviewed (from checkpoint $from_checkpoint)"
 fi
 
-# git restore --overlay --source "$remote_name/$pr_branch" -- "$repo_dir"
-git checkout -f --no-overlay "$remote_name/$pr_branch" -- "$repo_dir"
+# git restore --overlay --source "$pr_branch_ref" -- "$repo_dir"
+git checkout -f --no-overlay "$pr_branch_ref" -- "$repo_dir"
 git reset
 git status
