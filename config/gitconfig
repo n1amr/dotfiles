@@ -7,6 +7,7 @@
     df = diff
     pick = cherry-pick
     st = status
+    wt = worktree
 
     cor = "!git checkout-remote"
     cr = "!git review"
@@ -19,7 +20,10 @@
     rrb = "!git redo-rebase-on"
 
     # Simple
+    amend = commit --am --no-edit
     current-branch = rev-parse --abbrev-ref HEAD
+    default-branch = config --get user.default-branch
+    set-default-branch = config user.default-branch
     f = fetch -v --all
     l = log --graph --pretty=longline
     ll = log --graph
@@ -28,16 +32,32 @@
     mtv = mergetool --tool customVimMergeTool
     prev = checkout HEAD~
     rb = rebase -i
+    rba = rebase --abort
     rbc = rebase --continue
     rl = log --walk-reflogs --pretty=reflog-short
     rll = log --walk-reflogs --pretty=reflog-long
     root-dir = rev-parse --show-cdup
 
     # External scripts
+    commit-timestamp = "!git commit -m \"$(date -u -Iseconds)\""
+    commit-timestamp-all = "!git commit -am \"$(date -u -Iseconds)\""
+    copy-merge-base = "!git merge-base \"origin/$(git default-branch)\" HEAD | clipboard"
     create-github = "!git-create-github"
     create-gitlab = "!git-create-gitlab"
+    rebase-default = "!git rebase -i \"$(git merge-base \"$(git default-branch)\" HEAD)\""
+    rebase-default-latest = "!git rebase -i \"$(git merge-base \"origin/$(git default-branch)\" HEAD)\""
+    rebase-upstream = "!git rebase -i '@{upstream}'"
     review = "!git-review"
+    review-save = "!git review --save"
     review-checkpoint = "!git-review-checkpoint"
+
+    # Aliases
+    ct = commit-timestamp
+    cta = commit-timestamp-all
+    cmb = copy-merge-base
+    rbd = rebase-default
+    rbdl = rebase-default-latest
+    rbu = rebase-upstream
 
     # Functions
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
