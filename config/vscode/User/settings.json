@@ -278,6 +278,8 @@
     "numpy",
     "parquetjs",
     "Popen",
+    "Proto",
+    "Protobuf",
     "pycache",
     "Renderable",
     "RNSVG",
@@ -285,6 +287,8 @@
     "SSTREAM",
     "STREAMEXPIRY",
     "Sublayer",
+    "sublayers",
+    "swiftlint",
     "tqdm",
     "xargs"
   ],
@@ -445,5 +449,11 @@
     "50586": {
       "protocol": "https"
     }
+  },
+  "[markdown]": {
+    "diffEditor.ignoreTrimWhitespace": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
