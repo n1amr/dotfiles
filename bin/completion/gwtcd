@@ -1,0 +1,9 @@
+#!/bin/bash
+
+results=()
+
+while IFS= read dir; do
+    results+=("$dir")
+done < <( git worktree list --porcelain | grep '^worktree' | sed 's/^worktree //' )
+
+printf '%s\n' "${results[@]}"

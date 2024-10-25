@@ -1,62 +1,91 @@
 [alias]
-    # Short names
+    # author-date-old = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f" # git versoin < 2.22.0
+    amend = commit --am --no-edit
+    author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
+    backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
+    checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
+    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
+    code = "!f() { cd \"$(git repo-root)\"; code \"$@\" .; }; f"
+    commit-timestamp = "!git commit -m \"$(date -u -Iseconds)\""
+    commit-timestamp-all = "!git commit -am \"$(date -u -Iseconds)\""
+    config-edit = config --edit
+    config-path = "!echo \"$(git worktree-main-git-dir)/config\""
+    copy-commit-hash = "!git rev-parse HEAD | clipboard"
+    copy-current-branch = "!git current-branch | clipboard"
+    copy-merge-base = "!git merge-base \"origin/$(git default-branch)\" HEAD | clipboard"
+    create-github = "!git-create-github"
+    create-gitlab = "!git-create-gitlab"
+    create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
+    current-branch = rev-parse --abbrev-ref HEAD
+    default-branch = config --get user.default-branch
+    diff-upstream = diff '@{upstream}'
+    init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
+    is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
+    is-index-empty = "!f() { test -z \"$(git diff-index --cached --name-only HEAD)\"; }; f"
+    new-branch = "!f() { git checkout -B \"$1\" \"${2:-HEAD}\"; git branch --unset-upstream || true; git status; }; f"
+    push-pr = "!f() { git push origin \"HEAD~${1:-0}:refs/heads/$(git current-branch | sed 's/-dev$//')\" -f; }; f"
+    rebase-default = "!git rebase -i \"$(git merge-base \"$(git default-branch)\" HEAD)\""
+    rebase-default-latest = "!git rebase -i \"origin/$(git default-branch)\""
+    rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
+    rebase-upstream = rebase -i '@{upstream}'
+    recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
+    redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
+    repo-root = rev-parse --path-format=absolute --show-toplevel
+    repo-root-relative = rev-parse --show-cdup
+    review = "!git-review"
+    review-save = review --save
+    set-default-branch = config user.default-branch
+    stash-all = "!f() { ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\" && return 1; git stash -u; }; f"
+    vim = "!f() { cd \"$(git repo-root)\"; vim \"$@\" .; }; f"
+    worktree-main = "!git worktree-main-git-dir | sed 's/\\/*.git$//'"
+    worktree-main-exec = "!git -C \"$(git worktree-main-git-dir)\""
+    worktree-main-git-dir = rev-parse --path-format=absolute --git-common-dir
+
+    # Aliases
     a = add
+    ap = add --patch
     br = branch
     c = commit
+    ccb = copy-current-branch
+    cch = copy-commit-hash
+    cmb = copy-merge-base
     co = checkout
+    cor = checkout-remote
+    cr = review
+    crc = review-checkpoint
+    cs = create-stash
+    ct = commit-timestamp
+    cta = commit-timestamp-all
     df = diff
-    pick = cherry-pick
-    st = status
-
-    cor = "!git checkout-remote"
-    cr = "!git review"
-    crc = "!git review-checkpoint"
-    cs = "!git create-stash"
-    go = "!f() { git-browse \"$@\"; }; f"
-    next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"
-    rbb = "!f() { count=\"$1\"; shift; git rebase -i \"$@\" \"HEAD~${count}\"; }; f"
-    rbon = "!git rebase-on"
-    rrb = "!git redo-rebase-on"
-
-    # Simple
-    current-branch = rev-parse --abbrev-ref HEAD
-    f = fetch -v --all
+    dfa = diff-upstream
+    f = fetch --all --prune
+    go = "!git-browse"
     l = log --graph --pretty=longline
     ll = log --graph
     lp = log --graph --patch
     mt = mergetool --tool customVimMergeToolMin
     mtv = mergetool --tool customVimMergeTool
+    nb = new-branch
+    next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"
+    pick = cherry-pick
     prev = checkout HEAD~
     rb = rebase -i
+    rba = rebase --abort
+    rbb = "!f() { count=\"$1\"; shift; git rebase -i \"$@\" \"HEAD~${count}\"; }; f"
     rbc = rebase --continue
+    rbd = rebase-default
+    rbdl = rebase-default-latest
+    rbon = rebase-on
+    rbu = rebase-upstream
     rl = log --walk-reflogs --pretty=reflog-short
     rll = log --walk-reflogs --pretty=reflog-long
-    root-dir = rev-parse --show-cdup
-
-    # External scripts
-    create-github = "!git-create-github"
-    create-gitlab = "!git-create-gitlab"
-    review = "!git-review"
-    review-checkpoint = "!git-review-checkpoint"
-
-    # Functions
-    author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
-    author-date-old = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f" # git versoin < 2.22.0
-    backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
-    stash-all = "!f() { ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\" && return 1; git stash -u; }; f"
-    checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
-    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
-    create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
-    init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
-    is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
-    is-index-empty = "!f() { test -z \"$(git diff-index --cached --name-only HEAD)\"; }; f"
-    rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
-    recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
-    redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
-
-    # TODO: Remove
-    old-review = "!f() { set -x; branch=\"$1\" && test -n \"$branch\" || { echo \"Specify branch to review\" >&2; return 1; } && last_checkpoint=\"$2\" && git stash-all && git is-clean && git fetch -v origin \"$branch\" && merge_base=\"$(git merge-base \"origin/$branch\" \"origin/${GIT_TARGET_BRANCH:-master}\")\" && git checkout -B review \"$merge_base\" && { test -z \"$last_checkpoint\" || git checkout -f \"$last_checkpoint\" -- .; } && git restore --source \"origin/$branch\" -- .; }; f"
-    old-review-checkpoint = "!f() { set -x; git commit -m \"reviewed: $(date -u -Iseconds)\" && git rev-parse --verify HEAD; }; f"
+    rrb = redo-rebase-on
+    st = status
+    wt = worktree
+    wta = worktree add
+    wtl = worktree list
+    wtmv = worktree move
+    wtrm = worktree remove
 
 [core]
     editor = vim
@@ -171,7 +200,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [credential "azrepos:org/msasg"]
 	username = amralaa@microsoft.com
-	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+    azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
 [credential "azrepos:org/msblox"]
-	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
-	username = amralaa@microsoft.com
+    azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+    username = amralaa@microsoft.com

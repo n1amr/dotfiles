@@ -7,6 +7,7 @@ target_branch=''
 remote_name='origin'
 from_checkpoint=''
 save_checkpoint='false'
+reset_checkpoint='false'
 fetch='true'
 local_branch='false'
 
@@ -18,6 +19,7 @@ while [ $# != 0 ]; do
         --remote-name|-r)             remote_name="$2";     shift ;;
 
         --save-checkpoint|--save|-s)  save_checkpoint='true' ;;
+        --reset-checkpoint|--reset)   reset_checkpoint='true' ;;
         --no-fetch)                   fetch='false' ;;
         --local)                      local_branch='true' ;;
 
@@ -44,7 +46,7 @@ debug() {
 }
 
 if [[ -z "$target_branch" ]]; then
-    target_branch="$(git config --get user.defaultReviewBranch)"
+    target_branch="$(git config --get user.default-branch)"
 fi
 
 if [[ -z "$target_branch" ]]; then
@@ -56,23 +58,41 @@ debug target_branch="$target_branch"
 debug remote_name="$remote_name"
 debug from_checkpoint="$from_checkpoint"
 debug save_checkpoint="$save_checkpoint"
+debug reset_checkpoint="$reset_checkpoint"
 debug fetch="$fetch"
 debug local_branch="$local_branch"
 
 if [[ -z "$pr_branch" ]]; then
-    echo "Specify branch to review" >&2
-    return 1
+    pr_branch="$(git current-branch | sed 's|^review/||')"
+    if [[ -z "$pr_branch" ]]; then
+        echo "Specify branch to review" >&2
+        exit 1
+    else
+        echo "No PR branch is specified. Using default branch: $pr_branch"
+    fi
 fi
 
-repo_dir="$(git root-dir)"
+repo_dir="$(git repo-root)"
 if [[ -z "$repo_dir" ]]; then
     repo_dir='.'
 fi
 debug repo_dir="$repo_dir"
 
-checkpoint_file="$repo_dir/.git/review/checkpoints/${pr_branch//\//%}"
+git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+
+if [[ -f "$git_dir" ]]; then
+    git_dir="$(cat "$git_dir" | grep 'gitdir:' | sed 's/^gitdir: //')"
+fi
+
+checkpoint_file="$git_dir/review/checkpoints/${pr_branch//\//%}"
 mkdir -p "$(dirname "$checkpoint_file")"
 debug checkpoint_file="$checkpoint_file"
+
+if [[ "$reset_checkpoint" == 'true' ]]; then
+    rm -f "$checkpoint_file"
+
+    exit 0
+fi
 
 if [[ -z "$from_checkpoint" ]] && [[ -f "$checkpoint_file" ]]; then
     from_checkpoint="$(cat "$checkpoint_file" | tail -n 1)"
@@ -82,7 +102,7 @@ fi
 if [[ "$save_checkpoint" == 'true' ]]; then
     git status
 
-    git commit -m "Reviewed (from checkpoint $from_checkpoint)"
+    git commit -m "Reviewed (from checkpoint $from_checkpoint)" || true
 
     new_checkpoint="$(git rev-parse --verify HEAD)"
     echo "$new_checkpoint" >> "$checkpoint_file"
@@ -113,7 +133,7 @@ if [[ -n "$from_checkpoint" ]] && [[ "$from_checkpoint" != 'null' ]]; then
     git restore --no-overlay --source "$from_checkpoint" -- "$repo_dir"
     git add "$repo_dir"
     git status
-    git commit -am "Reviewed (from checkpoint $from_checkpoint)"
+    git commit -am "Reviewed (from checkpoint $from_checkpoint)" || true
 fi
 
 # git restore --overlay --source "$pr_branch_ref" -- "$repo_dir"

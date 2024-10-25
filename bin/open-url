@@ -10,8 +10,17 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-open () { xdg-open "$1" & }
-open_with_redirect () { open "$@" > /dev/null 2>&1 & }
+_open () {
+    if type open > /dev/null 2>&1; then
+        open "$1" &
+    else
+        xdg-open "$1" &
+    fi
+}
+
+open_with_redirect () {
+    _open "$@" # > /dev/null 2>&1 &
+}
 
 for url in "$@"; do
     open_with_redirect "$url"

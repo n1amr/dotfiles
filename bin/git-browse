@@ -6,17 +6,17 @@ remote_name=origin
 while [ $# != 0 ]; do
     case $1 in
         -r)
-        [[ $# -lt 2 ]] && echo "Error: No remote name" && exit 1
-        remote_name="$2"
-        shift
+            [[ $# -lt 2 ]] && echo "Error: No remote name" && exit 1
+            remote_name="$2"
+            shift
         ;;
 
         *)
-        if [[ -n "$action" ]]; then
-            echo "Only one action is required."
-            exit 1
-        fi
-        action="$1"
+            if [[ -n "$action" ]]; then
+                echo "Only one action is required."
+                exit 1
+            fi
+            action="$1"
         ;;
     esac
     shift
@@ -45,6 +45,7 @@ else
     echo "ERROR: Remote $remote_name is invalid"
     exit 1
 fi
+
 url="${git_url}"
 
 git_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)" || git_branch=''
@@ -116,5 +117,5 @@ case "$action" in
     ;;
 esac
 
-echo "Opening $url"
+echo "Opening URL: $url"
 open-url "$url"

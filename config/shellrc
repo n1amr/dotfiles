@@ -281,6 +281,10 @@ findword () {
     grep -P "$1" /usr/share/dict/words
 }
 
+gwtcd () {
+    cd "$@"
+}
+
 init_fzf () {
     export PATH="$DOTFILES_HOME/thirdparty/fzf/bin:$PATH"
     [[ $- == *i* ]] && source "$DOTFILES_HOME/thirdparty/fzf/shell/completion.$SHELLNAME" 2> /dev/null
