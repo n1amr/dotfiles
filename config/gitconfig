@@ -18,15 +18,29 @@
     create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
     current-branch = rev-parse --abbrev-ref HEAD
     default-branch = config --get user.default-branch
+    diff-default = "!git diff \"$(git default-branch)\""
+    diff-default-latest = "!git diff \"origin/$(git default-branch)\""
+    diff-default-merge-base = "!git diff \"$(git merge-base \"origin/$(git default-branch)\" HEAD)\""
     diff-upstream = diff '@{upstream}'
     init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
     is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
     is-index-empty = "!f() { test -z \"$(git diff-index --cached --name-only HEAD)\"; }; f"
+    log-default = "!git log-pretty \"$(git default-branch)..HEAD\""
+    log-default-latest = "!git log-pretty \"origin/$(git default-branch)..HEAD\""
+    log-default-merge-base = "!git log-pretty \"$(git merge-base \"origin/$(git default-branch)\" HEAD)..HEAD\""
+    log-message = log --graph
+    log-patch = log --graph --patch
+    log-pretty = log --graph --pretty=longline
+    log-upstream = log-pretty '@{upstream}..HEAD'
     new-branch = "!f() { git checkout -B \"$1\" \"${2:-HEAD}\"; git branch --unset-upstream || true; git status; }; f"
+    pull-branch = "!f() { git fetch origin \"$1:$1\"; }; f"
+    pull-default = "!git pull-branch \"$(git default-branch)\""
     push-pr = "!f() { git push origin \"HEAD~${1:-0}:refs/heads/$(git current-branch | sed 's/-dev$//')\" -f; }; f"
-    rebase-default = "!git rebase -i \"$(git merge-base \"$(git default-branch)\" HEAD)\""
+    rebase-default = "!git rebase -i \"$(git default-branch)\""
     rebase-default-latest = "!git rebase -i \"origin/$(git default-branch)\""
+    rebase-default-merge-base = "!git rebase -i \"$(git merge-base \"origin/$(git default-branch)\" HEAD)\""
     rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash --onto \"$remote_branch_name\" \"$(git merge-base \"$remote_branch_name\" HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
+    rebase-upstream = rebase -i '@{upstream}'
     rebase-upstream = rebase -i '@{upstream}'
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
@@ -52,17 +66,21 @@
     co = checkout
     cor = checkout-remote
     cr = review
-    crc = review-checkpoint
+    crs = review-save
     cs = create-stash
     ct = commit-timestamp
     cta = commit-timestamp-all
     df = diff
-    dfa = diff-upstream
+    dfd = diff-default
+    dfdl = diff-default-latest
+    dfdmb = diff-default-merge-base
+    dfu = diff-upstream
     f = fetch --all --prune
     go = "!git-browse"
-    l = log --graph --pretty=longline
-    ll = log --graph
-    lp = log --graph --patch
+    l = log-pretty
+    ll = log-message
+    lmb = log-default-merge-base
+    lp = log-patch
     mt = mergetool --tool customVimMergeToolMin
     mtv = mergetool --tool customVimMergeTool
     nb = new-branch
@@ -75,6 +93,7 @@
     rbc = rebase --continue
     rbd = rebase-default
     rbdl = rebase-default-latest
+    rbdmb = rebase-default-merge-base
     rbon = rebase-on
     rbu = rebase-upstream
     rl = log --walk-reflogs --pretty=reflog-short
