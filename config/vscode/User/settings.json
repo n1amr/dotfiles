@@ -1,12 +1,18 @@
 // User Settings (All Platforms)
-// Last update: 2024-05-19 14:03:42 +03:00
+// Last update: 2024-11-14 22:46:48 +02:00
 {
   // ##################
   // ###  Behavior  ###
   // ##################
 
+  "debug.console.wordWrap": false,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderSideBySide": false,
+  "editor.accessibilitySupport": "off",
+  "editor.cursorSurroundingLines": 0,
   "editor.fontFamily": "DejaVu Sans Mono for Powerline", // or "Consolas",
   "editor.fontSize": 14,
+  "editor.inlineSuggest.enabled": true,
   "editor.lineNumbers": "on",
   "editor.mouseWheelZoom": true,
   "editor.renderWhitespace": "all",
@@ -18,8 +24,15 @@
   "files.autoSave": "off",
   "files.autoSaveDelay": 5000, // Not applicable when autosave: "off"
   "files.eol": "auto",
+  "scm.defaultViewMode": "tree",
   "search.collapseResults": "auto",
+  "search.defaultViewMode": "tree",
+  "window.customTitleBarVisibility": "auto",
+  "workbench.activityBar.location": "top",
   "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
+  "workbench.editor.wrapTabs": true,
+  "workbench.panel.opensMaximized": "never",
   "workbench.startupEditor": "none",
 
   // Auto Format
@@ -28,11 +41,22 @@
   "files.trimTrailingWhitespace": true,
   // "json.format.keepLines": false,
 
+  // Language Specific.
   "[arm-template]": {
     "editor.defaultFormatter": "msazurermtools.azurerm-vscode-tools"
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
   },
   "[json]": {
     "editor.indentSize": 2,
@@ -44,15 +68,12 @@
     "editor.tabSize": 2,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file"
   },
-  "[typescript]": {
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
@@ -66,6 +87,11 @@
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.autopep8",
     "editor.formatOnType": true
+  },
+
+  "markdown.showToolbar": true,
+  "yaml.schemas": {
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
 
   // ===========================================================================
@@ -226,9 +252,9 @@
     "--aggressive"
   ],
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.7.13/bin/python",
+  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
-  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.7.13/bin/python", // TODO: Remove
+  // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.12.4/bin/python", // TODO: Remove
 
   // Prettier
   // =============
@@ -256,24 +282,34 @@
     "astimezone",
     "clickhouse",
     "cmake",
+    "cyclomatic",
     "datefmt",
     "dotfiles",
     "dtype",
     "eventhub",
     "gmtime",
+    "Interactor",
     "itertools",
     "jsonl",
     "kwargs",
+    "linkcode",
     "loadtest",
     "mkdir",
     "mutex",
     "numpy",
     "parquetjs",
     "Popen",
+    "Proto",
+    "Protobuf",
     "pycache",
+    "Renderable",
+    "RNSVG",
     "screenshotting",
     "SSTREAM",
     "STREAMEXPIRY",
+    "Sublayer",
+    "sublayers",
+    "swiftlint",
     "tqdm",
     "xargs"
   ],
@@ -303,11 +339,13 @@
   // ###############
   // ###  Other  ###
   // ###############
-  "editor.accessibilitySupport": "off",
+  "azure.authenticationLibrary": "MSAL",
   "git.autofetch": true,
-  "git.mergeEditor": false, // Disable 3-way merge editor
   "git.autorefresh": true,
+  "git.mergeEditor": false, // Disable 3-way merge editor
   "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
+  "security.workspace.trust.untrustedFiles": "open",
+  "update.showReleaseNotes": false,
 
   // ===========================================================================
 
@@ -406,22 +444,4 @@
   // ===========================================================================
 
   "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
-  "debug.console.wordWrap": false,
-  "azure.resourceFilter": [
-    "72f988bf-86f1-41af-91ab-2d7cd011db47/42db8b88-f5e6-40b8-9b0b-0af715701fc8",
-    "72f988bf-86f1-41af-91ab-2d7cd011db47/34093ecf-e969-49a6-a6a9-44c45fcdb780",
-    "cba545ce-21d5-4fcc-a680-d9477e5f872e/f08e8989-79d3-4847-b6ea-d5f8a08a56f2"
-  ],
-  "azureResourceManagerTools.parameterFiles": {
-    "c:\\users\\amralaa\\source\\repos\\clarity-backend\\devops\\azure-resources\\alerts\\arm-templates\\alerts-actions.jsonc": "alerts-actions.gitignored.parameters.json"
-  },
-  "azureResourceGroups.groupBy": "resourceGroup",
-  "editor.inlineSuggest.enabled": true,
-  "update.showReleaseNotes": false,
-  "azure.authenticationLibrary": "MSAL",
-  "editor.cursorSurroundingLines": 0,
-  "diffEditor.renderSideBySide": false,
-  "security.workspace.trust.untrustedFiles": "open",
-  "workbench.activityBar.location": "top",
-  "window.customTitleBarVisibility": "auto",
 }

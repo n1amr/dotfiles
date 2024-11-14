@@ -267,5 +267,17 @@
     "key": "enter",
     "command": "list.select",
     "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "cmd+w",
+    "command": "-workbench.action.closeWindow"
+  },
+  {
+    "key": "cmd+shift+g",
+    "command": "workbench.view.scm"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "gitlens.views.searchAndCompare.focus"
   }
 ]
