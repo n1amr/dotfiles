@@ -2,141 +2,209 @@
 
 set -eu
 
-pr_branch=''
-target_branch=''
-remote_name='origin'
-from_checkpoint=''
-save_checkpoint='false'
-reset_checkpoint='false'
-fetch='true'
-local_branch='false'
+main() {
+    parse_args "$@"
 
-while [ $# != 0 ]; do
-    case "$1" in
-        --pr-branch|--branch|--pr|-b) pr_branch="$2";       shift ;;
-        --from-checkpoint|--from|-f)  from_checkpoint="$2"; shift ;;
-        --target-branch|-t)           target_branch="$2";   shift ;;
-        --remote-name|-r)             remote_name="$2";     shift ;;
+    auto_calculate_args
 
-        --save-checkpoint|--save|-s)  save_checkpoint='true' ;;
-        --reset-checkpoint|--reset)   reset_checkpoint='true' ;;
-        --no-fetch)                   fetch='false' ;;
-        --local)                      local_branch='true' ;;
+    log_args
 
-        *)
-            if [[ "$#" -eq 1 ]]; then
-                pr_branch="$1"
-            else
-                echo "Invalid syntax. Unknown argument: '$1'."
-                exit 1
-            fi
-        ;;
-    esac
-    shift
-done
+    if [[ "$reset_checkpoint" == 'true' ]]; then
+        exec_reset_checkpoint
+    elif [[ "$save_checkpoint" == 'true' ]]; then
+        exec_save_checkpoint
+    else
+        exec_update
+    fi
+}
 
-set -x
+parse_args() {
+    pr_branch=''
+    target_branch=''
+    remote_name='origin'
+    from_checkpoint=''
+    save_checkpoint='false'
+    reset_checkpoint='false'
+    fetch='true'
+    local_branch='false'
+    debug='false'
+
+    while [ $# != 0 ]; do
+        case "$1" in
+            --pr-branch|--branch|--pr|-b) pr_branch="$2";       shift ;;
+            --from-checkpoint|--from|-f)  from_checkpoint="$2"; shift ;;
+            --target-branch|-t)           target_branch="$2";   shift ;;
+            --remote-name|-r)             remote_name="$2";     shift ;;
+
+            --save-checkpoint|--save|-s)  save_checkpoint='true' ;;
+            --reset-checkpoint|--reset)   reset_checkpoint='true' ;;
+            --no-fetch)                   fetch='false' ;;
+            --local)                      local_branch='true' ;;
+            --debug)                      debug='true' ;;
+
+            *)
+                if [[ "$#" -eq 1 ]]; then
+                    pr_branch="$1"
+                else
+                    fail "Invalid syntax. Unknown argument: '$1'."
+                fi
+            ;;
+        esac
+        shift
+    done
+
+    if [[ "$debug" == 'true' ]]; then
+        debug() {
+            echo "DEBUG: $@"
+        }
+
+        set -x
+    else
+        debug() { return; }
+    fi
+}
+
+auto_calculate_args() {
+    if [[ -z "$target_branch" ]]; then
+        target_branch="$(git config --get user.default-branch)"
+    fi
+
+    if [[ -z "$target_branch" ]]; then
+        target_branch="${GIT_TARGET_BRANCH:-master}"
+    fi
+
+    if [[ -z "$pr_branch" ]]; then
+        pr_branch="$(git current-branch | sed 's|^review/||')"
+        if [[ -z "$pr_branch" ]]; then
+            fail "Specify branch to review"
+        else
+            info "No PR branch is specified. Using default branch: $pr_branch"
+        fi
+    fi
+
+    repo_dir="$(git rev-parse --path-format=absolute --show-toplevel)"
+    if [[ -z "$repo_dir" ]]; then
+        repo_dir='.'
+    fi
+
+    git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+    if [[ -f "$git_dir" ]]; then
+        git_dir="$(cat "$git_dir" | grep 'gitdir:' | sed 's/^gitdir: //')"
+    fi
+
+    checkpoint_file="$git_dir/review/checkpoints/${pr_branch//\//%}"
+
+    if [[ -z "$from_checkpoint" ]] && [[ -f "$checkpoint_file" ]]; then
+        from_checkpoint="$(cat "$checkpoint_file" | tail -n 1)"
+    fi
+
+    if [[ "$local_branch" == 'true' ]]; then
+        pr_branch_ref="$pr_branch"
+    else
+        pr_branch_ref="$remote_name/$pr_branch"
+    fi
+}
+
+log_args() {
+    debug pr_branch="$pr_branch"
+    debug target_branch="$target_branch"
+    debug remote_name="$remote_name"
+    debug from_checkpoint="$from_checkpoint"
+    debug save_checkpoint="$save_checkpoint"
+    debug reset_checkpoint="$reset_checkpoint"
+    debug fetch="$fetch"
+    debug local_branch="$local_branch"
+    debug repo_dir="$repo_dir"
+    debug checkpoint_file="$checkpoint_file"
+}
+
+fail() {
+    echo >&2 "FAILED: $@"
+    exit 1
+}
 
 info() {
     echo "INFO: $@"
 }
 
-debug() {
-    echo "DEBUG: $@"
+has_untracked_files() {
+    test -n "$(git ls-files --others --exclude-standard "$repo_dir")"
 }
 
-if [[ -z "$target_branch" ]]; then
-    target_branch="$(git config --get user.default-branch)"
-fi
+has_staged_changes() {
+    test -n "$(git diff-index --cached --name-only HEAD)"
+}
 
-if [[ -z "$target_branch" ]]; then
-    target_branch="${GIT_TARGET_BRANCH:-master}"
-fi
+has_changes() {
+    test -n "$(git diff-index --name-only HEAD)"
+}
 
-debug pr_branch="$pr_branch"
-debug target_branch="$target_branch"
-debug remote_name="$remote_name"
-debug from_checkpoint="$from_checkpoint"
-debug save_checkpoint="$save_checkpoint"
-debug reset_checkpoint="$reset_checkpoint"
-debug fetch="$fetch"
-debug local_branch="$local_branch"
-
-if [[ -z "$pr_branch" ]]; then
-    pr_branch="$(git current-branch | sed 's|^review/||')"
-    if [[ -z "$pr_branch" ]]; then
-        echo "Specify branch to review" >&2
-        exit 1
-    else
-        echo "No PR branch is specified. Using default branch: $pr_branch"
-    fi
-fi
-
-repo_dir="$(git repo-root)"
-if [[ -z "$repo_dir" ]]; then
-    repo_dir='.'
-fi
-debug repo_dir="$repo_dir"
-
-git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
-
-if [[ -f "$git_dir" ]]; then
-    git_dir="$(cat "$git_dir" | grep 'gitdir:' | sed 's/^gitdir: //')"
-fi
-
-checkpoint_file="$git_dir/review/checkpoints/${pr_branch//\//%}"
-mkdir -p "$(dirname "$checkpoint_file")"
-debug checkpoint_file="$checkpoint_file"
-
-if [[ "$reset_checkpoint" == 'true' ]]; then
+exec_reset_checkpoint() {
     rm -f "$checkpoint_file"
 
     exit 0
-fi
+}
 
-if [[ -z "$from_checkpoint" ]] && [[ -f "$checkpoint_file" ]]; then
-    from_checkpoint="$(cat "$checkpoint_file" | tail -n 1)"
-    debug from_checkpoint="$from_checkpoint"
-fi
+exec_save_checkpoint() {
+    if ! has_changes; then
+        info 'No changes to save.'
+        exit 0
+    fi
 
-if [[ "$save_checkpoint" == 'true' ]]; then
     git status
 
-    git commit -m "Reviewed (from checkpoint $from_checkpoint)" || true
+    git commit -m "Reviewed (from checkpoint $from_checkpoint)"
 
     new_checkpoint="$(git rev-parse --verify HEAD)"
+    mkdir -p "$(dirname "$checkpoint_file")"
     echo "$new_checkpoint" >> "$checkpoint_file"
     info "Saved checkpoint '$new_checkpoint' to '$checkpoint_file'."
 
     exit 0
-fi
+}
 
-if [[ "$fetch" == 'true' ]] && [[ "$local_branch" == 'false' ]]; then
-    git fetch -v "$remote_name" "$target_branch" "$pr_branch"
-fi
+exec_update() {
+    if [[ "$fetch" == 'true' ]] && [[ "$local_branch" == 'false' ]]; then
+        info 'Fetching from remote.'
+        git fetch --quiet "$remote_name" "$target_branch" "$pr_branch"
+    fi
 
-pr_branch_ref="$remote_name/$pr_branch"
-if [[ "$local_branch" == 'true' ]]; then
-    pr_branch_ref="$pr_branch"
-fi
+    merge_base="$(git merge-base "$pr_branch_ref" "$remote_name/$target_branch")"
+    debug merge_base="$merge_base"
 
-merge_base="$(git merge-base "$pr_branch_ref" "$remote_name/$target_branch")"
-debug merge_base="$merge_base"
+    if has_staged_changes; then
+        fail "Cannot stash changes. Index is not empty."
+    fi
 
-git stash-all
-git clean -fd
+    if has_changes || has_untracked_files; then
+        git stash push --include-untracked --message "before review $pr_branch"
+    fi
 
-git checkout -f -B "review/$pr_branch" "$merge_base"
+    git checkout --quiet -f -B "review/$pr_branch" "$merge_base"
 
-# Restore last reviewed checkpoint.
-if [[ -n "$from_checkpoint" ]] && [[ "$from_checkpoint" != 'null' ]]; then
-    git restore --no-overlay --source "$from_checkpoint" -- "$repo_dir"
+    # Restore last reviewed checkpoint.
+    if [[ -n "$from_checkpoint" ]] && [[ "$from_checkpoint" != 'null' ]]; then
+        info "Applying changes from previous checkpoint: $from_checkpoint."
+        git restore --no-overlay --source "$from_checkpoint" -- "$repo_dir"
+        git add "$repo_dir"
+        if has_changes; then
+            if [[ "$debug" == 'true' ]]; then
+                git status
+            fi
+
+            git commit --quiet -am "Reviewed (from checkpoint $from_checkpoint)" || true
+        fi
+    fi
+
+    info "Applying changes from latest commit: $(git rev-parse --verify "$pr_branch_ref")."
+    git restore --no-overlay --source "$pr_branch_ref" -- "$repo_dir"
     git add "$repo_dir"
-    git status
-    git commit -am "Reviewed (from checkpoint $from_checkpoint)" || true
-fi
+    if has_changes; then
+        git status
+        git reset --quiet
+    fi
 
-# git restore --overlay --source "$pr_branch_ref" -- "$repo_dir"
-git checkout -f --no-overlay "$pr_branch_ref" -- "$repo_dir"
-git reset
-git status
+    exit 0
+}
+
+main "$@"
