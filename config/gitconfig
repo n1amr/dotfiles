@@ -77,6 +77,7 @@
     dfu = diff-upstream
     f = fetch --all --prune
     go = "!git-browse"
+    gpr = "!f() { git go --branch \"$(git current-branch | sed 's/-dev$//')\" pr \"$@\"; }; f"
     l = log-pretty
     ll = log-message
     lmb = log-default-merge-base
