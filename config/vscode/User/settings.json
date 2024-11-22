@@ -311,6 +311,7 @@
     "sublayers",
     "swiftlint",
     "tqdm",
+    "worktree",
     "xargs"
   ],
 

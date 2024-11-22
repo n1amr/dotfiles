@@ -33,9 +33,10 @@
     log-pretty = log --graph --pretty=longline
     log-upstream = log-pretty '@{upstream}..HEAD'
     new-branch = "!f() { git checkout -B \"$1\" \"${2:-HEAD}\"; git branch --unset-upstream || true; git status; }; f"
+    pr-branch = "!echo \"$(git current-branch | sed 's/-dev$//')\";"
     pull-branch = "!f() { git fetch origin \"$1:$1\"; }; f"
     pull-default = "!git pull-branch \"$(git default-branch)\""
-    push-pr = "!f() { git push origin \"HEAD~${1:-0}:refs/heads/$(git current-branch | sed 's/-dev$//')\" -f; }; f"
+    push-pr = "!f() { count="${1:-0}"; shift; git push origin \"HEAD~${count}:refs/heads/$(git pr-branch)\" \"$@\"; }; f"
     rebase-default = "!git rebase -i \"$(git default-branch)\""
     rebase-default-latest = "!git rebase -i \"origin/$(git default-branch)\""
     rebase-default-merge-base = "!git rebase -i \"$(git merge-base \"origin/$(git default-branch)\" HEAD)\""
@@ -77,7 +78,7 @@
     dfu = diff-upstream
     f = fetch --all --prune
     go = "!git-browse"
-    gpr = "!f() { git go --branch \"$(git current-branch | sed 's/-dev$//')\" pr \"$@\"; }; f"
+    gpr = "!f() { git go --branch \"$(git pr-branch)\" pr \"$@\"; }; f"
     l = log-pretty
     ll = log-message
     lmb = log-default-merge-base
@@ -87,7 +88,11 @@
     nb = new-branch
     next = "!f() { branch=\"${1:-master}\"; git checkout \"$(git log --reverse --ancestry-path --oneline HEAD..\"${branch}\" | head -1 | awk '{print $1}')\"; }; f"
     pick = cherry-pick
+    pl = pull
     prev = checkout HEAD~
+    ps = push
+    pspr = push-pr
+    psprf = "!f() { git push-pr \"$1\" -f; }; f"
     rb = rebase -i
     rba = rebase --abort
     rbb = "!f() { count=\"$1\"; shift; git rebase -i \"$@\" \"HEAD~${count}\"; }; f"
