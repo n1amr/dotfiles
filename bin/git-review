@@ -169,8 +169,14 @@ exec_update() {
         git fetch --quiet "$remote_name" "$target_branch" "$pr_branch"
     fi
 
-    merge_base="$(git merge-base "$pr_branch_ref" "$remote_name/$target_branch")"
-    debug merge_base="$merge_base"
+    base_commit="$remote_name/$target_branch"
+    debug base_commit="$base_commit"
+
+    updated_commit="$pr_branch_ref"
+    debug updated_commit="$updated_commit"
+
+    updated_merge_base="$(git merge-base "$base_commit" "$updated_commit")"
+    debug updated_merge_base="$updated_merge_base"
 
     if has_staged_changes; then
         fail "Cannot stash changes. Index is not empty."
@@ -180,11 +186,17 @@ exec_update() {
         git stash push --include-untracked --message "before review $pr_branch"
     fi
 
-    git checkout --quiet -f -B "review/$pr_branch" "$merge_base"
+    review_branch="review/$pr_branch"
+    debug review_branch="$review_branch"
 
     # Restore last reviewed checkpoint.
     if [[ -n "$from_checkpoint" ]] && [[ "$from_checkpoint" != 'null' ]]; then
         info "Applying changes from previous checkpoint: $from_checkpoint."
+
+        checkpoint_merge_base="$(git merge-base "$base_commit" "$from_checkpoint")"
+        debug checkpoint_merge_base="$checkpoint_merge_base"
+
+        git checkout --quiet -f -B "$review_branch" "$checkpoint_merge_base"
         git restore --no-overlay --source "$from_checkpoint" -- "$repo_dir"
         git add "$repo_dir"
         if has_changes; then
@@ -194,10 +206,14 @@ exec_update() {
 
             git commit --quiet -am "Reviewed (from checkpoint $from_checkpoint)" || true
         fi
+
+        git rebase "$updated_merge_base"
+    else
+        git checkout --quiet -f -B "$review_branch" "$updated_merge_base"
     fi
 
-    info "Applying changes from latest commit: $(git rev-parse --verify "$pr_branch_ref")."
-    git restore --no-overlay --source "$pr_branch_ref" -- "$repo_dir"
+    info "Applying changes from latest commit: $(git rev-parse --verify "$updated_commit")."
+    git restore --no-overlay --source "$updated_commit" -- "$repo_dir"
     git add "$repo_dir"
     if has_changes; then
         git status
