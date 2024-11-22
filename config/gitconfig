@@ -52,6 +52,7 @@
     set-default-branch = config user.default-branch
     stash-all = "!f() { ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\" && return 1; git stash -u; }; f"
     vim = "!f() { cd \"$(git repo-root)\"; vim \"$@\" .; }; f"
+    worktree-create = "!git-worktree-create"
     worktree-main = "!git worktree-main-git-dir | sed 's/\\/*.git$//'"
     worktree-main-exec = "!git -C \"$(git worktree-main-git-dir)\""
     worktree-main-git-dir = rev-parse --path-format=absolute --git-common-dir
@@ -108,6 +109,7 @@
     st = status
     wt = worktree
     wta = worktree add
+    wtc = worktree-create
     wtl = worktree list
     wtmv = worktree move
     wtrm = worktree remove

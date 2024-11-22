@@ -1,0 +1,88 @@
+#!/bin/bash
+
+set -eu
+
+main() {
+    parse_args "$@"
+
+    worktree_dir="$(git-worktree-path "$suffix")"
+    debug worktree_dir="$worktree_dir"
+
+    if [[ ! -d "$worktree_dir" ]]; then
+        git worktree add "$worktree_dir" "$(git rev-parse "$commit")"
+        info "Created new worktree at: $worktree_dir"
+    else
+        info "New worktree already exists at: $worktree_dir"
+    fi
+
+    if [[ "$cd" == 'true' ]]; then
+        cd "$worktree_dir"
+        exec "${SHELL:-bash}"
+    fi
+}
+
+parse_args() {
+    suffix=''
+    commit=''
+    cd='true'
+    debug='false'
+    # debug='true' # TODO: Remove.
+
+    while [ $# != 0 ]; do
+        case "$1" in
+            --commit|--branch|-b|-c) commit="$2";     shift ;;
+            --suffix|-s)             suffix="$2";     shift ;;
+            --no-cd)                 cd='false' ;;
+            --debug)                 debug='true' ;;
+
+            *)
+                if [[ -z "${suffix:-}" ]]; then
+                    suffix="$1"
+                else
+                    fail "Invalid syntax. Unknown argument: '$1'."
+                fi
+            ;;
+        esac
+
+        shift
+    done
+
+    if [[ "$debug" == 'true' ]]; then
+        debug() {
+            echo "DEBUG: $@"
+        }
+
+        set -x
+    else
+        debug() { return; }
+    fi
+
+    auto_calculate_args
+    log_args
+}
+
+auto_calculate_args() {
+    if [[ -z "$commit" ]]; then
+        commit="$(git current-branch)"
+    fi
+
+    if [[ -z "$commit" ]]; then
+        commit="$(git rev-parse HEAD)"
+    fi
+}
+
+log_args() {
+    debug suffix="$suffix"
+    debug commit="$commit"
+}
+
+fail() {
+    echo >&2 "FAILED: $@"
+    exit 1
+}
+
+info() {
+    echo "INFO: $@"
+}
+
+main "$@"

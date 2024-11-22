@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eu
+
+main_worktree_dir="$(git worktree-main)"
+
+suffix="${1:-}"
+if [[ -z "$suffix" ]]; then
+    echo "${main_worktree_dir}"
+else
+    echo "${main_worktree_dir}-${suffix}"
+fi
