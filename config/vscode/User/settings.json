@@ -302,6 +302,7 @@
     "Proto",
     "Protobuf",
     "pycache",
+    "reflog",
     "Renderable",
     "RNSVG",
     "screenshotting",

@@ -4,7 +4,7 @@
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
     backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
     checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
-    cleanup = "!f() { git fsck && git prune && git reflog expire --expire=now --all && git repack -ad && git prune; }; f"
+    cleanup = "!f() { git reflog expire --expire=now --all && git commit-graph write --reachable && git fsck && git prune && git repack -ad; }; f"
     code = "!f() { cd \"$(git repo-root)\"; code \"$@\" .; }; f"
     commit-timestamp = "!git commit -m \"$(date -u -Iseconds)\""
     commit-timestamp-all = "!git commit -am \"$(date -u -Iseconds)\""
@@ -101,7 +101,9 @@
     rbd = rebase-default
     rbdl = rebase-default-latest
     rbdmb = rebase-default-merge-base
+    rbe = rebase --edit-todo
     rbon = rebase-on
+    rbsp =  rebase --show-current-patch
     rbu = rebase-upstream
     rl = log --walk-reflogs --pretty=reflog-short
     rll = log --walk-reflogs --pretty=reflog-long
@@ -143,7 +145,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 Reflog Selector: %C(yellow)%gd%C(reset)%n\
 Reflog Subject:  %gs%C(reset)%n\
 %n%w(0,4,4)%B%w(0,0,0)%-
-    reflog-short = %C(reset)%C(bold red)%h <- %p%C(reset) - %C(yellow)%gd%C(dim white)%d%C(reset) - %ci %C(green)(%cr)%C(reset): %gs
+    reflog-short = %C(reset)%C(bold red)%h < %p%C(reset) = %C(yellow)%gd%C(reset) @ %C(green)%ci (%cr)%C(reset) ? %C(bold blue)%gs%C(reset): %s%C(dim white)%d%C(reset)
     reflog-long = %C(bold white)--------------------------------------------------------------------------------%n%C(reset)\
 Reflog Subject:  %gs%C(reset)%n\
 Reflog Selector: %C(yellow)%gd%C(dim white)%d%C(reset)%n\
@@ -165,6 +167,7 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
     tool = vimdiff
 
 [merge]
+    conflictStyle = diff3
     tool = customVimMergeToolMin # vimdiff
 
 [mergetool "customVimMergeTool"]
@@ -173,6 +176,13 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 [mergetool "customVimMergeToolMin"]
     # cmd = vim -d -f --cmd 'let g:isMergeTool = 1' $MERGED
     cmd = vim -d -f --cmd 'let g:isMergeTool = 1' -c '4wincmd w | wincmd J | only | nnoremap ZZ :w \\| qa<CR>' $LOCAL $BASE $REMOTE $MERGED
+
+[rebase]
+    autoSquash = true
+    forkPoint = true
+    rescheduleFailedExec = true
+    stat = true
+    updateRefs = true # Automatically force-update any branches that point to commits that are being rebased. Any branches that are checked out in a worktree are not updated in this way.
 
 [grep]
     linenumber = true
