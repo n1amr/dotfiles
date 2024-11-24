@@ -279,5 +279,10 @@
   {
     "key": "ctrl+shift+g",
     "command": "gitlens.views.searchAndCompare.focus"
+  },
+  {
+    "key": "shift+cmd+[",
+    "command": "-guid.insert",
+    "when": "editorTextFocus"
   }
 ]

@@ -117,15 +117,14 @@
         https://material.io/design/color/the-color-system.html#tools-for-picking-colors
     */
     "[Visual Studio 2019 Dark]": {
-      "activityBar.background": "#202020",
       "activityBar.activeBackground": "#404040",
-      "titleBar.activeBackground": "#3c3c3c",
-
+      "activityBar.background": "#202020",
+      "list.hoverBackground": "#001064",
+      "quickInputList.focusBackground": "#1A237E",
       "statusBar.background": "#263238",
       "statusBar.debuggingBackground": "#6A1B9A",
-
-      "quickInputList.focusBackground": "#1A237E",
-      "list.hoverBackground": "#001064"
+      "tab.activeBackground": "#1B237D",
+      "titleBar.activeBackground": "#3c3c3c",
     }
   },
 
