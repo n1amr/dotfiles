@@ -34,6 +34,7 @@ dotfiles_config() {
         'config/dotfiles/shellrc/hooks/post-shellrc.sh'
         'config/shellrc'
         'config/vim/vimrc'
+        'config/tmux.init'
         'config/tmux.conf'
         'config/ranger/rc.conf'
         'config/ranger/rifle.conf'

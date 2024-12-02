@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -eu
+set -xv
+
+session_name='ssh'
+
+main() {
+    if [[ "${1:-}" == 'setup_session' ]]; then
+        set_env
+        setup_session "$@"
+    else
+        create_session "$@"
+    fi
+}
+
+set_env() {
+    export DISPLAY=:0
+    tmux setenv DISPLAY "$DISPLAY"
+}
+
+create_session() {
+    if tmux has-session -t "$session_name"; then
+        if [[ "$session_name" == 'ssh' ]]; then
+            echo "Session has already started." >&2
+            exit 1
+        else
+            tmux kill-session -t "$session_name"
+        fi
+    fi
+
+    tmux new-session -d -s "$session_name" "exec bash $(realpath "$0") setup_session"
+
+    if [[ -z "${TMUX:-}" ]]; then
+        tmux attach -t "$session_name"
+    else
+        tmux switch-client -t "$session_name"
+    fi
+}
+
+new_window() {
+    local dir="$1"
+    local name="${2:-}"
+
+    if [[ -z "$name" ]]; then
+        name="$(basename "$dir")"
+    fi
+
+    tmux new-window -c "$dir" -n "$name"
+}
+
+send() {
+    tmux send-keys "$@"
+}
+
+setup_session() {
+    new_window ~ scratch
+    send 'vim' Enter
+
+    new_window ~/.dotfiles dotfiles
+    send 'gst' Enter
+    tmux split-window -c "#{pane_current_path}"
+    send 'cd custom' Enter
+    send 'gst' Enter
+    tmux select-pane -t 1
+
+    tmux select-window -t scratch
+}
+
+main "$@"
