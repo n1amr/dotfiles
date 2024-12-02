@@ -207,7 +207,10 @@ exec_update() {
             git commit --quiet -am "Reviewed (from checkpoint $from_checkpoint)" || true
         fi
 
-        git rebase "$updated_merge_base"
+        # -X ours: This option forces conflicting hunks to be auto-resolved cleanly by favoring our version.
+        # Changes from the other tree that do not conflict with our side are reflected in the merge result.
+        # For a binary file, the entire contents are taken from our side.
+        git rebase --strategy ort --strategy-option ours "$updated_merge_base"
     else
         git checkout --quiet -f -B "$review_branch" "$updated_merge_base"
     fi
