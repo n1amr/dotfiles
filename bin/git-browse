@@ -51,6 +51,8 @@ main() {
         create-pr|pr)
             if [[ "$remote_api" = 'ado' ]]; then
                 require_git_branch
+                git_branch="$(echo "$git_branch" | sed 's/-dev$//')"
+                git_branch="$(echo "$git_branch" | sed 's/^review\///')"
                 _open "$url/pullrequestcreate?sourceRef=${git_branch:-$git_commit}"
             else
                 fail_unsupported
