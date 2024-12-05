@@ -229,6 +229,10 @@ cdtree () {
     tree -CL 1 --dirsfirst "$(realpath .)" | nl | less -FRX
 }
 
+code() {
+    [[ "$#" -eq 0 ]] && command code . || command code "$@"
+}
+
 cpd () {
     dst="${@: -1}"
     mkdir -pv "$dst" && cp -v "$@"
