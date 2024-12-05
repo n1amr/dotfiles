@@ -124,7 +124,7 @@
       "statusBar.background": "#263238",
       "statusBar.debuggingBackground": "#6A1B9A",
       "tab.activeBackground": "#1B237D",
-      "titleBar.activeBackground": "#3c3c3c",
+      "titleBar.activeBackground": "#3c3c3c"
     }
   },
 
@@ -243,14 +243,16 @@
     "--experimental",
     "--aggressive"
   ],
-  "autopep8.interpreter": ["C:/Program Files/Python311/python.exe"],
+  // "autopep8.interpreter": ["C:/Program Files/Python311/python.exe"],
+  "autopep8.interpreter": ["${env:PYENV_ROOT}/shims/python"],
   "autopep8.args": [
     "--max-line-length",
     "120",
     "--experimental",
     "--aggressive"
   ],
-  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
   "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
   // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.12.4/bin/python", // TODO: Remove
@@ -444,5 +446,5 @@
 
   // ===========================================================================
 
-  "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+  "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__"
 }
