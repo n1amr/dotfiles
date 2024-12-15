@@ -285,6 +285,7 @@
     "cmake",
     "cyclomatic",
     "datefmt",
+    "descendency",
     "dotfiles",
     "dtype",
     "eventhub",

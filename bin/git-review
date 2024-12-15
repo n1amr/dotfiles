@@ -95,7 +95,7 @@ auto_calculate_args() {
     checkpoint_file="$git_dir/review/checkpoints/${pr_branch//\//%}"
 
     if [[ -z "$from_checkpoint" ]] && [[ -f "$checkpoint_file" ]]; then
-        from_checkpoint="$(cat "$checkpoint_file" | tail -n 1)"
+        from_checkpoint="$(get_last_checkpoint)"
     fi
 
     if [[ "$local_branch" == 'true' ]]; then
@@ -146,16 +146,19 @@ exec_reset_checkpoint() {
 }
 
 exec_save_checkpoint() {
-    if ! has_changes; then
+    if has_changes; then
+        git status
+
+        git commit -m "Reviewed (from checkpoint $from_checkpoint)"
+    fi
+
+    new_checkpoint="$(git rev-parse --verify HEAD)"
+
+    if [[ -f "$checkpoint_file" ]] && [[ "$new_checkpoint" == "$(get_last_checkpoint)" ]]; then
         info 'No changes to save.'
         exit 0
     fi
 
-    git status
-
-    git commit -m "Reviewed (from checkpoint $from_checkpoint)"
-
-    new_checkpoint="$(git rev-parse --verify HEAD)"
     mkdir -p "$(dirname "$checkpoint_file")"
     echo "$new_checkpoint" >> "$checkpoint_file"
     info "Saved checkpoint '$new_checkpoint' to '$checkpoint_file'."
@@ -224,6 +227,15 @@ exec_update() {
     fi
 
     exit 0
+}
+
+get_last_checkpoint() {
+    if ! [[ -f "$checkpoint_file" ]]; then
+        echo ""
+        return
+    fi
+
+    cat "$checkpoint_file" | tail -n 1
 }
 
 main "$@"
