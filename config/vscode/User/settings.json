@@ -100,11 +100,13 @@
   // ###  Style  ###
   // ###############
 
-  "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredDarkColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredLightColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredHighContrastColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredHighContrastLightColorTheme": "Visual Studio 2019 Dark",
+  // "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
+  "workbench.preferredLightColorTheme": "Default Dark Modern",
+  "workbench.preferredHighContrastColorTheme": "Default Dark Modern",
+  "workbench.preferredHighContrastLightColorTheme": "Default Dark Modern",
+
   "workbench.colorCustomizations": {
     /*
       Colors:
