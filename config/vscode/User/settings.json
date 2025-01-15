@@ -285,6 +285,7 @@
     "astimezone",
     "clickhouse",
     "cmake",
+    "cordova",
     "cyclomatic",
     "datefmt",
     "descendency",
@@ -292,9 +293,13 @@
     "downsampled",
     "Downsampling",
     "dtype",
+    "dylib",
+    "Dylibs",
     "eventhub",
     "gmtime",
     "Interactor",
+    "iphoneos",
+    "iphonesimulator",
     "itertools",
     "jsonl",
     "kwargs",
@@ -313,6 +318,7 @@
     "Renderable",
     "RNSVG",
     "screenshotting",
+    "setvariable",
     "SSTREAM",
     "STREAMEXPIRY",
     "Sublayer",
@@ -320,7 +326,10 @@
     "swiftlint",
     "tqdm",
     "worktree",
-    "xargs"
+    "xargs",
+    "xcarchive",
+    "XCFRAMEWORK",
+    "xcworkspace"
   ],
 
   // CMake:
