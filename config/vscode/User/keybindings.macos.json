@@ -284,5 +284,15 @@
     "key": "shift+cmd+[",
     "command": "-guid.insert",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
+  },
+  {
+    "key": "alt+cmd+f",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
   }
 ]
