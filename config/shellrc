@@ -230,7 +230,16 @@ cdtree () {
 }
 
 code() {
-    [[ "$#" -eq 0 ]] && command code . || command code "$@"
+    if [[ "$#" -ne 0 ]]; then
+        command code "$@"
+    else
+        repo_root="$(git repo-root 2>/dev/null)"
+        if [[ -n "$repo_root" ]]; then
+            command code "$repo_root"
+        else
+            command code .
+        fi
+    fi
 }
 
 cpd () {
