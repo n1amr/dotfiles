@@ -66,7 +66,7 @@ parse_args() {
 
 auto_calculate_args() {
     if [[ -z "$target_branch" ]]; then
-        target_branch="$(git config --get user.default-branch)"
+        target_branch="$(git config --get user.default-branch || true)"
     fi
 
     if [[ -z "$target_branch" ]]; then
