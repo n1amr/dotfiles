@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import asyncio
 import datetime
@@ -71,9 +71,11 @@ def send_notification(subject: str, body: str):
 
             await_task(telegram_send.send(files=[file], captions=[message], conf=config_path))
 
+
 def await_task(task):
     if 'coroutine' in str(type(task)):
         asyncio.run(task)
+
 
 def get_config_path() -> str:
     profile = os.environ.get('SEND_NOTIFICATION_PROFILE', DEFAULT_PROFILE)
