@@ -331,6 +331,14 @@
   "gitlens.rebaseEditor.ordering": "asc",
   "gitlens.views.searchAndCompare.files.layout": "tree",
 
+  // GitHub Copilot:
+  // ======
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Generate a commit message for the following changes: 1. Summarize the changes in one line.  2. Provide a detailed description of the changes outlining the purpose of the changes.  3. Generate a list of changed files, summarizing the changes in each file.  4. Include any relevant context or background information.  5. Use proper grammar and punctuation and use Markdown format."
+    }
+  ],
+
   // Other Extensions:
   // =================
   "docker.explorerRefreshInterval": 3000,
