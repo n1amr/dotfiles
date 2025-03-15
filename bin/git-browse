@@ -49,11 +49,14 @@ main() {
         ;;
 
         create-pr|pr)
+            require_git_branch
+            pr_branch="$(echo "$git_branch" | sed 's/-dev$//' | sed 's/^review\///')"
+
             if [[ "$remote_api" = 'ado' ]]; then
-                require_git_branch
-                git_branch="$(echo "$git_branch" | sed 's/-dev$//')"
-                git_branch="$(echo "$git_branch" | sed 's/^review\///')"
-                _open "$url/pullrequestcreate?sourceRef=${git_branch:-$git_commit}"
+                _open "$url/pullrequestcreate?sourceRef=${pr_branch:-$git_commit}"
+            elif [[ "$remote_api" = 'github' ]]; then
+                base_branch="$(get_default_branch)"
+                _open "$url/compare/${base_branch}...${pr_branch}"
             else
                 fail_unsupported
             fi
