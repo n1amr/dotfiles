@@ -1,5 +1,22 @@
 {
   "editor.formatOnSave": true,
+  "editor.indentSize": "tabSize",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "prettier.useTabs": false,
+
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
@@ -7,7 +24,5 @@
     }
   ],
 
-  "cSpell.words": [
-    "refspec"
-  ]
+  "cSpell.words": ["refspec"]
 }

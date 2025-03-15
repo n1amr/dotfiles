@@ -1,5 +1,5 @@
 // User Settings (All Platforms)
-// Last update: 2024-11-14 22:46:48 +02:00
+// Last update: 2025-01-29 08:30:49 +02:00
 {
   // ##################
   // ###  Behavior  ###
@@ -30,8 +30,8 @@
   "window.customTitleBarVisibility": "auto",
   "workbench.activityBar.location": "top",
   "workbench.editor.enablePreviewFromQuickOpen": false,
-  "workbench.editor.pinnedTabsOnSeparateRow": true,
-  "workbench.editor.wrapTabs": true,
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.editor.wrapTabs": false,
   "workbench.panel.opensMaximized": "never",
   "workbench.startupEditor": "none",
 
@@ -100,11 +100,13 @@
   // ###  Style  ###
   // ###############
 
-  "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredDarkColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredLightColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredHighContrastColorTheme": "Visual Studio 2019 Dark",
-  "workbench.preferredHighContrastLightColorTheme": "Visual Studio 2019 Dark",
+  // "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
+  "workbench.preferredLightColorTheme": "Default Dark Modern",
+  "workbench.preferredHighContrastColorTheme": "Default Dark Modern",
+  "workbench.preferredHighContrastLightColorTheme": "Default Dark Modern",
+
   "workbench.colorCustomizations": {
     /*
       Colors:
@@ -283,14 +285,21 @@
     "astimezone",
     "clickhouse",
     "cmake",
+    "cordova",
     "cyclomatic",
     "datefmt",
     "descendency",
     "dotfiles",
+    "downsampled",
+    "Downsampling",
     "dtype",
+    "dylib",
+    "Dylibs",
     "eventhub",
     "gmtime",
     "Interactor",
+    "iphoneos",
+    "iphonesimulator",
     "itertools",
     "jsonl",
     "kwargs",
@@ -298,8 +307,12 @@
     "loadtest",
     "mkdir",
     "mutex",
+    "Nonnull",
     "numpy",
     "parquetjs",
+    "Podfile",
+    "podspec",
+    "podspecs",
     "Popen",
     "Proto",
     "Protobuf",
@@ -308,6 +321,7 @@
     "Renderable",
     "RNSVG",
     "screenshotting",
+    "setvariable",
     "SSTREAM",
     "STREAMEXPIRY",
     "Sublayer",
@@ -315,7 +329,10 @@
     "swiftlint",
     "tqdm",
     "worktree",
-    "xargs"
+    "xargs",
+    "xcarchive",
+    "XCFRAMEWORK",
+    "xcworkspace"
   ],
 
   // CMake:
