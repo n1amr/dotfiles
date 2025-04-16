@@ -3,6 +3,7 @@
     amend = commit --am --no-edit
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
     backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
+    branch-by-date = for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)'
     checkout-remote = "!f() { remote_name=\"$1\"; git stash-all && git is-clean && git fetch -v origin \"$1\" && git checkout -f -B \"$1\" \"origin/$1\"; }; f"
     cleanup = "!f() { git reflog expire --expire=now --all && git commit-graph write --reachable && git fsck && git prune && git repack -ad; }; f"
     code = "!f() { cd \"$(git repo-root)\"; code \"$@\" .; }; f"
@@ -22,6 +23,7 @@
     diff-default-latest = "!git diff \"origin/$(git default-branch)\""
     diff-default-merge-base = "!git diff \"$(git merge-base \"origin/$(git default-branch)\" HEAD)\""
     diff-upstream = diff '@{upstream}'
+    grep-all = "!f() { git grep \"$@\" $(git branch-by-date); }; f"
     init-root = "!f() { git init && git commit --allow-empty -m \"Root Commit\"; }; f"
     is-clean = "!f() { test -z \"$(git status --short )\"; }; f"
     is-index-empty = "!f() { test -z \"$(git diff-index --cached --name-only HEAD)\"; }; f"
