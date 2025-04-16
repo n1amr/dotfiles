@@ -6,7 +6,7 @@
   // ##################
 
   "debug.console.wordWrap": false,
-  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": false,
   "editor.accessibilitySupport": "off",
   "editor.cursorSurroundingLines": 0,
@@ -324,8 +324,10 @@
     "setvariable",
     "SSTREAM",
     "STREAMEXPIRY",
+    "STREAMSET",
     "Sublayer",
     "sublayers",
+    "superview",
     "swiftlint",
     "symbolicate",
     "tqdm",
