@@ -32,14 +32,16 @@ find_or_append () {
 
 # Add marks to shell config
 ( sed '/^#/d; s|~|$HOME|' "$config_file" | awk -F'\t' '''
-    {printf "__DF_MARK_%s=\"%s\"\n", $1, $2}
-    {printf "X%s=\"$__DF_MARK_%s\"\n", $1, $1}
-    {printf "alias o,%s='\''o \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias l,%s='\''l \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias r,%s='\''r \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias g,%s='\''cd \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias M,%s='\''mv -iv -t \"$__DF_MARK_%s\"'\''\n", $1, $1}
-    {printf "alias Y,%s='\''cp -iv -t \"$__DF_MARK_%s\" -r '\''\n", $1, $1}
+    { sanitized_name = $1; gsub(/-/, "_", sanitized_name) }
+    { shell_const = "__DF_MARK_" sanitized_name }
+    {printf "%s=\"%s\"\n", shell_const, $2}
+    {printf "X%s=\"$%s\"\n", sanitized_name, shell_const}
+    {printf "alias o,%s='\''o \"$%s\"'\''\n", $1, shell_const}
+    {printf "alias l,%s='\''l \"$%s\"'\''\n", $1, shell_const}
+    {printf "alias r,%s='\''r \"$%s\"'\''\n", $1, shell_const}
+    {printf "alias g,%s='\''cd \"$%s\"'\''\n", $1, shell_const}
+    {printf "alias M,%s='\''mv -iv -t \"$%s\"'\''\n", $1, shell_const}
+    {printf "alias Y,%s='\''cp -iv -t \"$%s\" -r '\''\n", $1, shell_const}
 ''') > "$shellrc_output"
 find_or_append "$DOTFILES_HOME/config/shellrc" 'source ~/.marks.sh'
 

@@ -8,6 +8,24 @@ source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 
 config_file="$(custom-env-resolve 'config/marks.tsv')"
 
+main () {
+    if [[ "$#" = '0' ]]; then
+        list_marks "$@"
+        exit
+    fi
+
+    subcommand="$1"
+    shift
+    case "$subcommand" in
+        add) add_mark "$@" ;;
+        list) list_marks "$@" ;;
+        remove) remove_mark "$@" ;;
+        update) update_marks "$@" ;;
+        edit) "${EDITOR:-vim}" "$config_file" ;;
+        *) echo >&2 "Usage: $0 [add|list|remove|update|edit]"; exit 1 ;;
+    esac
+}
+
 list_marks () {
     local long='true'
     [[ "$1" == '-s' ]] && { long='false'; }
@@ -98,18 +116,4 @@ update_marks () {
     "$DOTFILES_HOME/bin/update-marks" > /dev/null
 }
 
-if [[ "$#" = '0' ]]; then
-    list_marks "$@"
-    exit
-fi
-
-subcommand="$1"
-shift
-case "$subcommand" in
-    add) add_mark "$@" ;;
-    list) list_marks "$@" ;;
-    remove) remove_mark "$@" ;;
-    update) update_marks "$@" ;;
-    edit) "${EDITOR:-vim}" "$config_file" ;;
-    *) echo >&2 "Usage: $0 [add|list|remove|update|edit]"; exit 1 ;;
-esac
+main "$@"
