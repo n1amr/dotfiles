@@ -240,5 +240,5 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 	username = amralaa@microsoft.com
 	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
 [credential "azrepos:org/msblox"]
-	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
 	username = amralaa@microsoft.com
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
