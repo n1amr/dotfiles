@@ -319,6 +319,7 @@
     "Proto",
     "Protobuf",
     "pycache",
+    "rects",
     "reflog",
     "Renderable",
     "RNSVG",
@@ -334,6 +335,7 @@
     "swiftlint",
     "symbolicate",
     "tqdm",
+    "Unretained",
     "Untracking",
     "worktree",
     "xargs",
@@ -479,5 +481,19 @@
 
   // ===========================================================================
 
-  "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__"
+  "__APPEND_NEW_SETTINGS_HERE__": "__APPEND_NEW_SETTINGS_HERE__",
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "gitlens.views.scm.grouped.views": {
+    "commits": true,
+    "branches": true,
+    "remotes": true,
+    "stashes": true,
+    "tags": true,
+    "worktrees": true,
+    "contributors": true,
+    "fileHistory": false,
+    "repositories": true,
+    "searchAndCompare": false,
+    "launchpad": false
+  }
 }
