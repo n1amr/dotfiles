@@ -1,4 +1,10 @@
-.netrwhist
-nviminfo
-view
-viminfo
+/.netrwhist
+/nviminfo
+/view
+/viminfo
+
+/spell/*
+!/spell/.keep
+
+/tmp/*
+!/tmp/**/.keep
