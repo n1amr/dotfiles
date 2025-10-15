@@ -33,6 +33,7 @@
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editor.wrapTabs": false,
   "workbench.panel.opensMaximized": "never",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.startupEditor": "none",
 
   // Auto Format
