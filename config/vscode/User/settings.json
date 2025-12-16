@@ -110,6 +110,11 @@
   "workbench.preferredHighContrastLightColorTheme": "Default Dark Modern",
 
   "workbench.colorCustomizations": {
+    // "diffEditor.removedLineBackground": "#B00000AA",
+    // "diffEditor.removedTextBackground": "#BB0000CC",
+    // "diffEditor.insertedLineBackground": "#00A00055",
+    // "diffEditor.insertedTextBackground": "#00900066",
+
     /*
       Colors:
         #1A237E Indigo
