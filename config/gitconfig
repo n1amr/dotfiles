@@ -191,6 +191,8 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [credential]
     helper = cache
+    helper =
+    helper = /usr/local/share/gcm-core/git-credential-manager
 
 [init]
     defaultBranch = master
