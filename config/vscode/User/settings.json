@@ -93,7 +93,7 @@
 
   "markdown.showToolbar": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
   },
 
   // ===========================================================================
@@ -501,5 +501,9 @@
     "repositories": true,
     "searchAndCompare": false,
     "launchpad": false
-  }
+  },
+  "devprod.vulnerability-extension.codeReview.adoOrganizations": [
+    "microsoft",
+    "msasg"
+  ]
 }
