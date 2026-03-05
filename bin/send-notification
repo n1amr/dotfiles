@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -e
 
 source ~/.dotfiles.env
 
@@ -17,8 +17,8 @@ FAILED_NOTIFICATIONS_DIR="$DOTFILES_HOME/tmp/notifications"
 IS_RETRYING="${IS_RETRYING:-false}"
 
 main() {
-    if [[ "$#" -ne 1 ]]; then
-        echo "Usage: echo 'Message body' | $0 <SUBJECT>" >&2
+    if [[ "$#" -eq 0 ]]; then
+        echo "Usage: echo 'Message body' | $0 <SUBJECT> [ATTACHMENTS...]" >&2
         exit 1
     fi
 
@@ -36,8 +36,12 @@ main() {
         body=''
     fi
 
-    echo "$body" | send_telegram "$subject" &
+    shift
+    local attachments=("$@")
 
+    echo "$body" | send_telegram "$subject" "${attachments[@]}" &
+
+    # TODO: Fix email sending authentication failure.
     if [[ "$DOTFILES_CONFIG_EMAIL_NOTIFICATION" = 'true' ]]; then
         echo "$body" | send_email "$subject" &
     fi
@@ -48,12 +52,14 @@ main() {
 send_telegram() {
     local subject="$1"
     local body="$(cat)"
+    shift
+    local attachments=("$@")
 
-    if echo "$body" | "$THIS_DIR/send-notification-telegram" "$subject"; then
+    if echo "$body" | "$THIS_DIR/send-notification-telegram" "$subject" "${attachments[@]}"; then
         echo "Telegram notification is sent."
     else
         echo "Failed to send telegram notification."
-        echo "$body" | on_failure "$subject"
+        echo "$body" | on_failure "$subject" "${attachments[@]}"
     fi
 }
 
@@ -62,7 +68,7 @@ send_email() {
     local body="$(cat)"
 
     if echo "$body" | "$THIS_DIR/send-notification-email" "$subject"; then
-        echo "Eamil is sent."
+        echo "Email is sent."
     else
         echo "Failed to send email."
         echo "$body" | on_failure "$subject"
@@ -76,16 +82,25 @@ on_failure() {
 
     local subject="$1"
     local body="$(cat)"
+    shift
+    local attachments=("$@")
+    local attachment_count="${#attachments[@]}"
 
     local timestamp="$(date -Iseconds)"
-    local filename="$timestamp ${subject//\//%}.txt"
 
+    local filename="$timestamp ${subject//\//%}.txt"
     local message_path="$FAILED_NOTIFICATIONS_DIR/$filename"
+
+    local new_subject="$subject [RESEND $timestamp]"
+
+    if [[ "$attachment_count" -gt 0 ]]; then
+        new_subject="$new_subject [with $attachment_count missing attachments]"
+    fi
 
     mkdir -pv "$(dirname "$message_path")"
     {
         echo "${SEND_NOTIFICATION_PROFILE:-}"
-        echo "$subject [RESEND $timestamp]"
+        echo "$new_subject"
         echo "$body"
     } > "$message_path"
 

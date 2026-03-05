@@ -8,7 +8,7 @@ import sys
 import telegram_send
 import tempfile
 
-from typing import Optional
+from typing import Coroutine, List, Optional
 
 DOTFILES_HOME = os.environ.get('DOTFILES_HOME', os.path.expanduser(f'~/.dotfiles'))
 PROFILES_DIR = os.path.join(DOTFILES_HOME, 'custom/config/telegram-send')
@@ -19,24 +19,25 @@ DEFAULT_PROFILE = 'notifications'
 
 
 def main():
-    if len(sys.argv) != 2:
-        print(f'Usage: echo "Message body" | {sys.argv[0]} <SUBJECT>', file=sys.stderr)
+    if len(sys.argv) < 2:
+        print(f'Usage: echo "Message body" | {sys.argv[0]} <SUBJECT> [ATTACHMENTS...]', file=sys.stderr)
 
         return 1
 
     subject = sys.argv[1]
+    attachments = sys.argv[2:]
 
     if not os.isatty(sys.stdin.fileno()):
         body = sys.stdin.read().rstrip('\r\n')
     else:
         body = None
 
-    send_notification(subject, body)
+    send_notification(subject, body, attachments)
 
     return 0
 
 
-def send_notification(subject: str, body: str):
+def send_notification(subject: str, body: str, attachments: List[str]):
     has_body = bool(body)
     is_short_body = has_body and len(body) <= SUMMARY_LENGTH
 
@@ -55,7 +56,7 @@ def send_notification(subject: str, body: str):
     config_path = get_config_path()
 
     if not has_body:
-        await_task(telegram_send.send(messages=[message], conf=config_path))
+        await_task(telegram_send.send(files=attachments, messages=[message], conf=config_path))
     else:
         if getattr(datetime, 'UTC', None):
             now = datetime.datetime.now(datetime.UTC)
@@ -69,7 +70,7 @@ def send_notification(subject: str, body: str):
             file.seek(0)
             file.name = timestamp
 
-            await_task(telegram_send.send(files=[file], captions=[message], conf=config_path))
+            await_task(telegram_send.send(files=[file, *attachments], captions=[message], conf=config_path))
 
 
 def await_task(task):
