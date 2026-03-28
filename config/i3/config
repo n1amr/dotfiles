@@ -511,8 +511,8 @@ exec --no-startup-id nm-applet --sm-disable
 
 # Startup Applications
 exec i3-msg 'workspace $ws1;    exec zsh -c ". ~/.zshrc && tmux-open"'
-exec i3-msg 'workspace $ws2;    exec firefox'
-exec i3-msg 'workspace $wslast; exec keepass2'
+# exec i3-msg 'workspace $ws2;    exec firefox'
+# exec i3-msg 'workspace $wslast; exec keepass2'
 
 exec i3-msg 'workspace $ws1'
 
