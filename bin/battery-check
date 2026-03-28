@@ -31,7 +31,7 @@ speak () {
 }
 
 report () {
-    battery | dotfiles-report "Low battery. Will hibernate ($(date -Iseconds))"
+    battery | dotfiles-report "Low battery. Will shutdown ($(date -Iseconds))"
 }
 
 recheck () {
@@ -60,14 +60,14 @@ run_beep () {
     report &
 
     timeout='10'
-    speak "Battery is low. You have only $timeout seconds to connect the charger before hibernating"
+    speak "Battery is low. You have only $timeout seconds to connect the charger before shutting down."
     for i in $(seq 0 "$timeout" | tac); do
         speak "$i"
         alert
         recheck
     done
 
-    speak 'Started hibernating now. Goodbye'
+    speak 'Started shutting down now. Goodbye'
     recheck
 
     exit 74

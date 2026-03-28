@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xv
+
 source ~/.dotfiles.env
 export PATH="$DOTFILES_HOME/bin:$PATH"
 
@@ -17,7 +19,8 @@ while true; do
 
     if [[ "$exit_code" == '74' ]]; then
         "$DOTFILES_HOME/config/i3/bin/i3-lock" || true
-        /usr/sbin/pm-suspend
+        # /usr/sbin/pm-suspend
+        sudo poweroff -p
     fi
 
     sleep 1
