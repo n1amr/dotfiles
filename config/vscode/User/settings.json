@@ -31,6 +31,7 @@
   "workbench.activityBar.location": "top",
   "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.editor.useModal": "off",
   "workbench.editor.wrapTabs": false,
   "workbench.panel.opensMaximized": "never",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
@@ -82,7 +83,7 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
   },
 
   "[python]": {
@@ -96,7 +97,7 @@
 
   "markdown.showToolbar": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i",
   },
 
   // ===========================================================================
@@ -106,11 +107,11 @@
   // ###############
 
   // "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "workbench.colorTheme": "Default Dark Modern",
-  "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Dark Modern",
-  "workbench.preferredHighContrastColorTheme": "Default Dark Modern",
-  "workbench.preferredHighContrastLightColorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Dark Modern",
+  "workbench.preferredDarkColorTheme": "Dark Modern",
+  "workbench.preferredLightColorTheme": "Dark Modern",
+  "workbench.preferredHighContrastColorTheme": "Dark Modern",
+  "workbench.preferredHighContrastLightColorTheme": "Dark Modern",
 
   "workbench.colorCustomizations": {
     // "diffEditor.removedLineBackground": "#B00000AA",
@@ -290,15 +291,23 @@
   // ===================
   "cSpell.enabled": true,
   "cSpell.userWords": [
+    "ADF",
     "Adls",
     "amralaa",
     "astimezone",
+    "Autoresizing",
+    "azuredatalakestore",
+    "BWT",
     "clickhouse",
+    "CLR",
     "cmake",
     "cordova",
+    "COUNTIF",
     "cyclomatic",
     "datefmt",
+    "dcount",
     "descendency",
+    "Diagnoser",
     "dotfiles",
     "downsampled",
     "Downsampling",
@@ -306,6 +315,8 @@
     "dylib",
     "Dylibs",
     "Embedder",
+    "ENDCS",
+    "enghub",
     "eventhub",
     "Experimentations",
     "gmtime",
@@ -316,17 +327,25 @@
     "jsonl",
     "Kusto",
     "kwargs",
+    "leftouter",
     "linkcode",
+    "Linq",
     "loadtest",
     "LOWDISTINCTNESS",
     "mkdir",
     "mutex",
+    "netcore",
     "Newtonsoft",
     "Nonnull",
     "numpy",
     "ONNX",
     "onnxruntime",
+    "Outputter",
+    "Outputters",
     "parquetjs",
+    "PARTITIONCOUNT",
+    "PARTITIONFUNCTION",
+    "PARTITIONSIZE",
     "Podfile",
     "podspec",
     "podspecs",
@@ -336,20 +355,30 @@
     "pycache",
     "pyenv",
     "rects",
+    "REFINERANGE",
     "reflog",
+    "reflogs",
     "Renderable",
     "RNSVG",
+    "ROUNDROBIN",
+    "rowset",
+    "scopehost",
     "screenshotting",
     "setvariable",
     "shellrc",
     "SSTREAM",
+    "STAGEBOUNDARYONOUTPUT",
+    "startofday",
     "STREAMEXPIRY",
     "STREAMSET",
     "Sublayer",
     "sublayers",
+    "Subview",
     "superview",
     "swiftlint",
     "symbolicate",
+    "tolong",
+    "toscalar",
     "tqdm",
     "Unretained",
     "Untracking",
@@ -357,7 +386,7 @@
     "xargs",
     "xcarchive",
     "XCFRAMEWORK",
-    "xcworkspace"
+    "xcworkspace",
   ],
 
   // CMake:
@@ -398,6 +427,8 @@
   "git.autofetch": true,
   "git.autorefresh": true,
   "git.mergeEditor": false, // Disable 3-way merge editor
+  "git.detectSubmodules": false,
+  "git.autoRepositoryDetection": "openEditors",
   "keyboard.dispatch": "keyCode", // Linux fix: caps:escape not working on Ubuntu
   "security.workspace.trust.untrustedFiles": "open",
   "update.showReleaseNotes": false,
@@ -517,4 +548,17 @@
     "microsoft",
     "msasg",
   ],
+  "chat.viewSessions.orientation": "stacked",
+  "chat.tools.urls.autoApprove": {
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true,
+    "https://github.com/dotnet-smartcomponents/smartcomponents/issues/75": {
+      "approveRequest": false,
+      "approveResponse": true,
+    },
+    "https://eng.ms": {
+      "approveRequest": false,
+      "approveResponse": true,
+    },
+  },
 }
