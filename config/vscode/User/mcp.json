@@ -1,0 +1,10 @@
+{
+  // Model Context Protocol (MCP) configuration for VS Code
+  "servers": {
+    "enghub": {
+      "type": "stdio",
+      "command": "enghub-mcp",
+      "args": ["start"]
+    }
+  }
+}
