@@ -6,7 +6,7 @@
   // ##################
 
   "debug.console.wordWrap": false,
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": false,
   "editor.accessibilitySupport": "off",
   "editor.cursorSurroundingLines": 0,
@@ -96,7 +96,7 @@
 
   "markdown.showToolbar": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i",
   },
 
   // ===========================================================================
@@ -106,11 +106,11 @@
   // ###############
 
   // "workbench.colorTheme": "Visual Studio 2019 Dark",
-  "workbench.colorTheme": "Default Dark Modern",
-  "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Dark Modern",
-  "workbench.preferredHighContrastColorTheme": "Default Dark Modern",
-  "workbench.preferredHighContrastLightColorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Dark Modern",
+  "workbench.preferredDarkColorTheme": "Dark Modern",
+  "workbench.preferredLightColorTheme": "Dark Modern",
+  "workbench.preferredHighContrastColorTheme": "Dark Modern",
+  "workbench.preferredHighContrastLightColorTheme": "Dark Modern",
 
   "workbench.colorCustomizations": {
     // "diffEditor.removedLineBackground": "#B00000AA",
@@ -290,10 +290,14 @@
   // ===================
   "cSpell.enabled": true,
   "cSpell.userWords": [
+    "ADF",
     "Adls",
     "amralaa",
     "astimezone",
+    "Autoresizing",
+    "BWT",
     "clickhouse",
+    "CLR",
     "cmake",
     "cordova",
     "cyclomatic",
@@ -319,6 +323,7 @@
     "Kusto",
     "kwargs",
     "linkcode",
+    "Linq",
     "loadtest",
     "LOWDISTINCTNESS",
     "mkdir",
@@ -352,6 +357,7 @@
     "STREAMSET",
     "Sublayer",
     "sublayers",
+    "Subview",
     "superview",
     "swiftlint",
     "symbolicate",
@@ -362,7 +368,7 @@
     "xargs",
     "xcarchive",
     "XCFRAMEWORK",
-    "xcworkspace"
+    "xcworkspace",
   ],
 
   // CMake:
