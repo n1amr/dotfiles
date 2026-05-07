@@ -1,5 +1,5 @@
 [alias]
-    # author-date-old = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f" # git versoin < 2.22.0
+    # author-date-old = "!f() { git filter-branch -f --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' HEAD~\"${1:-1}\"..HEAD; }; f" # git version < 2.22.0
     amend = commit --am --no-edit
     author-date = "!f() { git filter-repo --force --commit-callback 'commit.committer_date = commit.author_date' --refs HEAD~\"${1:-1}\"..HEAD; }; f"
     backup = "!f() { local branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; local tag_name=\"BACKUP/${branch_name}-$(date +\"%Y-%m-%d_%H-%M-%S\")\"; git tag \"$tag_name\" \"${1:-HEAD}\" && echo \"$tag_name\"; }; f"
@@ -47,6 +47,7 @@
     rebase-upstream = rebase -i '@{upstream}'
     recommit = "!f() { echo \"$(git l -1)\" && old_msg=\"$(git log -1 --format='%s')\" && git reset --soft HEAD~ && git commit -m \"$old_msg\"; }; f"
     redo-rebase-on = "!f() { local remote_branch_name=\"${1:-$(git rev-parse --abbrev-ref HEAD)}\"; git rebase -i --autosquash \"$(git merge-base \"$remote_branch_name\" HEAD)\"; }; f"
+    recent-branches = "!git reflog --pretty=%gs | grep \"checkout:\" | sed -E 's/.* to //' | awk '!seen[$0]++'"
     repo-root = rev-parse --path-format=absolute --show-toplevel
     repo-root-relative = rev-parse --show-cdup
     review = "!git-review"
