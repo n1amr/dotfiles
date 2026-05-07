@@ -17,7 +17,8 @@
     create-github = "!git-create-github"
     create-gitlab = "!git-create-gitlab"
     create-stash = "!f() { git is-clean && echo \"Nothing to stash\" && return 0; ! git is-index-empty && echo >&2 \"FAILED: Index is not empty\"; return 1; git add -A && git stash push --keep-index && git reset; }; f"
-    current-branch = rev-parse --abbrev-ref HEAD
+    current-branch = "!f() { branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$branch\" != \"HEAD\" ] && [ -n \"$branch\" ]; then echo \"$branch\"; else git status | sed -n \"s/.*rebasing branch '\\([^']*\\)'.*/\\1/p\"; fi; \\\n}; f"
+
     default-branch = config --get user.default-branch
     diff-default = "!git diff \"$(git default-branch)\""
     diff-default-latest = "!git diff \"origin/$(git default-branch)\""
