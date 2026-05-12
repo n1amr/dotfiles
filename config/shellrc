@@ -294,6 +294,10 @@ findword () {
     grep -P "$1" /usr/share/dict/words
 }
 
+gcorb () {
+    git checkout "$@"
+}
+
 gwtcd () {
     cd "$@"
 }
