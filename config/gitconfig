@@ -237,12 +237,19 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
     support = support/
     versiontag = ""
 
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
 [include]
     path = ~/.gitconfig.env
 
 [credential "azrepos:org/msasg"]
 	username = amralaa@microsoft.com
-	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+    azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+
 [credential "azrepos:org/msblox"]
-	username = amralaa@microsoft.com
-	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+    username = amralaa@microsoft.com
+    azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
