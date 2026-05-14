@@ -45,45 +45,45 @@
 
   // Language Specific.
   "[arm-template]": {
-    "editor.defaultFormatter": "msazurermtools.azurerm-vscode-tools",
+    "editor.defaultFormatter": "msazurermtools.azurerm-vscode-tools"
   },
   "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features",
+    "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSaveMode": "file"
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSaveMode": "file"
   },
   "[json]": {
     "editor.indentSize": 2,
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
     "editor.indentSize": 2,
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[swift]": {
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": false
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSaveMode": "file"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": false
   },
 
   "[python]": {
@@ -92,12 +92,12 @@
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.autopep8",
-    "editor.formatOnType": true,
+    "editor.formatOnType": true
   },
 
   "markdown.showToolbar": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i",
+    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
   },
 
   // ===========================================================================
@@ -137,8 +137,8 @@
       "statusBar.background": "#263238",
       "statusBar.debuggingBackground": "#6A1B9A",
       "tab.activeBackground": "#1B237D",
-      "titleBar.activeBackground": "#3c3c3c",
-    },
+      "titleBar.activeBackground": "#3c3c3c"
+    }
   },
 
   // ===========================================================================
@@ -156,26 +156,26 @@
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
       "source": "PowerShell",
-      "overrideName": true,
+      "overrideName": true
     },
     "Dev Box": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"],
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox.ps1"]
     },
     "Dev Box Jupyter": {
       "source": "PowerShell",
       "overrideName": true,
-      "args": ["-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1"],
+      "args": ["-File", "${env:home}\\scripts\\ssh-devbox-jupyter.ps1"]
     },
     "cmd": {
       "overrideName": true,
       "path": [
         "${env:windir}\\Sysnative\\cmd.exe",
-        "${env:windir}\\System32\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
       ],
-      "args": [],
-    },
+      "args": []
+    }
   },
 
   // ===========================================================================
@@ -189,22 +189,22 @@
   "files.exclude": {
     "**/*.pyc": true,
     "**/__pycache__": true,
-    "**/node_modules/**": true,
+    "**/node_modules/**": true
   },
   "files.watcherExclude": {
     "**/*.pyc": true,
     "**/.git/**": true,
     "**/__pycache__/**": true,
-    "**/node_modules/*/**": true,
+    "**/node_modules/*/**": true
   },
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook",
-    "git-rebase-todo": "gitlens.rebase",
+    "git-rebase-todo": "gitlens.rebase"
   },
   "files.associations": {
     "*.text": "plaintext",
     "*.txt": "plaintext",
-    "*.kql": "dotnet-interactive.kql",
+    "*.kql": "dotnet-interactive.kql"
   },
 
   // ===========================================================================
@@ -237,13 +237,13 @@
     "<C-d>": true,
     "<C-e>": true,
     "<C-u>": true,
-    "<C-y>": true,
+    "<C-y>": true
   },
   "vim.normalModeKeyBindingsNonRecursive": [
-    { "before": ["leader"], "after": ["\"", "+"] },
+    { "before": ["leader"], "after": ["\"", "+"] }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
-    { "before": ["leader"], "after": ["\"", "+"] },
+    { "before": ["leader"], "after": ["\"", "+"] }
   ],
 
   // Python:
@@ -254,7 +254,7 @@
     "--max-line-length",
     "120",
     "--experimental",
-    "--aggressive",
+    "--aggressive"
   ],
   // "autopep8.interpreter": ["C:/Program Files/Python311/python.exe"],
   "autopep8.interpreter": ["${env:PYENV_ROOT}/shims/python"],
@@ -262,7 +262,7 @@
     "--max-line-length",
     "120",
     "--experimental",
-    "--aggressive",
+    "--aggressive"
   ],
   // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
@@ -284,7 +284,7 @@
     "main": "linux",
     "mt-gpu": "linux",
     "clickhouse-build": "linux",
-    "personal-azure": "linux",
+    "personal-azure": "linux"
   },
 
   // Code Spell Checker:
@@ -386,7 +386,7 @@
     "xargs",
     "xcarchive",
     "XCFRAMEWORK",
-    "xcworkspace",
+    "xcworkspace"
   ],
 
   // CMake:
@@ -407,13 +407,13 @@
   // ======
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
-      "text": "Generate a commit message for the following changes: 1. Summarize the changes in one line.  2. Provide a detailed description of the changes outlining the purpose of the changes.  3. Generate a list of changed files, summarizing the changes in each file.  4. Include any relevant context or background information.  5. Use proper grammar and punctuation and use Markdown format.",
-    },
+      "text": "Generate a commit message for the following changes: 1. Summarize the changes in one line.  2. Provide a detailed description of the changes outlining the purpose of the changes.  3. Generate a list of changed files, summarizing the changes in each file.  4. Include any relevant context or background information.  5. Use proper grammar and punctuation and use Markdown format."
+    }
   ],
   "github.copilot.chat.codeGeneration.instructions": [
     {
-      "text": "When generating or modifying Bash scripts, strictly follow these conventions: use #!/bin/bash (not sh unless explicitly required for POSIX compatibility); place set -eu immediately after the shebang; do not use set -o pipefail unless pipeline failure handling is explicitly required; use a main() function for all non-trivial scripts and call main \"$@\" as the final line; define helper functions before the main invocation; use structured argument parsing in a dedicated parse_args() function with a while/case/shift loop; initialise all argument variables with safe defaults at the top of parse_args(); store boolean flags as the strings 'true' and 'false' rather than 0/1; use [[ ]] for conditionals; always double-quote variable expansions; use single quotes for literal strings where appropriate; always use \"$(...)\" command substitution instead of backticks; declare function-scoped variables with local; use bash arrays for argument lists instead of constructing commands as strings; prefer early exits with fail() over deeply nested conditionals; send diagnostics and usage errors to stderr; use 4-space indentation with no tabs; align case statement arms vertically for readability; keep one blank line between top-level function definitions; avoid trailing whitespace; use debug logging via a conditional debug() function pattern; use exec when handing off execution to another process; preserve existing repository formatting and naming conventions when editing existing scripts.",
-    },
+      "text": "When generating or modifying Bash scripts, strictly follow these conventions: use #!/bin/bash (not sh unless explicitly required for POSIX compatibility); place set -eu immediately after the shebang; do not use set -o pipefail unless pipeline failure handling is explicitly required; use a main() function for all non-trivial scripts and call main \"$@\" as the final line; define helper functions before the main invocation; use structured argument parsing in a dedicated parse_args() function with a while/case/shift loop; initialise all argument variables with safe defaults at the top of parse_args(); store boolean flags as the strings 'true' and 'false' rather than 0/1; use [[ ]] for conditionals; always double-quote variable expansions; use single quotes for literal strings where appropriate; always use \"$(...)\" command substitution instead of backticks; declare function-scoped variables with local; use bash arrays for argument lists instead of constructing commands as strings; prefer early exits with fail() over deeply nested conditionals; send diagnostics and usage errors to stderr; use 4-space indentation with no tabs; align case statement arms vertically for readability; keep one blank line between top-level function definitions; avoid trailing whitespace; use debug logging via a conditional debug() function pattern; use exec when handing off execution to another process; preserve existing repository formatting and naming conventions when editing existing scripts."
+    }
   ],
 
   // Other Extensions:
@@ -547,23 +547,24 @@
     "fileHistory": false,
     "repositories": true,
     "searchAndCompare": false,
-    "launchpad": false,
+    "launchpad": false
   },
   "devprod.vulnerability-extension.codeReview.adoOrganizations": [
     "microsoft",
-    "msasg",
+    "msasg"
   ],
+  "chat.mcp.autostart": "newAndOutdated",
   "chat.viewSessions.orientation": "stacked",
   "chat.tools.urls.autoApprove": {
     "https://code.visualstudio.com": true,
     "https://github.com/microsoft/vscode/wiki/*": true,
     "https://github.com/dotnet-smartcomponents/smartcomponents/issues/75": {
       "approveRequest": false,
-      "approveResponse": true,
+      "approveResponse": true
     },
     "https://eng.ms": {
       "approveRequest": false,
-      "approveResponse": true,
-    },
-  },
+      "approveResponse": true
+    }
+  }
 }
