@@ -6,7 +6,7 @@
   // ##################
 
   "debug.console.wordWrap": false,
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": false,
   "editor.accessibilitySupport": "off",
   "editor.cursorSurroundingLines": 0,
@@ -83,7 +83,7 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "diffEditor.ignoreTrimWhitespace": false
+    "diffEditor.ignoreTrimWhitespace": false,
   },
 
   "[python]": {
@@ -92,12 +92,13 @@
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.autopep8",
-    "editor.formatOnType": true
+    "editor.formatOnType": true,
+    "diffEditor.ignoreTrimWhitespace": true
   },
 
   "markdown.showToolbar": true,
   "yaml.schemas": {
-    "file:///Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///c%3A/Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
   },
 
   // ===========================================================================
@@ -256,17 +257,18 @@
     "--experimental",
     "--aggressive"
   ],
-  // "autopep8.interpreter": ["C:/Program Files/Python311/python.exe"],
-  "autopep8.interpreter": ["${env:PYENV_ROOT}/shims/python"],
+  "autopep8.interpreter": ["C:/Users/amralaa/AppData/Local/Python/pythoncore-3.14-64/python.exe"],
+  // "autopep8.interpreter": ["${env:PYENV_ROOT}/shims/python"],
   "autopep8.args": [
     "--max-line-length",
     "120",
     "--experimental",
     "--aggressive"
   ],
-  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
-  "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
+  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  // "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
   // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.12.4/bin/python", // TODO: Remove
 
@@ -291,19 +293,29 @@
   // ===================
   "cSpell.enabled": true,
   "cSpell.userWords": [
+    "abfs",
+    "abfss",
     "ADF",
     "Adls",
+    "Alaa",
     "amralaa",
+    "Annualize",
+    "ARGMAX",
     "astimezone",
     "Autoresizing",
     "azuredatalakestore",
+    "Bingdex",
+    "BROADCASTRIGHT",
     "BWT",
     "clickhouse",
     "CLR",
     "cmake",
+    "contactability",
+    "cooldown",
     "cordova",
     "COUNTIF",
     "cyclomatic",
+    "Dataframe",
     "datefmt",
     "dcount",
     "descendency",
@@ -311,15 +323,21 @@
     "dotfiles",
     "downsampled",
     "Downsampling",
+    "DSAT",
     "dtype",
     "dylib",
     "Dylibs",
+    "Ecommerce",
     "Embedder",
     "ENDCS",
+    "endofday",
     "enghub",
     "eventhub",
+    "evhns",
     "Experimentations",
     "gmtime",
+    "hdfs",
+    "Ibrahim",
     "Interactor",
     "iphoneos",
     "iphonesimulator",
@@ -330,10 +348,16 @@
     "leftouter",
     "linkcode",
     "Linq",
+    "llmscrubbedconversationevent",
     "loadtest",
     "LOWDISTINCTNESS",
+    "Magnetar",
+    "MCDR",
+    "Milvus",
     "mkdir",
     "mutex",
+    "MWHE",
+    "namenode",
     "netcore",
     "Newtonsoft",
     "Nonnull",
@@ -350,25 +374,35 @@
     "podspec",
     "podspecs",
     "Popen",
+    "Prcnt",
     "Proto",
     "Protobuf",
     "pycache",
     "pyenv",
+    "PYSPARK",
+    "Quickback",
+    "Quickbacks",
+    "Radwan",
     "rects",
+    "Referer",
     "REFINERANGE",
     "reflog",
     "reflogs",
     "Renderable",
+    "Resizer",
     "RNSVG",
     "ROUNDROBIN",
     "rowset",
     "scopehost",
     "screenshotting",
+    "SEMIJOIN",
+    "servicebus",
     "setvariable",
     "shellrc",
     "SSTREAM",
     "STAGEBOUNDARYONOUTPUT",
     "startofday",
+    "stclmagnetarwus",
     "STREAMEXPIRY",
     "STREAMSET",
     "Sublayer",
@@ -377,12 +411,19 @@
     "superview",
     "swiftlint",
     "symbolicate",
+    "Thndr",
+    "timespec",
+    "todatetime",
     "tolong",
     "toscalar",
     "tqdm",
+    "Unpersist",
     "Unretained",
+    "Unscrubbed",
     "Untracking",
+    "Upserting",
     "worktree",
+    "wwwroot",
     "xargs",
     "xcarchive",
     "XCFRAMEWORK",
@@ -554,7 +595,6 @@
     "msasg"
   ],
   "chat.mcp.autostart": "newAndOutdated",
-  "chat.viewSessions.orientation": "stacked",
   "chat.tools.urls.autoApprove": {
     "https://code.visualstudio.com": true,
     "https://github.com/microsoft/vscode/wiki/*": true,
@@ -562,9 +602,27 @@
       "approveRequest": false,
       "approveResponse": true
     },
-    "https://eng.ms": {
-      "approveRequest": false,
-      "approveResponse": true
-    }
-  }
+    "https://eng.ms": true,
+    "https://api.nuget.org": true
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "explorer.confirmPasteNative": false,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
+  "debug.disassemblyView.showSourceCode": false,
+
+  // "editor.hover.enabled": "on",
+  // "editor.hover.sticky": false,
+
 }

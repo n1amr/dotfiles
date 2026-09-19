@@ -5,6 +5,18 @@
       "type": "stdio",
       "command": "enghub-mcp",
       "args": ["start"]
+    },
+    "spark-mcp": {
+      "type": "stdio",
+      "command": "spark-mcp"
+    },
+    "wiki-mcp": {
+      "type": "stdio",
+      "command": "wiki-mcp"
+    },
+    "ScopeMCP.Local": {
+      "type": "stdio",
+      "command": "scopemcp-local"
     }
   }
 }
