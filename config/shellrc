@@ -586,10 +586,10 @@ init_ndenv () {
 
 init_pyenv () {
     export PATH="$PYENV_ROOT/bin:$PATH"
-    can_execute pyenv && {
-        eval "$(pyenv init --path)" || true
-        eval "$(pyenv init -)"
-    }
+
+    if can_execute pyenv; then
+        eval "$(pyenv init - --no-rehash zsh)"
+    fi
 }
 [[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && __dotfiles_init init_pyenv
 
