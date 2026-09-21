@@ -103,6 +103,8 @@ if [ "$SHELLNAME" = zsh ]; then
     export DISABLE_AUTO_UPDATE='true'
     export DIRSTACKSIZE='100'
 
+    zstyle ':omz:plugins:nvm' lazy yes
+
     export plugins=(
         dirpersist
         pip
@@ -603,7 +605,7 @@ init_nvm () {
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 }
-[[ "${DOTFILES_CONFIG_ENABLE_NVM:-true}" == 'true' ]] && __dotfiles_init init_nvm
+# [[ "${DOTFILES_CONFIG_ENABLE_NVM:-true}" == 'true' ]] && __dotfiles_init init_nvm
 
 [[ -n "${DOTFILES_CONFIG_TEXLIVE_BIN}" ]] && {
     export PATH="$DOTFILES_CONFIG_TEXLIVE_BIN:$PATH"
