@@ -61,14 +61,6 @@
     path = thirdparty/fzf
     url = https://github.com/junegunn/fzf.git
     branch = master
-[submodule "thirdparty/git-flow-completion"]
-    path = thirdparty/git-flow-completion
-    url = https://github.com/petervanderdoes/git-flow-completion
-    branch = master
-[submodule "thirdparty/gitflow-avh"]
-    path = thirdparty/gitflow-avh
-    url = https://github.com/petervanderdoes/gitflow-avh
-    branch = master
 [submodule "thirdparty/oh-my-zsh"]
     path = thirdparty/oh-my-zsh
     url = https://github.com/robbyrussell/oh-my-zsh.git

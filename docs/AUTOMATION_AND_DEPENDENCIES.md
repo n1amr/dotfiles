@@ -88,8 +88,6 @@ The repository relies on submodules both for personal extensions and third-party
 
 - `thirdparty/dunst`
 - `thirdparty/fzf`
-- `thirdparty/git-flow-completion`
-- `thirdparty/gitflow-avh`
 - `thirdparty/playerctl`
 - `thirdparty/vim-stream`
 

@@ -61,10 +61,6 @@
     url = git@github.com:dunst-project/dunst
 [submodule "thirdparty/fzf"]
     url = git@github.com:junegunn/fzf.git
-[submodule "thirdparty/git-flow-completion"]
-    url = git@github.com:petervanderdoes/git-flow-completion
-[submodule "thirdparty/gitflow-avh"]
-    url = git@github.com:petervanderdoes/gitflow-avh
 [submodule "thirdparty/oh-my-zsh"]
     url = git@github.com:robbyrussell/oh-my-zsh.git
 [submodule "thirdparty/playerctl"]

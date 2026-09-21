@@ -905,12 +905,6 @@ init_ssh () {
 }
 [[ "${DOTFILES_CONFIG_LOAD_SSH_AGENT:-true}" == 'true' ]] && __dotfiles_init init_ssh
 
-if [ "$SHELLNAME" = zsh ]; then
-    source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.zsh"
-elif [ "$SHELLNAME" = bash ]; then
-    source "$DOTFILES_HOME/thirdparty/git-flow-completion/git-flow-completion.bash"
-fi
-
 # terminal_resize
 reset_ps1
 reset_keybindings vi

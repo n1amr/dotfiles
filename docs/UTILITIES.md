@@ -20,7 +20,6 @@ Descriptions are based on script names and the surrounding repository structure 
 - `git-browse`: open repository or remote pages from Git context
 - `git-create-github`: create or initialize GitHub remotes or repositories
 - `git-create-gitlab`: create or initialize GitLab remotes or repositories
-- `git-flow`: wrapper around git-flow style operations
 - `git-review`: review-oriented Git helper
 - `git-worktree-create`: create a new Git worktree
 - `git-worktree-path`: print or compute worktree paths
