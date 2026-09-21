@@ -97,6 +97,8 @@
   },
 
   "markdown.showToolbar": true,
+  "markdown.preview.fontSize": 26,
+
   "yaml.schemas": {
     "file:///c%3A/Users/amralaa/.vscode/extensions/docsmsft.docs-yaml-1.0.6/dist/toc.schema.json": "/toc\\.yml/i"
   },
@@ -110,15 +112,15 @@
   // "workbench.colorTheme": "Visual Studio 2019 Dark",
   "workbench.colorTheme": "Dark Modern",
   "workbench.preferredDarkColorTheme": "Dark Modern",
-  "workbench.preferredLightColorTheme": "Dark Modern",
-  "workbench.preferredHighContrastColorTheme": "Dark Modern",
-  "workbench.preferredHighContrastLightColorTheme": "Dark Modern",
+  "workbench.preferredLightColorTheme": "Light Modern",
+  "workbench.preferredHighContrastColorTheme": "Light Modern",
+  "workbench.preferredHighContrastLightColorTheme": "Light Modern",
 
   "workbench.colorCustomizations": {
-    // "diffEditor.removedLineBackground": "#B00000AA",
-    // "diffEditor.removedTextBackground": "#BB0000CC",
-    // "diffEditor.insertedLineBackground": "#00A00055",
-    // "diffEditor.insertedTextBackground": "#00900066",
+    "diffEditor.removedLineBackground": "#B00000AA",
+    "diffEditor.removedTextBackground": "#BB0000CC",
+    "diffEditor.insertedLineBackground": "#00A00055",
+    "diffEditor.insertedTextBackground": "#00900066",
 
     /*
       Colors:
@@ -460,7 +462,7 @@
   // Other Extensions:
   // =================
   "docker.explorerRefreshInterval": 3000,
-  "insertDateString.format": "YYYY-MM-DD hh:mm:ss ZZZ",
+  "insertDateString.format": "YYYY-MM-DD hh:mm:ss Z",
   "jupyter.allowUnauthorizedRemoteConnection": true,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "kotlin.languageServer.enabled": false,
@@ -621,6 +623,8 @@
     "**/.forgejo/workflows/*.yaml"
   ],
   "debug.disassemblyView.showSourceCode": false,
+  "chat.viewSessions.orientation": "stacked",
+
 
   // "editor.hover.enabled": "on",
   // "editor.hover.sticky": false,
