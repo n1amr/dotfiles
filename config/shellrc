@@ -72,6 +72,7 @@ fi
 source "$DOTFILES_ENV_FILE"
 
 export PATH="$DOTFILES_HOME/bin:$DOTFILES_HOME/thirdparty/binaries:$PATH"
+export PYTHONPATH="$DOTFILES_HOME/config/python${PYTHONPATH:+:$PYTHONPATH}"
 
 source "$DOTFILES_HOME/bin/lib/polyfills.sh"
 

@@ -8,7 +8,6 @@ import re
 import shutil
 import sys
 
-from IPython import embed as breakpoint
 from functional import seq
 
 ENCODING = 'utf-8'

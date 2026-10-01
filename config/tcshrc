@@ -19,6 +19,12 @@ setenv CPPFLAGS         "-I${BUILD_PREFIX}/include"
 setenv LDFLAGS          "-L${BUILD_PREFIX}/lib"
 setenv LD_LIBRARY_PATH  "${BUILD_PREFIX}/lib${LD_LIBRARY_PATH}"
 setenv PATH             "${BUILD_PREFIX}/bin:${PATH}"
+if ( ! $?PYTHONPATH ) then
+    setenv PYTHONPATH "${DOTFILES_HOME}/config/python"
+else
+    setenv PYTHONPATH "${DOTFILES_HOME}/config/python:${PYTHONPATH}"
+endif
+setenv PYTHONBREAKPOINT "dotfiles_breakpoint.ipython"
 
 # Deduplicate paths
 setenv LDFLAGS          "`echo -n ${LDFLAGS}:  | tr ' ' ':' | awk -v RS=':' -v ORS=':' '\\!a[${DS}1]++' | sed 's/:\+/:/g; s/^:\|:${DS}//g' | tr ':' ' '`"
