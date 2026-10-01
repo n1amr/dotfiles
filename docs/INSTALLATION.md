@@ -15,6 +15,10 @@ To try the repo in isolation instead of installing into the current home:
 ~/.dotfiles/demo
 ```
 
+For the additional package installation and compatibility steps required after
+switching pyenv to Python 3.14, see
+[Python 3.14 Migration](./PYTHON_3_14_MIGRATION.md).
+
 ## Main Entry Points
 
 ### `install`
