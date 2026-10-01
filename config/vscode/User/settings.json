@@ -268,8 +268,8 @@
     "--aggressive"
   ],
   "python.defaultInterpreterPath": "${env:PYENV_ROOT}/shims/python",
-  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
-  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.7.10/bin/python",
+  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.14.6/bin/python",
+  // "python.defaultInterpreterPath": "${env:PYENV_ROOT}/versions/3.14.6/bin/python",
   // "python.pythonPath": "${env:PYENV_ROOT}/versions/3.12.4/bin/python",
   // "python.pythonPath": "${env:HOME}/.pyenv/shims/python", // TODO: Remove
   // "python.pythonPath": "${env:HOME}/.pyenv/versions/3.12.4/bin/python", // TODO: Remove
