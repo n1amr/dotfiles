@@ -61,7 +61,7 @@ alias hgp "fc -El 0 | grep"
 alias hrestore 'yes | cp ~/.${SHELLNAME}_history.bak ~/.${SHELLNAME}_history; for i in {0..10000}; do echo; done; /usr/bin/clear; cd ~; exec ${SHELLNAME}'
 alias i3config '"$EDITOR" "$DOTFILES_HOME/config/i3/config"'
 alias ipy "ipython"
-alias ipython "python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
+alias ipython "python -c 'from IPython import start_ipython; start_ipython()'"
 alias iso-date 'date -Iseconds'
 alias j 'jump'
 alias k 'cdtree'
