@@ -18,6 +18,7 @@ c.StoreMagics.autorestore = True
 c.TerminalInteractiveShell.display_completions = 'column'
 c.TerminalInteractiveShell.editing_mode = 'vi'
 c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = False
+c.TerminalInteractiveShell.timeoutlen = 0.1
 # c.TerminalInteractiveShell.mouse_support = True
 c.TerminalInteractiveShell.true_color = True
 
