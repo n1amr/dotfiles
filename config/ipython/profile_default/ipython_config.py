@@ -8,7 +8,8 @@ c.AliasManager.user_aliases = [
 ]
 
 c.InteractiveShell.autocall = 1
-c.InteractiveShell.colors = 'Linux'
+c.InteractiveShell.colors = 'linux'
+# c.InteractiveShell.colors = 'gruvbox-dark'
 c.InteractiveShell.confirm_exit = False
 c.InteractiveShell.editor = 'vim'
 
@@ -16,7 +17,6 @@ c.StoreMagics.autorestore = True
 
 c.TerminalInteractiveShell.display_completions = 'column'
 c.TerminalInteractiveShell.editing_mode = 'vi'
-c.TerminalInteractiveShell.highlighting_style = 'paraiso-dark'
 # c.TerminalInteractiveShell.mouse_support = True
 c.TerminalInteractiveShell.true_color = True
 
