@@ -129,8 +129,8 @@ if [ "$SHELLNAME" = zsh ]; then
     source "$DOTFILES_HOME/config/completions.zsh"
 
 elif [ "$SHELLNAME" = bash ]; then
-    export HISTSIZE=-1
-    export HISTFILESIZE="$HISTFILE"
+    export HISTSIZE=1000000
+    export HISTFILESIZE="$HISTSIZE"
     export SAVEHIST="$HISTSIZE"
 
     source "$DOTFILES_HOME/config/bash-init.sh"
@@ -888,7 +888,7 @@ elif [ "$SHELLNAME" = bash ]; then
 
     # Save and reload the history after each command finishes
     if [ "$SHELLNAME" = bash ] && [ "$IS_WSL" != 'true' ]; then
-        export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
+        PROMPT_COMMAND='history -a; history -n'
     fi
     command_not_found_handle () { __dotfiles_command_not_found_handler "$@"; }
 fi

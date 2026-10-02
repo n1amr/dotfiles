@@ -1,18 +1,22 @@
-__bash_prefix_filter () {
-    prefix="$1"
-    shift
-    for arg in "$@"; do
-        if [ -z "$prefix" ] || [[ "$arg" = "$prefix"* ]]; then
-            case "$arg" in
-                *[\!\@\#\$\%\^\&\*\(\)_+\ \"]*|*"'"*)
-                    echo "'$(<<<"$arg" sed "s/'/'\\\\''/g")'" #||
-                    ;;
-                *)
-                    echo "$arg"
-                    ;;
-            esac
+__dotfiles_bash_complete () {
+    local completion_command=''
+    local completion_root
+    local result
+
+    for completion_root in "$DOTFILES_HOME/bin/completion" "$DOTFILES_HOME/custom/bin/completion" "$DOTFILES_HOME/custom/env/$DOTFILES_ENV/bin/completion"; do
+        if [ -x "$completion_root/${COMP_WORDS[0]}" ]; then
+            completion_command="$completion_root/${COMP_WORDS[0]}"
         fi
     done
+
+    [ -z "$completion_command" ] && return
+
+    COMPREPLY=()
+    while IFS= read -r result; do
+        if [ -z "$2" ] || [[ "$result" = "$2"* ]]; then
+            COMPREPLY[${#COMPREPLY[@]}]="$result"
+        fi
+    done < <("$completion_command")
 }
 
 for completion_root in "$DOTFILES_HOME/bin/completion" "$DOTFILES_HOME/custom/bin/completion" "$DOTFILES_HOME/custom/env/$DOTFILES_ENV/bin/completion"; do
@@ -20,12 +24,6 @@ for completion_root in "$DOTFILES_HOME/bin/completion" "$DOTFILES_HOME/custom/bi
     for file in "$completion_root"/*; do
         [[ ! -x "$file" ]] && continue
         command="$(basename "$file")"
-
-        # function _sync-ssh {
-        #     COMPREPLY=( $(__bash_prefix_filter "$2" $("$DOTFILES_HOME/bin/completion/sync-ssh")) );
-        # }
-        #
-        # complete -F _sync-ssh sync-ssh
-        eval "function _$command () { IFS=\$'\\r\\n' GLOBIGNORE='*' eval 'COMPREPLY=( \$(__bash_prefix_filter \"\$2\" \$(\"$completion_root/$command\") ) )'; }; complete -F \"_$command\" \"$command\""
+        complete -F __dotfiles_bash_complete "$command"
     done
 done
