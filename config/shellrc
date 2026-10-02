@@ -590,6 +590,8 @@ init_pyenv () {
 
     if can_execute pyenv; then
         eval "$(pyenv init - --no-rehash zsh)"
+
+        export PYTHONBREAKPOINT='dotfiles_breakpoint.ipython'
     fi
 }
 [[ "${DOTFILES_CONFIG_ENABLE_PYENV:-true}" == 'true' ]] && __dotfiles_init init_pyenv
