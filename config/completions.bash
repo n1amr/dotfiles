@@ -3,11 +3,14 @@ __bash_prefix_filter () {
     shift
     for arg in "$@"; do
         if [ -z "$prefix" ] || [[ "$arg" = "$prefix"* ]]; then
-            if [[ "$arg" == *['!'@#\$%^\&*()_+\ \"\']* ]]; then
-                echo "'$(<<<"$arg" sed "s/'/'\\\\''/g")'" #||
-            else
-                echo "$arg"
-            fi
+            case "$arg" in
+                *[\!\@\#\$\%\^\&\*\(\)_+\ \"]*|*"'"*)
+                    echo "'$(<<<"$arg" sed "s/'/'\\\\''/g")'" #||
+                    ;;
+                *)
+                    echo "$arg"
+                    ;;
+            esac
         fi
     done
 }

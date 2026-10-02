@@ -881,8 +881,11 @@ if [ "$SHELLNAME" = zsh ]; then
     setopt -o sharehistory
     command_not_found_handler () { __dotfiles_command_not_found_handler "$@"; }
 elif [ "$SHELLNAME" = bash ]; then
-    shopt -s autocd
-    shopt -s globstar
+    if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
+        shopt -s autocd
+        shopt -s globstar
+    fi
+
     # Save and reload the history after each command finishes
     if [ "$SHELLNAME" = bash ] && [ "$IS_WSL" != 'true' ]; then
         export PROMPT_COMMAND="history -a && history -c && history -r; $PROMPT_COMMAND"
