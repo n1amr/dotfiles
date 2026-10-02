@@ -1,8 +1,11 @@
-from IPython import embed
+from IPython.terminal.embed import InteractiveShellEmbed
 from IPython.terminal.ipapp import load_default_config
 
 
-def ipython(*, header="", compile_flags=None, **kwargs):
+def ipython(*, header="", **kwargs):
     config = load_default_config()
-    kwargs.setdefault("colors", config.InteractiveShell.colors)
-    return embed(header=header, compile_flags=compile_flags, **kwargs)
+    colors = config.TerminalInteractiveShell.get(
+        "colors", config.InteractiveShell.get("colors", "neutral")
+    )
+    shell = InteractiveShellEmbed(config=config, colors=colors)
+    shell(header=header, stack_depth=2, **kwargs)
