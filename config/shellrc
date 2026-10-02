@@ -263,8 +263,10 @@ d () {
 deduplicate_env_paths () {
     if [ "$SHELLNAME" = zsh ]; then
         export -U PATH
+        typeset -gxUT PYTHONPATH pythonpath
     else
         export PATH="$(unique_paths "$PATH")"
+        export PYTHONPATH="$(unique_paths "$PYTHONPATH")"
     fi
 
     export LD_LIBRARY_PATH="$(unique_paths "$LD_LIBRARY_PATH")"
