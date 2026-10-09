@@ -2,22 +2,44 @@
 
 set -eu
 
-export DISPLAY="${DISPLAY:-:0}"
+export DISPLAY="${DIPLAY:-:0}"
 
-if [[ "$#" -eq 0 ]]; then
-    source ~/.dotfiles.env
-    default_session="${DOTFILES_CONFIG_TMUX_DEFAULT_SESSION:-$USER}"
-    session="$default_session"
-else
-    session="$1"
-fi
+main() {
+    if [[ "$#" -eq 0 ]]; then
+        source ~/.dotfiles.env
+        default_session="${DOTFILES_CONFIG_TMUX_DEFAULT_SESSION:-$USER}"
+        session="$default_session"
+    else
+        session="$1"
+    fi
 
-if ! tmux has-session -t="$session"; then
-    tmux new-session -d -s "$session"
-fi
+    if ! tmux has-session -t="$session"; then
+        tmux new-session -d -s "$session"
+    fi
 
-if [[ -z "${TMUX:-}" ]]; then
-    exec tmux attach -t "$session"
-else
-    exec tmux switch-client -t "$session"
-fi
+    detach_other_clients "$session"
+
+    if [[ -z "${TMUX:-}" ]]; then
+        exec tmux attach -t "$session"
+    else
+        exec tmux switch-client -t "$session"
+    fi
+}
+
+detach_other_clients() {
+    local session="$1"
+    local current_client=''
+    local client
+
+    if [[ -n "${TMUX:-}" ]]; then
+        current_client="$(tmux display-message -p '#{client_name}')"
+    fi
+
+    while IFS= read -r client; do
+        if [[ "$client" != "$current_client" ]]; then
+            tmux detach-client -t "$client"
+        fi
+    done < <(tmux list-clients -t "$session" -F '#{client_name}')
+}
+
+main "$@"
