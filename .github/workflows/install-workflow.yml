@@ -71,6 +71,7 @@ jobs:
           set -xv
           mkdir -pv /home
           useradd -s /bin/zsh -d "/home/${{ matrix.params.user }}" -m -G sudo "${{ matrix.params.user }}"
+          touch "/home/${{ matrix.params.user }}/.dotfiles.env.local"
 
       - name: Install dotfiles
         env:
