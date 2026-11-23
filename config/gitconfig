@@ -193,8 +193,6 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 
 [credential]
     helper = cache
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [init]
     defaultBranch = master
@@ -253,3 +251,6 @@ Committer Date:  %ci %C(green)(%cr)%C(reset)%n\
 [credential "azrepos:org/msblox"]
     username = amralaa@microsoft.com
     azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+[credential "azrepos:org/office"]
+	username = amralaa@microsoft.com
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47

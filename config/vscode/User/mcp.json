@@ -1,22 +1,45 @@
 {
-  // Model Context Protocol (MCP) configuration for VS Code
-  "servers": {
-    "enghub": {
-      "type": "stdio",
-      "command": "enghub-mcp",
-      "args": ["start"]
-    },
-    "spark-mcp": {
-      "type": "stdio",
-      "command": "spark-mcp"
-    },
-    "wiki-mcp": {
-      "type": "stdio",
-      "command": "wiki-mcp"
-    },
-    "ScopeMCP.Local": {
-      "type": "stdio",
-      "command": "scopemcp-local"
-    }
-  }
+	"servers": {
+		"enghub": {
+			"type": "stdio",
+			"command": "C:\\Program Files\\nodejs\\node.exe",
+			"args": [
+				"Q:\\.tools\\.npm-global\\node_modules\\@azure-core\\enghub-mcp\\dist\\cli.js",
+				"start"
+			]
+		},
+		"ScopeMCP.Local": {
+			"type": "stdio",
+			"command": "C:\\Users\\amralaa\\.dotnet\\tools\\scopemcp-local.exe",
+			"args": []
+		},
+		"spark-mcp": {
+			"type": "stdio",
+			"command": "C:\\Program Files\\nodejs\\node.exe",
+			"args": [
+				"Q:\\.tools\\.npm-global\\node_modules\\@magnetar\\spark-mcp\\build\\index.js"
+			]
+		},
+		"microsoft/azure-devops-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@azure-devops/mcp@latest",
+				"msasg",
+				"-d",
+				"${input:ado_domain}"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.0.0"
+		}
+	},
+	"inputs": [
+		{
+			"id": "ado_domain",
+			"type": "promptString",
+			"description": "Repeat to enable specific domains: core, work, work-items, search, test-plans, repositories, wiki, pipelines, advanced-security.",
+			"password": false
+		}
+	]
 }
